@@ -8,5 +8,8 @@
 ## Maintainence
 <p>This project is my hobby project, I may or may not contribute regularly.</p>
 
+## Prerequisities
+<p>Make sure you have Segoe Fluent Icons font installed. You can download it <a href="https://aka.ms/SegoeFluentIcons">here</a>.</p>
+
 ## License
 <p>FlowZone is licensed under the MIT license.</p>
