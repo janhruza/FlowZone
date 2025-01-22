@@ -14,4 +14,14 @@ public static class Messages
     /// There was an error while saving your tasks.
     /// </summary>
     public const string TasksSavingFailed = "There was an error while saving your tasks.";
+
+    /// <summary>
+    /// Do you want to delete this task?
+    /// </summary>
+    public const string ConfirmDeleteTask = "Do you want to delete this task?";
+
+    /// <summary>
+    /// No task description.
+    /// </summary>
+    public const string NoTaskDescription = "No task description.";
 }

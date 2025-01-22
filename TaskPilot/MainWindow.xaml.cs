@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -36,7 +37,7 @@ public partial class MainWindow : Window
 
                     new LineBreak(),
 
-                    new Run(task.Text)
+                    new Run(string.IsNullOrEmpty(task.Text.Trim()) == false ? task.Text : Messages.NoTaskDescription)
                     {
                         FontSize = 14
                     }
@@ -48,7 +49,62 @@ public partial class MainWindow : Window
             Content = tb,
         };
 
+        lbi.KeyDown += (s, e) =>
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                RemoveTask(task);
+            }
+        };
+
+        // add context menu to the valid items
+        // invalid items are those with id equal to long.MinValue
+        if (task.Id != long.MinValue)
+        {
+            // context menu
+            ContextMenu cm = new ContextMenu();
+            lbi.ContextMenu = cm;
+
+            // context menu items
+
+            MenuItem miUpdate = new MenuItem
+            {
+                Header = "Modify"
+            };
+
+            miUpdate.Click += (s, e) =>
+            {
+                // modify task
+                ModifyTask(ref task);
+            };
+
+            MenuItem miDelete = new MenuItem
+            {
+                Header = "Delete task",
+                InputGestureText = "Del"
+            };
+
+            miDelete.Click += (s, e) =>
+            {
+                // confirm deleting
+                RemoveTask(task);
+            };
+
+            // add items to the menu
+            cm.Items.Add(miUpdate);
+            cm.Items.Add(new Separator());
+            cm.Items.Add(miDelete);
+        }
+
         lbTasks.Items.Add(lbi);
+    }
+
+    private void RemoveTask(TaskItem task)
+    {
+        if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        {
+            App.RemoveTask(task.Id);
+        }
     }
 
     private void LoadTasks()
@@ -60,7 +116,7 @@ public partial class MainWindow : Window
             // load default tasks
             TaskItem task1 = new TaskItem
             {
-                Id = 0,
+                Id = long.MinValue,
                 Caption = "Add a new task",
                 Text = "To add a new task, click the '+' button in the bottom-right corner!",
                 CreationDate = DateTime.Now,
@@ -69,7 +125,7 @@ public partial class MainWindow : Window
 
             TaskItem task2 = new TaskItem
             {
-                Id = 1,
+                Id = long.MinValue,
                 Caption = "Reload the task list",
                 Text = "To reload the task list, click the middle button in the bottom-right corner.",
                 CreationDate = DateTime.Now,
@@ -78,7 +134,7 @@ public partial class MainWindow : Window
 
             TaskItem task3 = new TaskItem
             {
-                Id = 2,
+                Id = long.MinValue,
                 Caption = "Export your tasks",
                 Text = "To export your tasks, click the left button in the bottom-right corner.",
                 CreationDate = DateTime.Now,
@@ -100,6 +156,14 @@ public partial class MainWindow : Window
     private void GetNewTask()
     {
         if (NewTaskWindow.CreateTask() == true)
+        {
+            LoadTasks();
+        }
+    }
+
+    private void ModifyTask(ref TaskItem task)
+    {
+        if (NewTaskWindow.Modify(task) == true)
         {
             LoadTasks();
         }

@@ -2,6 +2,7 @@
 using System.Windows;
 using System;
 using TaskPilot.Core;
+using System.Linq;
 
 namespace TaskPilot;
 
@@ -152,6 +153,22 @@ public partial class App : Application
             Log.Error(ex);
             return false;
         }
+    }
+
+    /// <summary>
+    /// Removes the task with the given id (<paramref name="taskId"/>) from the list of all tasks (<see cref="Tasks"/>).
+    /// </summary>
+    /// <param name="taskId">Id of the task that should be removed.</param>
+    /// <returns></returns>
+    public static bool RemoveTask(long taskId)
+    {
+        // security checks
+        if (Tasks.Count == 0) return false;
+        if (!Tasks.Select(x => x.Id == taskId).Any()) return false;
+
+        // remove item
+        Tasks.Remove(Tasks.Where(x=>x.Id == taskId).First());
+        return true;
     }
 
     private void Application_Startup(object sender, StartupEventArgs e)

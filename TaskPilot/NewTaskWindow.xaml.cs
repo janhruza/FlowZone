@@ -9,6 +9,8 @@ namespace TaskPilot;
 /// </summary>
 public partial class NewTaskWindow : Window
 {
+    private bool _isNewTask;
+
     /// <summary>
     /// Creates a new instance of the <see cref="NewTaskWindow"/> class.
     /// </summary>
@@ -20,6 +22,29 @@ public partial class NewTaskWindow : Window
         // default dtValue - indefinite expiration
         cbCanExpire.IsChecked = false;
         dtExpiration.SelectedDate = DateTime.MaxValue;
+
+        // is new task
+        _isNewTask = true;
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="NewTaskWindow"/> class with a task specified. This is used to modify the existing task.
+    /// </summary>
+    /// <param name="task">The task to be modified.</param>
+    public NewTaskWindow(TaskItem task)
+    {
+        InitializeComponent();
+        Task = task;
+
+        cbCanExpire.IsChecked = task.ExpirationDate != DateTime.MaxValue; // must be MaxValue to be indefinite
+        dtExpiration.SelectedDate = task.ExpirationDate;
+
+        // load fields data
+        txtCaption.Text = task.Caption;
+        txtDescription.Text = task.Text;
+
+        // is not new task - already existing task is being modified
+        _isNewTask = false;
     }
 
     /// <summary>
@@ -34,6 +59,17 @@ public partial class NewTaskWindow : Window
     public static bool CreateTask()
     {
         NewTaskWindow window = new NewTaskWindow();
+        return window.ShowDialog() == true;
+    }
+
+    /// <summary>
+    /// Shows the <see cref="NewTaskWindow"/> as a dialog and returns true if a user-defined task was modified, otherwise false.
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    public static bool Modify(TaskItem task)
+    {
+        NewTaskWindow window = new NewTaskWindow(task);
         return window.ShowDialog() == true;
     }
 
@@ -60,7 +96,11 @@ public partial class NewTaskWindow : Window
         else
         {
             // valid input, create task
-            App.Tasks.Add(this.Task);
+            if (_isNewTask == true)
+            {
+                // create only if it's a new task
+                App.Tasks.Add(this.Task);
+            }
 
             // close dialog
             DialogResult = true;
