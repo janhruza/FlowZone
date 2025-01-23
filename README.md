@@ -13,7 +13,7 @@
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
-## Maintanance
+## Maintenance
 <p>This project is my hobby project, I may or may not contribute regularly.</p>
 
 ## Prerequisities
