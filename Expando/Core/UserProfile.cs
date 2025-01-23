@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Expando.Core;
 
@@ -277,10 +278,12 @@ public class UserProfile
     {
         try
         {
-            using (FileStream fs = new FileStream(UsersIndexFile, FileMode.Append, FileAccess.ReadWrite))
+            using (FileStream fs = File.Open(UsersIndexFile, FileMode.Open, FileAccess.ReadWrite))
             {
-                int count = 0;
-                using (BinaryReader reader = new BinaryReader(fs))
+                int count;
+
+                // it's important to leave the stream open for the BinaryWriter that writes data into the stream later
+                using (BinaryReader reader = new BinaryReader(fs, Encoding.Default, leaveOpen:true))
                 {
                     count = reader.ReadInt32();
                     count++;

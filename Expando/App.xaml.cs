@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Expando.Core;
 
 namespace Expando
 {
@@ -7,6 +9,14 @@ namespace Expando
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Creates a new instance of the <see cref="App"/> class.
+        /// </summary>
+        public App()
+        {
+            return;
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Expando.MainWindow mw = new Expando.MainWindow();
