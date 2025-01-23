@@ -3,7 +3,7 @@
 namespace Expando
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Representing the main Expando application class.
     /// </summary>
     public partial class App : Application
     {

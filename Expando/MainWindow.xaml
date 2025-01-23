@@ -5,11 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Expando"
         mc:Ignorable="d"
-        Title="MainWindow"
-        Height="450"
-        Width="800">
-    
+        WindowStartupLocation="CenterScreen"
+        MinWidth="450"
+        MinHeight="300"
+        Title="Expando"
+        Height="600"
+        Width="1000">
+
     <Grid>
+        <Grid.RowDefinitions>
+            <!--Navigation row-->
+            <RowDefinition Height="auto"/>
+            
+            <!--Content row-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <!--Navigation bar-->
+        <StackPanel Grid.Row="0"
+                    Margin="10"
+                    Orientation="Horizontal">
+
+            <ToggleButton Content="Home"
+                          Name="btnHome"
+                          Click="btnHome_Click"/>
+            
+            <ToggleButton Content="Overview"
+                          Name="btnOverview"
+                          Margin="5,0,0,0"
+                          Click="btnOverview_Click"/>
+            
+            <ToggleButton Content="Incomes"
+                          Name="btnIncomes"
+                          Margin="5,0,0,0"
+                          Click="btnIncomes_Click"/>
+            
+            <ToggleButton Content="Expanses"
+                          Name="btnExpanses"
+                          Margin="5,0,0,0"
+                          Click="btnExpanses_Click"/>
+
+            <ToggleButton Content="Profile"
+                          Name="btnProfile"
+                          Margin="5,0,0,0"
+                          Click="btnProfile_Click"/>
+
+        </StackPanel>
+
+        <Frame Grid.Row="1"
+               Margin="10,0,10,10"
+               NavigationUIVisibility="Hidden"
+               Name="frmContent"/>
 
     </Grid>
     
