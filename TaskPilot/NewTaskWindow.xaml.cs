@@ -110,7 +110,7 @@ public partial class NewTaskWindow : Window
 
     private void cbCanExpire_Checked(object sender, RoutedEventArgs e)
     {
-        dtExpiration.SelectedDate = DateTime.MinValue;
+        dtExpiration.SelectedDate = DateTime.Now;
         bdExpiration.Visibility = Visibility.Visible;
     }
 

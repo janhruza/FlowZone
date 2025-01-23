@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 using TaskPilot.Core;
 
 namespace TaskPilot;
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
     {
         TextBlock tb = new TextBlock
         {
+            TextTrimming = TextTrimming.CharacterEllipsis,
             Inlines =
                 {
                     new Run(task.Caption)
@@ -40,6 +42,19 @@ public partial class MainWindow : Window
                     new Run(string.IsNullOrEmpty(task.Text.Trim()) == false ? task.Text : Messages.NoTaskDescription)
                     {
                         FontSize = 14
+                    },
+
+                    new LineBreak(),
+
+                    new Run("Expiration: ")
+                    {
+                        FontSize = 12
+                    },
+
+                    new Run(task.IsIndefinite ? "Indefinite" : task.ExpirationDate.ToShortDateString())
+                    {
+                        FontSize = 12,
+                        Foreground = (task.IsIndefinite ? Brushes.LimeGreen : SystemColors.GrayTextBrush)
                     }
                 }
         };
@@ -194,5 +209,10 @@ public partial class MainWindow : Window
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         SaveTasks();
+    }
+
+    private void miRefreshView_Click(object sender, RoutedEventArgs e)
+    {
+        LoadTasks();
     }
 }
