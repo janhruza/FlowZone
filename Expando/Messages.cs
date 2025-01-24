@@ -14,4 +14,14 @@ public static class Messages
     /// Unable to load user profiles.
     /// </summary>
     public const string CantLoadUserData = "Unable to load user profiles.";
+
+    /// <summary>
+    /// Unable to create a new profile because the input data are invalid.
+    /// </summary>
+    public const string InvalidProfileData = "Unable to create a new profile because the input data are invalid.";
+
+    /// <summary>
+    /// Unable to create a new profile because of an internal error.
+    /// </summary>
+    public const string CantCreateProfile = "Unable to create a new profile because of an internal error.";
 }

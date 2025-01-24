@@ -16,9 +16,9 @@ public class UserProfile
     /// </summary>
     public UserProfile()
     {
-        Id = 0;
+        Id = ulong.MinValue;
         Username = Environment.UserName;
-        CreationDate = DateTime.Now;
+        CreationDate = DateTime.MinValue;
     }
 
     /// <summary>

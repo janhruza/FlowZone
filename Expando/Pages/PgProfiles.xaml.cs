@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Expando.Core;
+using Expando.Windows;
 
 namespace Expando.Pages;
 
@@ -30,6 +31,14 @@ public partial class PgProfiles : Page
         };
     }
 
+    private void CreateNewUser()
+    {
+        if (WndNewProfile.CreateUser() == true)
+        {
+            ReloadUI();
+        }
+    }
+
     private ListBoxItem NewProfileItem()
     {
         Border bdContent = new Border();
@@ -46,12 +55,23 @@ public partial class PgProfiles : Page
             FontSize = 14
         };
 
+        Button btnCreate = new Button
+        {
+            Content = "Create profile"
+        };
+
+        btnCreate.Click += (s, e) =>
+        {
+            CreateNewUser();
+        };
+
         StackPanel sp = new StackPanel
         {
             Children =
                 {
                     lblHeader,
-                    lblDescription
+                    lblDescription,
+                    btnCreate
                 }
         };
 
@@ -121,6 +141,9 @@ public partial class PgProfiles : Page
             lbProfiles.Items.Add(NewProfileItem());
             return;
         }
+
+        lbProfiles.Items.Add(NewProfileItem());
+        lbProfiles.Items.Add(new Separator());
 
         foreach (UserProfile profile in UserProfile.Profiles)
         {

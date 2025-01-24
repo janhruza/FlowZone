@@ -11,8 +11,4 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Windows\" />
-  </ItemGroup>
-
 </Project>
