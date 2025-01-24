@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
 
 </Project>

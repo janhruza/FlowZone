@@ -9,4 +9,9 @@ public static class Messages
     /// Representing the main window title.
     /// </summary>
     public const string AppTitle = "Expando";
+
+    /// <summary>
+    /// Unable to load user profiles.
+    /// </summary>
+    public const string CantLoadUserData = "Unable to load user profiles.";
 }

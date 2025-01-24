@@ -10,12 +10,12 @@ public struct Transaction
     /// <summary>
     /// Representing the transaction identification number.
     /// </summary>
-    public long Id { get; set; }
+    public ulong Id { get; set; }
 
     /// <summary>
     /// Representing a user identification number of the corresponding user.
     /// </summary>
-    public long UserId { get; set; }
+    public ulong UserId { get; set; }
 
     /// <summary>
     /// Representing the transaction's time stamp. This value is obtained by <see cref="GetTimestamp(DateTime)"/>.
@@ -31,6 +31,11 @@ public struct Transaction
     /// Representing the value of the transaction.
     /// </summary>
     public decimal Value { get; set; }
+
+    /// <summary>
+    /// Representing the user-defined description of this transaction.
+    /// </summary>
+    public string Description { get; set; }
 
     #region Static data
 

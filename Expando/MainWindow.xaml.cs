@@ -79,5 +79,7 @@ public partial class MainWindow : Window
     private void btnProfile_Click(object sender, RoutedEventArgs e)
     {
         NavUncheckAll(ref btnProfile);
+        Page pg = PgProfiles.Instance;
+        NavSetPage(ref pg);
     }
 }

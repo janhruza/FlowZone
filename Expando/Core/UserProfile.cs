@@ -24,7 +24,7 @@ public class UserProfile
     /// <summary>
     /// Representing the user identification number.
     /// </summary>
-    public long Id { get; init; }
+    public ulong Id { get; init; }
 
     /// <summary>
     /// Representing the user's name.
@@ -76,7 +76,7 @@ public class UserProfile
     /// <summary>
     /// Representing a path to the users index file.
     /// </summary>
-    public const string UsersIndexFile = "UsersIndexes.bin";
+    public const string UsersIndexFile = "UserIndex.bin";
 
     /// <summary>
     /// Representing a folder where all users data are stored (a folder where other users folders are stored).
@@ -105,12 +105,16 @@ public class UserProfile
     /// <param name="usersIndexFile">Path to the users index file.</param>
     /// <param name="usersData">Where the users data will be stored.</param>
     /// <returns>True on success, false on error.</returns>
-    public static bool LoadUsers(string usersIndexFile, out Dictionary<long, string> usersData)
+    public static bool LoadUsers(string usersIndexFile, out Dictionary<ulong, string> usersData)
     {
         usersData = [];
 
         // file not found
-        if (File.Exists(usersIndexFile) == false) return false;
+        if (File.Exists(usersIndexFile) == false)
+        {
+            // file not found but it may indicate first use where no profiles are created
+            return true;
+        }
 
         using (FileStream fs = File.OpenRead(usersIndexFile))
         {
@@ -122,7 +126,7 @@ public class UserProfile
                 // reads all users entries
                 for (int x = 0; x < count; x++)
                 {
-                    long userId = reader.ReadInt64();       // user Id
+                    ulong userId = reader.ReadUInt64();     // user Id
                     string userDir = reader.ReadString();   // path to the user's folder
 
                     // adds loaded data into the return dictionary
@@ -132,6 +136,151 @@ public class UserProfile
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Attempts to load all the saved users into the <see cref="Profiles"/>.
+    /// </summary>
+    /// <returns>A nonzero value if an error occurred, otherwise 0.</returns>
+    public static int LoadUsersData()
+    {
+        try
+        {
+            // Load users index file
+            if (LoadUsers(UsersIndexFile, out Dictionary<ulong, string> userData) == false)
+            {
+                // unable to read users index file
+                return 1;
+            }
+
+            // clear the profiles list
+            _profiles = [];
+
+            // handle all users, one folder at a time
+            foreach (var key in userData)
+            {
+                string path = key.Value;
+                if (Directory.Exists(path) == false)
+                {
+                    // user folder not found, user record is invalid
+                    // not a critical error, just a warning (in this context)
+                    continue;
+                }
+
+                // read user data
+                string infoPath = Path.Combine(path, "profile.bin");
+
+                if (LoadUserData(infoPath, out UserProfile profile) == false)
+                {
+                    // unable to load profile data
+                    // another warning, profile will be skipped
+                    continue;
+                }
+
+                // read transactions data
+                string transPath = Path.Combine(path, "transactions.bin");
+
+                if (LoadTransactions(transPath, ref profile) == false)
+                {
+                    // unable to load list of user's transactions
+                    // not critical, the user will be skipped (may change in the future to be treated as an error)
+                    continue;
+                }
+
+                // add loaded profile into the list of profiles
+                _profiles.Add(profile);
+            }
+
+            return 0;
+        }
+
+        catch (Exception ex)
+        {
+            return ex.HResult;
+        }
+    }
+
+    private static bool LoadUserData(string userInfoFile, out UserProfile profile)
+    {
+        // default init
+        profile = new UserProfile();
+
+        try
+        {
+            if (File.Exists(userInfoFile) == false)
+            {
+                return false;
+            }
+
+            // reinitialization of the return object
+            using (FileStream fs = File.OpenRead(userInfoFile))
+            {
+                using (BinaryReader br = new BinaryReader(fs))
+                {
+                    profile = new UserProfile
+                    {
+                        Id = br.ReadUInt64(),                               // long
+                        Username = br.ReadString(),                         // string
+                        CreationDate = DateTime.FromBinary(br.ReadInt64()), // long
+                    };
+                }
+            }
+
+            return true;
+        }
+
+        catch (Exception)
+        {
+            // unable to manipulate with the profile info file or invalid data inside
+            return false;
+        }
+    }
+
+    private static bool LoadTransactions(string transactionsFile, ref UserProfile profile)
+    {
+        try
+        {
+            if (File.Exists(transactionsFile) == false)
+            {
+                // file not found
+                return false;
+            }
+
+            // initializes the user's transaction history
+            profile._transactions = [];
+
+            using (FileStream fileStream = File.OpenRead(transactionsFile))
+            {
+                using (BinaryReader reader = new BinaryReader(fileStream))
+                {
+                    // get number of transactions
+                    int count = reader.ReadInt32();
+
+                    for (int x = 0; x < count; x++)
+                    {
+                        Transaction transaction = new Transaction
+                        {
+                            Id = reader.ReadUInt64(),
+                            UserId = reader.ReadUInt64(),
+                            Timestamp = reader.ReadInt64(),
+                            Type = reader.ReadBoolean(),
+                            Value = reader.ReadDecimal(),
+                            Description = reader.ReadString()
+                        };
+
+                        // adds the transaction into the list
+                        profile._transactions.Add(transaction);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     /*
@@ -159,6 +308,8 @@ public class UserProfile
      *  -   Timestamp           long    8
      *  -   Type                bool    1
      *  -   Value               decimal 16
+     *  -   Description length  int     4
+     *  -   Description         string  previous value
      */
 
     /// <summary>
