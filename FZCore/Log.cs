@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace TaskPilot;
+namespace FZCore;
 
 /// <summary>
 /// Representing the logging class.
