@@ -39,7 +39,8 @@
             <DataGrid CanUserResizeRows="False"
                       Name="dgEntries"
                       ColumnWidth="*"
-                      AutoGenerateColumns="True">
+                      AutoGenerateColumns="True"
+                      IsReadOnly="True">
             </DataGrid>
             
         </Border>

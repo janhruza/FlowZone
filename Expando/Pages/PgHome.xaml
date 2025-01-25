@@ -40,8 +40,8 @@
                     
                 <LineBreak />
                     
-                <Run Text="You can also view the application"/>
-                <Run Text="log"
+                <Run Text="You can also view the"/>
+                <Run Text="application log"
                      Name="rLog"
                      Foreground="{x:Static SystemColors.AccentColorBrush}"
                      MouseLeftButtonDown="rLog_MouseLeftButtonDown"/><Run Text="."/>

@@ -69,10 +69,7 @@ public partial class PgHome : Page, IExpandoPage
     {
         get
         {
-            if (_instance != null) return _instance;
-            
-            _instance = new PgHome();
-            return _instance;
+            return _instance ??= new PgHome();
         }
     }
 
