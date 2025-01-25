@@ -15,12 +15,14 @@ public partial class WndNewTransaction : Window
     /// </summary>
     /// <param name="transactionType">Representing the type of the transaction. It can be either <see cref="Transaction.TypeExpanse"/> or <see cref="Transaction.TypeIncome"/>.</param>
     /// <param name="transactionBase">Representing the base transaction (if any). Used when for modifying the existing transaction.</param>
-    public WndNewTransaction(bool transactionType, Transaction? transactionBase = null)
+    /// <param name="editMode">Determines whether a transaction is being modified or not.</param>
+    public WndNewTransaction(bool transactionType, Transaction? transactionBase = null, bool editMode = false)
     {
         InitializeComponent();
         this.transactionType = transactionType;
+        this.editMode = editMode;
 
-        if (transactionBase.HasValue)
+        if (transactionBase != null && transactionBase.HasValue && editMode == true)
         {
             this._transaction = transactionBase.Value;
         }
@@ -122,7 +124,7 @@ public partial class WndNewTransaction : Window
                 if (editMode == true)
                 {
                     // need toremove the original transaction first
-                    UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x =>x.Id == transaction.Id).First());
+                    UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x => x.Id == transaction.Id).FirstOrDefault());
                 }
 
                 // save the transaction
@@ -203,7 +205,9 @@ public partial class WndNewTransaction : Window
             return false;
         }
 
-        WndNewTransaction wnd = new WndNewTransaction(transaction.Type);
+        WndNewTransaction wnd = new WndNewTransaction(transaction.Type, transaction, true);
+        wnd.txtDescription.Text = transaction.Description;
+        wnd.txtValue.Text = transaction.Value.ToString();
         return wnd.ShowDialog() == true;
     }
 

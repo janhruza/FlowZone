@@ -69,7 +69,10 @@ public partial class PgExpanses : Page, IExpandoPage
 
         miModify.Click += (s, e) =>
         {
-
+            if (WndNewTransaction.ModifyTransaction(transaction) == true)
+            {
+                ReloadUI();
+            }
         };
 
         // remove transaction item
@@ -79,10 +82,34 @@ public partial class PgExpanses : Page, IExpandoPage
             InputGestureText = "Del"
         };
 
+        miRemove.Click += (s, e) =>
+        {
+            if (UserProfile.Current == null)
+            {
+                return;
+            }
+
+            if (UserProfile.Current.Transactions.Remove(transaction) == true)
+            {
+                if (UserProfile.Current.SaveTransactions() == true)
+                {
+                    ReloadUI();
+                }
+            }
+        };
+
         // listbox item itself
         ListBoxItem lbi = new ListBoxItem
         {
-            Tag = transaction.Id
+            Tag = transaction.Id,
+            ContextMenu = new ContextMenu
+            {
+                Items =
+                {
+                    miModify,
+                    miRemove,
+                }
+            }
         };
 
         // container border

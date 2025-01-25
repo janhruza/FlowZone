@@ -81,12 +81,6 @@ public class UserProfile
         try
         {
             int count = Transactions.Count;
-            if (count == 0)
-            {
-                // no transactions to write
-                return false;
-            }
-
             string path = Path.Combine(UserFolders, this.Id.ToString(), TransactionsFile);
             using (FileStream fs = File.Create(path))
             {

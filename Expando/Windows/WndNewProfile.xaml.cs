@@ -15,6 +15,7 @@ public partial class WndNewProfile : Window
     public WndNewProfile()
     {
         InitializeComponent();
+        this.txtUsername.Text = Environment.UserName;
     }
 
     private UserProfile _profile = new UserProfile();
