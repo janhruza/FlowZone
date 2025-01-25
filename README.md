@@ -9,7 +9,9 @@
 
 |Project|Technology|Description|
 |-------|----------|-----------|
+|FZCore|Class Library|FZCore is a library with all the common functionality.|
 |TaskPilot|WPF|Task Pilot is a simple task manager application. It offers a simple yet intuitive UI.|
+|Expando|WPF|Expando is a simple expanse tracker appication with moder UI and multi profile support.|
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
