@@ -42,9 +42,6 @@ namespace Expando
 
             // loads users data on startup
             ReloadUserData();
-
-            LogViewer lw = new LogViewer(Log.Path);
-            _ = lw.ShowDialog();
         }
 
         /// <summary>
