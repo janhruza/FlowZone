@@ -37,11 +37,19 @@
                      Name="rChangeUser"
                      Foreground="{x:Static SystemColors.AccentColorBrush}"
                      MouseLeftButtonDown="rChangeUser_MouseLeftButtonDown"/><Run Text="."/>
+                    
+                <LineBreak />
+                    
+                <Run Text="You can also view the application"/>
+                <Run Text="log"
+                     Name="rLog"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"
+                     MouseLeftButtonDown="rLog_MouseLeftButtonDown"/><Run Text="."/>
 
                 </TextBlock>
             </Label>
 
         </Border>
     </Grid>
-    
+
 </Page>

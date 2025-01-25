@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Expando.Core;
+using FZCore;
+using FZCore.Windows;
 
 namespace Expando.Pages;
 
@@ -23,8 +25,13 @@ public partial class PgHome : Page, IExpandoPage
             ReloadUI();
 
             // adds listeners to the events
+            // change user page
             rChangeUser.MouseEnter += (s, e) => rChangeUser.Foreground = SystemColors.AccentColorLight2Brush;
             rChangeUser.MouseLeave += (s, e) => rChangeUser.Foreground = SystemColors.AccentColorBrush;
+
+            // view log window
+            rLog.MouseEnter += (s, e) => rLog.Foreground = SystemColors.AccentColorLight2Brush;
+            rLog.MouseLeave += (s, e) => rLog.Foreground = SystemColors.AccentColorBrush;
         };
     }
 
@@ -43,6 +50,12 @@ public partial class PgHome : Page, IExpandoPage
     {
         Page pg = PgProfiles.Instance;
         MainWindow.SetActivePage(ref pg);
+    }
+
+    private void rLog_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        LogViewer lvWindow = new LogViewer(Log.Path);
+        lvWindow.ShowDialog();
     }
 
     #region Static code
