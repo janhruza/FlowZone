@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using Expando.Core;
+using FZCore;
+using FZCore.Windows;
 
 namespace Expando
 {
@@ -36,8 +38,13 @@ namespace Expando
             MainWindow = mw;
             MainWindow.Show();
 
+            Log.Info("Application started", nameof(Application_Startup));
+
             // loads users data on startup
             ReloadUserData();
+
+            LogViewer lw = new LogViewer(Log.Path);
+            _ = lw.ShowDialog();
         }
 
         /// <summary>
