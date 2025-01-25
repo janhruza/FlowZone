@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Expando.Pages;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Expando;
 
@@ -17,6 +18,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        _instance = this;
 
         this.Loaded += (s, e) =>
         {
@@ -35,7 +38,11 @@ public partial class MainWindow : Window
     {
         foreach (var tButton in _navButtons)
         {
-            if (tbException == tButton) continue;
+            if (tbException == tButton)
+            {
+                tButton.IsChecked = true;
+                continue;
+            }
 
             tButton.IsChecked = false;
         }
@@ -43,15 +50,15 @@ public partial class MainWindow : Window
         return;
     }
 
-    private void NavSetPage(ref Page page)
+    private bool NavSetPage(ref Page page)
     {
-        if (page == null) return;
-        if (frmContent == null) return;
+        if (page == null) return false;
+        if (frmContent == null) return false;
 
         frmContent.Content = page;
         this.Title = $"{page.Title} - {Messages.AppTitle}";
 
-        return;
+        return true;
     }
 
     private void btnHome_Click(object sender, RoutedEventArgs e)
@@ -82,4 +89,41 @@ public partial class MainWindow : Window
         Page pg = PgProfiles.Instance;
         NavSetPage(ref pg);
     }
+
+    #region Static code
+
+    private static MainWindow? _instance;
+
+    /// <summary>
+    /// Sets the content of the window to the selected <paramref name="page"/>.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public static bool SetActivePage(ref Page page)
+    {
+        if (_instance == null)
+        {
+            return false;
+        }
+
+        return _instance.NavSetPage(ref page);
+    }
+
+    /// <summary>
+    /// Navigates to the home page.
+    /// </summary>
+    /// <returns></returns>
+    public static bool SetHomePage()
+    {
+        if (_instance == null)
+        {
+            return false;
+        }
+
+        Page pgHome = PgHome.Instance;
+        _instance.NavUncheckAll(ref _instance.btnHome);
+        return _instance.NavSetPage(ref pgHome);
+    }
+
+    #endregion
 }

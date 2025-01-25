@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Expando.Core;
 
 namespace Expando.Pages;
 
@@ -32,9 +33,11 @@ public partial class PgHome : Page
     {
         if (this.IsLoaded == false) return;
 
-        rName.Text = Environment.UserName;
+        rName.Text = UserProfile.Current?.Username ?? "Anonymous";
         rDate.Text = DateTime.Now.ToLongDateString();
     }
+
+    #region Static code
 
     private static PgHome _instance;
 
@@ -51,4 +54,6 @@ public partial class PgHome : Page
             return _instance;
         }
     }
+
+    #endregion
 }

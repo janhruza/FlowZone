@@ -11,4 +11,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FZCore\FZCore.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FZCore;
 
 namespace Expando.Core;
 
@@ -89,6 +90,11 @@ public class UserProfile
     /// Representing a list of all loaded users.
     /// </summary>
     public static List<UserProfile> Profiles => _profiles;
+
+    /// <summary>
+    /// Representing the currently selected user profile (if any).
+    /// </summary>
+    public static UserProfile? Current { get; set; }
 
     /*
      * Users Index File structure
@@ -196,6 +202,7 @@ public class UserProfile
 
         catch (Exception ex)
         {
+            Log.Error(ex);
             return ex.HResult;
         }
     }
@@ -229,9 +236,10 @@ public class UserProfile
             return true;
         }
 
-        catch (Exception)
+        catch (Exception ex)
         {
             // unable to manipulate with the profile info file or invalid data inside
+            Log.Error(ex);
             return false;
         }
     }
@@ -277,8 +285,9 @@ public class UserProfile
             return true;
         }
 
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error(ex);
             return false;
         }
     }
@@ -366,9 +375,10 @@ public class UserProfile
             return true;
         }
 
-        catch (Exception)
+        catch (Exception ex)
         {
             // unable to create the index file
+            Log.Error(ex);
             return false;
         }
     }
@@ -418,9 +428,10 @@ public class UserProfile
             return true;
         }
 
-        catch (Exception)
+        catch (Exception ex)
         {
             // unable to create FS objects
+            Log.Error(ex);
             return false;
         }
     }
@@ -458,9 +469,10 @@ public class UserProfile
             return true;
         }
 
-        catch (Exception)
+        catch (Exception ex)
         {
             // unable to operate with the index file
+            Log.Error(ex);
             return false;
         }
     }

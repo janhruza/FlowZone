@@ -126,6 +126,12 @@ public partial class PgProfiles : Page
             Tag = profile.Id
         };
 
+        item.MouseDoubleClick += (s, e) =>
+        {
+            // confirm profile selection
+            SelectProfile(ref profile);
+        };
+
         return item;
     }
 
@@ -156,7 +162,7 @@ public partial class PgProfiles : Page
 
     #region Static data
 
-    private static PgProfiles _instance;
+    private static PgProfiles? _instance;
 
     /// <summary>
     /// Representing the current instance of the <see cref="PgProfiles"/> class.
@@ -165,9 +171,20 @@ public partial class PgProfiles : Page
     {
         get
         {
-            if (_instance == null) _instance = new PgProfiles();
+            _instance ??= new PgProfiles();
             return _instance;
         }
+    }
+
+    private static void SelectProfile(ref UserProfile profile)
+    {
+        // selects a single user profile and
+        // navigates to the home page with new
+        // user profile loaded
+
+        UserProfile.Current = profile;
+        MainWindow.SetHomePage();
+        return;
     }
 
     #endregion
