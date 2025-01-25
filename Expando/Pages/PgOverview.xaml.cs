@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
-namespace Expando.Pages
+namespace Expando.Pages;
+
+/// <summary>
+/// Representing the overview page.
+/// </summary>
+public partial class PgOverview : Page
 {
     /// <summary>
-    /// Interaction logic for PgOverview.xaml
+    /// Creates a new instance of the <see cref="PgOverview"/> class.
     /// </summary>
-    public partial class PgOverview : Page
+    public PgOverview()
     {
-        public PgOverview()
+        InitializeComponent();
+    }
+
+    #region Static code
+
+    private static PgOverview? _instance;
+
+    /// <summary>
+    /// Representing the working instance of the <see cref="PgOverview"/> class.
+    /// </summary>
+    public static PgOverview Instance
+    {
+        get
         {
-            InitializeComponent();
+            _instance ??= new PgOverview();
+            return _instance;
         }
     }
+
+    #endregion
 }

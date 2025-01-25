@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
-namespace Expando.Pages
+namespace Expando.Pages;
+
+/// <summary>
+/// Representing the incomes page.
+/// </summary>
+public partial class PgIncomes : Page
 {
     /// <summary>
-    /// Interaction logic for PgIncomes.xaml
+    /// Creates a new instance of the <see cref="PgIncomes"/> class.
     /// </summary>
-    public partial class PgIncomes : Page
+    public PgIncomes()
     {
-        public PgIncomes()
+        InitializeComponent();
+    }
+
+    #region Static code
+
+    private static PgIncomes? _instance;
+
+    /// <summary>
+    /// Representing the working instance of the <see cref="PgIncomes"/> class.
+    /// </summary>
+    public static PgIncomes Instance
+    {
+        get
         {
-            InitializeComponent();
+            _instance ??= new PgIncomes();
+            return _instance;
         }
     }
+
+    #endregion
 }
