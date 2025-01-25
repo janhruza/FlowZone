@@ -61,33 +61,36 @@ public partial class MainWindow : Window
         return true;
     }
 
+    private bool ChangePage(Page page, ref ToggleButton assocButton)
+    {
+        NavUncheckAll(ref assocButton);
+        NavSetPage(ref page);
+        return true;
+    }
+
     private void btnHome_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(ref btnHome);
-        Page pg = PgHome.Instance;
-        NavSetPage(ref pg);
+        ChangePage(PgHome.Instance, ref btnHome);
     }
 
     private void btnOverview_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(ref btnOverview);
+        ChangePage(PgOverview.Instance, ref btnOverview);
     }
 
     private void btnIncomes_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(ref btnIncomes);
+        ChangePage(PgIncomes.Instance, ref btnIncomes);
     }
 
     private void btnExpanses_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(ref btnExpanses);
+        ChangePage(PgExpanses.Instance, ref btnExpanses);
     }
 
     private void btnProfile_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(ref btnProfile);
-        Page pg = PgProfiles.Instance;
-        NavSetPage(ref pg);
+        ChangePage(PgProfiles.Instance, ref btnProfile);
     }
 
     #region Static code
