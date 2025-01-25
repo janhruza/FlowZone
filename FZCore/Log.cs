@@ -14,9 +14,9 @@ public static class Log
     /// </summary>
     public static string Path => System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.log");
 
-    private static void WriteEntry(string key, string value)
+    private static void WriteEntry(string key, string value, string? tag = null)
     {
-        string line = $"{DateTime.Now.ToString()};{key};{value}{Environment.NewLine}";
+        string line = $"{DateTime.Now.ToString()};{key};{(string.IsNullOrEmpty(tag) == false ? tag : "ALL")};{value}{Environment.NewLine}";
         File.AppendAllText(Path, line, Encoding.UTF8);
         return;
     }
@@ -25,9 +25,10 @@ public static class Log
     /// Writes an error message into the log file.
     /// </summary>
     /// <param name="message"></param>
-    public static void Error(string message)
+    /// <param name="tag">A log message entry identifier.</param>
+    public static void Error(string message, string? tag = null)
     {
-        WriteEntry("ERROR", message);
+        WriteEntry("ERROR", message, tag);
         return;
     }
 
@@ -35,9 +36,10 @@ public static class Log
     /// Writes an error message into the log file.
     /// </summary>
     /// <param name="ex"></param>
-    public static void Error(Exception ex)
+    /// /// <param name="tag">A log message entry identifier.</param>
+    public static void Error(Exception ex, string? tag = null)
     {
-        WriteEntry("ERROR", ex.ToString());
+        WriteEntry("ERROR", ex.ToString(), tag);
         return;
     }
 
@@ -45,9 +47,10 @@ public static class Log
     /// Writes a warning message into the log file.
     /// </summary>
     /// <param name="message"></param>
-    public static void Warning(string message)
+    /// <param name="tag">A log message entry identifier.</param>
+    public static void Warning(string message, string? tag = null)
     {
-        WriteEntry("WARNING", message);
+        WriteEntry("WARNING", message, tag);
         return;
     }
 
@@ -55,9 +58,10 @@ public static class Log
     /// Writes an informational message into the log file.
     /// </summary>
     /// <param name="message"></param>
-    public static void Info(string message)
+    /// <param name="tag">A log message entry identifier.</param>
+    public static void Info(string message, string? tag = null)
     {
-        WriteEntry("INFO", message);
+        WriteEntry("INFO", message, tag);
         return;
     }
 
@@ -65,9 +69,10 @@ public static class Log
     /// Writes a success message into the log file.
     /// </summary>
     /// <param name="message"></param>
-    public static void Success(string message)
+    /// <param name="tag">A log message entry identifier.</param>
+    public static void Success(string message, string? tag = null)
     {
-        WriteEntry("OK", message);
+        WriteEntry("OK", message, tag);
         return;
     }
 }
