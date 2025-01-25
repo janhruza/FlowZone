@@ -43,10 +43,11 @@ public partial class PgOverview : Page, IExpandoPage
     /// </summary>
     public void ReloadUI()
     {
-        if (UserProfile.IsProfileLoaded() == false)
+        if (UserProfile.Current == null)
         {
             // no user profile loaded
             // draw a message
+            rBilance.Text = "NaN";
             return;
         }
 
