@@ -51,11 +51,20 @@ public class UserProfile
     public List<Transaction> GetExpanses()
     {
         List<Transaction> list = [];
-        if (_transactions == null) return list;
+        try
+        {
+            if (_transactions == null) return list;
 
-        // gets only the expanses
-        list = _transactions.Where(x => x.Type == Transaction.TypeExpanse).ToList();
-        return list;
+            // gets only the expanses
+            list = _transactions.Where(x => x.Type == Transaction.TypeExpanse).ToList();
+            return list;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(GetExpanses));
+            return list;
+        }
     }
 
     /// <summary>
@@ -65,11 +74,20 @@ public class UserProfile
     public List<Transaction> GetIncomes()
     {
         List<Transaction> list = [];
-        if (_transactions == null) return list;
+        try
+        {
+            if (_transactions == null) return list;
 
-        // gets only the incomes
-        list = _transactions.Where(x => x.Type == Transaction.TypeIncome).ToList();
-        return list;
+            // gets only the incomes
+            list = _transactions.Where(x => x.Type == Transaction.TypeIncome).ToList();
+            return list;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(GetIncomes));
+            return list;
+        }
     }
 
     /// <summary>
@@ -104,12 +122,13 @@ public class UserProfile
                 }
             }
 
+            Log.Success($"Transactions for user '{this.Id}' were saved.", nameof(SaveTransactions));
             return true;
         }
 
         catch (Exception ex)
         {
-            Log.Error(ex);
+            Log.Error(ex, nameof(SaveTransactions));
             return false;
         }
     }
@@ -149,8 +168,17 @@ public class UserProfile
     /// <returns>True if any user profile is loaded, otherwise false.</returns>
     public static bool IsProfileLoaded()
     {
-        if (Current == null) return false;
-        if (Current.Id == ulong.MinValue) return false;
+        if (Current == null)
+        {
+            Log.Error("Current profile is null.", nameof(IsProfileLoaded));
+            return false;
+        }
+
+        if (Current.Id == ulong.MinValue)
+        {
+            Log.Error($"Current profile ID is invalid.", nameof(IsProfileLoaded));
+            return false;
+        }
 
         return true;
     }
@@ -173,34 +201,43 @@ public class UserProfile
     public static bool LoadUsers(string usersIndexFile, out Dictionary<ulong, string> usersData)
     {
         usersData = [];
-
-        // file not found
-        if (File.Exists(usersIndexFile) == false)
+        try
         {
-            // file not found but it may indicate first use where no profiles are created
+            // file not found
+            if (File.Exists(usersIndexFile) == false)
+            {
+                // file not found but it may indicate first use where no profiles are created
+                Log.Warning("Given user index file not found. May be caused by the first run, method returned successful exit code.", nameof(LoadUsers));
+                return true;
+            }
+
+            using (FileStream fs = File.OpenRead(usersIndexFile))
+            {
+                using (BinaryReader reader = new BinaryReader(fs))
+                {
+                    // number of all users
+                    int count = reader.ReadInt32();
+
+                    // reads all users entries
+                    for (int x = 0; x < count; x++)
+                    {
+                        ulong userId = reader.ReadUInt64();     // user Id
+                        string userDir = reader.ReadString();   // path to the user's folder
+
+                        // adds loaded data into the return dictionary
+                        usersData.Add(userId, userDir);
+                    }
+                }
+            }
+
             return true;
         }
 
-        using (FileStream fs = File.OpenRead(usersIndexFile))
+        catch (Exception ex)
         {
-            using (BinaryReader reader = new BinaryReader(fs))
-            {
-                // number of all users
-                int count = reader.ReadInt32();
-
-                // reads all users entries
-                for (int x = 0; x < count; x++)
-                {
-                    ulong userId = reader.ReadUInt64();     // user Id
-                    string userDir = reader.ReadString();   // path to the user's folder
-
-                    // adds loaded data into the return dictionary
-                    usersData.Add(userId, userDir);
-                }
-            }
+            Log.Error(ex, nameof(LoadUsers));
+            return false;
         }
-
-        return true;
     }
 
     /// <summary>
@@ -215,6 +252,7 @@ public class UserProfile
             if (LoadUsers(UsersIndexFile, out Dictionary<ulong, string> userData) == false)
             {
                 // unable to read users index file
+                Log.Error("Unable to read user index file.", nameof(LoadUsersData));
                 return 1;
             }
 
@@ -229,6 +267,7 @@ public class UserProfile
                 {
                     // user folder not found, user record is invalid
                     // not a critical error, just a warning (in this context)
+                    Log.Warning("User folder not found or user index record is invalid.", nameof(LoadUsersData));
                     continue;
                 }
 
@@ -239,6 +278,7 @@ public class UserProfile
                 {
                     // unable to load profile data
                     // another warning, profile will be skipped
+                    Log.Warning("Unable to load profile data.", nameof(LoadUsersData));
                     continue;
                 }
 
@@ -249,6 +289,7 @@ public class UserProfile
                 {
                     // unable to load list of user's transactions
                     // not critical, the user will be skipped (may change in the future to be treated as an error)
+                    Log.Error("Unable to load user's transactions list.", nameof(LoadUsersData));
                     continue;
                 }
 
@@ -261,7 +302,7 @@ public class UserProfile
 
         catch (Exception ex)
         {
-            Log.Error(ex);
+            Log.Error(ex, nameof(LoadUsersData));
             return ex.HResult;
         }
     }
@@ -275,6 +316,7 @@ public class UserProfile
         {
             if (File.Exists(userInfoFile) == false)
             {
+                Log.Error("User info file not found.", nameof(LoadUserData));
                 return false;
             }
 
@@ -298,7 +340,7 @@ public class UserProfile
         catch (Exception ex)
         {
             // unable to manipulate with the profile info file or invalid data inside
-            Log.Error(ex);
+            Log.Error(ex, nameof(LoadUserData));
             return false;
         }
     }
@@ -310,6 +352,7 @@ public class UserProfile
             if (File.Exists(transactionsFile) == false)
             {
                 // file not found
+                Log.Error($"Loading transactions file {transactionsFile} failed.", nameof(LoadTransactions));
                 return false;
             }
 
@@ -346,7 +389,7 @@ public class UserProfile
 
         catch (Exception ex)
         {
-            Log.Error(ex);
+            Log.Error(ex, nameof(LoadTransactions));
             return false;
         }
     }
@@ -398,7 +441,7 @@ public class UserProfile
         if (File.Exists(UsersIndexFile) == false)
         {
             // need to create users index file
-            if (CreateUsersIndexFile() == false) return 1; // unable to create index file
+            if (CreateUserIndexFile() == false) return 1; // unable to create index file
         }
 
         // add user to the file system (create their folder and put the data files in there)
@@ -418,7 +461,7 @@ public class UserProfile
         return 0;
     }
 
-    private static bool CreateUsersIndexFile()
+    private static bool CreateUserIndexFile()
     {
         try
         {
@@ -431,13 +474,14 @@ public class UserProfile
                 }
             }
 
+            Log.Success("User index file was created.", nameof(CreateUserIndexFile));
             return true;
         }
 
         catch (Exception ex)
         {
             // unable to create the index file
-            Log.Error(ex);
+            Log.Error(ex, nameof(CreateUserIndexFile));
             return false;
         }
     }
@@ -451,6 +495,7 @@ public class UserProfile
             if (Directory.Exists(userDir) == true)
             {
                 // user already exists
+                Log.Error("Can't write user data - user already exists.", nameof(WriteUserData));
                 return false;
             }
 
@@ -484,13 +529,14 @@ public class UserProfile
                 }
             }
 
+            Log.Success($"User data written - user ID: {user.Id}", nameof(WriteUserData));
             return true;
         }
 
         catch (Exception ex)
         {
             // unable to create FS objects
-            Log.Error(ex);
+            Log.Error(ex, nameof(WriteUserData));
             return false;
         }
     }
@@ -525,13 +571,15 @@ public class UserProfile
                 }
 
             }
+
+            Log.Success($"User was added to the index file. User ID: {user.Id}", nameof(AddUserToTheIndexFile));
             return true;
         }
 
         catch (Exception ex)
         {
             // unable to operate with the index file
-            Log.Error(ex);
+            Log.Error(ex, nameof(AddUserToTheIndexFile));
             return false;
         }
     }
@@ -546,7 +594,7 @@ public class UserProfile
         {
             if (UserProfile.Profiles.Count == 0)
             {
-                return CreateUsersIndexFile();
+                return CreateUserIndexFile();
             }
 
             using (FileStream fs = File.Create(UsersIndexFile))
@@ -564,12 +612,13 @@ public class UserProfile
                 }
             }
 
+            Log.Info("User index file was rebuilt.", nameof(RebuildUserIndexFile));
             return true;
         }
 
         catch (Exception ex)
         {
-            Log.Error(ex);
+            Log.Error(ex, nameof(RebuildUserIndexFile));
             return false;
         }
     }

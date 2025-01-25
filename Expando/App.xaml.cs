@@ -28,6 +28,7 @@ namespace Expando
             // loads the users data
             if (UserProfile.LoadUsersData() != 0)
             {
+                Log.Error(Messages.CantLoadUserData, nameof(ReloadUserData));
                 _ = MessageBox.Show(Messages.CantLoadUserData, "Load Profiles", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

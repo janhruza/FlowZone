@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Expando.Core;
 using Expando.Pages;
+using FZCore;
 
 namespace Expando;
 
@@ -51,20 +52,28 @@ public partial class MainWindow : Window
 
     private bool NavSetPage(ref Page page)
     {
-        if (page == null) return false;
-        if (frmContent == null) return false;
+        if (page == null)
+        {
+            Log.Error("Desired page is null.", nameof(NavSetPage));
+            return false;
+        }
+
+        if (frmContent == null)
+        {
+            Log.Error("Frame (page viever) is null.", nameof(NavSetPage));
+            return false;
+        }
 
         frmContent.Content = page;
         this.Title = $"{page.Title}{(UserProfile.IsProfileLoaded() ? $" ({UserProfile.Current?.Username})" : string.Empty)} - {Messages.AppTitle}";
-
+        Log.Info($"Navigation changed to: {page.Title}", nameof(NavSetPage));
         return true;
     }
 
     private bool ChangePage(Page page, ref ToggleButton? assocButton)
     {
         NavUncheckAll(ref assocButton);
-        NavSetPage(ref page);
-        return true;
+        return NavSetPage(ref page);
     }
 
     private void btnHome_Click(object sender, RoutedEventArgs e)
@@ -105,6 +114,7 @@ public partial class MainWindow : Window
     {
         if (_instance == null)
         {
+            Log.Error($"Static window instance is null.", nameof(SetActivePage));
             return false;
         }
 
@@ -119,6 +129,7 @@ public partial class MainWindow : Window
     {
         if (_instance == null)
         {
+            Log.Error("Static window instance is null.", nameof(SetHomePage));
             return false;
         }
 
