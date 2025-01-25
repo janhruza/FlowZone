@@ -22,9 +22,18 @@ public partial class WndNewTransaction : Window
         this.transactionType = transactionType;
         this.editMode = editMode;
 
-        if (transactionBase != null && transactionBase.HasValue && editMode == true)
+        if (transactionBase.HasValue && editMode == true)
         {
-            this._transaction = transactionBase.Value;
+            Transaction tr = transactionBase.Value;
+            this._transaction = new Transaction
+            {
+                Id = tr.Id,
+                UserId = tr.UserId,
+                Timestamp = tr.Timestamp,
+                Type = tr.Type,
+                Description = tr.Description,
+                Value = tr.Value
+            };
         }
 
         else
@@ -188,7 +197,7 @@ public partial class WndNewTransaction : Window
             return false;
         }
 
-        WndNewTransaction wnd = new WndNewTransaction(Transaction.TypeIncome);
+        WndNewTransaction wnd = new WndNewTransaction(Transaction.TypeIncome, null, false);
         return wnd.ShowDialog() == true;
     }
 

@@ -5,10 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Expando.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PgIncomes">
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="Incomes">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Name="lbIncomes"
+                 Margin="0,0,0,0"/>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+
+            <Button Content="Add Income"
+                    Name="btnNewIncome"
+                    Click="btnNewIncome_Click"/>
+
+        </StackPanel>
     </Grid>
 </Page>

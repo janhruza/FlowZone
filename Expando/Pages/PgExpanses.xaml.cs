@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using Expando.Core;
 using Expando.Windows;
 
@@ -48,105 +46,37 @@ public partial class PgExpanses : Page, IExpandoPage
         // list through all the expanses and draw them
         // to the list sorted by the newest to the oldest
 
-        foreach (Transaction expanse in UserProfile.Current.Transactions)
+        foreach (Transaction expanse in UserProfile.Current.GetExpanses())
         {
             // draw transaction items as listbox items
-            lbExpanses.Items.Add(CreateTransactionItem(expanse));
-        }
-
-        return;
-    }
-
-    private ListBoxItem CreateTransactionItem(Transaction transaction)
-    {
-        // context menu items for the item
-        // modify transaction item
-        MenuItem miModify = new MenuItem
-        {
-            Header = "Modify",
-            InputGestureText = "F2"
-        };
-
-        miModify.Click += (s, e) =>
-        {
-            if (WndNewTransaction.ModifyTransaction(transaction) == true)
+            void ModifyItem()
             {
-                ReloadUI();
-            }
-        };
-
-        // remove transaction item
-        MenuItem miRemove = new MenuItem
-        {
-            Header = "Delete",
-            InputGestureText = "Del"
-        };
-
-        miRemove.Click += (s, e) =>
-        {
-            if (UserProfile.Current == null)
-            {
-                return;
-            }
-
-            if (UserProfile.Current.Transactions.Remove(transaction) == true)
-            {
-                if (UserProfile.Current.SaveTransactions() == true)
+                if (WndNewTransaction.ModifyTransaction(expanse) == true)
                 {
                     ReloadUI();
                 }
             }
-        };
 
-        // listbox item itself
-        ListBoxItem lbi = new ListBoxItem
-        {
-            Tag = transaction.Id,
-            ContextMenu = new ContextMenu
+            void RemoveItem()
             {
-                Items =
+                if (UserProfile.Current == null)
                 {
-                    miModify,
-                    miRemove,
+                    return;
+                }
+
+                if (UserProfile.Current.Transactions.Remove(expanse) == true)
+                {
+                    if (UserProfile.Current.SaveTransactions() == true)
+                    {
+                        ReloadUI();
+                    }
                 }
             }
-        };
 
-        // container border
-        Border bd = new Border();
+            lbExpanses.Items.Add(App.CreateTransactionItem(expanse, ModifyItem, RemoveItem));
+        }
 
-        // value info (label)
-        Label lbValue = new Label
-        {
-            // set content as the transaction value with the currency format
-            Content = transaction.Value.ToString("C"),
-            FontSize = 16
-        };
-
-        // description info (label)
-        Label lbDescription = new Label
-        {
-            // get the transaction description
-            Content = (string.IsNullOrEmpty(transaction.Description.Trim()) == false ? transaction.Description : Messages.NoDescription),
-            FontSize = 12
-        };
-
-        // data panel
-        StackPanel sp = new StackPanel
-        {
-            Children =
-            {
-                lbValue,
-                lbDescription,
-            }
-        };
-
-        // set data panel as the border content
-        bd.Child = sp;
-
-        // set the listbox item content
-        lbi.Content = bd;
-        return lbi;
+        return;
     }
 
     private void btnNewExpanse_Click(object sender, System.Windows.RoutedEventArgs e)
