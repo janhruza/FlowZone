@@ -29,4 +29,15 @@ public static class Messages
     /// No description.
     /// </summary>
     public const string NoDescription = "No description.";
+
+    /// <summary>
+    /// Unable to create a new transaction. Make sure the you are using a valid user profile.
+    /// </summary>
+    public const string CantCreateTransaction = "Unable to create a new transaction. Make sure the you are using a valid user profile.";
+
+    /// <summary>
+    /// No user profile was loaded. Please visit the 'Profiles' page in order to load a user profile.
+    /// </summary>
+
+    public const string UserNotLoggedIn = "No user profile was loaded. Please visit the 'Profiles' page in order to load a user profile.";
 }

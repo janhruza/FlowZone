@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Expando.Core;
 using Expando.Pages;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Expando;
 
@@ -26,15 +26,14 @@ public partial class MainWindow : Window
             // contructs the _navButtons list
             _navButtons = [btnHome, btnOverview, btnIncomes, btnExpanses, btnProfile];
 
-            Page home = PgHome.Instance;
-            NavSetPage(ref home);
-            btnHome.IsChecked = true;
+            ToggleButton? tb = null;
+            ChangePage(PgProfiles.Instance, ref tb);
         };
     }
 
     private List<ToggleButton> _navButtons = [];
 
-    private void NavUncheckAll(ref ToggleButton tbException)
+    private void NavUncheckAll(ref ToggleButton? tbException)
     {
         foreach (var tButton in _navButtons)
         {
@@ -56,12 +55,12 @@ public partial class MainWindow : Window
         if (frmContent == null) return false;
 
         frmContent.Content = page;
-        this.Title = $"{page.Title} - {Messages.AppTitle}";
+        this.Title = $"{page.Title}{(UserProfile.IsProfileLoaded() ? $" ({UserProfile.Current?.Username})" : string.Empty)} - {Messages.AppTitle}";
 
         return true;
     }
 
-    private bool ChangePage(Page page, ref ToggleButton assocButton)
+    private bool ChangePage(Page page, ref ToggleButton? assocButton)
     {
         NavUncheckAll(ref assocButton);
         NavSetPage(ref page);

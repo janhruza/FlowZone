@@ -96,6 +96,18 @@ public class UserProfile
     /// </summary>
     public static UserProfile? Current { get; set; }
 
+    /// <summary>
+    /// Determines whether any user profile is loaded.
+    /// </summary>
+    /// <returns>True if any user profile is loaded, otherwise false.</returns>
+    public static bool IsProfileLoaded()
+    {
+        if (Current == null) return false;
+        if (Current.Id == ulong.MinValue) return false;
+
+        return true;
+    }
+
     /*
      * Users Index File structure
      *  - Number of users:  int     (4 bytes)

@@ -39,6 +39,12 @@ public partial class PgHome : Page, IExpandoPage
         rDate.Text = DateTime.Now.ToLongDateString();
     }
 
+    private void rChangeUser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        Page pg = PgProfiles.Instance;
+        MainWindow.SetActivePage(ref pg);
+    }
+
     #region Static code
 
     private static PgHome _instance;

@@ -35,7 +35,8 @@
                 <Run Text="If you want to switch user, you can do it"/>
                 <Run Text="here"
                      Name="rChangeUser"
-                     Foreground="{x:Static SystemColors.AccentColorBrush}"/><Run Text="."/>
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"
+                     MouseLeftButtonDown="rChangeUser_MouseLeftButtonDown"/><Run Text="."/>
 
             </TextBlock>
             

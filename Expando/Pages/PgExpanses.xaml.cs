@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Controls;
 using Expando.Core;
+using Expando.Windows;
 
 namespace Expando.Pages;
 
@@ -16,6 +17,11 @@ public partial class PgExpanses : Page, IExpandoPage
     public PgExpanses()
     {
         InitializeComponent();
+
+        this.Loaded += (s, e) =>
+        {
+            ReloadUI();
+        };
     }
 
     /// <summary>
@@ -94,6 +100,15 @@ public partial class PgExpanses : Page, IExpandoPage
         // set the listbox item content
         lbi.Content = bd;
         return lbi;
+    }
+
+    private void btnNewExpanse_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        // Shows a new expanse dialog
+        if (WndNewTransaction.CreateExpanse() == true)
+        {
+            ReloadUI();
+        }
     }
 
     #region Static code
