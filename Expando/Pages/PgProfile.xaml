@@ -61,10 +61,14 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Clear all transactions"
-                                Margin="0,0,5,0"/>
+                                Margin="0,0,5,0"
+                                Name="btnClearTransactions"
+                                Click="btnClearTransactions_Click"/>
                         
                         <Button Content="Delete profile"
-                                Background="{x:Static SystemColors.AccentColorDark1Brush}"/>
+                                Background="{x:Static SystemColors.AccentColorDark1Brush}"
+                                Name="btnDeleteProfile"
+                                Click="btnDeleteProfile_Click"/>
                     </StackPanel>
                     
                 </StackPanel>

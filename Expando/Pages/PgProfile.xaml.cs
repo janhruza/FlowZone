@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Expando.Core;
 
 namespace Expando.Pages;
@@ -42,6 +43,82 @@ public partial class PgMyProfile : Page, IExpandoPage
         this.rId.Text = UserProfile.Current?.Id.ToString();
 
         return;
+    }
+
+    private void ClearTransactionsList()
+    {
+        if (UserProfile.IsProfileLoaded() == false)
+        {
+            return;
+        }
+
+        if (MessageBox.Show(Messages.ConfirmDeleteTransactions, "Delete all transactions", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        {
+            // clear transactions list
+            UserProfile.Current?.Transactions.Clear();
+            if (UserProfile.Current?.SaveTransactions() == true)
+            {
+                _ = MessageBox.Show(Messages.TransactionsDeleted, "Transactions deleted.", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            else
+            {
+                // unable to save the list of transactions
+                _ = MessageBox.Show(Messages.TransactionsSavingError, "Updating error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        return;
+    }
+
+    private void DeleteUserProfile()
+    {
+        if (UserProfile.Current == null)
+        {
+            return;
+        }
+
+        if (MessageBox.Show(Messages.ConfirmDeleteAccount, "Delete your profile", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        {
+            // delete user profile
+
+            if (UserProfile.Profiles.Remove(UserProfile.Current) == true)
+            {
+                // remove the currently loaded profile
+                UserProfile.Current = null;
+
+                if (UserProfile.RebuildUserIndexFile() == true)
+                {
+                    // navigate to the home page
+                    UserProfile.LoadUsersData();
+                    MainWindow.SetHomePage();
+                }
+
+                else
+                {
+                    // can't rebuild user index file
+                    _ = MessageBox.Show(Messages.CantRebuildIndexFile, "Can't rebuild index file", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            else
+            {
+                // can't remove profile from the loaded profiles list
+                _ = MessageBox.Show(Messages.CantRemoveUser, "Can't remove profile.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        return;
+    }
+
+    private void btnClearTransactions_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        ClearTransactionsList();
+    }
+
+    private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        DeleteUserProfile();
     }
 
     #region Static code

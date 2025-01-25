@@ -50,4 +50,31 @@ public static class Messages
     /// Unable to save your transactions. This is an internal error.
     /// </summary>
     public const string TransactionsSavingError = "Unable to save your transactions. This is an internal error.";
+
+    /// <summary>
+    /// Do you want to delete all your transactions? This action is irreversible.
+    /// </summary>
+
+    public const string ConfirmDeleteTransactions = "Do you want to delete all your transactions? This action is irreversible.";
+
+    /// <summary>
+    /// All your transactions were deleted.
+    /// </summary>
+    public const string TransactionsDeleted = "All your transactions were deleted.";
+
+    /// <summary>
+    /// Do you want to delete your profile? This action is irreversible and permanent.
+    /// </summary>
+
+    public const string ConfirmDeleteAccount = "Do you want to delete your profile? This action is irreversible and permanent.";
+
+    /// <summary>
+    /// Unable to create the user index file. This is an internal error.
+    /// </summary>
+    public const string CantRebuildIndexFile = "Unable to create the user index file. This is an internal error.";
+
+    /// <summary>
+    /// Unable to remove the user from the loaded users list.
+    /// </summary>
+    public const string CantRemoveUser = "Unable to remove the user from the loaded users list.";
 }

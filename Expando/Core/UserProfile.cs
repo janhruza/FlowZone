@@ -546,9 +546,7 @@ public class UserProfile
         {
             if (UserProfile.Profiles.Count == 0)
             {
-                // no loaded profiles or
-                // no profiles at all
-                return false;
+                return CreateUsersIndexFile();
             }
 
             using (FileStream fs = File.Create(UsersIndexFile))
