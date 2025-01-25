@@ -80,6 +80,8 @@ public partial class WndNewTransaction : Window
             value = decimal.Zero;
         }
 
+        value = decimal.Abs(value);
+
         if (transactionBase == null)
         {
             DateTime dt = DateTime.Now;

@@ -1,11 +1,13 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
+using Expando.Core;
 
 namespace Expando.Pages;
 
 /// <summary>
 /// Representing the overview page.
 /// </summary>
-public partial class PgOverview : Page
+public partial class PgOverview : Page, IExpandoPage
 {
     /// <summary>
     /// Creates a new instance of the <see cref="PgOverview"/> class.
@@ -13,6 +15,11 @@ public partial class PgOverview : Page
     public PgOverview()
     {
         InitializeComponent();
+
+        this.Loaded += (s, e) =>
+        {
+            ReloadUI();
+        };
     }
 
     #region Static code
@@ -29,6 +36,26 @@ public partial class PgOverview : Page
             _instance ??= new PgOverview();
             return _instance;
         }
+    }
+
+    /// <summary>
+    /// Reloads the page UI.
+    /// </summary>
+    public void ReloadUI()
+    {
+        if (UserProfile.IsProfileLoaded() == false)
+        {
+            // no user profile loaded
+            // draw a message
+            return;
+        }
+
+        decimal expanses = UserProfile.Current.GetExpanses().Sum(x => x.Value);
+        decimal incomes = UserProfile.Current.GetIncomes().Sum(x => x.Value);
+        decimal total = -expanses + incomes;
+
+        rBilance.Text = total.ToString("C");
+        return;
     }
 
     #endregion
