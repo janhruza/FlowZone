@@ -89,7 +89,7 @@ public partial class MainWindow : Window
 
     private void btnProfile_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgProfiles.Instance, ref btnProfile);
+        ChangePage(PgMyProfile.Instance, ref btnProfile);
     }
 
     #region Static code

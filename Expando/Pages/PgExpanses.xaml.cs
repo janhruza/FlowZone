@@ -59,6 +59,26 @@ public partial class PgExpanses : Page, IExpandoPage
 
     private ListBoxItem CreateTransactionItem(Transaction transaction)
     {
+        // context menu items for the item
+        // modify transaction item
+        MenuItem miModify = new MenuItem
+        {
+            Header = "Modify",
+            InputGestureText = "F2"
+        };
+
+        miModify.Click += (s, e) =>
+        {
+
+        };
+
+        // remove transaction item
+        MenuItem miRemove = new MenuItem
+        {
+            Header = "Delete",
+            InputGestureText = "Del"
+        };
+
         // listbox item itself
         ListBoxItem lbi = new ListBoxItem
         {

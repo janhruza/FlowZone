@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using Expando.Core;
 
@@ -13,13 +14,41 @@ public partial class WndNewTransaction : Window
     /// Creates a new instance of the <see cref="WndNewTransaction"/> class.
     /// </summary>
     /// <param name="transactionType">Representing the type of the transaction. It can be either <see cref="Transaction.TypeExpanse"/> or <see cref="Transaction.TypeIncome"/>.</param>
-    public WndNewTransaction(bool transactionType)
+    /// <param name="transactionBase">Representing the base transaction (if any). Used when for modifying the existing transaction.</param>
+    public WndNewTransaction(bool transactionType, Transaction? transactionBase = null)
     {
         InitializeComponent();
         this.transactionType = transactionType;
+
+        if (transactionBase.HasValue)
+        {
+            this._transaction = transactionBase.Value;
+        }
+
+        else
+        {
+            DateTime dt = DateTime.Now;
+            _transaction = new Transaction
+            {
+                Id = (ulong)dt.ToBinary(),
+                UserId = UserProfile.Current?.Id ?? ulong.MinValue,
+                Timestamp = dt.ToBinary(),
+                Type = transactionType,
+                Value = decimal.MinValue,
+                Description = string.Empty
+            };
+        }
     }
 
+    /// <summary>
+    /// Representing the transaction type.
+    /// </summary>
     private bool transactionType;
+
+    /// <summary>
+    /// Determines whether an existing task is being modified.
+    /// </summary>
+    private bool editMode;
 
     private bool VerifyTransaction(Transaction transaction)
     {
@@ -29,9 +58,10 @@ public partial class WndNewTransaction : Window
         return true;
     }
 
-    private Transaction CreateTransaction()
+    private Transaction _transaction;
+    private Transaction CreateTransaction(Transaction? transactionBase = null)
     {
-        DateTime dt = DateTime.Now;
+        Transaction transaction;
         decimal value = decimal.Zero;
 
         if (decimal.TryParse(txtValue.Text.Trim(), out value) == false)
@@ -39,17 +69,36 @@ public partial class WndNewTransaction : Window
             value = decimal.Zero;
         }
 
-        Transaction transaction = new Transaction
+        if (transactionBase == null)
         {
-            Id = (ulong)dt.ToBinary(),
-            UserId = UserProfile.Current?.Id ?? ulong.MinValue,
-            Timestamp = dt.ToBinary(),
-            Type = transactionType,
-            Value = value,
-            Description = txtDescription.Text.Trim()
-        };
+            DateTime dt = DateTime.Now;
+            transaction = new Transaction
+            {
+                Id = (ulong)dt.ToBinary(),
+                UserId = UserProfile.Current?.Id ?? ulong.MinValue,
+                Timestamp = dt.ToBinary(),
+                Type = transactionType,
+                Value = value,
+                Description = txtDescription.Text.Trim()
+            };
 
-        return transaction;
+            return transaction;
+        }
+        
+        else
+        {
+            transaction = new Transaction
+            {
+                Id = transactionBase.Value.Id,
+                UserId = transactionBase.Value.UserId,
+                Timestamp = transactionBase.Value.Timestamp,
+                Type = transactionBase.Value.Type,
+                Value = value,
+                Description = txtDescription.Text.Trim()
+            };
+
+            return transaction;
+        }
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -61,7 +110,7 @@ public partial class WndNewTransaction : Window
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         // check if the transaction is valid
-        Transaction transaction = CreateTransaction();
+        Transaction transaction = CreateTransaction(_transaction);
 
         if (VerifyTransaction(transaction) == true)
         {
@@ -69,8 +118,23 @@ public partial class WndNewTransaction : Window
             // add transaction to the list of user's transactions
             if (UserProfile.Current != null)
             {
+                // is edit mode
+                if (editMode == true)
+                {
+                    // need toremove the original transaction first
+                    UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x =>x.Id == transaction.Id).First());
+                }
+
                 // save the transaction
                 UserProfile.Current.Transactions.Add(transaction);
+
+                // resave transactions
+                if (UserProfile.Current.SaveTransactions() == false)
+                {
+                    // unable to save the list of the transactions
+                    _ = MessageBox.Show(Messages.TransactionsSavingError, "Saving error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 // close the window with successful dialog result state
                 this.DialogResult = true;
@@ -123,6 +187,23 @@ public partial class WndNewTransaction : Window
         }
 
         WndNewTransaction wnd = new WndNewTransaction(Transaction.TypeIncome);
+        return wnd.ShowDialog() == true;
+    }
+
+    /// <summary>
+    /// Attempts to modify the existing <paramref name="transaction"/>.
+    /// </summary>
+    /// <param name="transaction">A transaction to be modified.</param>
+    /// <returns></returns>
+    public static bool ModifyTransaction(Transaction transaction)
+    {
+        if (UserProfile.IsProfileLoaded() == false)
+        {
+            _ = MessageBox.Show(Messages.UserNotLoggedIn, "No profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
+        }
+
+        WndNewTransaction wnd = new WndNewTransaction(transaction.Type);
         return wnd.ShowDialog() == true;
     }
 

@@ -72,12 +72,65 @@ public class UserProfile
         return list;
     }
 
+    /// <summary>
+    /// Attempts to save the list of user's transactions to the transactions file. THis operation will overwrite the user's transactions list.
+    /// </summary>
+    /// <returns>True if the reqrite is successful, otherwise false.</returns>
+    public bool SaveTransactions()
+    {
+        try
+        {
+            int count = Transactions.Count;
+            if (count == 0)
+            {
+                // no transactions to write
+                return false;
+            }
+
+            string path = Path.Combine(UserFolders, this.Id.ToString(), TransactionsFile);
+            using (FileStream fs = File.Create(path))
+            {
+                using (BinaryWriter bw = new BinaryWriter(fs))
+                {
+                    bw.Write(count);
+
+                    for (int x = 0; x < count; x++)
+                    {
+                        // the transaction object
+                        Transaction tr = Transactions[x];
+
+                        // transaction data
+                        bw.Write(tr.Id);
+                        bw.Write(tr.UserId);
+                        bw.Write(tr.Timestamp);
+                        bw.Write(tr.Type);
+                        bw.Write(tr.Value);
+                        bw.Write(tr.Description);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+            return false;
+        }
+    }
+
     #region Static methods and members
 
     /// <summary>
     /// Representing a path to the users index file.
     /// </summary>
     public const string UsersIndexFile = "UserIndex.bin";
+
+    /// <summary>
+    /// Representing a transactions file name.
+    /// </summary>
+    public const string TransactionsFile = "transactions.bin";
 
     /// <summary>
     /// Representing a folder where all users data are stored (a folder where other users folders are stored).
@@ -196,7 +249,7 @@ public class UserProfile
                 }
 
                 // read transactions data
-                string transPath = Path.Combine(path, "transactions.bin");
+                string transPath = Path.Combine(path, TransactionsFile);
 
                 if (LoadTransactions(transPath, ref profile) == false)
                 {
@@ -427,7 +480,7 @@ public class UserProfile
 
             // writes the TRANSACTIONS.BIN file
             {
-                string transactionsPath = Path.Combine(userDir, "transactions.bin");
+                string transactionsPath = Path.Combine(userDir, TransactionsFile);
                 using (FileStream fileStream = File.Create(transactionsPath))
                 {
                     using (BinaryWriter bw = new BinaryWriter(fileStream))
@@ -484,6 +537,46 @@ public class UserProfile
         catch (Exception ex)
         {
             // unable to operate with the index file
+            Log.Error(ex);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Recreates the user index file based on the current list of all loaded users. Current solution when users are deleted.
+    /// </summary>
+    /// <returns>True if the operation is successful, otherwise false.</returns>
+    public static bool RebuildUserIndexFile()
+    {
+        try
+        {
+            if (UserProfile.Profiles.Count == 0)
+            {
+                // no loaded profiles or
+                // no profiles at all
+                return false;
+            }
+
+            using (FileStream fs = File.Create(UsersIndexFile))
+            {
+                using (BinaryWriter writer = new BinaryWriter(fs))
+                {
+                    writer.Write(UserProfile.Profiles.Count);
+
+                    for (int x = 0; x < UserProfile.Profiles.Count; x++)
+                    {
+                        writer.Write(UserProfile.Profiles[x].Id);
+                        string path = Path.Combine(UserFolders, UserProfile.Profiles[x].Id.ToString());
+                        writer.Write(path);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        catch (Exception ex)
+        {
             Log.Error(ex);
             return false;
         }

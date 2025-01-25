@@ -40,4 +40,14 @@ public static class Messages
     /// </summary>
 
     public const string UserNotLoggedIn = "No user profile was loaded. Please visit the 'Profiles' page in order to load a user profile.";
+
+    /// <summary>
+    /// No user profile loaded. You can load your profile on the 'Profiles' page.
+    /// </summary>
+    public const string NoProfileLoaded = "No user profile loaded. You can load your profile on the 'Profiles' page.";
+
+    /// <summary>
+    /// Unable to save your transactions. This is an internal error.
+    /// </summary>
+    public const string TransactionsSavingError = "Unable to save your transactions. This is an internal error.";
 }

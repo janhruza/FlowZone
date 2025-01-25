@@ -13,9 +13,9 @@
         <Border VerticalAlignment="Center"
                 HorizontalAlignment="Center">
 
-            <TextBlock FontSize="18"
+            <Label>
+                <TextBlock FontSize="18"
                        FontFamily="{DynamicResource DisplayFont}"
-                       Foreground="White"
                        Name="tbText">
                 
                 <Run Text="Welcome,"/>
@@ -38,8 +38,9 @@
                      Foreground="{x:Static SystemColors.AccentColorBrush}"
                      MouseLeftButtonDown="rChangeUser_MouseLeftButtonDown"/><Run Text="."/>
 
-            </TextBlock>
-            
+                </TextBlock>
+            </Label>
+
         </Border>
     </Grid>
     
