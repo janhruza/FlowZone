@@ -8,7 +8,7 @@ namespace Expando.Pages;
 /// <summary>
 /// Representing a profile selection page.
 /// </summary>
-public partial class PgProfiles : Page
+public partial class PgProfiles : Page, IExpandoPage
 {
     /// <summary>
     /// Creates a new instance of the <see cref="PgProfiles"/> class.
@@ -135,7 +135,10 @@ public partial class PgProfiles : Page
         return item;
     }
 
-    private void ReloadUI()
+    /// <summary>
+    /// Reloads the page UI.
+    /// </summary>
+    public void ReloadUI()
     {
         lbProfiles.Items.Clear();
 

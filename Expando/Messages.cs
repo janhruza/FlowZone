@@ -24,4 +24,9 @@ public static class Messages
     /// Unable to create a new profile because of an internal error.
     /// </summary>
     public const string CantCreateProfile = "Unable to create a new profile because of an internal error.";
+
+    /// <summary>
+    /// No description.
+    /// </summary>
+    public const string NoDescription = "No description.";
 }

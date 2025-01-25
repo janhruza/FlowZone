@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Expando.Core;
 
 namespace Expando.Pages;
@@ -9,7 +8,7 @@ namespace Expando.Pages;
 /// <summary>
 /// Representing the home page.
 /// </summary>
-public partial class PgHome : Page
+public partial class PgHome : Page, IExpandoPage
 {
     /// <summary>
     /// Creates a new instance of the <see cref="PgHome"/> class.
@@ -29,7 +28,10 @@ public partial class PgHome : Page
         };
     }
 
-    private void ReloadUI()
+    /// <summary>
+    /// Reloads the page UI.
+    /// </summary>
+    public void ReloadUI()
     {
         if (this.IsLoaded == false) return;
 
