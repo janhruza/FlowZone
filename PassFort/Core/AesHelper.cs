@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 namespace PassFort.Core;
 
 /// <summary>
-/// Representing the helper class for various AES encryption tasks.
+/// Representing the helper class for various AES encryption tasks. This class was originally generated using the PHI-4 model.
 /// </summary>
 public static class AesHelper
 {
