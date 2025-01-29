@@ -12,6 +12,7 @@ namespace PassFort.Core;
  * Header           8           Description header. Determines that the file is a valid DbFile.
  * Version          1           Version of the file format as byte.
  * Key              32          AES encryption key
+ * Name             VARIABLE    User-defined name of the database.
  * PasswordCount    4           Number of stored passwords as Int32.
  * PasswordEntries  VARIABLE    All stored password entries. Number of them is described in the previous 4 bytes (Int32)
  */
@@ -34,11 +35,13 @@ public class DbFile
     /// <summary>
     /// Creates a new instance of the <see cref="DbFile"/> class with default values.
     /// </summary>
-    public DbFile()
+    /// <param name="filePath">Database file path - used only when creating a new DB file.</param>
+    public DbFile(string? filePath = null)
     {
-        _filePath = string.Empty;
+        _filePath = filePath ?? string.Empty;
         _formatVersion = 1;
         _entries = [];
+        _name = string.Empty;
 
         // generate key
         byte[] buffer = new byte[32];
@@ -53,6 +56,16 @@ public class DbFile
     private byte _formatVersion;
     private byte[] _key;
     private List<PasswordEntry> _entries;
+    private string _name;
+
+    /// <summary>
+    /// Representing the user name of the database.
+    /// </summary>
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
 
     #region Static code
 
@@ -81,6 +94,7 @@ public class DbFile
     public static bool Open(string filePath, out DbFile file)
     {
         file = new DbFile();
+        file._filePath = filePath;
 
         try
         {
@@ -93,6 +107,7 @@ public class DbFile
 
                     file._formatVersion = br.ReadByte();
                     file._key = br.ReadBytes(KEY_SIZE);
+                    file._name = br.ReadString();
                     int entriesCount = br.ReadInt32();
 
                     for (int x = 0; x < entriesCount; x++)
@@ -128,6 +143,7 @@ public class DbFile
                     bw.Write(DbFile.HEADER);
                     bw.Write(file._formatVersion);
                     bw.Write(file._key);
+                    bw.Write(file._name);
                     bw.Write(file._entries.Count);
 
                     for (int x = 0; x < file._entries.Count; x++)

@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using FZCore;
+using PassFort.Pages;
 
 namespace PassFort;
 
@@ -22,6 +25,7 @@ public partial class MainWindow : Window
             _navButtons = [btnHome, btnOverview, btnSettings];
 
             // navigate to home page
+            NavSetPage(PgHome.Instance);
             NavUncheckAl(ref btnHome);
         };
     }
@@ -44,8 +48,23 @@ public partial class MainWindow : Window
         }
     }
 
+    private bool NavSetPage(Page? page)
+    {
+        if (page == null)
+        {
+            Log.Error("Invalid content. Page was null.", nameof(NavSetPage));
+            return false;
+        }
+
+        // set page content
+        frmContent.Content = page;
+        this.Title = $"{page.Title} - {App.Title}";
+        return true;
+    }
+
     private void btnHome_Click(object sender, RoutedEventArgs e)
     {
+        NavSetPage(PgHome.Instance);
         NavUncheckAl(ref btnHome);
     }
 

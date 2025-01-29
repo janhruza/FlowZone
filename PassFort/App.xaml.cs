@@ -13,4 +13,9 @@ public partial class App : Application
         MainWindow = mw;
         MainWindow.Show();
     }
+
+    /// <summary>
+    /// Representing the app window title.
+    /// </summary>
+    public const string Title = "PassFort";
 }
