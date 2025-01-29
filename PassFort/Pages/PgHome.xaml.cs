@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using PassFort.Core;
 using PassFort.Windows;
 
 namespace PassFort.Pages;
@@ -45,6 +46,7 @@ public partial class PgHome : Page, IPassFortPage
     /// </summary>
     public void ReloadUI()
     {
+        ReloadHistory();
         return;
     }
 
@@ -67,6 +69,58 @@ public partial class PgHome : Page, IPassFortPage
         }
 
         lbHistory.Items.Clear();
+        foreach (string historyItem in App.History)
+        {
+            // item menu items
+            MenuItem miOpen = new MenuItem
+            {
+                Header = "Open"
+            };
+
+            miOpen.Click += (s, e) =>
+            {
+                // open database file
+                if (DbFile.Open(historyItem, out DbFile file) == true)
+                {
+                    // file opened successfully
+                }
+
+                else
+                {
+                    _ = MessageBox.Show(Messages.CantOpenDbFile, "Unable to open database", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            };
+
+            MenuItem miRemove = new MenuItem
+            {
+                Header = "Remove"
+            };
+
+            miRemove.Click += (s, e) =>
+            {
+                App.History.Remove(historyItem);
+                ReloadHistory();
+            };
+
+            ListBoxItem lbi = new ListBoxItem
+            {
+                Content = historyItem,
+                Uid = historyItem,
+                ContextMenu = new ContextMenu
+                {
+                    Items =
+                    {
+                        miOpen,
+                        new Separator(),
+                        miRemove
+                    }
+                }
+            };
+
+            lbHistory.Items.Add(lbi);
+        }
+
         return;
     }
 
@@ -78,7 +132,11 @@ public partial class PgHome : Page, IPassFortPage
             return;
         }
 
-        WndCreateDatabase.CreateNewDatabase();
+        if (WndCreateDatabase.CreateNewDatabase() == true)
+        {
+            ReloadHistory();
+        }
+
         return;
     }
 

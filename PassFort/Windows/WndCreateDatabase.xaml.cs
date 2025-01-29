@@ -17,10 +17,13 @@ public partial class WndCreateDatabase : Window
         InitializeComponent();
     }
 
+    private string dbName = string.Empty;
+    private string dbPath = string.Empty;
+
     private bool ProcessInputData()
     {
-        string dbName = txtDbName.Text.Trim();
-        string dbPath = txtPath.Text.Trim();
+        dbName = txtDbName.Text.Trim();
+        dbPath = txtPath.Text.Trim();
 
         if (string.IsNullOrEmpty(dbName) == true) return false;
         if (string.IsNullOrEmpty(dbPath) == true) return false;
@@ -44,13 +47,19 @@ public partial class WndCreateDatabase : Window
     {
         if (ProcessInputData() == true)
         {
+            // check iif history item already exists
+            if (App.History.Contains(dbPath) == false)
+            {
+                App.History.Add(dbPath);
+            }
+
             this.DialogResult = true;
             this.Close();
         }
 
         else
         {
-            _ = MessageBox.Show(Messages.CantCreateDatabase, "Can't create database", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBox.Show(Messages.CantCreateDatabase, "Unable to create database", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         return;

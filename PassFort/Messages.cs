@@ -9,4 +9,9 @@ public static class Messages
     /// Unable to create database file because the input data are invalid.
     /// </summary>
     public const string CantCreateDatabase = "Unable to create database file because the input data are invalid.";
+
+    /// <summary>
+    /// Unable to open database file.
+    /// </summary>
+    public const string CantOpenDbFile = "Unable to open database file.";
 }
