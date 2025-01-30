@@ -60,6 +60,22 @@ public partial class PgHome : Page, IPassFortPage
         return;
     }
 
+    private void OpenHistoryItem(string historyItem)
+    {
+        if (DbFile.Open(historyItem, out DbFile file) == true)
+        {
+            // file opened successfully
+            DbFile.Current = file;
+            MainWindow.SetContentPage(PgOverview.Instance, ref MainWindow.Instance.btnOverview);
+        }
+
+        else
+        {
+            _ = MessageBox.Show(Messages.CantOpenDbFile, "Unable to open database", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+    }
+
     private void ReloadHistory()
     {
         if (_isLocked == true)
@@ -80,16 +96,7 @@ public partial class PgHome : Page, IPassFortPage
             miOpen.Click += (s, e) =>
             {
                 // open database file
-                if (DbFile.Open(historyItem, out DbFile file) == true)
-                {
-                    // file opened successfully
-                }
-
-                else
-                {
-                    _ = MessageBox.Show(Messages.CantOpenDbFile, "Unable to open database", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                OpenHistoryItem(historyItem);
             };
 
             MenuItem miRemove = new MenuItem
@@ -116,6 +123,11 @@ public partial class PgHome : Page, IPassFortPage
                         miRemove
                     }
                 }
+            };
+
+            lbi.MouseDoubleClick += (s, e) =>
+            {
+                OpenHistoryItem(historyItem);
             };
 
             lbHistory.Items.Add(lbi);

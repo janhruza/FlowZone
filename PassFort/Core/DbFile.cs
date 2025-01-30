@@ -77,6 +77,11 @@ public class DbFile
     public static List<byte> LoadedKey => _loadedKey;
 
     /// <summary>
+    /// Representing currently opened database file.
+    /// </summary>
+    public static DbFile? Current {  get; set; }
+
+    /// <summary>
     /// Creaes a new instance of the <see cref="DbFile"/> class.
     /// </summary>
     /// <returns></returns>

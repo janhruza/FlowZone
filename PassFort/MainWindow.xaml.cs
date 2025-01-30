@@ -18,6 +18,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        _instance = this;
 
         this.Loaded += (s, e) =>
         {
@@ -70,11 +71,59 @@ public partial class MainWindow : Window
 
     private void btnOverview_Click(object sender, RoutedEventArgs e)
     {
+        NavSetPage(PgOverview.Instance);
         NavUncheckAl(ref btnOverview);
     }
 
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
         NavUncheckAl(ref btnSettings);
+    }
+
+    private static MainWindow? _instance;
+
+    /// <summary>
+    /// Attempts to set home page as the content page.
+    /// </summary>
+    public static void SetHomePage()
+    {
+        if (_instance == null) return;
+
+        _instance.NavSetPage(PgHome.Instance);
+        _instance.NavUncheckAl(ref _instance.btnHome);
+        return;
+    }
+
+    /// <summary>
+    /// Representing the current instance of the <see cref="MainWindow"/> class.
+    /// </summary>
+    public static MainWindow Instance => _instance ??= new MainWindow();
+
+    /// <summary>
+    /// Attempts to set a content <paramref name="page"/> as the current main window content.
+    /// </summary>
+    /// <param name="page">Target page with content.</param>
+    /// <param name="assocButton">Associated toggle button.</param>
+    /// <returns></returns>
+    public static bool SetContentPage(Page? page, ref ToggleButton? assocButton)
+    {
+        if (page == null)
+        {
+            return false;
+        }
+
+        if (_instance == null)
+        {
+            return false;
+        }
+
+        _instance.NavSetPage(page);
+
+        if (assocButton != null)
+        {
+            _instance.NavUncheckAl(ref assocButton);
+        }
+
+        return true;
     }
 }

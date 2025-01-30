@@ -11,15 +11,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <Label Content="Double click the items in order to open them"/>
+
         <ListBox Name="lbHistory"
-                 Grid.Row="0"
+                 Grid.Row="1"
                  Margin="0,0,0,10"/>
 
-        <StackPanel Grid.Row="1"
+        <StackPanel Grid.Row="2"
                     Orientation="Horizontal">
 
             <Button Content="Create new database"

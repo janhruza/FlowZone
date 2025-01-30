@@ -1,0 +1,90 @@
+﻿<Page x:Class="PassFort.Pages.PgOverview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PassFort.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="Overview">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--Navigation view-->
+        <TreeView Name="trFolders">
+            <TreeViewItem Header="Database"
+                          Name="trDbAll"
+                          IsExpanded="True"
+                          Width="150">
+                
+                <TreeViewItem Header="Social media"
+                              Name="trSocialMedia"/>
+                
+                <TreeViewItem Header="E-mail"
+                              Name="trEmail"/>
+                
+                <TreeViewItem Header="Finance"
+                              Name="trFinance"/>
+                
+                <TreeViewItem Header="Shopping"
+                              Name="trShopping"/>
+                
+                <TreeViewItem Header="Gaming"
+                              Name="trGaming"/>
+                
+                <TreeViewItem Header="Work"
+                              Name="trWork"/>
+                
+                <TreeViewItem Header="School"
+                              Name="trSchool"/>
+                
+                <TreeViewItem Header="Utilities"
+                              Name="trUtilities"/>
+                
+                <TreeViewItem Header="Other"
+                              Name="trOther"/>
+                
+            </TreeViewItem>
+        </TreeView>
+        
+        <!--Password view-->
+        <Border Margin="10,0,0,0"
+                Grid.Column="1">
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Control buttons-->
+                <StackPanel Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+
+                    <Button Content="Copy Username"
+                            Margin="0,0,5,0"
+                            Name="btnCopyUsername"
+                            Click="btnCopyUsername_Click"/>
+                    
+                    <Button Content="Copy Password"
+                            Margin="0,0,5,0"
+                            Name="btnCopyPassword"
+                            Click="btnCopyPassword_Click"/>
+
+                    <Button Content="New Password"
+                            Name="btnNewPassword"
+                            Click="btnNewPassword_Click"/>
+
+                </StackPanel>
+            </Grid>
+            
+        </Border>
+    </Grid>
+</Page>
