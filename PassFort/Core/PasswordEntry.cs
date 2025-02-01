@@ -34,6 +34,7 @@ public struct PasswordEntry
 
         // public fields
         Id = Guid.NewGuid();
+        Name = string.Empty;
         CreationTime = DateTime.Now;
         ModificationTIme = DateTime.Now;
         Category = PasswordCategory.None;
@@ -48,6 +49,11 @@ public struct PasswordEntry
     /// Representing the unique identifier for this password entry.
     /// </summary>
     public Guid Id { get; set; }
+
+    /// <summary>
+    /// Representing the user given entry name.
+    /// </summary>
+    public string Name { get; set; }
 
     /// <summary>
     /// Representing the date and time of when the entry was created.
@@ -129,6 +135,20 @@ public struct PasswordEntry
     {
         entry._password = data.ToList();
         return;
+    }
+
+    /// <summary>
+    /// Determines whether the given <paramref name="entry"/> is valid or not.
+    /// </summary>
+    /// <param name="entry">Target entry to be checked.</param>
+    /// <returns>True, if the <paramref name="entry"/> is valid, otherwise false.</returns>
+    public static bool IsEntryValid(PasswordEntry entry)
+    {
+        if (string.IsNullOrEmpty(entry.Name.Trim()) == true) return false;
+        if (string.IsNullOrEmpty(entry.Username.Trim()) == true) return false;
+        if (string.IsNullOrEmpty(entry.Password.Trim()) == true) return false;
+
+        return true;
     }
 
     #endregion

@@ -20,34 +20,44 @@
             <TreeViewItem Header="Database"
                           Name="trDbAll"
                           IsExpanded="True"
-                          Width="150">
+                          Width="150"
+                          Selected="trDbAll_Selected">
                 
                 <TreeViewItem Header="Social media"
-                              Name="trSocialMedia"/>
+                              Name="trSocialMedia"
+                              Selected="trSocialMedia_Selected"/>
                 
                 <TreeViewItem Header="E-mail"
-                              Name="trEmail"/>
+                              Name="trEmail"
+                              Selected="trEmail_Selected"/>
                 
                 <TreeViewItem Header="Finance"
-                              Name="trFinance"/>
+                              Name="trFinance"
+                              Selected="trFinance_Selected"/>
                 
                 <TreeViewItem Header="Shopping"
-                              Name="trShopping"/>
+                              Name="trShopping"
+                              Selected="trShopping_Selected"/>
                 
                 <TreeViewItem Header="Gaming"
-                              Name="trGaming"/>
+                              Name="trGaming"
+                              Selected="trGaming_Selected"/>
                 
                 <TreeViewItem Header="Work"
-                              Name="trWork"/>
+                              Name="trWork"
+                              Selected="trWork_Selected"/>
                 
                 <TreeViewItem Header="School"
-                              Name="trSchool"/>
+                              Name="trSchool"
+                              Selected="trSchool_Selected"/>
                 
                 <TreeViewItem Header="Utilities"
-                              Name="trUtilities"/>
+                              Name="trUtilities"
+                              Selected="trUtilities_Selected"/>
                 
                 <TreeViewItem Header="Other"
-                              Name="trOther"/>
+                              Name="trOther"
+                              Selected="trOther_Selected"/>
                 
             </TreeViewItem>
         </TreeView>
@@ -62,6 +72,9 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
+                <ListBox Name="lbEntries"
+                         Margin="0,0,0,10"/>
+
                 <!--Control buttons-->
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center"
@@ -71,12 +84,14 @@
                     <Button Content="Copy Username"
                             Margin="0,0,5,0"
                             Name="btnCopyUsername"
-                            Click="btnCopyUsername_Click"/>
+                            Click="btnCopyUsername_Click"
+                            IsEnabled="False"/>
                     
                     <Button Content="Copy Password"
                             Margin="0,0,5,0"
                             Name="btnCopyPassword"
-                            Click="btnCopyPassword_Click"/>
+                            Click="btnCopyPassword_Click"
+                            IsEnabled="False"/>
 
                     <Button Content="New Password"
                             Name="btnNewPassword"

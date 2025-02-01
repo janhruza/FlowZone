@@ -19,6 +19,7 @@ public static class Extensions
         writer.Write(entry.Id.ToByteArray());
         writer.Write(entry.CreationTime.ToBinary());
         writer.Write(entry.ModificationTIme.ToBinary());
+        writer.Write(entry.Name.Trim());
         writer.Write((byte)entry.Category);
         writer.Write(entry.Url);
         writer.Write(entry.Username);
@@ -39,6 +40,7 @@ public static class Extensions
         entry.Id = new Guid(reader.ReadBytes(16));
         entry.CreationTime = DateTime.FromBinary(reader.ReadInt64());
         entry.ModificationTIme = DateTime.FromBinary(reader.ReadInt64());
+        entry.Name = reader.ReadString();
         entry.Category = (PasswordCategory)reader.ReadByte();
         entry.Url = reader.ReadString();
         entry.Username = reader.ReadString();

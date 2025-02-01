@@ -68,6 +68,35 @@ public partial class PgOverview : Page, IPassFortPage
         return;
     }
 
+    private bool FilterPasswords(PasswordCategory category)
+    {
+        // display all saved user password entries from
+        // the given category
+
+        if (DbFile.Current == null)
+        {
+            // no file loaded
+            return false;
+        }
+
+        lbEntries.Items.Clear();
+        foreach (PasswordEntry entry in DbFile.Current.Entries)
+        {
+            // draw basic menu item
+            // no custom style or template
+
+            ListBoxItem lbi = new ListBoxItem
+            {
+                Tag = entry.Id,
+                Content = $"{entry.Name}"
+            };
+
+            lbEntries.Items.Add(lbi);
+        }
+
+        return true;
+    }
+
     private void btnCopyUsername_Click(object sender, RoutedEventArgs e)
     {
         return;
@@ -81,6 +110,56 @@ public partial class PgOverview : Page, IPassFortPage
     private void btnNewPassword_Click(object sender, RoutedEventArgs e)
     {
         return;
+    }
+
+    private void trDbAll_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trSocialMedia_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trEmail_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trFinance_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trShopping_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trGaming_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trWork_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trSchool_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trUtilities_Selected(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void trOther_Selected(object sender, RoutedEventArgs e)
+    {
+
     }
 
     #region Static code

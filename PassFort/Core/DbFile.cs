@@ -67,6 +67,11 @@ public class DbFile
         set => _name = value;
     }
 
+    /// <summary>
+    /// Representing the list of all stored password entries.
+    /// </summary>
+    public List<PasswordEntry> Entries => _entries;
+
     #region Static code
 
     private static List<byte> _loadedKey = [];

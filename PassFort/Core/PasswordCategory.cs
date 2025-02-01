@@ -53,5 +53,10 @@ public enum PasswordCategory : byte
     /// <summary>
     /// A catch-all category for entries that don't fit into the predefined categories.
     /// </summary>
-    Other
+    Other,
+
+    /// <summary>
+    /// Representing a category that respresenting all categories. Used for printing all password entries of all categories.
+    /// </summary>
+    All
 }
