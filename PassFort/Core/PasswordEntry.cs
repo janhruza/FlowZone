@@ -151,5 +151,23 @@ public struct PasswordEntry
         return true;
     }
 
+    /// <summary>
+    /// Filters target entries from the given list of <paramref name="entries"/> those who have the target <paramref name="category"/>.
+    /// </summary>
+    /// <param name="entries">List of all entries to filter from.</param>
+    /// <param name="category">A target password entry category.</param>
+    /// <returns></returns>
+    public static List<PasswordEntry> FilterEntries(List<PasswordEntry> entries, PasswordCategory category)
+    {
+        if (entries.Count == 0)
+        {
+            // no entries to filter from
+            return [];
+        }
+
+        List<PasswordEntry> filteredEntries = entries.Where(x => x.Category == category).ToList();
+        return filteredEntries;
+    }
+
     #endregion
 }

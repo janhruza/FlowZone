@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using PassFort.Core;
 
@@ -79,8 +80,25 @@ public partial class PgOverview : Page, IPassFortPage
             return false;
         }
 
+        // clear entries list
         lbEntries.Items.Clear();
-        foreach (PasswordEntry entry in DbFile.Current.Entries)
+
+        List<PasswordEntry> entries;
+
+        if (category == PasswordCategory.All || category == PasswordCategory.None)
+        {
+            // get all entries (all categories)
+            entries = DbFile.Current.Entries;
+        }
+
+        else
+        {
+            // get only specific entries (based on filtered category)
+            entries = PasswordEntry.FilterEntries(DbFile.Current.Entries, category);
+        }
+
+        // select only from the filtered entries list
+        foreach (PasswordEntry entry in entries)
         {
             // draw basic menu item
             // no custom style or template
@@ -114,52 +132,52 @@ public partial class PgOverview : Page, IPassFortPage
 
     private void trDbAll_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.All);
     }
 
     private void trSocialMedia_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.SocialMedia);
     }
 
     private void trEmail_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Email);
     }
 
     private void trFinance_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Finance);
     }
 
     private void trShopping_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Shopping);
     }
 
     private void trGaming_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Gaming);
     }
 
     private void trWork_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Work);
     }
 
     private void trSchool_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.School);
     }
 
     private void trUtilities_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Utilities);
     }
 
     private void trOther_Selected(object sender, RoutedEventArgs e)
     {
-
+        FilterPasswords(PasswordCategory.Other);
     }
 
     #region Static code
