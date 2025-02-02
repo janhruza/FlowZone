@@ -14,4 +14,15 @@ public static class Messages
     /// Unable to open database file.
     /// </summary>
     public const string CantOpenDbFile = "Unable to open database file.";
+
+    /// <summary>
+    /// Unable to validate your input. Please make sure all required fields are properly filled.
+    /// </summary>
+
+    public const string CanValidatePassword = "Unable to validate your input. Please make sure all required fields are properly filled.";
+
+    /// <summary>
+    /// Unable to continue because no database file was loaded. Please load a valid database file and repeat the operation.
+    /// </summary>
+    public const string NoDatabaseLoaded = "Unable to continue because no database file was loaded. Please load a valid database file and repeat the operation.";
 }

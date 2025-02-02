@@ -65,7 +65,7 @@ public partial class PgHome : Page, IPassFortPage
         if (DbFile.Open(historyItem, out DbFile file) == true)
         {
             // file opened successfully
-            DbFile.Current = file;
+            DbFile.SetCurrent(file);
             MainWindow.SetContentPage(PgOverview.Instance, ref MainWindow.Instance.btnOverview);
         }
 

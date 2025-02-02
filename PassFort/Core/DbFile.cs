@@ -74,6 +74,8 @@ public class DbFile
 
     #region Static code
 
+    private static DbFile? _current;
+
     private static List<byte> _loadedKey = [];
 
     /// <summary>
@@ -84,7 +86,17 @@ public class DbFile
     /// <summary>
     /// Representing currently opened database file.
     /// </summary>
-    public static DbFile? Current {  get; set; }
+    public static DbFile? Current => _current;
+
+    /// <summary>
+    /// Sets the currently opened database file.
+    /// </summary>
+    /// <param name="current">A new opened database file.</param>
+    public static void SetCurrent(DbFile? current)
+    {
+        _current = current;
+        return;
+    }
 
     /// <summary>
     /// Creaes a new instance of the <see cref="DbFile"/> class.

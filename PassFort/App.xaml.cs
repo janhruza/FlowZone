@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Collections.Generic;
 using System.IO;
+using PassFort.Core;
 
 namespace PassFort;
 
@@ -61,6 +62,23 @@ public partial class App : Application
         File.WriteAllLines(_historyPath, lines);
         return;
     }
+
+    /// <summary>
+    /// Representing a list of all valid (user selectable) <see cref="PasswordCategory"/> and their display text.
+    /// </summary>
+    public static Dictionary<PasswordCategory, string> NameByPasswordCategory => new Dictionary<PasswordCategory, string>
+    {
+        {PasswordCategory.None, "None" },
+        {PasswordCategory.SocialMedia, "Social media" },
+        {PasswordCategory.Email, "E-mail" },
+        {PasswordCategory.Finance, "Finance" },
+        {PasswordCategory.Shopping, "Shopping" },
+        {PasswordCategory.Gaming, "Gaming" },
+        {PasswordCategory.Work, "School" },
+        {PasswordCategory.School, "None" },
+        {PasswordCategory.Utilities, "Utilities" },
+        {PasswordCategory.Other, "Other" }
+    };
 
     #endregion
 }

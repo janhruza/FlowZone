@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using FZCore;
 using PassFort.Core;
+using PassFort.Windows;
 
 namespace PassFort.Pages;
 
@@ -52,6 +54,8 @@ public partial class PgOverview : Page, IPassFortPage
 
         else
         {
+            trDbAll.IsSelected = true;
+            FilterPasswords(PasswordCategory.All);
             Unlock();
         }
     }
@@ -63,8 +67,6 @@ public partial class PgOverview : Page, IPassFortPage
     {
         trFolders.IsEnabled = true;
         trDbAll.Header = DbFile.Current?.Name;
-
-
         _isLocked = false;
         return;
     }
@@ -74,14 +76,15 @@ public partial class PgOverview : Page, IPassFortPage
         // display all saved user password entries from
         // the given category
 
+        // clear entries list
+        lbEntries.Items.Clear();
+
         if (DbFile.Current == null)
         {
             // no file loaded
+            Log.Error("No database file loaded.", nameof(FilterPasswords));
             return false;
         }
-
-        // clear entries list
-        lbEntries.Items.Clear();
 
         List<PasswordEntry> entries;
 
@@ -127,6 +130,11 @@ public partial class PgOverview : Page, IPassFortPage
 
     private void btnNewPassword_Click(object sender, RoutedEventArgs e)
     {
+        if (WndCreatePassword.CreateNewPassword() == true)
+        {
+            ReloadUI();
+        }
+
         return;
     }
 
