@@ -67,6 +67,7 @@ public partial class WndCreatePassword : Window
             if (cbCategory.Items.Count > 0)
             {
                 cbCategory.SelectedIndex = 0;
+                category = PasswordCategory.None;
             }
         }
     }

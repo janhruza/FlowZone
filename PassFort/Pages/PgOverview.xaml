@@ -16,12 +16,13 @@
         </Grid.ColumnDefinitions>
 
         <!--Navigation view-->
-        <TreeView Name="trFolders">
+        <TreeView Name="trFolders"
+                  SelectedItemChanged="trFolders_SelectedItemChanged">
+            
             <TreeViewItem Header="Database"
                           Name="trDbAll"
                           IsExpanded="True"
-                          Width="150"
-                          Selected="trDbAll_Selected">
+                          Width="150">
                 
                 <TreeViewItem Header="Social media"
                               Name="trSocialMedia"

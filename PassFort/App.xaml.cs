@@ -74,8 +74,8 @@ public partial class App : Application
         {PasswordCategory.Finance, "Finance" },
         {PasswordCategory.Shopping, "Shopping" },
         {PasswordCategory.Gaming, "Gaming" },
-        {PasswordCategory.Work, "School" },
-        {PasswordCategory.School, "None" },
+        {PasswordCategory.Work, "Work" },
+        {PasswordCategory.School, "School" },
         {PasswordCategory.Utilities, "Utilities" },
         {PasswordCategory.Other, "Other" }
     };

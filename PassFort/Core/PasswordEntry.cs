@@ -162,11 +162,11 @@ public struct PasswordEntry
         if (entries.Count == 0)
         {
             // no entries to filter from
-            return [];
+            return new List<PasswordEntry>();
         }
 
-        List<PasswordEntry> filteredEntries = entries.Where(x => x.Category == category).ToList();
-        return filteredEntries;
+        return entries.Where(x => x.Category == category).ToList();
+
     }
 
     #endregion

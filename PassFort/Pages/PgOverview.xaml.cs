@@ -37,6 +37,7 @@ public partial class PgOverview : Page, IPassFortPage
     /// </summary>
     public void Lock()
     {
+        lbEntries.Items.Clear();
         trFolders.IsEnabled = false;
         _isLocked = true;
         return;
@@ -47,17 +48,8 @@ public partial class PgOverview : Page, IPassFortPage
     /// </summary>
     public void ReloadUI()
     {
-        if (DbFile.Current == null)
-        {
-            Lock();
-        }
-
-        else
-        {
-            trDbAll.IsSelected = true;
-            FilterPasswords(PasswordCategory.All);
-            Unlock();
-        }
+        lbEntries.Items.Clear();
+        trDbAll.IsSelected = true;
     }
 
     /// <summary>
@@ -65,6 +57,7 @@ public partial class PgOverview : Page, IPassFortPage
     /// </summary>
     public void Unlock()
     {
+        lbEntries.Items.Clear();
         trFolders.IsEnabled = true;
         trDbAll.Header = DbFile.Current?.Name;
         _isLocked = false;
@@ -86,7 +79,7 @@ public partial class PgOverview : Page, IPassFortPage
             return false;
         }
 
-        List<PasswordEntry> entries;
+        List<PasswordEntry> entries = [];
 
         if (category == PasswordCategory.All || category == PasswordCategory.None)
         {
@@ -100,6 +93,13 @@ public partial class PgOverview : Page, IPassFortPage
             entries = PasswordEntry.FilterEntries(DbFile.Current.Entries, category);
         }
 
+        if (entries.Count == 0)
+        {
+            // no entries
+            Log.Error($"No password entries in this category: {App.NameByPasswordCategory[category]}", nameof(FilterPasswords));
+            return false;
+        }
+
         // select only from the filtered entries list
         foreach (PasswordEntry entry in entries)
         {
@@ -109,7 +109,7 @@ public partial class PgOverview : Page, IPassFortPage
             ListBoxItem lbi = new ListBoxItem
             {
                 Tag = entry.Id,
-                Content = $"{entry.Name}"
+                Content = $"{entry.Name} ({App.NameByPasswordCategory[entry.Category]})"
             };
 
             lbEntries.Items.Add(lbi);
@@ -136,11 +136,6 @@ public partial class PgOverview : Page, IPassFortPage
         }
 
         return;
-    }
-
-    private void trDbAll_Selected(object sender, RoutedEventArgs e)
-    {
-        FilterPasswords(PasswordCategory.All);
     }
 
     private void trSocialMedia_Selected(object sender, RoutedEventArgs e)
@@ -198,4 +193,14 @@ public partial class PgOverview : Page, IPassFortPage
     public static PgOverview Instance => _instance ??= new PgOverview();
 
     #endregion
+
+    private void trFolders_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+        if (e.NewValue == trDbAll)
+        {
+            // only if the parent node is selected
+            // display all password entries
+            FilterPasswords(PasswordCategory.All);
+        }
+    }
 }
