@@ -19,11 +19,20 @@ public partial class PgOverview : Page, IPassFortPage
     {
         InitializeComponent();
 
+        _username = string.Empty;
+        _password = string.Empty;
+
         this.Loaded += (s, e) =>
         {
             ReloadUI();
         };
     }
+
+    // loaded username
+    private string _username;
+
+    // loaded password
+    private string _password;
 
     private bool _isLocked = false;
 
@@ -112,6 +121,13 @@ public partial class PgOverview : Page, IPassFortPage
                 Content = $"{entry.Name} ({App.NameByPasswordCategory[entry.Category]})"
             };
 
+            lbi.Selected += (s, e) =>
+            {
+                // set field data
+                _username = entry.Username;
+                _password = entry.Password;
+            };
+
             lbEntries.Items.Add(lbi);
         }
 
@@ -120,11 +136,13 @@ public partial class PgOverview : Page, IPassFortPage
 
     private void btnCopyUsername_Click(object sender, RoutedEventArgs e)
     {
+        Clipboard.SetText(_username);
         return;
     }
 
     private void btnCopyPassword_Click(object sender, RoutedEventArgs e)
     {
+        Clipboard.SetText(_password);
         return;
     }
 
@@ -201,6 +219,21 @@ public partial class PgOverview : Page, IPassFortPage
             // only if the parent node is selected
             // display all password entries
             FilterPasswords(PasswordCategory.All);
+        }
+    }
+
+    private void lbEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (lbEntries.SelectedItem == null)
+        {
+            btnCopyPassword.IsEnabled = false;
+            btnCopyUsername.IsEnabled = false;
+        }
+
+        else
+        {
+            btnCopyPassword.IsEnabled = true;
+            btnCopyUsername.IsEnabled = true;
         }
     }
 }
