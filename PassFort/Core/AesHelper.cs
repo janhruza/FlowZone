@@ -22,23 +22,16 @@ public static class AesHelper
     /// <exception cref="ArgumentException">Thrown when the key size is invalid.</exception>
     public static byte[] EncryptPassword(string password, byte[] key)
     {
-        if (string.IsNullOrEmpty(password))
-            throw new ArgumentNullException(nameof(password));
-        if (!IsValidKeySize(key))
-            throw new ArgumentException("Key must be 128, 192, or 256 bits long.");
-
-        using var aes = Aes.Create();
+        using Aes aes = Aes.Create();
         aes.Key = key;
         aes.GenerateIV();
 
-        using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
-        using var ms = new MemoryStream();
-        ms.Write(aes.IV, 0, IvSize); // Prepend IV to output
-        using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-        using (var sw = new StreamWriter(cs, Encoding.UTF8))
-        {
-            sw.Write(password);
-        }
+        using MemoryStream ms = new MemoryStream();
+        ms.Write(aes.IV, 0, IvSize); // Store IV at the beginning
+        using CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);
+        using StreamWriter sw = new StreamWriter(cs, Encoding.UTF8);
+        sw.Write(password);
+
         return ms.ToArray();
     }
 
@@ -51,22 +44,17 @@ public static class AesHelper
     /// <exception cref="ArgumentException">Thrown when encryptedData is invalid or key size is incorrect.</exception>
     public static string DecryptPassword(byte[] encryptedData, byte[] key)
     {
-        if (encryptedData == null || encryptedData.Length < IvSize)
-            throw new ArgumentException("Invalid encrypted data.");
-        if (!IsValidKeySize(key))
-            throw new ArgumentException("Key must be 128, 192, or 256 bits long.");
-
-        using var aes = Aes.Create();
+        using Aes aes = Aes.Create();
         aes.Key = key;
 
         byte[] iv = new byte[IvSize];
         Array.Copy(encryptedData, 0, iv, 0, IvSize);
         aes.IV = iv;
 
-        using var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-        using var ms = new MemoryStream(encryptedData, IvSize, encryptedData.Length - IvSize);
-        using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-        using var sr = new StreamReader(cs, Encoding.UTF8);
+        using MemoryStream ms = new MemoryStream(encryptedData, IvSize, encryptedData.Length - IvSize);
+        using CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
+        using StreamReader sr = new StreamReader(cs, Encoding.UTF8);
+
         return sr.ReadToEnd();
     }
 

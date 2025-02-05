@@ -25,4 +25,9 @@ public static class Messages
     /// Unable to continue because no database file was loaded. Please load a valid database file and repeat the operation.
     /// </summary>
     public const string NoDatabaseLoaded = "Unable to continue because no database file was loaded. Please load a valid database file and repeat the operation.";
+
+    /// <summary>
+    /// Selected database file was not found. Do you want to remove it from the history?
+    /// </summary>
+    public const string DbFileNotFound = "Selected database file was not found. Do you want to remove it from the history?";
 }

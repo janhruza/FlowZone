@@ -85,8 +85,8 @@ public struct PasswordEntry
     /// </summary>
     public string Password
     {
-        get => DecryptPassword(_password.ToArray(), DbFile.LoadedKey.ToArray());
-        set => _password = EncryptPassword(value, DbFile.LoadedKey.ToArray()).ToList();
+        get => DecryptPassword(_password.ToArray(), [.. DbFile.LoadedKey]);
+        set => _password = [.. EncryptPassword(value, [.. DbFile.LoadedKey])];
     }
 
     /// <summary>

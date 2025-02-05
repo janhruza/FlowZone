@@ -28,10 +28,8 @@ public partial class WndCreateDatabase : Window
         if (string.IsNullOrEmpty(dbName) == true) return false;
         if (string.IsNullOrEmpty(dbPath) == true) return false;
 
-        DbFile dbFile = new DbFile(dbPath)
-        {
-            Name = dbName
-        };
+        DbFile dbFile = DbFile.CreateNew(dbPath);
+        dbFile.Name = dbName;
 
         // attempt to save the new file
         return DbFile.Save(dbFile);

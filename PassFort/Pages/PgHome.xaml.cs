@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using PassFort.Core;
 using PassFort.Windows;
@@ -62,6 +63,20 @@ public partial class PgHome : Page, IPassFortPage
 
     private void OpenHistoryItem(string historyItem)
     {
+        if (File.Exists(historyItem) == false)
+        {
+            // file not found
+            // ask user whether to delete the file from history
+
+            if (MessageBox.Show(Messages.DbFileNotFound, "File not found", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                App.History.Remove(historyItem);
+                ReloadHistory();
+            }
+
+            return;
+        }
+
         if (DbFile.Open(historyItem, out DbFile file) == true)
         {
             // file opened successfully

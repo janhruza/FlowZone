@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using FZCore;
 
 namespace PassFort.Core;
@@ -48,8 +49,9 @@ public class DbFile
         Random.Shared.NextBytes(buffer);
 
         // assign the key as the loaded one
-        _key = buffer;
-        _loadedKey = [.. buffer];
+        _key = new byte[KEY_SIZE];
+        Array.Copy(buffer, _key, KEY_SIZE);
+        _loadedKey = new List<byte>(_key);
     }
 
     private string _filePath;
@@ -108,6 +110,16 @@ public class DbFile
     }
 
     /// <summary>
+    /// Creaes a new instance of the <see cref="DbFile"/> class with save file location defined.
+    /// </summary>
+    /// <param name="dbPath">Save location of the database file.</param>
+    /// <returns></returns>
+    public static DbFile CreateNew(string dbPath)
+    {
+        return new DbFile(dbPath);
+    }
+
+    /// <summary>
     /// Attempts to open the given database file located at <paramref name="filePath"/>.
     /// </summary>
     /// <param name="filePath">Path to the database file.</param>
@@ -115,33 +127,27 @@ public class DbFile
     /// <returns>True if the opening was successful, otherwise false.</returns>
     public static bool Open(string filePath, out DbFile file)
     {
-        file = new DbFile();
-        file._filePath = filePath;
-
+        file = new DbFile(filePath);
         try
         {
-            using (FileStream fs = File.OpenRead(filePath))
-            {
-                using (BinaryReader br = new BinaryReader(fs))
-                {
-                    // invalid file check
-                    if (br.ReadString() != HEADER) return false;
+            using FileStream fs = File.OpenRead(filePath);
+            using BinaryReader br = new BinaryReader(fs);
 
-                    file._formatVersion = br.ReadByte();
-                    file._key = br.ReadBytes(KEY_SIZE);
-                    file._name = br.ReadString();
-                    int entriesCount = br.ReadInt32();
+            if (Encoding.UTF8.GetString(br.ReadBytes(8)) != HEADER)
+                return false;
 
-                    for (int x = 0; x < entriesCount; x++)
-                    {
-                        PasswordEntry entry = br.ReadPasswordEntry();
-                        file._entries.Add(entry);
-                    }
-                }
-            }
+            file._formatVersion = br.ReadByte();
+            file._key = br.ReadBytes(KEY_SIZE);
+            file._name = Encoding.UTF8.GetString(br.ReadBytes(br.ReadInt32()));
+
+            int entriesCount = br.ReadInt32();
+            file._entries = new List<PasswordEntry>();
+
+            for (int x = 0; x < entriesCount; x++)
+                file._entries.Add(br.ReadPasswordEntry());
+
             return true;
         }
-
         catch (Exception ex)
         {
             Log.Error(ex, nameof(DbFile.Open));
@@ -158,26 +164,22 @@ public class DbFile
     {
         try
         {
-            using (FileStream fs = File.Create(file._filePath))
-            {
-                using (BinaryWriter bw = new BinaryWriter(fs))
-                {
-                    bw.Write(DbFile.HEADER);
-                    bw.Write(file._formatVersion);
-                    bw.Write(file._key);
-                    bw.Write(file._name);
-                    bw.Write(file._entries.Count);
+            using FileStream fs = File.Create(file._filePath);
+            using BinaryWriter bw = new BinaryWriter(fs);
 
-                    for (int x = 0; x < file._entries.Count; x++)
-                    {
-                        bw.WritePasswordEntry(file._entries[x]);
-                    }
-                }
-            }
+            bw.Write(Encoding.UTF8.GetBytes(HEADER));
+            bw.Write(file._formatVersion);
+            bw.Write(file._key);
+            byte[] nameBytes = Encoding.UTF8.GetBytes(file._name);
+            bw.Write(nameBytes.Length);
+            bw.Write(nameBytes);
+            bw.Write(file._entries.Count);
+
+            foreach (var entry in file._entries)
+                bw.WritePasswordEntry(entry);
 
             return true;
         }
-
         catch (Exception ex)
         {
             Log.Error(ex, nameof(DbFile.Save));

@@ -77,7 +77,8 @@ public partial class App : Application
         {PasswordCategory.Work, "Work" },
         {PasswordCategory.School, "School" },
         {PasswordCategory.Utilities, "Utilities" },
-        {PasswordCategory.Other, "Other" }
+        {PasswordCategory.Other, "Other" },
+        { PasswordCategory.All, "All" }
     };
 
     #endregion
