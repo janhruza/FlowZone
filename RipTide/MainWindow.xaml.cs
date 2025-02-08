@@ -167,6 +167,7 @@ public partial class MainWindow : Window
     private void miMissingDownloader_Click(object sender, RoutedEventArgs e)
     {
         // show the help page
+        App.ShowMissingDownloaderDialog();
     }
 
     private void miAbout_Click(object sender, RoutedEventArgs e)

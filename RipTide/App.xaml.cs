@@ -80,10 +80,20 @@ public partial class App : Application
     };
 
     /// <summary>
-    /// SHows the about dialog.
+    /// Shows the about dialog.
     /// </summary>
     public static void ShowAboutDialog()
     {
         _ = new WndAbout().ShowDialog();
+        return;
+    }
+
+    /// <summary>
+    /// Shows the missing downloader dialog.
+    /// </summary>
+    public static void ShowMissingDownloaderDialog()
+    {
+        _ = new WndMissingDownloader().ShowDialog();
+        return;
     }
 }

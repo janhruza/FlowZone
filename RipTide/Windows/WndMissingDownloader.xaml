@@ -1,0 +1,117 @@
+﻿<Window x:Class="RipTide.Windows.WndMissingDownloader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RipTide.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Missing Downloader"
+        SizeToContent="WidthAndHeight">
+    
+    <Grid Width="640">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Content panel-->
+        <StackPanel Grid.Row="0"
+                    Margin="10,10,10,0">
+            <Label>
+                <Label.Content>
+                    <TextBlock Text="Missing video downloader"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="{x:Static SystemColors.AccentColorLight1Brush}"/>
+                </Label.Content>
+            </Label>
+
+            <Label>
+                <Label.Content>
+                    <TextBlock TextWrapping="Wrap">
+                        <Run Text="RipTide's downloader"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{x:Static SystemColors.AccentColorLight2Brush}" />
+                        
+                        <LineBreak />
+                        
+                        <Run Text="RipTide relies on YT-DLP, a powerful open-source video downloader, to fetch and process videos from various platforms. However, it looks like YT-DLP is missing from your RipTide installation."/>
+                        
+                        <LineBreak />
+                        <LineBreak />
+                        
+                        <Run Text="Step 1: Download YT-DLP"
+                             FontSize="16"
+                             FontWeight="SemiBold"
+                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+                        
+                        <LineBreak />
+                        
+                        <Run Text="To continue using RipTide, you need to download the latest version of YT-DLP. You can get it directly from the official source:"/>
+                        
+                        <Run Text="https://github.com/yt-dlp/yt-dlp/releases/latest"
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"
+                             Name="rDownloadLink"
+                             MouseEnter="rDownloadLink_MouseEnter"
+                             MouseLeave="rDownloadLink_MouseLeave"
+                             MouseLeftButtonDown="rDownloadLink_MouseLeftButtonDown"
+                             TextDecorations="Underline"/>
+                        
+                        <LineBreak />
+                        <LineBreak />
+                        
+                        <Run Text="Step 2: Place YT-DLP in RipTide’s Directory"
+                             FontSize="16"
+                             FontWeight="SemiBold"
+                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+                        
+                        <LineBreak />
+                        
+                        <Run Text="Once the download is complete:"/>
+                        <LineBreak />
+                        <LineBreak />
+                        
+                        <Run Text="1. Locate the yt-dlp executable file in your Downloads folder."/>
+                        <LineBreak />
+                        
+                        <Run Text="2. Move or copy the file into the RipTide installation folder. This ensures RipTide can detect and use YT-DLP properly."/>
+                        
+                        <LineBreak />
+                        <LineBreak />
+                        
+                        <Run Text="Step 3: Refresh RipTide"
+                             FontSize="16"
+                             FontWeight="SemiBold"
+                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+
+                        <LineBreak />
+                        
+                        <Run Text="After placing the YT-DLP executable in the correct folder, restart RipTide, and it should now function without any issues."/>
+                        
+                        <LineBreak />
+                        <LineBreak />
+                        
+                        <Run Text="If you continue to experience problems, check that the file is named correctly (yt-dlp.exe)."/>
+
+                    </TextBlock>
+                </Label.Content>
+            </Label>
+            
+        </StackPanel>
+
+        <!--Control buttons-->
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Margin="10">
+            
+            <Button Content="Close"
+                    Name="btnClose"
+                    Click="btnClose_Click"/>
+        </StackPanel>
+    </Grid>
+    
+</Window>

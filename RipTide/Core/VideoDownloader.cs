@@ -110,6 +110,11 @@ public class VideoDownloader
     public const string Link = "https://github.com/yt-dlp/yt-dlp";
 
     /// <summary>
+    /// Representing the latest release page for the YT-DLP project.
+    /// </summary>
+    public const string LinkRelease = "https://github.com/yt-dlp/yt-dlp/releases/latest";
+
+    /// <summary>
     /// Representing the source with all the supported web pages and domains.
     /// </summary>
     public const string SupportedSites = "https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md";
