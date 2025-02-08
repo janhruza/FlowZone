@@ -7,19 +7,95 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="RipTide - Simple video downloader"
-        ResizeMode="CanResize"
-        MinWidth="350"
-        MinHeight="350"
-        Height="480"
-        Width="640">
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight">
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <!--Navigation menu-->
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+
+                <MenuItem Name="miResetFields"
+                          Header="Reload"
+                          InputGestureText="F5"
+                          Click="miResetFields_Click"/>
+
+                <Separator />
+
+                <MenuItem Name="miClose"
+                          Header="Close"
+                          InputGestureText="Alt+F4"
+                          Click="miClose_Click"/>
+            </MenuItem>
+            
+            <MenuItem Header="Help">
+                <MenuItem Name="miSupportedSites"
+                          Header="Supported sites"
+                          Click="miSupportedSites_Click"/>
+
+                <MenuItem Name="miMissingDownloader"
+                          Header="Missing downloader"
+                          Click="miMissingDownloader_Click"/>
+
+                <Separator />
+
+                <MenuItem Name="miAbout"
+                          Header="About RipTide"
+                          InputGestureText="F1"
+                          Click="miAbout_Click"/>
+                
+            </MenuItem>
+        </Menu>
+        
+        <!--Content panel-->
         <StackPanel Grid.Row="1"
+                    Margin="10,0,10,0">
+
+            <Label Content="Video URL"/>
+            <TextBox Width="450"
+                     Name="txtUrl"
+                     Margin="0,0,0,5"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+            <Label Content="Save location"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0"
+                         Name="txtLocation"
+                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+                <Button Grid.Column="1"
+                        Margin="5,0,0,0"
+                        Content="..."
+                        Name="btnChooseLocation"
+                        Click="btnChooseLocation_Click"/>
+            </Grid>
+
+            <Expander Header="More"
+                      Margin="0,5,0,0"
+                      IsExpanded="False">
+
+                <StackPanel>
+                    <Label Content="Use cookies (e. g. for downloading login-only locked videos)"/>
+                    <ComboBox Name="cbCookiesBrowsers"/>
+                </StackPanel>
+
+            </Expander>
+
+        </StackPanel>
+        
+        <!--Controls panel-->
+        <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     Margin="10"
                     VerticalAlignment="Center"
@@ -31,7 +107,8 @@
                     Click="btnClose_Click"/>
             
             <Button Content="Download"
-                    Name="btnDownload"/>
+                    Name="btnDownload"
+                    Click="btnDownload_Click"/>
 
         </StackPanel>
     </Grid>
