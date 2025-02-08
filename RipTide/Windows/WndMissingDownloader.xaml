@@ -53,12 +53,11 @@
                         <Run Text="To continue using RipTide, you need to download the latest version of YT-DLP. You can get it directly from the official source:"/>
                         
                         <Run Text="https://github.com/yt-dlp/yt-dlp/releases/latest"
-                             Foreground="{x:Static SystemColors.AccentColorBrush}"
+                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"
                              Name="rDownloadLink"
                              MouseEnter="rDownloadLink_MouseEnter"
                              MouseLeave="rDownloadLink_MouseLeave"
-                             MouseLeftButtonDown="rDownloadLink_MouseLeftButtonDown"
-                             TextDecorations="Underline"/>
+                             MouseLeftButtonDown="rDownloadLink_MouseLeftButtonDown"/>
                         
                         <LineBreak />
                         <LineBreak />

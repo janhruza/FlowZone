@@ -20,6 +20,7 @@ public class VideoDownloader
         Location = string.Empty;
         Format = VideoDownloader.OutputFormat;
         Cookies = CookiesBrowser.None;
+        AdditionalParameters = [];
     }
 
     /// <summary>
@@ -36,6 +37,11 @@ public class VideoDownloader
     /// Representing the output format.
     /// </summary>
     public string Format { get; set; }
+
+    /// <summary>
+    /// Representing a list of additional, user-specified parameters.
+    /// </summary>
+    public List<string> AdditionalParameters { get; set; }
 
     /// <summary>
     /// Representing a browser to use it's cookies from to download videos.
@@ -81,6 +87,9 @@ public class VideoDownloader
                         // use cookies (if any)
                         CookiesByBrowser[Cookies],
 
+                        // user specified params
+                        string.Join(' ', AdditionalParameters),
+
                         // show progress in the console window title
                         "--console-title",
 
@@ -118,6 +127,11 @@ public class VideoDownloader
     /// Representing the source with all the supported web pages and domains.
     /// </summary>
     public const string SupportedSites = "https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md";
+
+    /// <summary>
+    /// Representic the YT-DLP help.
+    /// </summary>
+    public const string Help = "https://github.com/yt-dlp/yt-dlp/blob/master/README.md#usage-and-options";
 
     /// <summary>
     /// Representing the main command line interpreter for this app.

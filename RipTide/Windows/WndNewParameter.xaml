@@ -1,0 +1,61 @@
+﻿<Window x:Class="RipTide.Windows.WndNewParameter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RipTide.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Add new parameter"
+        SizeToContent="WidthAndHeight">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="10,10,10,0">
+
+            <Label>
+                <Label.Content>
+                    <TextBlock>
+                        <Run Text="Enter parameter value -"/>
+                        <Run Text="supported parameters"
+                             Name="rSupportedSites"
+                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"
+                             MouseEnter="rSupportedSites_MouseEnter"
+                             MouseLeave="rSupportedSites_MouseLeave"
+                             MouseLeftButtonDown="rSupportedSites_MouseLeftButtonDown"/>
+                    </TextBlock>
+                </Label.Content>
+            </Label>
+            
+            <TextBox Name="txtParam"
+                     Width="350"
+                     TextChanged="txtParam_TextChanged"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Margin="10">
+
+            <Button Content="Cancel"
+                    Margin="0,0,5,0"
+                    Name="btnCancel"
+                    Click="btnCancel_Click"/>
+            
+            <Button Content="Add"
+                    Name="btnAdd"
+                    Click="btnAdd_Click"
+                    IsEnabled="False"/>
+
+        </StackPanel>
+    </Grid>
+    
+</Window>

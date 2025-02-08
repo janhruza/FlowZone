@@ -29,12 +29,12 @@ public partial class WndMissingDownloader : Window
 
     private void rDownloadLink_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        rDownloadLink.Foreground = SystemColors.AccentColorLight2Brush;
+        rDownloadLink.Foreground = SystemColors.AccentColorBrush;
     }
 
     private void rDownloadLink_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        rDownloadLink.Foreground = SystemColors.AccentColorBrush;
+        rDownloadLink.Foreground = SystemColors.AccentColorLight2Brush;
     }
 
     private void rDownloadLink_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using RipTide.Core;
+using RipTide.Windows;
 
 namespace RipTide;
 
@@ -143,6 +144,34 @@ public partial class MainWindow : Window
         return;
     }
 
+    private void AddNewParameter()
+    {
+        WndNewParameter wnd = new WndNewParameter();
+        if (wnd.ShowDialog() == true)
+        {
+            // add parameter
+            string param = wnd.ParameterValue;
+            ListBoxItem lbi = new ListBoxItem
+            {
+                Uid = param,
+                Content = param
+            };
+
+            lbExtraParams.Items.Add(lbi);
+        }
+
+        return;
+    }
+
+    private void RemoveSelectedParameter()
+    {
+        if (lbExtraParams.Items.Count == 0) return;
+        if (lbExtraParams.SelectedIndex == -1) return;
+
+        lbExtraParams.Items.RemoveAt(lbExtraParams.SelectedIndex);
+        return;
+    }
+
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
@@ -184,5 +213,28 @@ public partial class MainWindow : Window
     private void miResetFields_Click(object sender, RoutedEventArgs e)
     {
         ResetFields();
+    }
+
+    private void btnAddParam_Click(object sender, RoutedEventArgs e)
+    {
+        AddNewParameter();
+    }
+
+    private void btnRemoveParam_Click(object sender, RoutedEventArgs e)
+    {
+        RemoveSelectedParameter();
+    }
+
+    private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F1)
+        {
+            App.ShowAboutDialog();
+        }
+
+        else if (e.Key == System.Windows.Input.Key.F5)
+        {
+            ResetFields();
+        }
     }
 }

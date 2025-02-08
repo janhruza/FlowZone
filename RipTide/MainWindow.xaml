@@ -8,7 +8,8 @@
         WindowStartupLocation="CenterScreen"
         Title="RipTide - Simple video downloader"
         ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        KeyDown="Window_KeyDown">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -87,7 +88,35 @@
 
                 <StackPanel>
                     <Label Content="Use cookies (e. g. for downloading login-only locked videos)"/>
-                    <ComboBox Name="cbCookiesBrowsers"/>
+                    <ComboBox Name="cbCookiesBrowsers"
+                              Margin="0,0,0,5"/>
+
+                    <Label Content="Additional command line parameters"/>
+                    <ListBox Height="120"
+                             Name="lbExtraParams"/>
+
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1">
+
+                            <Button Content="Remove selected"
+                                    Name="btnRemoveParam"
+                                    Click="btnRemoveParam_Click"
+                                    Margin="0,0,5,0"/>
+
+                            <Button Content="Add parameter"
+                                    Name="btnAddParam"
+                                    Click="btnAddParam_Click"/>
+
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
 
             </Expander>
