@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expando", "Expando\Expando.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FZCore", "FZCore\FZCore.csproj", "{86693C7C-F0A7-467B-A5E6-63E9F28F836D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RipTide", "RipTide\RipTide.csproj", "{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,14 @@ Global
 		{86693C7C-F0A7-467B-A5E6-63E9F28F836D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86693C7C-F0A7-467B-A5E6-63E9F28F836D}.Release|x64.ActiveCfg = Release|Any CPU
 		{86693C7C-F0A7-467B-A5E6-63E9F28F836D}.Release|x64.Build.0 = Release|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B112E4C-93CC-4EF0-BE1B-C306ED496BBD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
