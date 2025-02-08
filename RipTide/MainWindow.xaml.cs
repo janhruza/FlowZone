@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -113,6 +114,13 @@ public partial class MainWindow : Window
             return;
         }
 
+        // rebuild additional params list
+        _downloader.AdditionalParameters.Clear();
+        foreach (string param in lbExtraParams.Items)
+        {
+            _downloader.AdditionalParameters.Add(param);
+        }
+
         Process? pDownload;
         if (_downloader.Download(out pDownload) == false)
         {
@@ -151,13 +159,7 @@ public partial class MainWindow : Window
         {
             // add parameter
             string param = wnd.ParameterValue;
-            ListBoxItem lbi = new ListBoxItem
-            {
-                Uid = param,
-                Content = param
-            };
-
-            lbExtraParams.Items.Add(lbi);
+            lbExtraParams.Items.Add(param);
         }
 
         return;
