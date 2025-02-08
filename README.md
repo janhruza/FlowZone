@@ -12,6 +12,7 @@
 |FZCore|Class Library|FZCore is a library with all the common functionality.|
 |TaskPilot|WPF|Task Pilot is a simple task manager application. It offers a simple yet intuitive UI.|
 |Expando|WPF|Expando is a simple expanse tracker appication with moder UI and multi profile support.|
+|RipTide|WPF|RipTide is a simple video downloader build on top of the [yt-dlp](https://github.com/yt-dlp/yt-dlp) project.
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
