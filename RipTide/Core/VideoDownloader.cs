@@ -100,7 +100,6 @@ public class VideoDownloader
             };
 
             string sList = string.Join(' ', process.StartInfo.ArgumentList);
-            App.ShowMessage(sList, System.Windows.MessageBoxImage.Information);
 
             // start the download process
             return process.Start();
