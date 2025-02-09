@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Microsoft.Win32;
-using Microsoft.Windows.Themes;
 using RipTide.Core;
 using RipTide.Windows;
 
@@ -41,6 +40,14 @@ public partial class MainWindow : Window
 
         this.Loaded += (s, e) =>
         {
+            // handle window settings
+            App.HandleWindowSettings(this);
+
+            // assign settings for this window (MainWindow specific)
+            miAoT.IsChecked = RTSettings.Current.AlwaysOnTop;
+            SetThemeMode(RTSettings.Current.ThemeMode, ThemeItemById[RTSettings.Current.ThemeMode]);
+
+            // refresh all fields to their defaults
             ResetFields();
         };
     }
@@ -239,5 +246,87 @@ public partial class MainWindow : Window
         {
             ResetFields();
         }
+    }
+
+    private Dictionary<Core.ThemeMode, MenuItem> ThemeItemById => new Dictionary<Core.ThemeMode, MenuItem>()
+    {
+        { Core.ThemeMode.System, miThemeSystem },
+        { Core.ThemeMode.Light, miThemeLight },
+        { Core.ThemeMode.Dark, miThemeDark },
+        { Core.ThemeMode.None, miThemeLegacy }
+    };
+
+    private void SetThemeMode(Core.ThemeMode mode, MenuItem? toggleOn)
+    {
+#pragma warning disable WPF0001
+        // disable all theme-related check boxes (on menu items)
+        miThemeLight.IsChecked = false;
+        miThemeDark.IsChecked = false;
+        miThemeSystem.IsChecked = false;
+        miThemeLegacy.IsChecked = false;
+
+        // set mode to settings
+        RTSettings.Current.ThemeMode = mode;
+
+        switch (mode)
+        {
+            case Core.ThemeMode.Dark:
+                App.Current.ThemeMode = System.Windows.ThemeMode.Dark;
+                break;
+
+            case Core.ThemeMode.Light:
+                App.Current.ThemeMode = System.Windows.ThemeMode.Light;
+                break;
+
+            case Core.ThemeMode.System:
+                App.Current.ThemeMode = System.Windows.ThemeMode.System;
+                break;
+
+            case Core.ThemeMode.None:
+                App.Current.ThemeMode = System.Windows.ThemeMode.None;
+                break;
+
+            default:
+                break;
+        }
+
+        // check the right one
+        if (toggleOn != null)
+        {
+            toggleOn.IsChecked = true;
+        }
+#pragma warning restore WPF0001
+    }
+
+    private void miAoT_Checked(object sender, RoutedEventArgs e)
+    {
+        RTSettings.Current.AlwaysOnTop = true;
+        this.Topmost = true;
+    }
+
+    private void miAoT_Unchecked(object sender, RoutedEventArgs e)
+    {
+        RTSettings.Current.AlwaysOnTop = false;
+        this.Topmost = false;
+    }
+
+    private void miThemeLight_Click(object sender, RoutedEventArgs e)
+    {
+        SetThemeMode(Core.ThemeMode.Light, miThemeLight);
+    }
+
+    private void miThemeDark_Click(object sender, RoutedEventArgs e)
+    {
+        SetThemeMode(Core.ThemeMode.Dark, miThemeDark);
+    }
+
+    private void miThemeSystem_Click(object sender, RoutedEventArgs e)
+    {
+        SetThemeMode(Core.ThemeMode.System, miThemeSystem);
+    }
+
+    private void miThemeLegacy_Click(object sender, RoutedEventArgs e)
+    {
+        SetThemeMode(Core.ThemeMode.None, miThemeLegacy);
     }
 }

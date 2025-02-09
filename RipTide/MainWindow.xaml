@@ -55,6 +55,45 @@
                           Click="miAbout_Click"/>
 
             </MenuItem>
+            
+            <!--Settings menu-->
+            <MenuItem Header="Settings">
+                <MenuItem Header="Always on Top"
+                          Name="miAoT"
+                          IsCheckable="True"
+                          Checked="miAoT_Checked"
+                          Unchecked="miAoT_Unchecked"/>
+
+                <Separator />
+
+                <!--Theme submenu-->
+                <MenuItem Header="Theme">
+                    
+                    <MenuItem Header="Light"
+                              Name="miThemeLight"
+                              Click="miThemeLight_Click"
+                              IsCheckable="True"/>
+                    
+                    <MenuItem Header="Dark"
+                              Name="miThemeDark"
+                              Click="miThemeDark_Click"
+                              IsCheckable="True"/>
+                    
+                    <MenuItem Header="System"
+                              Name="miThemeSystem"
+                              Click="miThemeSystem_Click"
+                              IsCheckable="True"/>
+
+                    <Separator />
+                    
+                    <MenuItem Header="Legacy"
+                              Name="miThemeLegacy"
+                              Click="miThemeLegacy_Click"
+                              IsCheckable="True"/>
+
+                </MenuItem>
+                
+            </MenuItem>
 
         </Menu>
         
