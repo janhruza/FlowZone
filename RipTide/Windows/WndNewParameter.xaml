@@ -35,6 +35,7 @@
             
             <TextBox Name="txtParam"
                      Width="350"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                      TextChanged="txtParam_TextChanged"/>
 
         </StackPanel>

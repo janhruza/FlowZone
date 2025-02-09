@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using Microsoft.Windows.Themes;
 using RipTide.Core;
 using RipTide.Windows;
 

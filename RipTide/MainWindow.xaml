@@ -20,6 +20,8 @@
 
         <!--Navigation menu-->
         <Menu Grid.Row="0">
+            
+            <!--File menu-->
             <MenuItem Header="File">
 
                 <MenuItem Name="miResetFields"
@@ -35,6 +37,7 @@
                           Click="miClose_Click"/>
             </MenuItem>
             
+            <!--Help menu-->
             <MenuItem Header="Help">
                 <MenuItem Name="miSupportedSites"
                           Header="Supported sites"
@@ -50,8 +53,9 @@
                           Header="About RipTide"
                           InputGestureText="F1"
                           Click="miAbout_Click"/>
-                
+
             </MenuItem>
+
         </Menu>
         
         <!--Content panel-->
