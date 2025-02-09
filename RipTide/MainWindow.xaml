@@ -86,7 +86,7 @@
 
                     <Separator />
                     
-                    <MenuItem Header="Legacy"
+                    <MenuItem Header="None (Legacy)"
                               Name="miThemeLegacy"
                               Click="miThemeLegacy_Click"
                               IsCheckable="True"/>

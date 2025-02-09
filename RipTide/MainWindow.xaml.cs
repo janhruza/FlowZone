@@ -118,7 +118,7 @@ public partial class MainWindow : Window
         if (VerifyFields() == false)
         {
             // incomplete input data
-            App.ShowMessage(Messages.UnableToVerifyFields, MessageBoxImage.Error);
+            App.ShowMessage(Messages.UnableToVerifyFields, DialogIcon.Error);
             return;
         }
 
@@ -133,7 +133,7 @@ public partial class MainWindow : Window
         if (_downloader.Download(out pDownload) == false)
         {
             // unable to start download
-            App.ShowMessage(Messages.UnableToStartDownload, MessageBoxImage.Error);
+            App.ShowMessage(Messages.UnableToStartDownload, DialogIcon.Error);
             return;
         }
 

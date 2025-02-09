@@ -37,9 +37,9 @@ public partial class App : Application
     /// </summary>
     /// <param name="message">Message to be displayed within the message box.</param>
     /// <param name="image">Specified image associated to the message box.</param>
-    public static void ShowMessage(string message, MessageBoxImage image)
+    public static void ShowMessage(string message, DialogIcon image)
     {
-        _ = MessageBox.Show(message, Title, MessageBoxButton.OK, image);
+        _ = new WndDialog(message, App.Title, image).ShowDialog();
         return;
     }
 
