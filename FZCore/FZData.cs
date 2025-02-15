@@ -14,4 +14,9 @@ public static class FZData
     /// Representing the solution (suite) name.
     /// </summary>
     public const string Solution = "Flow Zone";
+
+    /// <summary>
+    /// Representing the original author's name.
+    /// </summary>
+    public const string Author = "Jan Hrůza";
 }
