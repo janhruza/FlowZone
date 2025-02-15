@@ -10,6 +10,14 @@
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight">
 
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="View log"
+                      Name="miViewLog"
+                      Click="miViewLog_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+
     <Grid>
         <TabControl Margin="10">
             <TabItem Header="New archive">

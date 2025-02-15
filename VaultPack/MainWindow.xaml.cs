@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using FZCore;
+using FZCore.Windows;
 
 namespace VaultPack;
 
@@ -253,4 +254,9 @@ public partial class MainWindow : Window
     }
 
     #endregion
+
+    private void miViewLog_Click(object sender, RoutedEventArgs e)
+    {
+        _ = new LogViewer(Log.Path).ShowDialog();
+    }
 }
