@@ -63,6 +63,7 @@ public partial class MainWindow : Window
             }
         }
 
+        Core.InfoBox($"Archive of {_filesToAdd.Count} files was created at {path}.", "Archive created");
         return;
     }
 
@@ -223,6 +224,8 @@ public partial class MainWindow : Window
                 }
             }
         }
+
+        Core.InfoBox($"Archive was extracted into {e_FolderPath}.", "Archive extracted");
     }
 
     private void btnChooseArchive_Click(object sender, RoutedEventArgs e)
