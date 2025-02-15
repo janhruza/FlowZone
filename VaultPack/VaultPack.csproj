@@ -10,4 +10,8 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FZCore\FZCore.csproj" />
+  </ItemGroup>
+
 </Project>
