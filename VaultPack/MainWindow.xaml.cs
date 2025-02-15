@@ -163,7 +163,7 @@ public partial class MainWindow : Window
     {
         txtArchivePath.Clear();
         txtExtractFolder.Clear();
-        Log.Error($"Extract archive page was cleared.", nameof(btnExtractClear_Click));
+        Log.Info($"Extract archive page was cleared.", nameof(btnExtractClear_Click));
     }
 
     private bool ValidateExtractionData()

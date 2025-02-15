@@ -25,6 +25,7 @@ namespace FZCore.Windows
         public LogViewer(string logFilePath)
         {
             InitializeComponent();
+            dgEntries.RowHeight = double.NaN;
 
             // Load the log file when the window is fully loaded
             this.Loaded += (s, e) =>
