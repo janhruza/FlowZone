@@ -25,7 +25,8 @@
                         <Label Content="Files to be put in the archive"></Label>
                         <ListBox Width="450"
                                  Height="150"
-                                 Name="lbFilesToAdd"/>
+                                 Name="lbFilesToAdd"
+                                 SelectionMode="Extended"/>
 
                         <StackPanel HorizontalAlignment="Right"
                                     Orientation="Horizontal"
@@ -36,7 +37,9 @@
                                     Name="btnCreateRemove"
                                     Click="btnCreateRemove_Click"/>
                             
-                            <Button Content="Add file"/>
+                            <Button Content="Add file"
+                                    Name="btnCreateAddFile"
+                                    Click="btnCreateAddFile_Click"/>
 
                         </StackPanel>
 
@@ -68,7 +71,8 @@
 
                         <Button Margin="0,0,5,0"
                                 Content="Clear"
-                                Name="btnClearCreate"/>
+                                Name="btnClearCreate"
+                                Click="btnClearCreate_Click"/>
                         
                         <Button Margin="0"
                                 Content="Create"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Windows.Controls;
 using System.IO;
+using System.Linq;
 
 namespace VaultPack;
 
@@ -83,7 +84,12 @@ public partial class MainWindow : Window
     {
         if (lbFilesToAdd.SelectedIndex >= 0)
         {
-            lbFilesToAdd.Items.RemoveAt(lbFilesToAdd.SelectedIndex);
+            List<ListBoxItem> selectedItems = lbFilesToAdd.SelectedItems.Cast<ListBoxItem>().ToList();
+
+            foreach (ListBoxItem selected in selectedItems)
+            {
+                lbFilesToAdd.Items.Remove(selected);
+            }
         }
 
         return;
@@ -105,5 +111,34 @@ public partial class MainWindow : Window
     private void btnCreateRemove_Click(object sender, RoutedEventArgs e)
     {
         RemoveCreateSelected();
+    }
+
+    private void btnCreateAddFile_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog ofd = new OpenFileDialog
+        {
+            Multiselect = true,
+            Filter = "All Files|*.*"
+        };
+
+        if (ofd.ShowDialog() == true)
+        {
+            foreach (string file in ofd.FileNames)
+            {
+                AddCreateItem(file);
+            }
+        }
+    }
+
+    private void ClearCreatePage()
+    {
+        _filesToAdd.Clear();
+        lbFilesToAdd.Items.Clear();
+        txtCreatePath.Clear();
+    }
+
+    private void btnClearCreate_Click(object sender, RoutedEventArgs e)
+    {
+        ClearCreatePage();
     }
 }
