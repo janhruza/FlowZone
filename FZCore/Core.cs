@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
+using FZCore.Windows;
 
 namespace FZCore;
 
@@ -16,5 +18,20 @@ public static class Core
     {
         _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
         return;
+    }
+
+    /// <summary>
+    /// Opens a new <see cref="LogViewer"/> window and displays the application log.
+    /// </summary>
+    /// <returns>True, if the log window is opened, otherwise false.</returns>
+    public static bool ViewLog()
+    {
+        if (File.Exists(Log.Path) == false)
+        {
+            return false;
+        }
+
+        _ = new LogViewer(Log.Path).ShowDialog();
+        return true;
     }
 }

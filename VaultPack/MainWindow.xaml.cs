@@ -260,6 +260,6 @@ public partial class MainWindow : Window
 
     private void miViewLog_Click(object sender, RoutedEventArgs e)
     {
-        _ = new LogViewer(Log.Path).ShowDialog();
+        Core.ViewLog();
     }
 }
