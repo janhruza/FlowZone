@@ -83,8 +83,71 @@
                 </Grid>
             </TabItem>
 
+            <!--Tab: Extrac existing archive-->
             <TabItem Header="Extract existing">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
+                    <!--Main content-->
+                    <StackPanel Margin="10,10,10,0">
+                        
+                        <Label Content="Archive location"/>
+                        <Grid Width="450">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Name="txtArchivePath"
+                                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                            <Button Grid.Column="1"
+                                Margin="5,0,0,0"
+                                Content="..."
+                                Name="btnChooseArchive"
+                                Click="btnChooseArchive_Click"/>
+                        </Grid>
+
+                        <Label Content="Extract location"
+                               Margin="0,5,0,0"/>
+                        
+                        <Grid Width="450">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Name="txtExtractFolder"
+                                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                            <Button Grid.Column="1"
+                                    Margin="5,0,0,0"
+                                    Content="..."
+                                    Name="btnChooseExtractFolder"
+                                    Click="btnChooseExtractFolder_Click"/>
+                        </Grid>
+                        
+                    </StackPanel>
+
+                    <!--Control buttons-->
+                    <StackPanel Grid.Row="1"
+                                Margin="10,10,10,0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+
+                        <Button Content="Clear"
+                                Margin="0,0,5,0"
+                                Name="btnExtractClear"
+                                Click="btnExtractClear_Click"/>
+                        
+                        <Button Content="Extract"
+                                Name="btnExtract"
+                                Click="btnExtract_Click"/>
+
+                    </StackPanel>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

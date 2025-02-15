@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System.Windows.Controls;
 using System.IO;
 using System.Linq;
+using System.Xml;
 
 namespace VaultPack;
 
@@ -19,6 +20,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    #region Create new archive code
 
     private List<string> _filesToAdd = [];
 
@@ -141,4 +144,90 @@ public partial class MainWindow : Window
     {
         ClearCreatePage();
     }
+
+    #endregion
+
+    #region Extract existing archive code
+    string e_ArchivePath = string.Empty;
+    string e_FolderPath = string.Empty;
+
+    private void btnExtractClear_Click(object sender, RoutedEventArgs e)
+    {
+        txtArchivePath.Clear();
+        txtExtractFolder.Clear();
+    }
+
+    private bool ValidateExtractionData()
+    {
+        e_ArchivePath = txtArchivePath.Text.Trim();
+        e_FolderPath = txtExtractFolder.Text.Trim();
+
+        if (File.Exists(e_ArchivePath) == false) return false;
+        if (Directory.Exists(e_FolderPath) == false) return false;
+
+        return true;
+    }
+
+    private void btnExtract_Click(object sender, RoutedEventArgs e)
+    {
+        // Data check
+        if (ValidateExtractionData() == false)
+        {
+            return;
+        }
+
+        // extract archive
+        using (FileStream fs = File.OpenRead(e_ArchivePath))
+        {
+            using (BinaryReader br = new BinaryReader(fs))
+            {
+                // get number of entries
+                int count = br.ReadInt32();
+
+                for (int x = 0; x <count; x++)
+                {
+                    string name = br.ReadString();
+                    long size = br.ReadInt64();
+
+                    byte[] buffer = new byte[size];
+
+                    for (int i = 0; i < size; i++)
+                    {
+                        buffer[i] = br.ReadByte();
+                    }
+
+                    string path = Path.Combine(e_FolderPath, name);
+                    File.WriteAllBytes(path, buffer);
+                }
+            }
+        }
+    }
+
+    private void btnChooseArchive_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog ofd = new OpenFileDialog
+        {
+            Filter = "Flow Zone Archive|*.fza|Other|*.*"
+        };
+
+        if (ofd.ShowDialog() == true)
+        {
+            txtArchivePath.Text = ofd.FileName;
+        }
+    }
+
+    private void btnChooseExtractFolder_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFolderDialog ofd = new OpenFolderDialog
+        {
+            Title = "Select extraction folder"
+        };
+
+        if (ofd.ShowDialog() == true)
+        {
+            txtExtractFolder.Text = ofd.FolderName;
+        }
+    }
+
+    #endregion
 }
