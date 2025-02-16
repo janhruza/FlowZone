@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ResourceRadar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        Title="Resource Radar"
+        SizeToContent="WidthAndHeight">
 
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            
+            <!--Navigation row-->
+            <RowDefinition Height="auto"/>
+            
+            <!--Content row-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--Navigation bar-->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,0">
+
+            <ToggleButton Content="Dashboard"
+                          Margin="0,0,5,0"
+                          Name="btnDashboard"
+                          Click="btnDashboard_Click"/>
+            
+            <ToggleButton Content="Inventory"
+                          Margin="0,0,5,0"
+                          Name="btnInventory"
+                          Click="btnInventory_Click"/>
+            
+            <ToggleButton Content="Analytics"
+                          Margin="0,0,5,0"
+                          Name="btnAnalytics"
+                          Click="btnAnalytics_Click"/>
+            
+            <ToggleButton Content="Settings"
+                          Name="btnSettings"
+                          Click="btnSettings_Click"/>
+
+        </StackPanel>
+        
+        <!--Main content-->
+        <Frame Grid.Row="1"
+               Margin="0,10,0,10"
+               Name="frmContent"
+               Width="720"
+               Height="400"/>
     </Grid>
+    
 </Window>
