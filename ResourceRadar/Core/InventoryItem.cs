@@ -109,3 +109,7 @@ public class InventoryItem
     }
 }
 
+/// <summary>
+/// Representing a list of multiple <see cref="InventoryItem"/>s.
+/// </summary>
+public class InventoryItemsCollection : List<InventoryItem>;
