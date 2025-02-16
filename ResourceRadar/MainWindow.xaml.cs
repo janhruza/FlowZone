@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.TextFormatting;
+using FZCore;
+using ResourceRadar.Pages;
 
 namespace ResourceRadar;
 
@@ -29,6 +32,7 @@ public partial class MainWindow : Window
     {
         this.MinWidth = this.ActualWidth;
         this.MinHeight = this.ActualHeight;
+        NavUncheckAll(btnDashboard);
     }
 
     private void NavUncheckAll(ToggleButton? exception)
@@ -45,6 +49,20 @@ public partial class MainWindow : Window
                 navButton.IsChecked = false;
             }
         }
+    }
+
+    private bool NavSetPage(Page? page, ToggleButton? toggle)
+    {
+        if (page == null)
+        {
+            Log.Error("Navigation failed because the target page is null.", nameof(NavSetPage));
+            return false;
+        }
+
+        frmContent.Content = page;
+        this.Title = $"{page.Title} - {App.Title}";
+        NavUncheckAll(toggle);
+        return true;
     }
 
     private void btnDashboard_Click(object sender, RoutedEventArgs e)
@@ -64,6 +82,6 @@ public partial class MainWindow : Window
 
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(btnSettings);
+        NavSetPage(PgSettings.Instance, btnSettings);
     }
 }

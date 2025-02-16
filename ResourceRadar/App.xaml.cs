@@ -3,10 +3,15 @@
 namespace ResourceRadar;
 
 /// <summary>
-/// Interaction logic for App.xaml
+/// Representing the main application class.
 /// </summary>
 public partial class App : Application
 {
+    /// <summary>
+    /// Representing the base window title.
+    /// </summary>
+    public const string Title = "Resource Radar";
+
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         MainWindow mw = new MainWindow();
