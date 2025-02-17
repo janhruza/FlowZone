@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using FZCore;
+using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 
@@ -37,23 +26,39 @@ public partial class PgSettings : Page
     /// </summary>
     public static PgSettings Instance => _instance ??= new PgSettings();
 
+    private void SetTheme(FZThemeMode theme)
+    {
+        if (UserProfile.Current == null)
+        {
+            Log.Warning($"No user profile loaded.", nameof(SetTheme));
+        }
+
+        else
+        {
+            UserProfile.Current.Settings.ThemeMode = theme;
+        }
+
+        FZCore.Core.SetApplicationTheme(App.Current, theme);
+        return;
+    }
+
     private void rbThemeSystem_Checked(object sender, RoutedEventArgs e)
     {
-        FZCore.Core.SetApplicationTheme(App.Current, FZThemeMode.System);
+        SetTheme(FZThemeMode.System);
     }
 
     private void rbThemeDark_Checked(object sender, RoutedEventArgs e)
     {
-        FZCore.Core.SetApplicationTheme(App.Current, FZThemeMode.Dark);
+        SetTheme(FZThemeMode.Dark);
     }
 
     private void rbThemeLight_Checked(object sender, RoutedEventArgs e)
     {
-        FZCore.Core.SetApplicationTheme(App.Current, FZThemeMode.Light);
+        SetTheme(FZThemeMode.Light);
     }
 
     private void rbThemeNone_Click(object sender, RoutedEventArgs e)
     {
-        FZCore.Core.SetApplicationTheme(App.Current, FZThemeMode.None);
+        SetTheme(FZThemeMode.None);
     }
 }
