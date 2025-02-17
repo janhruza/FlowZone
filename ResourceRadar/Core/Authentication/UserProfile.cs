@@ -272,4 +272,168 @@ public class UserProfile
 
         return result;
     }
+
+    /// <summary>
+    /// Gets the number of profiles.
+    /// </summary>
+    /// <returns></returns>
+    public static int GetProfilesCount()
+    {
+        try
+        {
+            if (Directory.Exists(ProfilesFolder) == false)
+            {
+                return 0;
+            }
+
+            return Directory.GetDirectories(ProfilesFolder).Length;
+        }
+
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(GetProfilesCount));
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// Sets the given <paramref name="profile"/> as the current profile unless the <paramref name="profile"/> is null.
+    /// </summary>
+    /// <param name="profile">Profile to be set as current.</param>
+    /// <returns>True, if the <paramref name="profile"/> is set as active, otherwise false.</returns>
+    public static bool SetCurrent(UserProfile? profile)
+    {
+        if (profile == null)
+        {
+            return false;
+        }
+
+        _current = profile;
+        return true;
+    }
+
+    /// <summary>
+    /// Asynchronously gets a list of all created profiles.
+    /// </summary>
+    /// <returns>List of all created profiles.</returns>
+    public static async Task<List<UserProfile>> GetProfilesAsync()
+    {
+        if (Directory.Exists(ProfilesFolder) == false)
+        {
+            return [];
+        }
+
+        List<UserProfile> profiles = await Task.Run<List<UserProfile>>(() =>
+        {
+            try
+            {
+                List<UserProfile> profiles = [];
+
+                foreach (string dir in Directory.GetDirectories(ProfilesFolder))
+                {
+                    if (File.Exists(Path.Combine(dir, FILE_PROFILE)) == false || File.Exists(Path.Combine(dir, FILE_ITEMS)) == false)
+                    {
+                        Log.Warning($"Incomplete profile \'{dir}\'. Loading skipped.", nameof(GetProfilesAsync));
+                        continue;
+                    }
+
+                    try
+                    {
+                        // load profile data
+                        string data = File.ReadAllText(Path.Combine(dir, FILE_PROFILE), Encoding.UTF8);
+                        UserProfile? profile = JsonSerializer.Deserialize<UserProfile>(data);
+
+                        if (profile == null)
+                        {
+                            Log.Error("Unable to deserialize profile data.", nameof(GetProfilesAsync));
+                            continue;
+                        }
+
+                        // load profile items
+                        using (FileStream fs = File.OpenRead(Path.Combine(dir, FILE_ITEMS)))
+                        {
+                            using (BinaryReader br = new BinaryReader(fs))
+                            {
+                                int count = br.ReadInt32();
+                                for (int x = 0; x < count; x++)
+                                {
+                                    InventoryItem item = new InventoryItem();
+
+                                    // basic data
+                                    item.Id = br.ReadInt32();
+                                    item.Name = br.ReadString();
+                                    item.Category = br.ReadString();
+                                    item.Brand = br.ReadString();
+                                    item.Model = br.ReadString();
+
+                                    // storge data
+                                    item.Storage.Room = br.ReadString();
+                                    item.Storage.StorageArea = br.ReadString();
+                                    item.Storage.Condition = br.ReadString();
+
+                                    // purchase details
+                                    item.PurchaseDate = DateTime.FromBinary(br.ReadInt64());
+                                    item.PurchasePrice = br.ReadDecimal();
+                                    item.PurchasedFrom = br.ReadString();
+                                    item.HasWarranty = br.ReadBoolean();
+                                    item.WarrantyExpiry = DateTime.FromBinary(br.ReadInt64());
+
+                                    // metadata
+                                    item.IsInUse = br.ReadBoolean();
+                                    item.LastUsed = DateTime.FromBinary(br.ReadInt64());
+                                    item.ExpirationDate = DateTime.FromBinary(br.ReadInt64());
+
+                                    List<string> mHistory = [];
+                                    int mCount = br.ReadInt32();
+                                    for (int m = 0; m < mCount; m++)
+                                    {
+                                        mHistory.Add(br.ReadString());
+                                    }
+
+                                    // add history
+                                    item.MaintenanceHistory = mHistory;
+
+                                    List<string> mAttachments = [];
+                                    int aCount = br.ReadInt32();
+                                    for (int a = 0; a < aCount; a++)
+                                    {
+                                        mAttachments.Add(br.ReadString());
+                                    }
+
+                                    // add attachments
+                                    item.Attachments = mAttachments;
+
+                                    // additional notes
+                                    item.Notes = br.ReadString();
+
+                                    // add item to profile
+                                    profile.Items.Add(item);
+                                }
+                            }
+                        }
+
+                        // add loaded profile
+                        profiles.Add(profile);
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, nameof(GetProfilesAsync));
+                        continue;
+                    }
+                }
+
+                return profiles;
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(GetProfilesAsync));
+                return [];
+            }
+        });
+
+        return profiles;
+    }
 }

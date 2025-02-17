@@ -17,6 +17,7 @@ public partial class MainWindow : Window
     /// </summary>
     public MainWindow()
     {
+        _instance = this;
         InitializeComponent();
 
         // Initialize navigation buttons
@@ -32,7 +33,8 @@ public partial class MainWindow : Window
     {
         this.MinWidth = this.ActualWidth;
         this.MinHeight = this.ActualHeight;
-        NavUncheckAll(btnDashboard);
+
+        NavSetPage(PgProfileSelector.Instance, null);
     }
 
     private void NavUncheckAll(ToggleButton? exception)
@@ -59,6 +61,16 @@ public partial class MainWindow : Window
             return false;
         }
 
+        if (page.GetType() == typeof(PgProfileSelector))
+        {
+            stpNav.Visibility = Visibility.Collapsed;
+        }
+
+        else
+        {
+            stpNav.Visibility = Visibility.Visible;
+        }
+
         frmContent.Content = page;
         this.Title = $"{page.Title} - {App.Title}";
         NavUncheckAll(toggle);
@@ -67,7 +79,7 @@ public partial class MainWindow : Window
 
     private void btnDashboard_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(btnDashboard);
+        NavSetPage(PgDashboard.Instance, btnDashboard);
     }
 
     private void btnInventory_Click(object sender, RoutedEventArgs e)
@@ -84,4 +96,32 @@ public partial class MainWindow : Window
     {
         NavSetPage(PgSettings.Instance, btnSettings);
     }
+
+    #region Static code
+
+    private static MainWindow? _instance;
+
+    /// <summary>
+    /// Representing the current instance of the <see cref="MainWindow"/> class.
+    /// </summary>
+    public static MainWindow Instance => _instance ??= new MainWindow();
+
+    /// <summary>
+    /// Navigates the <see cref="Instance"/> window to the given <paramref name="page"/> and sets the active <paramref name="assocButton"/> as checked (if any).
+    /// </summary>
+    /// <param name="page">New page content.</param>
+    /// <param name="assocButton">Associated toggle button (optional).</param>
+    /// <returns>True, if navigation succeeded, otherwise false.</returns>
+    public static bool SetActivePage(Page? page, ToggleButton? assocButton)
+    {
+        if (_instance == null)
+        {
+            Log.Error("Window is null.", nameof(SetActivePage));
+            return false;
+        }
+
+        return _instance.NavSetPage(page, assocButton);
+    }
+
+    #endregion
 }

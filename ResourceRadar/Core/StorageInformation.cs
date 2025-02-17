@@ -3,8 +3,18 @@
 /// <summary>
 /// Representing the information about the storage of a single <see cref="InventoryItem"/>.
 /// </summary>
-public struct StorageInformation
+public class StorageInformation
 {
+    /// <summary>
+    /// Creates a new instance of the <see cref="StorageInformation"/> class.
+    /// </summary>
+    public StorageInformation()
+    {
+        Room = string.Empty;
+        StorageArea = string.Empty;
+        Condition = string.Empty;
+    }
+
     /// <summary>
     /// Gets or sets the room of the item.
     /// </summary>
