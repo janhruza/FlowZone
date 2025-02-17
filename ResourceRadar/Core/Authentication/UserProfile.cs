@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace ResourceRadar.Core.Authentication;
 /// </summary>
 public class UserProfile
 {
+    private const string FILE_PROFILE = "settings.json";
+    private const string FILE_ITEMS = "items.bin";
+
     /// <summary>
     /// Representing the user profiles folder.
     /// </summary>
@@ -129,8 +133,8 @@ public class UserProfile
             string userFolder = Path.Combine(ProfilesFolder, profile.Id.ToString());
             _ = Directory.CreateDirectory(userFolder);
 
-            string profileData = Path.Combine(userFolder, "settings.json");
-            string userItems = Path.Combine(userFolder, "items.bin");
+            string profileData = Path.Combine(userFolder, FILE_PROFILE);
+            string userItems = Path.Combine(userFolder, FILE_ITEMS);
 
             // writes profile data into the settings file
             string jsonProfileData = JsonSerializer.Serialize<UserProfile>(profile);
@@ -169,7 +173,7 @@ public class UserProfile
         bool result = await Task.Run<bool>(() => {
             try
             {
-                string path = Path.Combine(ProfilesFolder, profile.Id.ToString(), "items.bin");
+                string path = Path.Combine(ProfilesFolder, profile.Id.ToString(), FILE_ITEMS);
                 using (FileStream fs = File.Create(path))
                 {
                     using (BinaryWriter bw = new BinaryWriter(fs))
@@ -230,6 +234,38 @@ public class UserProfile
             catch  (Exception ex)
             {
                 Log.Error(ex, nameof(WriteUserItems));
+                return false;
+            }
+        });
+
+        return result;
+    }
+
+    /// <summary>
+    /// Attempts to save <paramref name="profile"/> settings.
+    /// </summary>
+    /// <param name="profile">Target user profile to save.</param>
+    /// <returns>True, if the profile settings were saved, otherwise false.</returns>
+    public static async Task<bool> SaveSettings(UserProfile? profile)
+    {
+        if (profile == null)
+        {
+            return false;
+        }
+
+        bool result = await Task.Run<bool>(() =>
+        {
+            try
+            {
+                string data = JsonSerializer.Serialize<UserProfile>(profile);
+                string path = Path.Combine(ProfilesFolder, profile.Id.ToString(), FILE_PROFILE);
+                File.WriteAllText(path, data, Encoding.UTF8);
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(SaveSettings));
                 return false;
             }
         });
