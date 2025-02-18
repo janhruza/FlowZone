@@ -362,7 +362,7 @@ public class UserProfile
                                     InventoryItem item = new InventoryItem();
 
                                     // basic data
-                                    item.Id = br.ReadInt32();
+                                    item.Id = br.ReadInt64();
                                     item.Name = br.ReadString();
                                     item.Category = br.ReadString();
                                     item.Brand = br.ReadString();

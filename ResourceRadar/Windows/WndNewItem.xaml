@@ -1,0 +1,143 @@
+﻿<Window x:Class="ResourceRadar.Windows.WndNewItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ResourceRadar.Windows"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Title="New inventory item"
+        SizeToContent="WidthAndHeight">
+    
+    <Grid Width="420">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Main content-->
+        <StackPanel Grid.Row="0"
+                    Margin="10,10,10,0">
+
+            <!--Basic info-->
+            <Expander Header="Basic information"
+                      Name="eBasicInfo">
+                
+                <StackPanel>
+                    <Label Content="Name"/>
+                    <TextBox Name="txtName"
+                             SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+                    <Label Content="Category"
+                           Margin="0,5,0,0"/>
+                    <TextBox Name="txtCategory"
+                             SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                    
+                    <Label Content="Brand"
+                           Margin="0,5,0,0"/>
+                    
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtBrand"/>
+
+                    <Label Content="Model"
+                           Margin="0,5,0,0"/>
+                    
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtModel"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Storage"
+                      Name="eStorage">
+                
+                <StackPanel>
+                    <Label Content="Room"/>
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtStorageRoom"/>
+
+                    <Label Content="Storage area"
+                           Margin="0,5,0,0"/>
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtStorageArea"/>
+                    
+                    <Label Content="Condition"
+                           Margin="0,5,0,0"/>
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtStorageCondition"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Purchase details"
+                      Name="ePurchase">
+
+                <StackPanel>
+                    <Label Content="Date of purchase"/>
+                    <DatePicker Name="dtPurchase"/>
+
+                    <Label Content="Price"
+                           Margin="0,5,0,0"/>
+
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtPrice"/>
+
+                    <Label Content="Seller"
+                           Margin="0,5,0,0"/>
+                    
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtSeller"/>
+
+                    <CheckBox Content="Has warranty"
+                              Name="cbHasWarranty"
+                              Margin="0,5,0,0"
+                              Checked="cbHasWarranty_Checked"
+                              Unchecked="cbHasWarranty_Unchecked"/>
+
+                    <StackPanel x:Name="stpWarranty"
+                                Margin="0,5,0,0"
+                                Visibility="Collapsed">
+                        
+                        <Label Content="Warranty expiration"/>
+                        <DatePicker Name="dtWarranty"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Other"
+                      Name="eOther">
+
+                <StackPanel>
+                    <Label Content="Expiration date"/>
+                    <DatePicker Name="dtExpiration"/>
+
+                    <Label Content="Notes"
+                           Margin="0,5,0,0"/>
+
+                    <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
+                             Name="txtNotes"
+                             AcceptsReturn="True"
+                             Height="50"/>
+                </StackPanel>
+            </Expander>
+            
+        </StackPanel>
+        
+        <!--Control buttons-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    Margin="10"
+                    HorizontalAlignment="Right">
+
+            <Button Content="Cancel"
+                    Margin="0,0,5,0"
+                    Name="btnCancel"
+                    Click="btnCancel_Click"/>
+            
+            <Button Content="OK"
+                    Name="btnOk"
+                    Click="btnOk_Click"/>
+
+        </StackPanel>
+    </Grid>
+    
+</Window>

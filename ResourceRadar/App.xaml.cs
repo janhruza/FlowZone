@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using FZCore;
-using ResourceRadar.Core.Authentication;
 using ResourceRadar.Windows;
 
 namespace ResourceRadar;
