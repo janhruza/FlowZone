@@ -84,12 +84,12 @@ public partial class MainWindow : Window
 
     private void btnInventory_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(btnInventory);
+        NavSetPage(PgInventory.Instance, btnInventory);
     }
 
     private void btnAnalytics_Click(object sender, RoutedEventArgs e)
     {
-        NavUncheckAll(btnAnalytics);
+        NavSetPage(PgAnalytics.Instance, btnAnalytics);
     }
 
     private void btnSettings_Click(object sender, RoutedEventArgs e)

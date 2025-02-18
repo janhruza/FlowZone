@@ -16,8 +16,38 @@ public partial class PgSettings : Page
     /// </summary>
     public PgSettings()
     {
-        _instance = this;
         InitializeComponent();
+
+        this.Loaded += (s, e) =>
+        {
+            if (UserProfile.Current == null)
+            {
+                return;
+            }
+
+            // set checked theme item
+            switch (UserProfile.Current.Settings.ThemeMode)
+            {
+                case FZThemeMode.None:
+                    rbThemeNone.IsChecked = true;
+                    break;
+
+                case FZThemeMode.Light:
+                    rbThemeLight.IsChecked = true;
+                    break;
+
+                case FZThemeMode.Dark:
+                    rbThemeDark.IsChecked = true;
+                    break;
+
+                case FZThemeMode.System:
+                    rbThemeSystem.IsChecked = true;
+                    break;
+
+                default:
+                    return;
+            }
+        };
     }
 
     private static PgSettings? _instance;
