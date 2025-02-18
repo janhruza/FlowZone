@@ -102,6 +102,7 @@ public class InventoryItem
         Category = string.Empty;
         Brand = string.Empty;
         Model = string.Empty;
+        Storage = new StorageInformation();
         PurchasedFrom = string.Empty;
         Notes = string.Empty;
         MaintenanceHistory = [];
