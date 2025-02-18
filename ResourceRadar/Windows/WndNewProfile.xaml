@@ -7,7 +7,8 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
-        Title="Create new profile">
+        Title="Create new profile"
+        Loaded="Window_Loaded">
     
     <Grid>
         <Grid.RowDefinitions>

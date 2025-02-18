@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using ResourceRadar.Core.Authentication;
@@ -70,5 +71,10 @@ public partial class WndNewProfile : Window
     private void txtUsername_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
         btnOk.IsEnabled = txtUsername.Text.Length > 0;
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        SystemSounds.Beep.Play();
     }
 }

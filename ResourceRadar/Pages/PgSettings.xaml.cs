@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using FZCore;
 using ResourceRadar.Core.Authentication;
@@ -26,7 +27,7 @@ public partial class PgSettings : Page
     /// </summary>
     public static PgSettings Instance => _instance ??= new PgSettings();
 
-    private void SetTheme(FZThemeMode theme)
+    private async Task SetTheme(FZThemeMode theme)
     {
         if (UserProfile.Current == null)
         {
@@ -36,29 +37,30 @@ public partial class PgSettings : Page
         else
         {
             UserProfile.Current.Settings.ThemeMode = theme;
+            await UserProfile.SaveSettings(UserProfile.Current);
         }
 
         FZCore.Core.SetApplicationTheme(App.Current, theme);
         return;
     }
 
-    private void rbThemeSystem_Checked(object sender, RoutedEventArgs e)
+    private async void rbThemeSystem_Checked(object sender, RoutedEventArgs e)
     {
-        SetTheme(FZThemeMode.System);
+        await SetTheme(FZThemeMode.System);
     }
 
-    private void rbThemeDark_Checked(object sender, RoutedEventArgs e)
+    private async void rbThemeDark_Checked(object sender, RoutedEventArgs e)
     {
-        SetTheme(FZThemeMode.Dark);
+        await SetTheme(FZThemeMode.Dark);
     }
 
-    private void rbThemeLight_Checked(object sender, RoutedEventArgs e)
+    private async void rbThemeLight_Checked(object sender, RoutedEventArgs e)
     {
-        SetTheme(FZThemeMode.Light);
+        await SetTheme(FZThemeMode.Light);
     }
 
-    private void rbThemeNone_Click(object sender, RoutedEventArgs e)
+    private async void rbThemeNone_Click(object sender, RoutedEventArgs e)
     {
-        SetTheme(FZThemeMode.None);
+        await SetTheme(FZThemeMode.None);
     }
 }
