@@ -5,5 +5,11 @@
              ThemeMode="System"
              Exit="Application_Exit"
              Startup="Application_Startup">
+
+    <Application.Resources>
+
+        <FontFamily x:Key="IconsFont">Segoe Fluent Icons</FontFamily>
+        
+    </Application.Resources>
     
 </Application>

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.TextFormatting;
 using FZCore;
+using ResourceRadar.Core.Authentication;
 using ResourceRadar.Pages;
 
 namespace ResourceRadar;
@@ -63,12 +64,12 @@ public partial class MainWindow : Window
 
         if (page.GetType() == typeof(PgProfileSelector))
         {
-            stpNav.Visibility = Visibility.Collapsed;
+            gNavBar.Visibility = Visibility.Collapsed;
         }
 
         else
         {
-            stpNav.Visibility = Visibility.Visible;
+            gNavBar.Visibility = Visibility.Visible;
         }
 
         frmContent.Content = page;
@@ -95,6 +96,12 @@ public partial class MainWindow : Window
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
         NavSetPage(PgSettings.Instance, btnSettings);
+    }
+
+    private void btnLogout_Click(object sender, RoutedEventArgs e)
+    {
+        UserProfile.Logout();
+        NavSetPage(PgProfileSelector.Instance, null);
     }
 
     #region Static code

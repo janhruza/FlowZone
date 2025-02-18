@@ -7,11 +7,17 @@
       mc:Ignorable="d"
       Title="Select a profile">
 
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
         <Label FontSize="20"
-               Content="Select existing profile or create a new one"/>
+               Content="Select existing profile or create a new one"
+               Grid.Row="0"/>
 
         <ListBox Name="lbProfiles"
-                 Height="300"/>
-    </StackPanel>
+                 Grid.Row="1"/>
+    </Grid>
 </Page>
