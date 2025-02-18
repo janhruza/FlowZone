@@ -23,14 +23,16 @@
             <Label Content="Username"/>
             <TextBox Name="txtUsername"
                      Width="400"
-                     TextChanged="txtUsername_TextChanged"/>
+                     TextChanged="txtUsername_TextChanged"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
             <Label Content="Descrioption (optional)"
                    Margin="0,5,0,0"/>
             
             <TextBox Name="txtDescription"
                      AcceptsReturn="True"
-                     Height="50"/>
+                     Height="50"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
         </StackPanel>
         

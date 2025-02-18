@@ -65,6 +65,7 @@ public partial class MainWindow : Window
         if (page.GetType() == typeof(PgProfileSelector))
         {
             gNavBar.Visibility = Visibility.Collapsed;
+            FZCore.Core.SetApplicationTheme(App.Current, FZThemeMode.System);
         }
 
         else
