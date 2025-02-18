@@ -158,7 +158,7 @@ public class Analytics
     /// </summary>
     /// <param name="collection">Collection of items.</param>
     /// <returns>List of items with their warranties expired.</returns>
-    public static Task<InventoryItemsCollection> ExpiredWarranty(InventoryItemsCollection collection)
+    public static Task<InventoryItemsCollection> ExpiredWarrantyAsync(InventoryItemsCollection collection)
     {
         return NearExpiredWarrantyAsync(collection, 0);
     }
