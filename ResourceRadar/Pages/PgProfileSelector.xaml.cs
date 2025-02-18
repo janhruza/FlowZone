@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
@@ -33,12 +34,19 @@ public partial class PgProfileSelector : Page
             Content = "Create a new profile"
         };
 
-        lbi.MouseDoubleClick += (s, e) =>
-        {
-            // open new user dialog
-        };
+        lbi.MouseDoubleClick += CreateUser_MouseDoubleClick;
 
         return lbi;
+    }
+
+    private async void CreateUser_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
+    {
+        // open new user dialog
+        if (App.CreateNewProfile() == true)
+        {
+            // open dashboard for the newly created user
+            await RefreshProfiles();
+        }
     }
 
     private async Task RefreshProfiles()

@@ -34,7 +34,7 @@ public class UserProfile
     /// </summary>
     public UserProfile()
     {
-        Id = ulong.MaxValue;
+        Id = ulong.MinValue;
         Name = Environment.UserName;
         Description = string.Empty;
         Settings = new ProfileSettings();
@@ -310,6 +310,7 @@ public class UserProfile
         }
 
         _current = profile;
+        FZCore.Core.SetApplicationTheme(App.Current, profile.Settings.ThemeMode);
         return true;
     }
 

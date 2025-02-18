@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using FZCore;
 using ResourceRadar.Core.Authentication;
+using ResourceRadar.Windows;
 
 namespace ResourceRadar;
 
@@ -25,6 +27,22 @@ public partial class App : Application
     {
         // Post exit cleanup
         return;
+    }
+
+    /// <summary>
+    /// Attempts to create a new user profile.
+    /// </summary>
+    /// <returns>True if new user profile was created.</returns>
+    public static bool CreateNewProfile()
+    {
+        WndNewProfile wnd = new WndNewProfile();
+        if (wnd.ShowDialog() != true)
+        {
+            Log.Info("Profile creation cancelled.", nameof(CreateNewProfile));
+            return false;
+        }
+
+        return true;
     }
 }
 

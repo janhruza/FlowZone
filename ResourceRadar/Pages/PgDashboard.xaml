@@ -6,4 +6,7 @@
       xmlns:local="clr-namespace:ResourceRadar.Pages"
       Title="Dashboard">
 
+    <Grid>
+    </Grid>
+    
 </Page>
