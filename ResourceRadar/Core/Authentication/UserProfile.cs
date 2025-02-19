@@ -65,7 +65,7 @@ public class UserProfile
     /// Representing all user's stored inventory items.
     /// </summary>
     [JsonIgnore]
-    public List<InventoryItem> Items { get; set; }
+    public InventoryItemsCollection Items { get; set; }
 
     /// <summary>
     /// Logouts the currently loaded profile.

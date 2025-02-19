@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using FZCore;
 using ResourceRadar.Core;
+using ResourceRadar.Core.Authentication;
 using ResourceRadar.Windows;
 
 namespace ResourceRadar;
@@ -25,6 +27,12 @@ public partial class App : Application
     private void Application_Exit(object sender, ExitEventArgs e)
     {
         // Post exit cleanup
+        if (UserProfile.Current != null)
+        {
+            _ = UserProfile.SaveSettings(UserProfile.Current);
+            _ = UserProfile.WriteUserItems(UserProfile.Current, UserProfile.Current.Items);
+        }
+
         return;
     }
 
@@ -60,6 +68,16 @@ public partial class App : Application
 
         oItem = null;
         return false;
+    }
+
+    /// <summary>
+    /// Displays the message box saying no user is logged in.
+    /// </summary>
+    public static void NoLoggedUser()
+    {
+        Log.Error(Messages.NO_USER_LOGGED, nameof(NoLoggedUser));
+        _ = MessageBox.Show("", "No user logged", MessageBoxButton.OK, MessageBoxImage.Error);
+        return;
     }
 }
 

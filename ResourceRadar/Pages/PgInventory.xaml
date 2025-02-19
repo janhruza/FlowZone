@@ -7,6 +7,29 @@
       Title="Inventory">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Name="lbiItems"
+                 Grid.Row="0"/>
+
+        <StackPanel Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+            <Button Content="Refresh"
+                    Name="btnRefresh"
+                    Margin="0,0,5,0"
+                    Click="btnRefresh_Click"/>
+            
+            <Button Content="New Item"
+                    Name="btnAddItem"
+                    Click="btnAddItem_Click"/>
+
+        </StackPanel>
+
     </Grid>
 </Page>
