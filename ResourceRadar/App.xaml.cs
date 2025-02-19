@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using FZCore;
+using ResourceRadar.Core;
 using ResourceRadar.Windows;
 
 namespace ResourceRadar;
@@ -41,6 +42,24 @@ public partial class App : Application
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Opens a new item dialog window.
+    /// </summary>
+    /// <param name="oItem">A place to store the created inventory item (in case of need).</param>
+    /// <returns>True, if new inventory item was created, otherwise false.</returns>
+    public static bool AddNewItem(out InventoryItem? oItem)
+    {
+        WndNewItem wnd = new WndNewItem();
+        if (wnd.ShowDialog() == true)
+        {
+            oItem = wnd.Value;
+            return true;
+        }
+
+        oItem = null;
+        return false;
     }
 }
 
