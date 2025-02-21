@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using FZCore;
 using ResourceRadar.Core;
@@ -35,58 +33,37 @@ public partial class PgInventory : Page
             return null;
         }
 
-        Grid g = new Grid
+        // menu items
+        MenuItem miDelete = new MenuItem
         {
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            VerticalAlignment = VerticalAlignment.Stretch,
-            Width = double.NaN
+            Header = "Delete",
+            InputGestureText = "Del"
         };
 
-        g.ColumnDefinitions.Add(new ColumnDefinition());
-        g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-
-        // Control buttons
-        // Remove button
-        Button btnRemove = new Button
+        miDelete.Click += (s, e) =>
         {
-            Content = "Remove",
-            Visibility = Visibility.Collapsed
+            if (UserProfile.Current.Items.Remove(item) == true)
+            {
+                RefreshItems();
+            }
         };
 
-        btnRemove.Click += (s, e) =>
-        {
-            UserProfile.Current.Items.Remove(item);
-            RefreshItems();
-        };
-
-        g.Children.Add(btnRemove);
-        Grid.SetColumn(btnRemove, 1);
-
-        Label lblText = new Label
-        {
-            Content = item.Name
-        };
-
-        g.Children.Add(lblText);
-        Grid.SetColumn(lblText, 0);
-
+        // list box item iteself
         ListBoxItem lbi = new ListBoxItem
         {
-            Content = g
-        };
-
-        lbi.MouseEnter += (s, e) =>
-        {
-            btnRemove.Visibility = Visibility.Visible;
-        };
-
-        lbi.MouseLeave += (s, e) =>
-        {
-            btnRemove.Visibility = Visibility.Collapsed;
+            Content = item.Name,
+            ContextMenu = new ContextMenu
+            {
+                Items =
+                {
+                    miDelete
+                }
+            }
         };
 
         return lbi;
     }
+
 
     private void RefreshItems()
     {
