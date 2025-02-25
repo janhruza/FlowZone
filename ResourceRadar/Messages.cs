@@ -26,5 +26,10 @@ namespace ResourceRadar
         /// No inventory item was created.
         /// </summary>
         public const string NO_ITEM_CREATED = "No inventory item was created.";
+
+        /// <summary>
+        /// Remove Item
+        /// </summary>
+        public const string REMOVE_ITEM_CAPTION = "Remove Item";
     }
 }

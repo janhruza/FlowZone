@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Windows;
+using System.Linq;
 
 namespace ResourceRadar.Core;
 
@@ -108,9 +110,54 @@ public class InventoryItem
         MaintenanceHistory = [];
         Attachments = [];
     }
+
+    #region Static code
+
+    /// <summary>
+    /// Shows a confirmation dialog for item deletion.
+    /// </summary>
+    /// <param name="items">List of items or a single item.</param>
+    /// <returns>True, if user confirms the action, otherwise false.</returns>
+    public static bool ConfirmDelete(InventoryItemsCollection items)
+    {
+        MessageBoxResult result;
+
+        if (items.Any() == false)
+        {
+            return false;
+        }
+
+        if (items.Count == 1)
+        {
+            // single item
+            result = MessageBox.Show($"Are you sure you want to permanently remove \'{items.First().Name}\' from your inventory? This action is irreversible.", Messages.REMOVE_ITEM_CAPTION, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        }
+
+        else
+        {
+            // multiple items
+            result = MessageBox.Show($"Are you sure you want to permanently remove {items.Count} items from your inventory? This action is irreversible.", Messages.REMOVE_ITEM_CAPTION, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        }
+
+        return result == MessageBoxResult.Yes;
+    }
+
+    #endregion
 }
 
 /// <summary>
 /// Representing a list of multiple <see cref="InventoryItem"/>s.
 /// </summary>
-public class InventoryItemsCollection : List<InventoryItem>;
+public class InventoryItemsCollection : List<InventoryItem>
+{
+    /// <summary>
+    /// Representing the base consructor.
+    /// </summary>
+    public InventoryItemsCollection() : base() { }
+
+    /// <summary>
+    /// Creates the collection with the items from the <paramref name="collection"/>.
+    /// </summary>
+    /// <param name="collection">Collection of items to add into the list.</param>
+    public InventoryItemsCollection(IEnumerable<InventoryItem> collection) : base(collection) { }
+}

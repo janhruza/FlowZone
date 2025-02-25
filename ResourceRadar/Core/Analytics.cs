@@ -162,4 +162,57 @@ public class Analytics
     {
         return NearExpiredWarrantyAsync(collection, 0);
     }
+
+    /// <summary>
+    /// Gets the last <paramref name="nLastRecords"/> purchased records from the <paramref name="items"/>.
+    /// </summary>
+    /// <param name="items">List of all items to create history from.</param>
+    /// <param name="nLastRecords">Total numer of items to be returned.</param>
+    /// <returns>A list of <paramref name="nLastRecords"/> items from the collection of <paramref name="items"/>.
+    /// If the total number of items in the <paramref name="items"/> is less than <paramref name="nLastRecords"/>,
+    /// then all items from the <paramref name="items"/> are returned.</returns>
+    public static Task<InventoryItemsCollection> GetHistoryAsync(InventoryItemsCollection items, int nLastRecords)
+    {
+        return Task.Run<InventoryItemsCollection>(() =>
+        {
+            int count = Count(items);
+            if (count == 0)
+            {
+                return [];
+            }
+
+            // get number of items
+            int totalToGet = (count >= nLastRecords ? nLastRecords : count);
+
+            // get and return items
+            var list = items.OrderByDescending(x => x.PurchaseDate).Take(totalToGet).ToList();
+            InventoryItemsCollection result = [.. list];
+            return result;
+        });
+    }
+
+    /// <summary>
+    /// Filters the items based on their names.
+    /// </summary>
+    /// <param name="items">List of items.</param>
+    /// <param name="searchName">Search phrase.</param>
+    /// <returns>Filtered items or an empty list if no items were found or the input data are invalid.</returns>
+    public static Task<InventoryItemsCollection> FilterItemsAsync(InventoryItemsCollection items, string searchName)
+    {
+        return Task.Run<InventoryItemsCollection>(() =>
+        {
+            if (string.IsNullOrEmpty(searchName.Trim()) == true)
+            {
+                return [];
+            }
+
+            if (items.Any() == false)
+            {
+                return [];
+            }
+
+            searchName = searchName.Trim().ToLower();
+            return new InventoryItemsCollection([.. items.Where(x => x.Name.ToLower().Contains(searchName))]);
+        });
+    }
 }

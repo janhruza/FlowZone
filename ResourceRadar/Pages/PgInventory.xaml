@@ -8,14 +8,33 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ListBox Name="lbiItems"
-                 Grid.Row="0"/>
+        <Grid Grid.Row="0"
+              Margin="0,0,0,10">
 
-        <StackPanel Grid.Row="1"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Search:"
+                   Grid.Column="0"
+                   VerticalContentAlignment="Center"/>
+
+            <TextBox Name="txtSearch"
+                     Grid.Column="1"
+                     Margin="10,0,0,0"
+                     TextChanged="txtSearch_TextChanged"/>
+        </Grid>
+        
+        <ListBox Name="lbiItems"
+                 Grid.Row="1"/>
+
+        <StackPanel Grid.Row="2"
                     Margin="0,10,0,0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">

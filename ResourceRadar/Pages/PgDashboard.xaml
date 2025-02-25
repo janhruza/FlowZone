@@ -7,6 +7,57 @@
       Title="Dashboard">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Content row-->
+        <Border Grid.Row="0"
+                Margin="0,0,0,10">
+
+            <Label HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch">
+                    
+                    <Run Text="Total stored items:"/>
+                    <Run Text="0"
+                         Name="rStoredItemsCount"
+                         FontWeight="Bold"
+                         Foreground="{x:Static SystemColors.AccentColorBrush}"/>
+                    
+                    <LineBreak />
+                    
+                    <Run Text="Recent items"/>
+                    <LineBreak />
+                    
+                    <Border BorderThickness="1"
+                            BorderBrush="{x:Static SystemColors.AccentColorBrush}"
+                            CornerRadius="10"
+                            Padding="5"
+                            Width="600">
+                        
+                        <StackPanel Name="stpHistory"
+                                    Width="auto"/>
+                        
+                    </Border>
+                    <LineBreak />
+                    
+                </TextBlock>
+            </Label>
+
+        </Border>
+        
+        <!--Control buttons row-->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+            <Button Content="Refresh"
+                    Name="btnRefresh"
+                    Click="btnRefresh_Click"/>
+
+        </StackPanel>
     </Grid>
     
 </Page>

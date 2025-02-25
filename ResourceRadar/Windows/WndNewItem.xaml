@@ -21,7 +21,8 @@
 
             <!--Basic info-->
             <Expander Header="Basic information"
-                      Name="eBasicInfo">
+                      Name="eBasicInfo"
+                      IsExpanded="True">
                 
                 <StackPanel>
                     <Label Content="Name"/>

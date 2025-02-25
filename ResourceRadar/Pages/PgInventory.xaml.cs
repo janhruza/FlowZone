@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using FZCore;
 using ResourceRadar.Core;
 using ResourceRadar.Core.Authentication;
@@ -42,10 +46,7 @@ public partial class PgInventory : Page
 
         miDelete.Click += (s, e) =>
         {
-            if (UserProfile.Current.Items.Remove(item) == true)
-            {
-                RefreshItems();
-            }
+            RemoveItem(item);
         };
 
         // list box item iteself
@@ -61,11 +62,36 @@ public partial class PgInventory : Page
             }
         };
 
+        lbi.KeyDown += (s, e) =>
+        {
+            if (e.Key == Key.Delete)
+            {
+                RemoveItem(item);
+            }
+        };
+
         return lbi;
     }
 
+    private void RemoveItem(InventoryItem item)
+    {
+        if (UserProfile.Current == null)
+        {
+            return;
+        }
 
-    private void RefreshItems()
+        if (InventoryItem.ConfirmDelete([item]) == true)
+        {
+            if (UserProfile.Current.Items.Remove(item) == true)
+            {
+                RefreshItems();
+            }
+        }
+    }
+
+    private bool FilterItems => string.IsNullOrEmpty(txtSearch.Text.Trim()) == false;
+
+    private async Task RefreshItems()
     {
         lbiItems.Items.Clear();
 
@@ -79,14 +105,45 @@ public partial class PgInventory : Page
             return;
         }
 
-        // refresh UI
-        foreach (InventoryItem item in UserProfile.Current.Items)
+        if (FilterItems == false)
         {
-            // create item
-            ListBoxItem? lbi = CreateListItem(item);
+            // refresh UI
+            foreach (InventoryItem item in UserProfile.Current.Items)
+            {
+                // create item
+                ListBoxItem? lbi = CreateListItem(item);
 
-            if (lbi == null) continue;
-            lbiItems.Items.Add(lbi);
+                if (lbi == null) continue;
+                lbiItems.Items.Add(lbi);
+            }
+        }
+
+        else
+        {
+            InventoryItemsCollection items = await Analytics.FilterItemsAsync(UserProfile.Current.Items, txtSearch.Text.Trim());
+
+            if (items.Any() == false)
+            {
+                ListBoxItem lbi = new ListBoxItem
+                {
+                    Content = $"No results for \'{txtSearch.Text.Trim()}\' found.",
+                    Background = SystemColors.AccentColorBrush
+                };
+
+                lbiItems.Items.Add(lbi);
+            }
+
+            else
+            {
+                foreach (var item in items)
+                {
+                    // create item
+                    ListBoxItem? lbi = CreateListItem(item);
+
+                    if (lbi == null) continue;
+                    lbiItems.Items.Add(lbi);
+                }
+            }
         }
     }
 
@@ -101,12 +158,12 @@ public partial class PgInventory : Page
 
     #endregion
 
-    private void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
+    private async void btnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        RefreshItems();
+        await RefreshItems();
     }
 
-    private void btnAddItem_Click(object sender, System.Windows.RoutedEventArgs e)
+    private async void btnAddItem_Click(object sender, System.Windows.RoutedEventArgs e)
     {
         if (UserProfile.Current == null)
         {
@@ -125,7 +182,12 @@ public partial class PgInventory : Page
             }
 
             UserProfile.Current.Items.Add(item);
-            RefreshItems();
+            await RefreshItems();
         }
+    }
+
+    private async void txtSearch_TextChanged(object sender, RoutedEventArgs e)
+    {
+        await RefreshItems();
     }
 }
