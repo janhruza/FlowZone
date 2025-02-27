@@ -1,4 +1,5 @@
-﻿using FZCore;
+﻿using System.Globalization;
+using FZCore;
 
 namespace ResourceRadar.Core.Authentication;
 
@@ -13,10 +14,16 @@ public class ProfileSettings
     public ProfileSettings()
     {
         ThemeMode = FZThemeMode.System;
+        CultureName = CultureInfo.CurrentCulture.Name;
     }
 
     /// <summary>
     /// Representing the preferred application theme.
     /// </summary>
     public FZThemeMode ThemeMode { get; set; }
+
+    /// <summary>
+    /// Representing the selected culture - sed currency, etc.
+    /// </summary>
+    public string CultureName { get; set; }
 }

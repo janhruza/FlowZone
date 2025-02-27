@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using FZCore;
@@ -23,6 +24,33 @@ public partial class PgSettings : Page
             if (UserProfile.Current == null)
             {
                 return;
+            }
+
+            // display cultures
+            cbLocales.Items.Clear();
+
+            foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                ComboBoxItem cbi = new ComboBoxItem
+                {
+                    Content = $"{culture.DisplayName} {(string.IsNullOrEmpty(culture.Name) == true ? string.Empty : $"({culture.Name.ToUpper()})")}"
+                };
+
+                cbi.Selected += async (s, e) =>
+                {
+                    // set the new culture
+                    UserProfile.Current.Settings.CultureName = culture.Name;
+                    CultureInfo cu = new CultureInfo(culture.Name);
+                    CultureInfo.CurrentCulture = cu;
+                    CultureInfo.CurrentUICulture = cu;
+                    await UserProfile.SaveSettings(UserProfile.Current);
+                };
+
+                int index = cbLocales.Items.Add(cbi);
+                if (culture.Name == UserProfile.Current.Settings.CultureName)
+                {
+                    cbLocales.SelectedIndex = index;
+                }
             }
 
             // set checked theme item

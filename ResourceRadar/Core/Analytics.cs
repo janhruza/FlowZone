@@ -101,7 +101,7 @@ public class Analytics
             if (collection.Count < topN) return [];
 
             var list = collection.OrderByDescending(x => x.PurchasePrice).Take(topN).ToList();
-            return (InventoryItemsCollection)list;
+            return [.. list];
         });
     }
 

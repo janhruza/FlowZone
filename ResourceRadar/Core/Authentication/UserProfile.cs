@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -92,6 +93,9 @@ public class UserProfile
         }
 
         _current = profile;
+        CultureInfo cu = new CultureInfo(profile.Settings.CultureName);
+        CultureInfo.CurrentCulture = cu;
+        CultureInfo.CurrentUICulture = cu;
         Log.Success($"User \'{profile.Name}\' was logged in.", nameof(Login));
         return true;
     }

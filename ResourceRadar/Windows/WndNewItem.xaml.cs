@@ -70,6 +70,7 @@ public partial class WndNewItem : Window
         _item.Storage.Condition = txtStorageCondition.Text.Trim();
 
         _item.PurchaseDate = dtPurchase.SelectedDate ?? DateTime.Now;
+        _item.PurchasePrice = Convert.ToDecimal(txtPrice.Text);
         _item.ExpirationDate = dtExpiration.SelectedDate ?? DateTime.MinValue;
         _item.WarrantyExpiry = dtWarranty.SelectedDate ?? DateTime.MinValue;
 

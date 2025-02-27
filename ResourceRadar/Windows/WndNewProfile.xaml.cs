@@ -1,7 +1,7 @@
-﻿using System;
+﻿using System.Globalization;
 using System.Media;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Windows;
@@ -17,19 +17,43 @@ public partial class WndNewProfile : Window
     public WndNewProfile()
     {
         InitializeComponent();
+        this.Loaded += (s, e) =>
+        {
+            // load cultures
+            cbLocales.Items.Clear();
+
+            foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                ComboBoxItem cbi = new ComboBoxItem
+                {
+                    Content = $"{culture.DisplayName} {(string.IsNullOrEmpty(culture.Name) == true ? string.Empty : $"({culture.Name.ToUpper()})")}",
+                    Tag = culture.Name,
+                    Uid = culture.Name
+                };
+
+                cbi.Selected += (s, e) =>
+                {
+                    sLocale = culture.Name;
+                };
+
+                cbLocales.Items.Add(cbi);
+            }
+
+        };
     }
 
     private string sName = string.Empty;
     private string sDescription = string.Empty;
+    private string sLocale = string.Empty;
 
     private bool VerifyFields()
     {
         sName = txtUsername.Text.Trim();
         sDescription = txtDescription.Text.Trim();
 
-        if (string.IsNullOrEmpty(sName) == true)
+        if (string.IsNullOrEmpty(sName) == true || string.IsNullOrEmpty(sLocale) == true)
         {
-            // name is mandatory
+            // fields are required
             return false;
         }
 

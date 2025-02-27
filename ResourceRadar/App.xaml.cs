@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows;
 using FZCore;
 using ResourceRadar.Core;

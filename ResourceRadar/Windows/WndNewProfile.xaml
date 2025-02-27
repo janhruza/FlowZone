@@ -26,6 +26,11 @@
                      TextChanged="txtUsername_TextChanged"
                      SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
+            <Label Content="Locale"
+                   Margin="0,5,0,0"/>
+
+            <ComboBox Name="cbLocales"/>
+
             <Label Content="Descrioption (optional)"
                    Margin="0,5,0,0"/>
             

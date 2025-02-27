@@ -32,5 +32,10 @@
                          Name="rbThemeNone"
                          Click="rbThemeNone_Click"/>
         </StackPanel>
+
+        <Label Content="Culture (locales)"
+               FontSize="20"
+               Margin="0,5,0,0"/>
+        <ComboBox Name="cbLocales"/>
     </StackPanel>
 </Page>

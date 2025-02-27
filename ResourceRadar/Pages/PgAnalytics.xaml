@@ -7,6 +7,34 @@
       Title="Analytics">
 
     <Grid>
-        
+        <Label>
+            <TextBlock>
+                <Run Name="rName"
+                     Text="[user]"
+                     FontWeight="SemiBold"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"/><Run Text="'s stats"/>
+                <LineBreak />
+                
+                <Run Text="Number of stored items:"/>
+                <Run Name="rItemsCount"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"
+                     Text="[count]"
+                     FontWeight="SemiBold"/>
+                <LineBreak />
+                
+                <Run Text="Total value:"/>
+                <Run Name="rTotalValue"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"
+                     FontWeight="SemiBold"
+                     Text="[total]"/>
+                <LineBreak />
+                
+                <Run Text="Last item:"/>
+                <Run Name="rLast"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"
+                     FontWeight="SemiBold"
+                     Text="[last]"/>
+            </TextBlock>
+        </Label>
     </Grid>
 </Page>
