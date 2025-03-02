@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Windows;
 using FZCore.Windows;
+using Microsoft.Win32;
 
 namespace FZCore;
 
@@ -44,6 +46,34 @@ public static class Core
     {
         InfoBox(FZData.License, FZData.Solution);
         return true;
+    }
+
+    /// <summary>
+    /// Determines whether the user's Windows customization is set to dark mode.
+    /// </summary>
+    /// <returns>True, if the dark mode is enabled in settings, otherwise false. Also returns false if an exception is raised.</returns>
+    public static bool IsDarkModeEnabled()
+    {
+        const string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+        const string valueName = "AppsUseLightTheme";
+
+        try
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(registryKey))
+            {
+                if (key != null && key.GetValue(valueName) is int value)
+                {
+                    return value == 0; // 0 means dark mode
+                }
+            }
+        }
+        catch
+        {
+            // Handle exceptions (e.g., lack of permissions)
+        }
+
+        // Default to light mode if the value cannot be determined
+        return false;
     }
 
 #pragma warning disable WPF0001
@@ -97,11 +127,23 @@ public static class Core
             WindowExtender.EnableDarkMode();
         }
 
+        else if (theme == FZThemeMode.System)
+        {
+            if (IsDarkModeEnabled() == true)
+            {
+                WindowExtender.EnableDarkMode();
+            }
+
+            else
+            {
+                WindowExtender.EnableLightMode();
+            }
+        }
+
         else
         {
             WindowExtender.EnableSystemMode();
         }
-
         return;
     }
 

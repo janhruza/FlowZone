@@ -175,6 +175,10 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        // enable system theme
+        // now with proper handle of system-drawn controls
+        FZCore.Core.SetApplicationTheme(FZThemeMode.System);
+
         TaskPilot.MainWindow mw = new TaskPilot.MainWindow();
         MainWindow = mw;
         MainWindow.Show();
