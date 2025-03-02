@@ -35,6 +35,10 @@ namespace Expando
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            // set proper theme
+            // handles drawing of system-controls like menus too
+            FZCore.Core.SetApplicationTheme(FZThemeMode.System);
+
             Expando.MainWindow mw = new Expando.MainWindow();
             MainWindow = mw;
             MainWindow.Show();
