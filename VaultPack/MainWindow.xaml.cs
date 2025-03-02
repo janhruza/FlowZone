@@ -20,6 +20,18 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        WindowExtender wex = new WindowExtender(this);
+        WindowExtender.EnableDarkMode();
+
+        wex.AddMenuItem(0x10, new ExtendedMenuItem
+        {
+            Header = "View Log",
+            OnClick = () =>
+            {
+                Core.ViewLog();
+            }
+        });
     }
 
     #region Create new archive code

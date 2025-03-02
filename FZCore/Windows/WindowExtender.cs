@@ -30,7 +30,7 @@ public class WindowExtender
     {
         if (window == null) throw new ArgumentNullException(nameof(window));
 
-        _hwnd = new WindowInteropHelper(window).Handle;
+        _hwnd = new WindowInteropHelper(window).EnsureHandle();
         _customMenuItems = new Dictionary<int, ExtendedMenuItem>();
 
         // Hook WndProc
@@ -127,4 +127,29 @@ public class WindowExtender
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     private static extern bool InsertMenu(IntPtr hMenu, int uPosition, int uFlags, int uIDNewItem, string lpNewItem);
+
+    [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern int SetPreferredAppMode(int preferredAppMode);
+
+    [DllImport("uxtheme.dll", EntryPoint = "#136", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern void FlushMenuThemes();
+
+    /// <summary>
+    /// Draws the system menu using the dark theme.
+    /// </summary>
+    public static void EnableDarkMode()
+    {
+        // Set the preferred app mode to dark
+        SetPreferredAppMode(2); // 2 corresponds to "AllowDark" mode
+        FlushMenuThemes(); // Apply the theme changes
+    }
+
+    /// <summary>
+    /// Draws the system menu using the light (default) theme.
+    /// </summary>
+    public static void EnableLightMode()
+    {
+        SetPreferredAppMode(1);
+        FlushMenuThemes();
+    }
 }
