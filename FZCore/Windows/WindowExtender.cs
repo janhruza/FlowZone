@@ -140,7 +140,7 @@ public class WindowExtender
     public static void EnableDarkMode()
     {
         // Set the preferred app mode to dark
-        SetPreferredAppMode(2); // 2 corresponds to "AllowDark" mode
+        _ = SetPreferredAppMode(2); // 2 corresponds to "AllowDark" mode
         FlushMenuThemes(); // Apply the theme changes
     }
 
@@ -149,7 +149,16 @@ public class WindowExtender
     /// </summary>
     public static void EnableLightMode()
     {
-        SetPreferredAppMode(1);
+        _ = SetPreferredAppMode(4); // force light mode
+        FlushMenuThemes();
+    }
+
+    /// <summary>
+    /// Draws the system menu with the system theme.
+    /// </summary>
+    public static void EnableSystemMode()
+    {
+        _ = SetPreferredAppMode(0); // use system default (light)
         FlushMenuThemes();
     }
 }

@@ -68,6 +68,7 @@ public static class Core
         }
 
         window.ThemeMode = ThemesByNames[theme];
+        
         return;
     }
 
@@ -84,6 +85,22 @@ public static class Core
         }
 
         application.ThemeMode = ThemesByNames[theme];
+
+        if (theme == FZThemeMode.Light)
+        {
+            WindowExtender.EnableLightMode();
+        }
+
+        else if (theme == FZThemeMode.Dark)
+        {
+            WindowExtender.EnableDarkMode();
+        }
+
+        else
+        {
+            WindowExtender.EnableSystemMode();
+        }
+
         return;
     }
 
