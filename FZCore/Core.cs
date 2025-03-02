@@ -105,5 +105,16 @@ public static class Core
         return;
     }
 
+    /// <summary>
+    /// Sets the desired <paramref name="theme"/> for the entire applcation (full <see cref="Application"/> scope).
+    /// Also draws the system elements (menu, etc.) using the corresponding theme.
+    /// </summary>
+    /// <param name="theme">Desired application theme.</param>
+    public static void SetApplicationTheme(FZThemeMode theme)
+    {
+        SetApplicationTheme(Application.Current, theme);
+        return;
+    }
+
 #pragma warning restore WPF0001
 }
