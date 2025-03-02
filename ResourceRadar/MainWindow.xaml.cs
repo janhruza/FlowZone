@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media.TextFormatting;
 using FZCore;
 using ResourceRadar.Core.Authentication;
 using ResourceRadar.Pages;
