@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultPack", "VaultPack\Vaul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceRadar", "ResourceRadar\ResourceRadar.csproj", "{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFort", "PassFort\PassFort.csproj", "{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,14 @@ Global
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|x64.ActiveCfg = Release|Any CPU
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|x64.Build.0 = Release|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|x64.ActiveCfg = Debug|x64
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|x64.Build.0 = Debug|x64
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|x64.ActiveCfg = Release|Any CPU
+		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

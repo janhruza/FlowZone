@@ -1,0 +1,56 @@
+﻿<Window x:Class="PassFort.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PassFort"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="PassFort"
+        SizeToContent="WidthAndHeight"
+        MinWidth="450"
+        MinHeight="300"
+        ResizeMode="CanResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--Menu bar row-->
+            <RowDefinition Height="auto"/>
+            
+            <!--Content row-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <!--File menu item-->
+            <MenuItem Header="File">
+                <MenuItem Header="Open database"
+                          InputGestureText="Ctr+O"
+                          Name="miOpen"/>
+
+                <Separator />
+
+                <MenuItem Header="Close"
+                          InputGestureText="Alt+F4"
+                          Name="miClose"
+                          Click="miClose_Click"/>
+            </MenuItem>
+            
+            <!--Help menu item-->
+            <MenuItem Header="Help">
+                <MenuItem Header="About PassFort"/>
+                <MenuItem Header="About FlowZone"/>
+            </MenuItem>
+        </Menu>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <Frame Name="frmContent"
+                   NavigationUIVisibility="Hidden"/>
+
+        </ScrollViewer>
+    </Grid>
+    
+</Window>
