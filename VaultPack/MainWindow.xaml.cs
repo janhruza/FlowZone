@@ -24,7 +24,8 @@ public partial class MainWindow : Window
         WindowExtender wex = new WindowExtender(this);
         WindowExtender.EnableDarkMode();
 
-        wex.AddMenuItem(0x10, new ExtendedMenuItem
+        wex.AddSeparator(0x10);
+        wex.AddMenuItem(0x11, new ExtendedMenuItem
         {
             Header = "View Log",
             OnClick = () =>

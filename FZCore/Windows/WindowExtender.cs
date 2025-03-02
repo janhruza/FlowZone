@@ -54,6 +54,20 @@ public class WindowExtender
     }
 
     /// <summary>
+    /// Adds new separator to the given position within the list of custom items.
+    /// </summary>
+    /// <param name="id"></param>
+    public void AddSeparator(int id)
+    {
+        _customMenuItems[id] = new ExtendedMenuItem
+        {
+            Header = "-"
+        };
+
+        RedrawMenu();
+    }
+
+    /// <summary>
     /// Adds new menu item to the end of the sequence.
     /// </summary>
     /// <param name="id">Menu item ID.</param>
@@ -93,13 +107,18 @@ public class WindowExtender
 
         IntPtr systemMenu = GetSystemMenu(_hwnd, false);
 
-        // Add a separator at the top
-        InsertMenu(systemMenu, 0, MF_SEPARATOR, 0, string.Empty);
-
         // Insert custom items at their respective positions based on IDs
         foreach (var menuItem in _customMenuItems.OrderBy(m => m.Key))
         {
-            InsertMenu(systemMenu, menuItem.Key, MF_STRING, menuItem.Key, menuItem.Value.Header);
+            if (string.IsNullOrEmpty(menuItem.Value.Header) || menuItem.Value.Header == "-")
+            {
+                InsertMenu(systemMenu, menuItem.Key, MF_SEPARATOR, 0, string.Empty);
+            }
+
+            else
+            {
+                InsertMenu(systemMenu, menuItem.Key, MF_STRING, menuItem.Key, menuItem.Value.Header);
+            }
         }
     }
 
