@@ -271,19 +271,19 @@ public partial class MainWindow : Window
         switch (mode)
         {
             case Core.ThemeMode.Dark:
-                App.Current.ThemeMode = System.Windows.ThemeMode.Dark;
+                FZCore.Core.SetApplicationTheme(App.Current, FZCore.FZThemeMode.Dark);
                 break;
 
             case Core.ThemeMode.Light:
-                App.Current.ThemeMode = System.Windows.ThemeMode.Light;
+                FZCore.Core.SetApplicationTheme(App.Current, FZCore.FZThemeMode.Light);
                 break;
 
             case Core.ThemeMode.System:
-                App.Current.ThemeMode = System.Windows.ThemeMode.System;
+                FZCore.Core.SetApplicationTheme(App.Current, FZCore.FZThemeMode.System);
                 break;
 
             case Core.ThemeMode.None:
-                App.Current.ThemeMode = System.Windows.ThemeMode.None;
+                FZCore.Core.SetApplicationTheme(App.Current, FZCore.FZThemeMode.None);
                 break;
 
             default:

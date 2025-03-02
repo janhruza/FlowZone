@@ -74,6 +74,7 @@ public static class Core
 
     /// <summary>
     /// Sets the desired <paramref name="theme"/> for the entire <paramref name="application"/> (full <see cref="Application"/> scope).
+    /// Also draws the system elements (menu, etc.) using the corresponding theme.
     /// </summary>
     /// <param name="application">Target application.</param>
     /// <param name="theme">Desired application theme.</param>
