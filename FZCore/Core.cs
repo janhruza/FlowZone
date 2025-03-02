@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using FZCore.Windows;
@@ -12,6 +12,11 @@ namespace FZCore;
 /// </summary>
 public static class Core
 {
+    /// <summary>
+    /// Representing the URL of the FlowZone project.
+    /// </summary>
+    public const string FlowZoneUrl = $"https://www.github.com/janhruza/FlowZone";
+
     /// <summary>
     /// Shows the popup dialog box with the specified <paramref name="message"/> and window <paramref name="caption"/>.
     /// </summary>
@@ -76,6 +81,22 @@ public static class Core
         return false;
     }
 
+    /// <summary>
+    /// Opens the specified <paramref name="url"/> using the default web browser.
+    /// </summary>
+    /// <param name="url">Target URL address of the site to visit.</param>
+    public static void OpenWebPage(string url)
+    {
+        _ = Process.Start(new ProcessStartInfo
+        {
+            FileName = url,
+            UseShellExecute = true // Must be true to open the URL with the default web browser
+        });
+
+        return;
+    }
+
+
 #pragma warning disable WPF0001
     private static Dictionary<FZThemeMode, ThemeMode> ThemesByNames => new Dictionary<FZThemeMode, ThemeMode>
     {
@@ -98,7 +119,7 @@ public static class Core
         }
 
         window.ThemeMode = ThemesByNames[theme];
-        
+
         return;
     }
 

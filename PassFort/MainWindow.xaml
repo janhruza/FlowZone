@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="PassFort"
-        SizeToContent="WidthAndHeight"
         MinWidth="450"
         MinHeight="300"
-        ResizeMode="CanResize">
+        Width="1000"
+        Height="680">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,9 +24,21 @@
         <Menu Grid.Row="0">
             <!--File menu item-->
             <MenuItem Header="File">
+                <MenuItem Header="Create new database"
+                          InputGestureText="Ctrl+N"
+                          Name="miNewDatabase"
+                          Click="miNewDatabase_Click"/>
+
                 <MenuItem Header="Open database"
-                          InputGestureText="Ctr+O"
-                          Name="miOpen"/>
+                          InputGestureText="Ctrl+O"
+                          Name="miOpenDatabase"
+                          Click="miOpenDatabase_Click"/>
+
+                <MenuItem Header="Save"
+                          InputGestureText="Ctrl+S"
+                          Name="miSaveDatabase"
+                          Click="miSaveDatabase_Click"
+                          IsEnabled="False"/>
 
                 <Separator />
 
@@ -36,10 +48,22 @@
                           Click="miClose_Click"/>
             </MenuItem>
             
+            <!--Edit menu item-->
+            <MenuItem Header="Edit">
+                <MenuItem Command="Copy"/>
+                <MenuItem Command="Cut"/>
+                <MenuItem Command="Paste"/>
+            </MenuItem>
+            
             <!--Help menu item-->
             <MenuItem Header="Help">
-                <MenuItem Header="About PassFort"/>
-                <MenuItem Header="About FlowZone"/>
+                <MenuItem Header="About PassFort"
+                          Name="miABoutPassFort"
+                          Click="miABoutPassFort_Click"/>
+                
+                <MenuItem Header="About FlowZone"
+                          Name="miAboutFlowZone"
+                          Click="miAboutFlowZone_Click"/>
             </MenuItem>
         </Menu>
 
