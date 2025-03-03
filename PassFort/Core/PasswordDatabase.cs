@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using System.Text;
-using System.Windows.Documents;
 using FZCore;
 
 namespace PassFort.Core
@@ -23,7 +21,8 @@ namespace PassFort.Core
         private string? _dirPath;
 
 
-        private static readonly string _metadata = "metadata";
+        private static readonly string _metadata    = "metadata";
+        private static readonly string _passwords   = "index";
 
         /// <summary>
         /// Creates a new empty database structure.
@@ -116,11 +115,34 @@ namespace PassFort.Core
             }
         }
 
-        public bool ReadPasswordEntries()
+        public bool ReadPasswordEntries(out PasswordCollection entries)
         {
+            entries = [];
+
             if (_dirPath == null)
             {
                 return false;
+            }
+
+            string path = Path.Combine(_dirPath, _passwords);
+            string[] lines = File.ReadAllLines(path);
+
+            if (lines.Length == 0)
+            {
+                // no passwords saved
+                return true;
+            }
+
+            // list files
+            foreach (string line in lines)
+            {
+                if (File.Exists(Path.Combine(_dirPath, line)) == false)
+                {
+                    // file not found, skip
+                    continue;
+                }
+
+
             }
 
             return true;
@@ -130,7 +152,7 @@ namespace PassFort.Core
 
         #region Write methods
 
-        public bool WritePasswordEntries()
+        public bool WritePasswordEntries(PasswordCollection entries)
         {
             if (_dirPath == null)
             {
