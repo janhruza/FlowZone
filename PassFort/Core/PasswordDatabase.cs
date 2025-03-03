@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Input;
 using FZCore;
+
+using static PassFort.Messages;
 
 namespace PassFort.Core
 {
@@ -23,6 +29,18 @@ namespace PassFort.Core
 
         private static readonly string _metadata    = "metadata";
         private static readonly string _passwords   = "index";
+        private static readonly int _keySize = 32;
+        private static readonly int _ivSize = 16;
+
+        private byte[] GenerateBytes(int count)
+        {
+            using (RandomNumberGenerator rnd = RandomNumberGenerator.Create())
+            {
+                byte[] bytes = new byte[count];
+                rnd.GetBytes(bytes);
+                return bytes;
+            }
+        }
 
         /// <summary>
         /// Creates a new empty database structure.
@@ -34,6 +52,10 @@ namespace PassFort.Core
             Id = Guid.CreateVersion7();
             Name = $"Database";
             CreationTime = DateTime.Now;
+
+            // get IV and Key
+            _key = GenerateBytes(_keySize);
+            _iV = GenerateBytes(_ivSize);
         }
 
         #region Metadata
@@ -53,6 +75,16 @@ namespace PassFort.Core
         /// </summary>
         public Guid Id { get; set; }
 
+        /// <summary>
+        /// Representing the encryption key.
+        /// </summary>
+        private byte[] _key { get; set; }
+
+        /// <summary>
+        /// Representing the encryption IV.
+        /// </summary>
+        private byte[] _iV { get; set; }
+
         #endregion
 
         /*
@@ -66,8 +98,11 @@ namespace PassFort.Core
          *  Passwords are stored in their own files, encrypted, along with their own metadata
          *  
          * METADATA file (binary)
+         *  -   ID                          GUID
          *  -   Database name               string
          *  -   Creation time (in binary)   long
+         *  -   Key                         byte[32]
+         *  -   IV                          byte[16]
          *  
          * PASSWORD files (binary)
          *  -   ID                          GUID
@@ -91,7 +126,7 @@ namespace PassFort.Core
             {
                 if (File.Exists(_dirPath) == false)
                 {
-                    Log.Error("No database is opened.", nameof(ReadMetadata));
+                    Log.Error(NO_DB_OPENED, nameof(ReadMetadata));
                     return false;
                 }
 
@@ -100,8 +135,11 @@ namespace PassFort.Core
                 {
                     using (BinaryReader br = new BinaryReader(fs))
                     {
+                        this.Id = new Guid(br.ReadBytes(16));
                         this.Name = br.ReadString();
                         this.CreationTime = DateTime.FromBinary(br.ReadInt64());
+                        this._key = br.ReadBytes(_keySize);
+                        this._iV = br.ReadBytes(_ivSize);
                     }
                 }
 
@@ -115,51 +153,132 @@ namespace PassFort.Core
             }
         }
 
+        /// <summary>
+        /// Reads all the stored password entries from the opened database file.
+        /// </summary>
+        /// <param name="entries">List of entries that will be returned. If an error occurred, an emty list is returned.</param>
+        /// <returns>True, if the operation succeeded, otherwise false.</returns>
         public bool ReadPasswordEntries(out PasswordCollection entries)
         {
-            entries = [];
-
-            if (_dirPath == null)
+            try
             {
-                return false;
-            }
+                entries = [];
 
-            string path = Path.Combine(_dirPath, _passwords);
-            string[] lines = File.ReadAllLines(path);
+                if (_dirPath == null)
+                {
+                    Log.Error(NO_DB_OPENED, nameof(ReadPasswordEntries));
+                    return false;
+                }
 
-            if (lines.Length == 0)
-            {
-                // no passwords saved
+                string path = Path.Combine(_dirPath, _passwords);
+                string[] lines = File.ReadAllLines(path);
+
+                if (lines.Length == 0)
+                {
+                    // no passwords saved
+                    return true;
+                }
+
+                // list files
+                foreach (string line in lines)
+                {
+                    string file = Path.Combine(_dirPath, line);
+                    if (File.Exists(path) == false)
+                    {
+                        // file not found, skip
+                        continue;
+                    }
+
+                    // gets the password data and structures them
+                    ReadOnlySpan<byte> bytes = File.ReadAllBytes(file);
+                    PasswordEntry? pe = PasswordEntry.ReadFromData(bytes);
+
+                    // input data check
+                    if (pe == null)
+                    {
+                        Log.Warning($"Unable to parse password entry \'{file}\'.", nameof(ReadPasswordEntries));
+                        continue;
+                    }
+
+                    // decrypt password entry
+                    if (DecryptEntry(pe) == false)
+                    {
+                        App.CriticalError(CANT_DECRYPT_ENTRY, nameof(ReadPasswordEntries));
+                    }
+
+                    entries.Add(pe);
+                }
+
                 return true;
             }
 
-            // list files
-            foreach (string line in lines)
+            catch (Exception ex)
             {
-                if (File.Exists(Path.Combine(_dirPath, line)) == false)
-                {
-                    // file not found, skip
-                    continue;
-                }
-
-
+                entries = [];
+                Log.Error(ex, nameof(ReadPasswordEntries));
+                return false;
             }
-
-            return true;
         }
 
         #endregion
 
         #region Write methods
 
+        /// <summary>
+        /// Writes all password <paramref name="entries"/> into the opened database file.
+        /// </summary>
+        /// <param name="entries">List of entries to be wrtten into the file.</param>
+        /// <returns>True, if the operation succeeded, otherwise false.</returns>
         public bool WritePasswordEntries(PasswordCollection entries)
         {
-            if (_dirPath == null)
+            try
             {
-                return false;
+                if (_dirPath == null)
+                {
+                    return false;
+                }
+
+                string indexFile = Path.Combine(_dirPath, _passwords);
+                List<string> list = [];
+
+                foreach (PasswordEntry entry in entries)
+                {
+                    // encrypts the entry
+                    if (EncryptEntry(entry) == false)
+                    {
+                        // critical error, show message
+                        App.CriticalError(CANT_ENCRYPT_ENTRY, nameof(WritePasswordEntries));
+                    }
+
+                    using (MemoryStream? ms = PasswordEntry.WriteRawData(entry))
+                    {
+                        if (ms == null)
+                        {
+                            continue;
+                        }
+
+                        // gets the id as the filename
+                        // name is base64 encoded entry ID, without padding equal signs (=)
+                        string name = Convert.ToBase64String(entry.Id.ToByteArray()).TrimEnd('=');
+                        string path = Path.Combine(_dirPath, name);
+                        File.WriteAllBytes(path, ms.ToArray());
+
+                        // register file into the index file
+                        list.Add(name);
+                    }
+                }
+
+                // rewrites the index file
+                File.WriteAllLines(indexFile, list);
+
+                return true;
             }
 
-            return true;
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(WritePasswordEntries));
+                return false;
+            }
         }
 
         /// <summary>
@@ -172,7 +291,7 @@ namespace PassFort.Core
             {
                 if (_dirPath == null)
                 {
-                    Log.Error("No database is opened.", nameof(WriteMetadata));
+                    Log.Error(NO_DB_OPENED, nameof(WriteMetadata));
                     return false;
                 }
 
@@ -181,8 +300,11 @@ namespace PassFort.Core
                 {
                     using (BinaryWriter bw = new BinaryWriter(fs))
                     {
+                        bw.Write(this.Id.ToByteArray());
                         bw.Write(this.Name);                        // string
                         bw.Write(this.CreationTime.ToBinary());     // long
+                        bw.Write(this._key);                        // bytes (32)
+                        bw.Write(this._iV);                         // bytes (16)
                     }
                 }
 
@@ -239,13 +361,13 @@ namespace PassFort.Core
             {
                 if (File.Exists(_filePath) == false)
                 {
-                    Log.Error("No archive is loaded.", nameof(CloseArchive));
+                    Log.Error(NO_DB_OPENED, nameof(CloseArchive));
                     return false;
                 }
 
                 if (Directory.Exists(_dirPath) == false)
                 {
-                    Log.Error("No archive is opened.", nameof(CloseArchive));
+                    Log.Error(NO_DB_OPENED, nameof(CloseArchive));
                     return false;
                 }
 
@@ -263,6 +385,99 @@ namespace PassFort.Core
                 Log.Error(ex, nameof(CloseArchive));
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the password database is opened or not.
+        /// </summary>
+        /// <returns>True, if the database file is opened, otherwise false.</returns>
+        public bool IsOpened()
+        {
+            return _dirPath != null;
+        }
+
+        #endregion
+
+        #region Encryption-related methods
+
+        /// <summary>
+        /// Encrypts the plain text string using AES and returns the encrypted string encoded as base64 string.
+        /// </summary>
+        /// <param name="value">Plain text strng to be encrypted.</param>
+        /// <returns>An encrypted value of <paramref name="value"/> as base64 string, otherwise null.</returns>
+        private string? EncryptString(string value)
+        {
+            if (IsOpened() == false)
+            {
+                Log.Error(NO_DB_OPENED, nameof(EncryptString));
+                return null;
+            }
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = _key;
+                aes.IV = _iV;
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    var plainBytes = Encoding.UTF8.GetBytes(value);
+                    var encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+                    return Convert.ToBase64String(encryptedBytes);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Decrypts AES encoded data into a plain text string.
+        /// </summary>
+        /// <param name="value">A base64 encoded string that contains AES encrypted data.</param>
+        /// <returns>A plain text result of the AES decryption as string. If an error occurrs, null is returned.</returns>
+        private string? DecryptString(string value)
+        {
+            if (IsOpened() == false)
+            {
+                Log.Error(NO_DB_OPENED, nameof(DecryptString));
+                return null;
+            }
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = _key;
+                aes.IV = _iV;
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                {
+                    var encryptedBytes = Convert.FromBase64String(value);
+                    var plainBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+                    return Encoding.UTF8.GetString(plainBytes);
+                }
+            }
+        }
+
+        private bool EncryptEntry(PasswordEntry entry)
+        {
+            if (IsOpened() == false)
+            {
+                Log.Error(NO_DB_OPENED, nameof(EncryptEntry));
+                return false;
+            }
+
+            // encrypts all sensitive fields/properties inside of the entry
+            entry.Username = EncryptString(entry.Username);
+            entry.Password = EncryptString(entry.Password);
+            return true;
+        }
+
+        private bool DecryptEntry(PasswordEntry entry)
+        {
+            if (IsOpened() == false)
+            {
+                Log.Error(NO_DB_OPENED, nameof(DecryptEntry));
+                return false;
+            }
+
+            // decrypts all sensitive fields/properties inside of the entry
+            entry.Username = DecryptString(entry.Username);
+            entry.Password = DecryptString(entry.Password);
+            return true;
         }
 
         #endregion
