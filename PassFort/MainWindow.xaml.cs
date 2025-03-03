@@ -148,6 +148,10 @@ public partial class MainWindow : Window
         if (PasswordDatabase.Current != null)
         {
             // add new password
+            if (WndNewEntry.CreateEntry() == true)
+            {
+                // TODO refresh UI password list
+            }
         }
     }
 }

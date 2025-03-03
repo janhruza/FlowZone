@@ -59,6 +59,7 @@
             <MenuItem Header="Database">
                 <MenuItem Header="Add Entry"
                           Name="miDbAddEntry"
+                          IsEnabled="False"
                           Click="miDbAddEntry_Click"/>
             </MenuItem>
             
