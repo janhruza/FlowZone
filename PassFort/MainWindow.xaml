@@ -60,6 +60,7 @@
                 <MenuItem Header="Add Entry"
                           Name="miDbAddEntry"
                           IsEnabled="False"
+                          InputGestureText="Ctrl+Shift+N"
                           Click="miDbAddEntry_Click"/>
             </MenuItem>
             
