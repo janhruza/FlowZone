@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using FZCore;
 
@@ -44,7 +45,7 @@ public partial class App : Application
         Log.Error(message, tag);
 
         // show error info
-        if (MessageBox.Show($"Critical error has occurred. Message: {message} Do you want to terminate the process and report this error to Microsoft?", tag ?? "Critical Error", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No) == MessageBoxResult.Yes)
+        if (MessageBox.Show($"Critical error has occurred. Message: {message}\n\r\n\rDo you want to terminate the process and report this error to Microsoft?", tag ?? "Critical Error", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.No) == MessageBoxResult.Yes)
         {
             Environment.FailFast(message);
         }
@@ -52,4 +53,3 @@ public partial class App : Application
         return;
     }
 }
-

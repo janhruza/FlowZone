@@ -283,7 +283,7 @@ namespace PassFort.Core
 
             catch (Exception ex)
             {
-                Log.Error(ex, nameof(WritePasswordEntries));
+                App.CriticalError(ex.ToString(), nameof(WritePasswordEntries));
                 return false;
             }
         }
@@ -354,7 +354,7 @@ namespace PassFort.Core
 
             catch (Exception ex)
             {
-                Log.Error(ex, nameof(OpenArchive));
+                App.CriticalError(ex.ToString(), nameof(OpenArchive));
                 return false;
             }
         }
@@ -383,10 +383,11 @@ namespace PassFort.Core
                 // create archive in the new file
                 // overwrite the original archive with the new one
                 // delete the temporary file
-                string newPath = Path.GetTempFileName();
-                ZipFile.CreateFromDirectory(_dirPath, newPath, CompressionLevel.NoCompression, false);
-                File.Move(newPath, _filePath, true);
-                File.Delete(newPath);
+                
+                using (FileStream fs = File.OpenWrite(_filePath))
+                {
+                    ZipFile.CreateFromDirectory(_dirPath, fs, CompressionLevel.NoCompression, false);
+                }
 
                 // delete the temp folder and clear the _dirPath
                 Directory.Delete(this._dirPath, true);
@@ -398,7 +399,7 @@ namespace PassFort.Core
 
             catch (Exception ex)
             {
-                Log.Error(ex, nameof(CloseArchive));
+                App.CriticalError(ex.ToString(), nameof(CloseArchive));
                 return false;
             }
         }
@@ -428,7 +429,7 @@ namespace PassFort.Core
 
             catch (Exception ex)
             {
-                Log.Error(ex, nameof(CloseArchive));
+                App.CriticalError(ex.ToString(), nameof(CloseArchive));
                 return false;
             }
         }
