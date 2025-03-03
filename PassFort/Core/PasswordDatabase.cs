@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Input;
 using FZCore;
 
 using static PassFort.Messages;
@@ -26,7 +25,6 @@ namespace PassFort.Core
         /// </summary>
         private string? _dirPath;
 
-
         private static readonly string _metadata    = "metadata";
         private static readonly string _passwords   = "index";
         private static readonly int _keySize = 32;
@@ -46,11 +44,12 @@ namespace PassFort.Core
         /// Creates a new empty database structure.
         /// </summary>
         /// <param name="filePath">Path to the existing database.</param>
-        public PasswordDatabase(string? filePath)
+        /// <param name="name">Name of the database.</param>
+        public PasswordDatabase(string? filePath = null, string? name = null)
         {
             _filePath = filePath;
             Id = Guid.CreateVersion7();
-            Name = $"Database";
+            Name = (string.IsNullOrEmpty(name) == false ? name : "Database");
             CreationTime = DateTime.Now;
 
             // get IV and Key
@@ -124,7 +123,7 @@ namespace PassFort.Core
         {
             try
             {
-                if (File.Exists(_dirPath) == false)
+                if (Directory.Exists(_dirPath) == false)
                 {
                     Log.Error(NO_DB_OPENED, nameof(ReadMetadata));
                     return false;
@@ -340,7 +339,8 @@ namespace PassFort.Core
                 ZipFile.ExtractToDirectory(_filePath, dirName);
 
                 // load the _dirPath with the recieved temp path
-                _dirPath = dirName;
+                this._dirPath = dirName;
+                _current = this;
                 return true;
             }
 
@@ -352,14 +352,14 @@ namespace PassFort.Core
         }
 
         /// <summary>
-        /// Closes opened archive file and writes all the data into the source file (resaves the file).
+        /// Closes opened archive file and writes all the data into the source file.
         /// </summary>
         /// <returns>True, if closing and saving is successful, otherwise false.</returns>
         public bool CloseArchive()
         {
             try
             {
-                if (File.Exists(_filePath) == false)
+                if (_filePath == null)
                 {
                     Log.Error(NO_DB_OPENED, nameof(CloseArchive));
                     return false;
@@ -376,8 +376,42 @@ namespace PassFort.Core
                 // delete the temp folder and clear the _dirPath
                 Directory.Delete(this._dirPath, true);
                 _dirPath = null;
+                _current = null;
 
                 return true;
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(CloseArchive));
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Attempts to rewrite the metadata file and the password index file.
+        /// </summary>
+        /// <returns>True, if the operation s successful, otherwise false.</returns>
+        public bool Save()
+        {
+            try
+            {
+                if (_filePath == null)
+                {
+                    Log.Error(NO_DB_OPENED, nameof(Save));
+                    return false;
+                }
+
+                if (Directory.Exists(_dirPath) == false)
+                {
+                    Log.Error(NO_DB_OPENED, nameof(Save));
+                    return false;
+                }
+
+                PasswordCollection entries;
+                ReadPasswordEntries(out entries);
+
+                return (WriteMetadata() && WritePasswordEntries(entries));
             }
 
             catch (Exception ex)
@@ -479,6 +513,57 @@ namespace PassFort.Core
             entry.Password = DecryptString(entry.Password);
             return true;
         }
+
+        #endregion
+
+        #region Static methods
+
+        /// <summary>
+        /// Creates a new database file with the specified database <paramref name="name"/>. Location is determined by the <paramref name="path"/> argument.
+        /// </summary>
+        /// <param name="name">Database name.</param>
+        /// <param name="path">Path where the database file will be created.</param>
+        /// <returns>An instance of the newly created <see cref="PasswordDatabase"/>, otherwise null.</returns>
+        public static PasswordDatabase? Create(string name, string path)
+        {
+            // create instance
+            PasswordDatabase db = new PasswordDatabase(filePath:path, name:name);
+
+            // write data
+            // create temp folder
+            db._dirPath = Path.Combine(Path.GetTempPath(), ((ulong)DateTime.Now.ToBinary()).ToString());
+            _ = Directory.CreateDirectory(db._dirPath);
+
+            if (db.WriteMetadata() == false)
+            {
+                Log.Error("Unable to create metadata file.", nameof(Create));
+                return null;
+            }
+
+            if (db.WritePasswordEntries([]) == false)
+            {
+                Log.Error("Unable to create password index file.", nameof(Create));
+                return null;
+            }
+
+            if (db.CloseArchive() == false)
+            {
+                Log.Error("Unable to create database file.", nameof(Create));
+                return null;
+            }
+
+            // return db
+            return db;
+        }
+
+        private static PasswordDatabase? _current;
+
+        /// <summary>
+        /// Representing the last opened database.
+        /// When the <see cref="OpenArchive"/> is called, the value is set to the calling database and when
+        /// the <see cref="CloseArchive"/> is called, the value is set to null.
+        /// </summary>
+        public static PasswordDatabase? Current => _current;
 
         #endregion
     }

@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using FZCore.Windows;
+using Microsoft.Win32;
+using PassFort.Core;
+using PassFort.Windows;
 
 namespace PassFort;
 
@@ -15,6 +20,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        _affectedItems = [miSaveDatabase, miCloseDatabase];
+
         int idx = 0x10;
         WindowExtender wex = new WindowExtender(this);
         wex.AddSeparator(idx++);
@@ -23,7 +30,15 @@ public partial class MainWindow : Window
             Header = "View Log",
             OnClick = () => FZCore.Core.ViewLog()
         });
+
+        wex.AddMenuItem(idx++, new ExtendedMenuItem
+        {
+            Header = "Refresh\tF5",
+            OnClick = () => RedrawUIElements()
+        });
     }
+
+    private List<MenuItem> _affectedItems;
 
     #region Static code
 
@@ -36,9 +51,31 @@ public partial class MainWindow : Window
 
     #endregion
 
+    /// <summary>
+    /// Performs a check whether a databse is opened and if so, enables all associated elements, otherwise disables those elements.
+    /// </summary>
+    private void RedrawUIElements()
+    {
+        bool value = PasswordDatabase.Current != null;
+        foreach (MenuItem mi in _affectedItems)
+        {
+            mi.IsEnabled = value;
+        }
+
+        this.Title = (value == true ? $"{PasswordDatabase.Current.Name} - PassFort" : "PassFort");
+    }
+
     private void SaveDatabase()
     {
+        if (PasswordDatabase.Current != null)
+        {
+            PasswordDatabase.Current.Save();
+        }
 
+        else
+        {
+            _ = MessageBox.Show(Messages.NO_DB_OPENED, this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void miClose_Click(object sender, RoutedEventArgs e)
@@ -61,20 +98,47 @@ public partial class MainWindow : Window
 
     private void miOpenDatabase_Click(object sender, RoutedEventArgs e)
     {
-        // TODO open database file
+        // open a database file
+        OpenFileDialog ofd = new OpenFileDialog
+        {
+            Filter = App.DB_FILTER
+        };
+
+        if (ofd.ShowDialog() == true)
+        {
+            PasswordDatabase db = new PasswordDatabase(ofd.FileName);
+            if (db.OpenArchive() == true && db.ReadMetadata() == true)
+            {
+                RedrawUIElements();
+            }
+        }
+
         return;
     }
 
     private void miNewDatabase_Click(object sender, RoutedEventArgs e)
     {
         // TODO open create new database window
+        WndNewDatabase.CreateDatabase();
         return;
     }
 
     private void miSaveDatabase_Click(object sender, RoutedEventArgs e)
     {
-        // TODO save opened database
+        // saves opened database
         SaveDatabase();
         return;
+    }
+
+    private void miCloseDatabase_Click(object sender, RoutedEventArgs e)
+    {
+        // closes the opened database
+        if (PasswordDatabase.Current != null)
+        {
+            if (PasswordDatabase.Current.CloseArchive() == true)
+            {
+                RedrawUIElements();
+            }
+        }
     }
 }

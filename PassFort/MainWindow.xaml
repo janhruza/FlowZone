@@ -34,10 +34,17 @@
                           Name="miOpenDatabase"
                           Click="miOpenDatabase_Click"/>
 
+                <Separator />
+                
                 <MenuItem Header="Save"
                           InputGestureText="Ctrl+S"
                           Name="miSaveDatabase"
                           Click="miSaveDatabase_Click"
+                          IsEnabled="False"/>
+
+                <MenuItem Header="Close Database"
+                          Name="miCloseDatabase"
+                          Click="miCloseDatabase_Click"
                           IsEnabled="False"/>
 
                 <Separator />
