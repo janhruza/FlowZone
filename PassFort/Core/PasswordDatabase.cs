@@ -379,7 +379,14 @@ namespace PassFort.Core
                     return false;
                 }
 
-                ZipFile.CreateFromDirectory(_dirPath, _filePath, CompressionLevel.NoCompression, false);
+                // create a temporary file (to avoid file exists errors)
+                // create archive in the new file
+                // overwrite the original archive with the new one
+                // delete the temporary file
+                string newPath = Path.GetTempFileName();
+                ZipFile.CreateFromDirectory(_dirPath, newPath, CompressionLevel.NoCompression, false);
+                File.Move(newPath, _filePath, true);
+                File.Delete(newPath);
 
                 // delete the temp folder and clear the _dirPath
                 Directory.Delete(this._dirPath, true);
