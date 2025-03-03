@@ -20,7 +20,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        _affectedItems = [miSaveDatabase, miCloseDatabase];
+        _affectedItems = [miSaveDatabase, miCloseDatabase, miDbAddEntry];
 
         int idx = 0x10;
         WindowExtender wex = new WindowExtender(this);
@@ -139,6 +139,15 @@ public partial class MainWindow : Window
             {
                 RedrawUIElements();
             }
+        }
+    }
+
+    private void miDbAddEntry_Click(object sender, RoutedEventArgs e)
+    {
+        // show new entry window
+        if (PasswordDatabase.Current != null)
+        {
+            // add new password
         }
     }
 }

@@ -25,9 +25,10 @@ public static class WindowExtentions
     /// </summary>
     /// <param name="window">Target window.</param>
     /// <param name="message">Message text.</param>
-    public static void ShowMessage(this Window window, string message)
+    /// <param name="image">Message image.</param>
+    public static void ShowMessage(this Window window, string message, MessageBoxImage image = MessageBoxImage.Information)
     {
-        _ = MessageBox.Show(message, window.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+        _ = MessageBox.Show(message, window.Title, MessageBoxButton.OK, image);
         return;
     }
 

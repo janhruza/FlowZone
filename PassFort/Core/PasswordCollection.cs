@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PassFort.Core;
 
 /// <summary>
 /// Representing a <see cref="List{T}"/> of <see cref="PasswordEntry"/> items.
 /// </summary>
-public class PasswordCollection : List<PasswordEntry>
+public class PasswordCollection : ObservableCollection<PasswordEntry>
 {
     /// <summary>
     /// Creates a new list of type <see cref="PasswordEntry"/> with no items inside of it.

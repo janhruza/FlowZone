@@ -21,7 +21,8 @@
                     Width="400">
 
             <Label Content="Database name"/>
-            <TextBox Name="txtName"/>
+            <TextBox Name="txtName"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
             <Label Content="Database location"
                    Margin="0,5,0,0"/>
@@ -34,7 +35,8 @@
 
                 <TextBox Name="txtPath"
                          Margin="0,0,5,0"
-                         Grid.Column="0"/>
+                         Grid.Column="0"
+                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
                 <Button Content="..."
                         Name="btnChoose"

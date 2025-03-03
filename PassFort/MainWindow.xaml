@@ -54,6 +54,13 @@
                           Name="miClose"
                           Click="miClose_Click"/>
             </MenuItem>
+
+            <!--Database related items-->
+            <MenuItem Header="Database">
+                <MenuItem Header="Add Entry"
+                          Name="miDbAddEntry"
+                          Click="miDbAddEntry_Click"/>
+            </MenuItem>
             
             <!--Edit menu item-->
             <MenuItem Header="Edit">

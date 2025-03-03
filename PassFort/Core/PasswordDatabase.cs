@@ -25,6 +25,13 @@ namespace PassFort.Core
         /// </summary>
         private string? _dirPath;
 
+        private PasswordCollection _entries = [];
+
+        /// <summary>
+        /// Representing the list of all loaded password entries.
+        /// </summary>
+        public PasswordCollection Entries => _entries;
+
         private static readonly string _metadata    = "metadata";
         private static readonly string _passwords   = "index";
         private static readonly int _keySize = 32;
@@ -153,7 +160,7 @@ namespace PassFort.Core
         }
 
         /// <summary>
-        /// Reads all the stored password entries from the opened database file.
+        /// Reads all the stored password entries from the opened database file. It also stores the list of <paramref name="entries"/> in <see cref="_entries"/>.
         /// </summary>
         /// <param name="entries">List of entries that will be returned. If an error occurred, an emty list is returned.</param>
         /// <returns>True, if the operation succeeded, otherwise false.</returns>
@@ -162,6 +169,7 @@ namespace PassFort.Core
             try
             {
                 entries = [];
+                _entries = entries;
 
                 if (_dirPath == null)
                 {
@@ -408,10 +416,7 @@ namespace PassFort.Core
                     return false;
                 }
 
-                PasswordCollection entries;
-                ReadPasswordEntries(out entries);
-
-                return (WriteMetadata() && WritePasswordEntries(entries));
+                return (WriteMetadata() && WritePasswordEntries(_entries));
             }
 
             catch (Exception ex)
@@ -540,7 +545,7 @@ namespace PassFort.Core
                 return null;
             }
 
-            if (db.WritePasswordEntries([]) == false)
+            if (db.WritePasswordEntries(db._entries) == false)
             {
                 Log.Error("Unable to create password index file.", nameof(Create));
                 return null;
