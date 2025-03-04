@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using FZCore;
-using FZCore.Extentions;
+using FZCore.Extensions;
 using PassFort.Core;
 
 namespace PassFort.Windows;

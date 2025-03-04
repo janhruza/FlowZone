@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Interop;
+using PVOID = nint;
 
-using PVOID = System.IntPtr;
-
-namespace FZCore.Extentions;
+namespace FZCore.Extensions;
 
 /// <summary>
 /// Representing various <see cref="Window"/> class extentions.
@@ -51,6 +50,6 @@ public static class WindowExtentions
             return PVOID.MinValue;
         }
 
-        return GetHandle((Window)window.Parent);
+        return ((Window)window.Parent).GetHandle();
     }
 }
