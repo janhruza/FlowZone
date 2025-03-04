@@ -14,6 +14,8 @@
 |Expando|WPF|Expando is a simple expanse tracker appication with moder UI and multi profile support.|
 |RipTide|WPF|RipTide is a simple video downloader build on top of the [yt-dlp](https://github.com/yt-dlp/yt-dlp) project.|
 |VaultPack|WPF|VaultPack is a simple archiving utility. It is really basic and offers no compression algorithms.|
+|ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|
+|PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
