@@ -25,5 +25,14 @@
 ## Prerequisities
 <p>Make sure you have Segoe Fluent Icons font installed. You can download it <a href="https://aka.ms/SegoeFluentIcons">here</a>.</p>
 
+## Used resources
+Here is a list of all third party resources used in this solution.
+<ul>
+<li><a href="https://www.flaticon.com/free-icons/shield" title="shield icons">Shield icons created by afif fudin - Flaticon</a></li>
+<li><a href="https://www.flaticon.com/free-icons/information" title="information icons">Information icons created by Anggara - Flaticon</a></li>
+<li><a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Alfredo Hernandez - Flaticon</a></li>
+<li><a href="https://www.flaticon.com/free-icons/warning" title="warning icons">Warning icons created by Good Ware - Flaticon</a></li>
+</ul>
+
 ## License
 <p>FlowZone is licensed under the MIT license.</p>
