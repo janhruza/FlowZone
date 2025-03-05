@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using FZCore.Windows;
 using Microsoft.Win32;
 
@@ -180,4 +182,11 @@ public static class Core
     }
 
 #pragma warning restore WPF0001
+
+    internal static BitmapImage GetImageSource(string imageName)
+    {
+        var uri = new Uri($"pack://application:,,,/YourAssemblyName;component/{imageName}", UriKind.Absolute);
+        return new BitmapImage(uri);
+    }
+
 }

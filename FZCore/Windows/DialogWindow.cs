@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace FZCore.Windows;
 
@@ -132,9 +129,68 @@ public class DialogWindow
         this.Buttons = DWButton.OK;
     }
 
-    #region Private members
+    #region Private members and methods
 
     private TDReturn _result = TDReturn.ERROR;
+
+    private static BitmapImage GetImage(DWImage image)
+    {
+        switch (image)
+        {
+            case DWImage.ERROR:
+                return Core.GetImageSource("close.png");
+
+            default:
+            case DWImage.INFO:
+                return Core.GetImageSource("information.png");
+
+            case DWImage.SHIELD:
+                return Core.GetImageSource("shield.png");
+
+            case DWImage.WARNING:
+                return Core.GetImageSource("warning.png");
+        }
+    }
+
+    private static string GetButtonText(DWButton btn)
+    {
+        switch (btn)
+        {
+            default:
+            case DWButton.OK:
+                return "OK";
+
+            case DWButton.YES:
+                return "Yes";
+
+            case DWButton.NO:
+                return "No";
+
+            case DWButton.RETRY:
+                return "Retry";
+
+            case DWButton.CANCEL:
+                return "Cancel";
+
+            case DWButton.CLOSE:
+                return "Close";
+        }
+    }
+
+    private static TDReturn GetResult(DWButton btn)
+    {
+        switch (btn)
+        {
+            case DWButton.OK: return TDReturn.IDOK;
+            case DWButton.YES: return TDReturn.IDYES;
+            case DWButton.NO: return TDReturn.IDNO;
+            case DWButton.RETRY: return TDReturn.IDRETRY;
+            case DWButton.CANCEL: return TDReturn.IDCANCEL;
+
+            default:
+            case DWButton.CLOSE: return TDReturn.IDCLOSE;
+        }
+    }
 
     #endregion
 
@@ -162,6 +218,7 @@ public class DialogWindow
 
     /// <summary>
     /// Representing dialog button options. Each of those options has an associated action to it.
+    /// Use pipe symbol (|) to chain multiple buttons.
     /// </summary>
     public DWButton Buttons { get; set; }
 
@@ -180,7 +237,8 @@ public class DialogWindow
             Title = this.Title,
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
             ResizeMode = ResizeMode.NoResize,
-            SizeToContent = SizeToContent.WidthAndHeight
+            SizeToContent = SizeToContent.WidthAndHeight,
+            MaxWidth = 640
         };
 
         // window created, set default return value
@@ -189,7 +247,11 @@ public class DialogWindow
         // create layout
         // display caption, message, image and selected buttons
 
-        Grid g = new Grid();
+        Grid g = new Grid
+        {
+            Margin = new Thickness(10)
+        };
+
         StackPanel stp = new StackPanel();
 
         // top grid - image and caption
@@ -204,7 +266,7 @@ public class DialogWindow
 
         Image img = new Image
         {
-            
+            Source = GetImage(this.Image)
         };
 
         Label lbl = new Label
@@ -212,11 +274,68 @@ public class DialogWindow
             Content = this.Caption
         };
 
+        gTop.Children.Add(img);
+        gTop.Children.Add(lbl);
+
+        Grid.SetColumn(img, 0);
+        Grid.SetColumn(lbl, 1);
+
+        stp.Children.Add(gTop);
+
+        // message itself
+        Label lblMessage = new Label
+        {
+            Content = new TextBlock
+            {
+                Text = this.Message,
+                TextWrapping = TextWrapping.Wrap,
+                TextTrimming = TextTrimming.CharacterEllipsis
+            },
+
+            Margin = new Thickness(0, 5, 0, 0)
+        };
+
+        stp.Children.Add(lblMessage);
+
+        StackPanel stpFooter = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            HorizontalAlignment = HorizontalAlignment.Right,
+            Margin = new Thickness(0, 10, 0, 0)
+        };
+
+        // draw buttons
+        foreach (DWButton btn in Enum.GetValues<DWButton>())
+        {
+            if (this.Buttons.HasFlag(btn) == true)
+            {
+                // draw button
+                Button b = new Button
+                {
+                    Content = GetButtonText(btn),
+                    Margin = new Thickness(5, 0, 0, 0)
+                };
+
+                b.Click += (s, e) =>
+                {
+                    // set status and close
+                    _result = GetResult(btn);
+                    wnd.Close();
+                };
+
+                stpFooter.Children.Add(b);
+            }
+        }
+
+        stp.Children.Add(stpFooter);
+
         g.Children.Add(stp);
         wnd.Content = g;
+
         // show window as dialog
         _ = wnd.ShowDialog();
 
+        // return result
         return _result;
     }
 
@@ -224,7 +343,28 @@ public class DialogWindow
 
     #region Static methods and elements
 
+    /// <summary>
+    /// Shows the custom WinAPI-like TaskDialog.
+    /// </summary>
+    /// <param name="message">Main dialog message. This is the actual message field.</param>
+    /// <param name="title">Window title bar text.</param>
+    /// <param name="caption">Caption of the message.</param>
+    /// <param name="image">Specified dialog image. Default is <see cref="DWImage.INFO"/>.</param>
+    /// <param name="buttons">Available buttons for user to choose from. These buttons directly influence the return value of this method.</param>
+    /// <returns>Value specified by the button user pressed.</returns>
+    public static TDReturn ShowDialog(string message, string title, string caption, DWImage image, DWButton buttons)
+    {
+        DialogWindow dw = new DialogWindow
+        {
+            Title = title,
+            Message = message,
+            Caption = caption,
+            Image = image,
+            Buttons = buttons
+        };
 
+        return dw.Show();
+    }
 
     #endregion
 }
