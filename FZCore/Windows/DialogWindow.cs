@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -192,6 +193,25 @@ public class DialogWindow
         }
     }
 
+    private static SystemSound GetSound(DWImage image)
+    {
+        switch (image)
+        {
+            default:
+            case DWImage.INFO:
+                return SystemSounds.Beep;
+
+            case DWImage.WARNING:
+                return SystemSounds.Exclamation;
+
+            case DWImage.ERROR:
+                return SystemSounds.Asterisk;
+
+            case DWImage.SHIELD:
+                return SystemSounds.Exclamation;
+        }
+    }
+
     #endregion
 
     #region Dialog properties
@@ -238,7 +258,13 @@ public class DialogWindow
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
             ResizeMode = ResizeMode.NoResize,
             SizeToContent = SizeToContent.WidthAndHeight,
-            MaxWidth = 640
+            MaxWidth = 640,
+            MinWidth = 320
+        };
+
+        wnd.Loaded += (s, e) =>
+        {
+            GetSound(Image).Play();
         };
 
         // window created, set default return value
@@ -266,12 +292,18 @@ public class DialogWindow
 
         Image img = new Image
         {
-            Source = GetImage(this.Image)
+            Source = GetImage(this.Image),
+            Width = 32,
+            Height = 32
         };
 
         Label lbl = new Label
         {
-            Content = this.Caption
+            Content = this.Caption,
+            Foreground = SystemColors.AccentColorBrush,
+            FontSize = 20,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5, 0, 0, 0)
         };
 
         gTop.Children.Add(img);

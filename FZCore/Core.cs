@@ -185,7 +185,7 @@ public static class Core
 
     internal static BitmapImage GetImageSource(string imageName)
     {
-        var uri = new Uri($"pack://application:,,,/YourAssemblyName;component/{imageName}", UriKind.Absolute);
+        var uri = new Uri($"pack://application:,,,/FZCore;component/Resources/{imageName}", UriKind.Absolute);
         return new BitmapImage(uri);
     }
 
