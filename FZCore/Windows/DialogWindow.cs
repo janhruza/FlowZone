@@ -205,7 +205,7 @@ public class DialogWindow
                 return SystemSounds.Exclamation;
 
             case DWImage.ERROR:
-                return SystemSounds.Asterisk;
+                return SystemSounds.Hand;
 
             case DWImage.SHIELD:
                 return SystemSounds.Exclamation;

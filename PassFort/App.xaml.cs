@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using FZCore;
-using FZCore.Windows;
 
 namespace PassFort;
 
@@ -27,12 +25,6 @@ public partial class App : Application
         MainWindow mw = new MainWindow();
         MainWindow = mw;
         MainWindow.Show();
-
-        DialogWindow.ShowDialog("This is a sample message text.",
-                                "Window title",
-                                "Message caption",
-                                DWImage.WARNING,
-                                DWButton.OK | DWButton.YES);
     }
 
     private void Application_Exit(object sender, ExitEventArgs e)
