@@ -189,4 +189,13 @@ public static class Core
         return new BitmapImage(uri);
     }
 
+    /// <summary>
+    /// Returns a path to the desired <paramref name="resource"/>.
+    /// </summary>
+    /// <param name="resource">Name of the resource inside of the 'Resources' folder.</param>
+    /// <returns>Full path to the desired resource as <see cref="string"/>.</returns>
+    public static string GetResource(string resource)
+    {
+        return $"pack://application:,,,/FZCore;component/Resources/{resource}";
+    }
 }
