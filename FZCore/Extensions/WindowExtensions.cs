@@ -8,7 +8,7 @@ namespace FZCore.Extensions;
 /// <summary>
 /// Representing various <see cref="Window"/> class extentions.
 /// </summary>
-public static class WindowExtentions
+public static class WindowExtensions
 {
     #region P/Invoke
 
@@ -74,5 +74,28 @@ public static class WindowExtentions
     {
         PVOID hWnd = GetHandle(window);
         return FlashWindow(hWnd, false);
+    }
+
+    /// <summary>
+    /// Toggles fullscreen mode on the selected <paramref name="window"/>.
+    /// </summary>
+    /// <param name="window">Window to toggle fullscreen mode.</param>
+    public static void ToggleFullScreenMode(this Window window)
+    {
+        bool isEnabled = (window.WindowState == WindowState.Maximized && window.WindowStyle == WindowStyle.None);
+        if (isEnabled == true)
+        {
+            // restore window
+            window.WindowStyle = WindowStyle.SingleBorderWindow;
+            window.WindowState = WindowState.Normal;
+        }
+
+        else
+        {
+            window.WindowStyle = WindowStyle.None;
+            window.WindowState = WindowState.Maximized;
+        }
+
+        return;
     }
 }

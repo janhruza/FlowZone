@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
+using FZCore.Extensions;
 
 namespace FZCore.Windows;
 
@@ -16,10 +19,14 @@ public class WindowExtender
     private const int MF_STRING = 0x00000000;
     private const int MF_SEPARATOR = 0x00000800;
     private const int SC_RESTORE = 0xF120; // Example: Standard system command
+    private const uint SC_CLOSE = 0xF060;
+    private const uint MF_BYCOMMAND = 0x00000000;
 
+    private Window _window;
     private IntPtr _hwnd;
     private IntPtr _originalSystemMenu;
     private Dictionary<int, ExtendedMenuItem> _customMenuItems;
+    private bool _consoleAttached;
 
     /// <summary>
     /// Creates a new instance of the <see cref="WindowExtender"/> class.
@@ -30,8 +37,10 @@ public class WindowExtender
     {
         if (window == null) throw new ArgumentNullException(nameof(window));
 
+        _window = window;
         _hwnd = new WindowInteropHelper(window).EnsureHandle();
         _customMenuItems = new Dictionary<int, ExtendedMenuItem>();
+        _consoleAttached = false;
 
         // Hook WndProc
         var source = HwndSource.FromHwnd(_hwnd);
@@ -39,6 +48,36 @@ public class WindowExtender
 
         // Save the original system menu
         _originalSystemMenu = GetSystemMenu(_hwnd, false);
+    }
+
+    /// <summary>
+    /// Toggles command line window.
+    /// </summary>
+    public void ToggleConsole()
+    {
+        if (_consoleAttached == true)
+        {
+            FreeConsole();
+            _consoleAttached = false;
+        }
+
+        else
+        {
+            // show console window
+            AllocConsole();
+
+            // get console window handle
+            nint hConsole = GetConsoleWindow();
+
+            // get console menu handle
+            nint hMenu = GetSystemMenu(hConsole, false);
+
+            // delete close menu item (disables the close button)
+            DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
+
+            Console.Title = $"{Process.GetProcessById(Environment.ProcessId).ProcessName} Debug Console";
+            _consoleAttached = true;
+        }
     }
 
     /// <summary>
@@ -100,6 +139,36 @@ public class WindowExtender
         _customMenuItems.Clear();
     }
 
+    /// <summary>
+    /// Enables extended functionality on the associated window.
+    /// </summary>
+    public void EmpowerWindow()
+    {
+        if (_window == null) return;
+
+        // enable keydown events
+        _window.KeyDown += (s, e) =>
+        {
+            if (e.Key == Key.F1)
+            {
+                // open app log
+                Core.ViewLog();
+            }
+
+            if (e.Key == System.Windows.Input.Key.F11)
+            {
+                // empower window
+                _window.ToggleFullScreenMode();
+            }
+
+            if (e.Key == System.Windows.Input.Key.F12)
+            {
+                // toggle console
+                ToggleConsole();
+            }
+        };
+    }
+
     private void RedrawMenu()
     {
         // Clear the current menu and restore the default system menu
@@ -152,6 +221,20 @@ public class WindowExtender
 
     [DllImport("uxtheme.dll", EntryPoint = "#136", SetLastError = true, CharSet = CharSet.Unicode)]
     private static extern void FlushMenuThemes();
+
+    [DllImport("kernel32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool AllocConsole();
+
+    [DllImport("kernel32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool FreeConsole();
+
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool DeleteMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr GetConsoleWindow();
 
     /// <summary>
     /// Draws the system menu using the dark theme.

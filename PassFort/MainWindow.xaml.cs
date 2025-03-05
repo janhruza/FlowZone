@@ -36,6 +36,8 @@ public partial class MainWindow : Window
             Header = "Refresh\tF5",
             OnClick = () => RedrawUIElements()
         });
+
+        wex.EmpowerWindow();
     }
 
     private List<MenuItem> _affectedItems;
