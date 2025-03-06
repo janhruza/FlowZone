@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using FZCore.Windows;
 using Microsoft.Win32;
 using PassFort.Core;
+using PassFort.Pages;
 using PassFort.Windows;
 
 namespace PassFort;
@@ -38,6 +39,19 @@ public partial class MainWindow : Window
         });
 
         wex.EmpowerWindow();
+
+        this.Loaded += (s, e) =>
+        {
+            NavToPage(new PgDatabase());
+        };
+    }
+
+    private void NavToPage(Page? pg)
+    {
+        if (pg == null) return;
+
+        frmContent.Content = pg;
+        this.Title = $"{pg.Title} | PassFort";
     }
 
     private List<MenuItem> _affectedItems;
@@ -58,13 +72,18 @@ public partial class MainWindow : Window
     /// </summary>
     private void RedrawUIElements()
     {
+        if (PasswordDatabase.Current == null)
+        {
+            return;
+        }
+
         bool value = PasswordDatabase.Current != null;
         foreach (MenuItem mi in _affectedItems)
         {
             mi.IsEnabled = value;
         }
 
-        this.Title = (value == true ? $"{PasswordDatabase.Current.Name} - PassFort" : "PassFort");
+        this.Title = value == true ? $"{PasswordDatabase.Current.Name} - PassFort" : "PassFort";
     }
 
     private void SaveDatabase()

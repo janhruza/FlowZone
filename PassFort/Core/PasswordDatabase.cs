@@ -344,7 +344,7 @@ namespace PassFort.Core
                 }
 
                 string dirName = Path.Combine(Path.GetTempPath(), Guid.CreateVersion7().ToString());
-                ZipFile.ExtractToDirectory(_filePath, dirName);
+                ZipFile.ExtractToDirectory(_filePath, dirName, true);
 
                 // load the _dirPath with the recieved temp path
                 this._dirPath = dirName;
