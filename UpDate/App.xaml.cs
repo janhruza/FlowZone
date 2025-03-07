@@ -16,18 +16,36 @@ public partial class App : Application
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        // set application theme
-        FZCore.Core.SetApplicationTheme(FZThemeMode.System);
+        // loads the settings
+        UpDateSettings.Current = UpDateSettings.EnsureSettings();
 
-        // create main window
-        MainWindow mw = new MainWindow();
+        // set application theme
+        FZCore.Core.SetApplicationTheme(UpDateSettings.Current.ThemeMode);
+
+        // create main window with the properties
+        // set according to the settings values
+        MainWindow mw = new MainWindow
+        {
+            Title = UpDateSettings.Current.Title,
+            Width = UpDateSettings.Current.WindowSize.Width,
+            Height = UpDateSettings.Current.WindowSize.Height
+        };
+
         MainWindow = mw;
         MainWindow.Show();
+
+        Log.Info("App started.", nameof(Application_Startup));
     }
 
     private void Application_Exit(object sender, ExitEventArgs e)
     {
-        // clear data (if needed)
+        // save loaded settings
+        if (UpDateSettings.Current != null)
+        {
+            UpDateSettings.Current.SaveAsDefault();
+        }
+
+        Log.Info("App exited.", nameof(Application_Exit));
         return;
     }
 }

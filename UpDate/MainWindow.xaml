@@ -8,11 +8,55 @@
         ResizeMode="CanResize"
         MinWidth="350"
         MinHeight="350"
-        SizeToContent="WidthAndHeight"
-        Title="UpDate">
+        Width="640"
+        Height="400"
+        Title="UpDate"
+        Closing="Window_Closing">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            
+            <!--Menu row-->
+            <RowDefinition Height="auto"/>
+            
+            <!--Content row-->
+            <RowDefinition />
+            
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            
+            <!--File menu item-->
+            <MenuItem Header="File">
+                <MenuItem Name="miClose"
+                          Header="Close"
+                          InputGestureText="Alt+F4"
+                          Click="miClose_Click"/>
+            </MenuItem>
+            
+            <!--Feeds menu item-->
+            <MenuItem Header="Feeds">
+                <MenuItem Name="miAddFeed"
+                          Header="New feed"
+                          InputGestureText="Ctrl+N"
+                          Click="miAddFeed_Click"/>
+            </MenuItem>
+            
+            <!--Help menu item-->
+            <MenuItem Header="Help">
+
+                <MenuItem Name="miSettings"
+                          Header="Settings"
+                          InputGestureText="F2"
+                          Click="miSettings_Click"/>
+
+                <Separator />
+
+                <MenuItem Name="miResetSettings"
+                          Header="Restore settings"
+                          Click="miResetSettings_Click"/>
+            </MenuItem>
+        </Menu>
     </Grid>
     
 </Window>
