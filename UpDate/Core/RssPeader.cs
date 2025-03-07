@@ -67,18 +67,6 @@ public class RssPeader
         ReadXmlData(_doc, _data);
     }
 
-    /// <summary>
-    /// Creates a new instance of the <see cref="RssPeader"/> class where the RSS source is a URL address where the RSS feed data are located.
-    /// </summary>
-    /// <param name="rssSource">URL address where the RSS data can be retrieved from.</param>
-    public RssPeader(Uri rssSource)
-    {
-        var task = RetrieveRssData(rssSource);
-        Task.WaitAny(task);
-        _data = task.Result;
-        ReadXmlData(_doc, _data);
-    }
-
     #endregion
 
     #region Methods and properties
@@ -91,90 +79,61 @@ public class RssPeader
     {
         try
         {
-            List<RssChannel> channels = [];
+            List<RssChannel> channels = new List<RssChannel>();
 
-            var rssNodes = _doc.SelectNodes("rss");
+            var rssNodes = _doc.SelectNodes("//rss/channel");
             if (rssNodes == null || rssNodes.Count == 0)
             {
-                Log.Warning("Selected document has no RSS nodes.", nameof(ReadChannels));
-                return [];
+                Log.Warning("Selected document has no RSS channels.", nameof(ReadChannels));
+                return channels;
             }
 
-            // read channels (from all RSS nodes (if multiple for some reason)
-            foreach (XmlNode node in rssNodes)
+            foreach (XmlNode channelNode in rssNodes)
             {
-                var channelNodes = node.SelectNodes("channel");
-                if (channelNodes == null || channelNodes.Count == 0)
+                if (channelNode == null)
                 {
-                    // no channels, return
-                    Log.Warning("No channel nodes found.", nameof(ReadChannels));
-                    return channels;
+                    continue;
                 }
 
-                foreach (XmlNode channelNode in channelNodes)
+                RssChannel channel = new RssChannel
                 {
-                    if (channelNode == null)
-                    {
-                        // just to be sure
-                        continue;
-                    }
+                    Title = channelNode.SelectSingleNode("title")?.InnerText ?? string.Empty,
+                    Link = channelNode.SelectSingleNode("link")?.InnerText ?? string.Empty,
+                    Description = channelNode.SelectSingleNode("description")?.InnerText ?? string.Empty,
+                    Category = channelNode.SelectSingleNode("category")?.InnerText ?? string.Empty,
+                    Copyright = channelNode.SelectSingleNode("copyright")?.InnerText ?? string.Empty
+                };
 
-                    // get channel properties
-                    string? channelTitle = channelNode?.SelectSingleNode("title")?.Value;
-                    string? channelLink = channelNode?.SelectSingleNode("link")?.Value;
-                    string? channelDesc = channelNode?.SelectSingleNode("description")?.Value;
-                    string? channelCategory = channelNode?.SelectSingleNode("category")?.Value;
-                    string? channelCopyright = channelNode?.SelectSingleNode("copyright")?.Value;
-
-                    // create channel item
-                    RssChannel channel = new RssChannel
-                    {
-                        Title = channelTitle ?? string.Empty,
-                        Link = channelLink ?? string.Empty,
-                        Description = channelDesc ?? string.Empty,
-                        Category = channelCategory ?? string.Empty,
-                        Copyright = channelCopyright ?? string.Empty
-                    };
-
-                    // read channel items
-                    var itemNodes = channelNode?.SelectNodes("item");
-                    if (itemNodes == null || itemNodes.Count == 0)
-                    {
-                        Log.Warning("Channel contains no items.", nameof(ReadChannels));
-                        continue;
-                    }
-
+                var itemNodes = channelNode.SelectNodes("item");
+                if (itemNodes != null)
+                {
                     foreach (XmlNode itemNode in itemNodes)
                     {
-                        // gets a single channel item
                         FeedItem item = new FeedItem
                         {
-                            Title = itemNode?.SelectSingleNode("title")?.Value ?? string.Empty,
-                            Link = itemNode?.SelectSingleNode("link")?.Value ?? string.Empty,
-                            Description = itemNode?.SelectSingleNode("description")?.Value ?? string.Empty,
-                            Author = itemNode?.SelectSingleNode("author")?.Value ?? string.Empty,
-                            Category = itemNode?.SelectSingleNode("category")?.Value ?? string.Empty,
-                            Comments = itemNode?.SelectSingleNode("comments")?.Value ?? string.Empty,
-                            Guid = itemNode?.SelectSingleNode("guid")?.Value ?? string.Empty,
-                            PublicationDate = itemNode?.SelectSingleNode("pubDate")?.Value ?? string.Empty
+                            Title = itemNode.SelectSingleNode("title")?.InnerText ?? string.Empty,
+                            Link = itemNode.SelectSingleNode("link")?.InnerText ?? string.Empty,
+                            Description = itemNode.SelectSingleNode("description")?.InnerText ?? string.Empty,
+                            Author = itemNode.SelectSingleNode("author")?.InnerText ?? string.Empty,
+                            Category = itemNode.SelectSingleNode("category")?.InnerText ?? string.Empty,
+                            Comments = itemNode.SelectSingleNode("comments")?.InnerText ?? string.Empty,
+                            Guid = itemNode.SelectSingleNode("guid")?.InnerText ?? string.Empty,
+                            PublicationDate = itemNode.SelectSingleNode("pubDate")?.InnerText ?? string.Empty
                         };
 
-                        // adds item to the channel
                         channel.Items.Add(item);
                     }
-
-                    // add channel to return list
-                    channels.Add(channel);
                 }
+
+                channels.Add(channel);
             }
 
             return channels;
         }
-
         catch (Exception ex)
         {
             Log.Error(ex, nameof(ReadChannels));
-            return [];
+            return new List<RssChannel>();
         }
     }
 

@@ -17,7 +17,7 @@ public partial class App : Application
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         // set application theme
-        Core.SetApplicationTheme(FZThemeMode.System);
+        FZCore.Core.SetApplicationTheme(FZThemeMode.System);
 
         // create main window
         MainWindow mw = new MainWindow();
