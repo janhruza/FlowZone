@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpDate"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        MinWidth="350"
+        MinHeight="350"
+        SizeToContent="WidthAndHeight"
+        Title="UpDate">
 
+    <Grid>
+        
     </Grid>
+    
 </Window>
