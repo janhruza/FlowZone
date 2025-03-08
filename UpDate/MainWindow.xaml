@@ -71,9 +71,10 @@
             </Grid.ColumnDefinitions>
 
             <!--List of RSS feeds as tree-->
-            <TreeView Grid.Column="0"
+                <TreeView Grid.Column="0"
                       Margin="10,0,10,10"
-                      Name="trFeeds"/>
+                      Name="trFeeds"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 
             <!--Page viever-->
             <Frame Grid.Column="1"

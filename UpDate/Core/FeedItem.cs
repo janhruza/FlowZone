@@ -5,6 +5,25 @@
     /// </summary>
     public struct FeedItem
     {
+        #region Static methods
+
+        /// <summary>
+        /// Determines whether the <paramref name="item"/>'s description has some HTML tags in it.
+        /// </summary>
+        /// <param name="item">Target item to check.</param>
+        /// <returns>True, if <paramref name="item"/> seems to be HTML formatted, otherwise false.</returns>
+        public static bool IsHTMLBody(ref FeedItem item)
+        {
+            if (string.IsNullOrEmpty(item.Description) == true)
+            {
+                return false;
+            }
+
+            return item.Description.Contains("<p>") || item.Description.Contains("<img") || item.Description.Contains("<a href");
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates a new RSS feed item.
         /// </summary>

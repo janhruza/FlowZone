@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
+using FZCore;
 using UpDate.Core;
 
 namespace UpDate.Pages;
@@ -44,6 +47,106 @@ public partial class PgChannelView : Page
 
     #region Class methods
 
+    private string DocumentMeta(string styleCss)
+    {
+        return $"<head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1'><style>{styleCss}</style></head>";
+    }
+
+    private string GetDarkStyles()
+    {
+        return @"* {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: sans-serif;
+}
+
+p {
+    color: #FFFFFF;
+    font-size: 14pt;
+}
+
+a {
+    color: darkorange;
+}
+
+a:hover {
+    color: orange;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: darkorange;
+}
+
+::selection {
+    background-color: darkorange;
+    color: #FFFFFF;
+}";
+    }
+
+    private string GetLightStyles()
+    {
+        return @"* {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: sans-serif;
+}
+
+p {
+    color: #000000;
+    font-size: 14pt;
+}
+
+a {
+    color: orange;
+}
+
+a:hover {
+    color: darkorange;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: orange;
+}
+
+::selection {
+    background-color: orange;
+    color: #000000;
+}";
+    }
+
+    private string GetStyleSheet()
+    {
+        if (UpDateSettings.Current == null)
+        {
+            UpDateSettings.Current = UpDateSettings.EnsureSettings();
+        }
+
+        switch (UpDateSettings.Current.ThemeMode)
+        {
+            case FZThemeMode.Light: return GetLightStyles();
+            case FZThemeMode.Dark: return GetDarkStyles();
+            case FZThemeMode.None: return GetLightStyles();
+
+            default:
+            case FZThemeMode.System: return (FZCore.Core.IsDarkModeEnabled() == true ? GetDarkStyles() : GetLightStyles());
+        }
+    }
+
+    private string GetHTMLText(string title, string body)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<html>");
+        sb.Append(DocumentMeta(GetStyleSheet()));
+        sb.Append("<body>");
+        sb.Append("<h1>");
+        sb.Append(title);
+        sb.Append("</h1>");
+        sb.Append(body);
+        sb.Append("</body>");
+        sb.Append("</html>");
+        return sb.ToString();
+    }
+
     private ListBoxItem NoFeedItemsItem()
     {
         return new ListBoxItem
@@ -54,9 +157,22 @@ public partial class PgChannelView : Page
 
     private ListBoxItem GetFeedItem(FeedItem item)
     {
-        ListBoxItem lbi = new ListBoxItem
+        ListBoxItem lbi = new ListBoxItem();
+
+        if (FeedItem.IsHTMLBody(ref item) == false)
         {
-            Content = new TextBlock
+            string dateText;
+            if (DateTime.TryParse(item.PublicationDate, out DateTime dt) == true)
+            {
+                dateText = dt.ToString("f");
+            }
+
+            else
+            {
+                dateText = item.PublicationDate;
+            }
+
+            lbi.Content = new TextBlock
             {
                 TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.CharacterEllipsis,
@@ -65,7 +181,7 @@ public partial class PgChannelView : Page
                 {
                     new Run
                     {
-                        Text = item.Title,
+                        Text = item.Title.Trim(),
                         FontSize = 18,
                         FontWeight = FontWeights.SemiBold
                     },
@@ -74,17 +190,54 @@ public partial class PgChannelView : Page
 
                     new Run
                     {
-                        Text = item.Description
+                        Text = dateText
+                    },
+
+                    new LineBreak(),
+
+                    new Run
+                    {
+                        Text = item.Description.Trim()
                     }
                 }
-            }
-        };
+            };
+        }
+
+        else
+        {
+            // has HTML body
+            lbi.Content = item.Title;
+        }
 
         lbi.MouseDoubleClick += (s, e) =>
         {
             if (string.IsNullOrEmpty(item.Link) == false)
             {
                 FZCore.Core.OpenWebPage(item.Link);
+            }
+
+            else if (FeedItem.IsHTMLBody(ref item) == true)
+            {
+                if (UpDateSettings.Current == null)
+                {
+                    UpDateSettings.Current = UpDateSettings.EnsureSettings();
+                }
+
+                // open description as web
+                WebBrowser wb = new WebBrowser();
+
+                wb.NavigateToString(GetHTMLText(item.Title, item.Description));
+
+                Window window = new Window
+                {
+                    Content = wb,
+                    Width = SystemParameters.PrimaryScreenWidth - 400,
+                    Height = SystemParameters.PrimaryScreenHeight - 200,
+                    Title = $"{item.Title} - {UpDateSettings.Current.Title}",
+                    Background = Brushes.Transparent
+                };
+
+                window.Show();
             }
         };
 

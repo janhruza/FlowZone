@@ -35,17 +35,23 @@ public partial class MainWindow : Window
         // extend window
         WindowExtender wex = new WindowExtender(this);
         wex.AddSeparator(0x11);
-        wex.AddMenuItem(0x12, "View log\tF1", () => FZCore.Core.ViewLog());
+        wex.AddMenuItem(0x12, "Refresh\tF5", async () => await ReloadFeedsAsync());
+        wex.AddMenuItem(0x13, "View log\tF1", () => FZCore.Core.ViewLog());
 
         // activate all extensions
         wex.EmpowerWindow();
 
         // add hooks
-        this.KeyDown += (s, e) =>
+        this.KeyDown += async (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F2)
             {
                 HandleSettings();
+            }
+
+            if (e.Key == System.Windows.Input.Key.F5)
+            {
+                await ReloadFeedsAsync();
             }
         };
 
@@ -82,6 +88,7 @@ public partial class MainWindow : Window
 
             // clear data
             trFeeds.Items.Clear();
+            frmContent.Content = null;
 
             var feedSources = UpDateSettings.Current.Feeds;
             if (feedSources.Count == 0)
@@ -90,7 +97,7 @@ public partial class MainWindow : Window
                 TreeViewItem item = new TreeViewItem
                 {
                     Header = "No feeds avalable.",
-                    Padding = new Thickness(0, 5, 5, 5)
+                    Padding = new Thickness(0, 10, 10, 10)
                 };
 
                 trFeeds.Items.Add(item);
@@ -136,16 +143,27 @@ public partial class MainWindow : Window
                             }
                         },
 
-                        Padding = new Thickness(0, 5, 5, 5)
+                        Padding = new Thickness(0, 10, 10, 10)
                     };
 
                     item.Selected += (s, e) =>
                     {
                         // open RSS feed in a feed reader page
-                        frmContent.Content = new PgChannelView(channel);
+                        PgChannelView channelView = new PgChannelView(channel);
+                        frmContent.Content = channelView;
+                        this.Title = $"{channel.Title} | {UpDateSettings.Current.Title}";
                     };
 
                     trFeeds.Items.Add(item);
+                }
+
+                if (trFeeds.Items.Count > 0)
+                {
+                    TreeViewItem? first = trFeeds.Items[0] as TreeViewItem;
+                    if (first != null)
+                    {
+                        first.IsSelected = true;
+                    }
                 }
             }
 
