@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
-                    Margin="10,10,10,10">
+                    Margin="10,10,10,0">
 
             <Label Content="Feed URL address"/>
             <TextBox Name="txtUrl"

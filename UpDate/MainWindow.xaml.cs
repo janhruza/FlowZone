@@ -1,6 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using FZCore;
 using FZCore.Windows;
+using UpDate.Core;
 using UpDate.Windows;
 
 namespace UpDate;
@@ -35,6 +40,11 @@ public partial class MainWindow : Window
                 HandleSettings();
             }
         };
+
+        this.Loaded += async (s, e) =>
+        {
+            await ReloadFeedsAsync();
+        };
     }
 
     private void ApplySettings(UpDateSettings? settings)
@@ -51,6 +61,74 @@ public partial class MainWindow : Window
 
         FZCore.Core.SetApplicationTheme(settings.ThemeMode);
         return;
+    }
+
+    private async Task<bool> ReloadFeedsAsync()
+    {
+        try
+        {
+            if (UpDateSettings.Current == null)
+            {
+                UpDateSettings.Current = UpDateSettings.EnsureSettings();
+            }
+
+            // clear data
+            trFeeds.Items.Clear();
+
+            var feedSources = UpDateSettings.Current.Feeds;
+            if (feedSources.Count == 0)
+            {
+                // draw info about no available feeds
+                TreeViewItem item = new TreeViewItem
+                {
+                    Header = "No feeds avalable.",
+                    Padding = new Thickness(0, 5, 5, 5)
+                };
+
+                trFeeds.Items.Add(item);
+                return true;
+            }
+
+            foreach (string feedSource in feedSources)
+            {
+                RssReader reader = new RssReader();
+                bool result = await reader.LoadDataAsync(feedSource);
+
+                if (result == false)
+                {
+                    continue;
+                }
+
+                List<RssChannel> channels = await reader.ReadChannelsAsync();
+
+                foreach (RssChannel channel in channels)
+                {
+                    // create channel item in feeds tree
+                    TreeViewItem item = new TreeViewItem
+                    {
+                        Header = channel.Title,
+                        Uid = channel.Link,
+                        ToolTip = channel.Description,
+                        Padding = new Thickness(0, 5, 5, 5)
+                    };
+
+                    item.MouseLeftButtonDown += (s, e) =>
+                    {
+                        // open RSS feed in a feed reader page
+                    };
+
+                    trFeeds.Items.Add(item);
+                }
+            }
+
+            return true;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(ReloadFeedsAsync));
+            return false;
+        }
     }
 
     private void miClose_Click(object sender, RoutedEventArgs e)
