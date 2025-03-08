@@ -18,7 +18,18 @@
         <StackPanel Grid.Row="0"
                     Margin="10,10,10,0">
 
-            <Label Content="Base window title"/>
+            <Label>
+                <TextBlock>
+                    <Run Text="Base window title"/>
+                    <Run Text="("/><Run Text="restore"
+                                        Foreground="{x:Static SystemColors.AccentColorBrush}"
+                                        Name="rRestore"
+                                        FontWeight="Normal"
+                                        MouseLeftButtonDown="rRestore_MouseLeftButtonDown"
+                                        MouseEnter="rRestore_MouseEnter"
+                                        MouseLeave="rRestore_MouseLeave"/><Run Text=")"/>
+                </TextBlock>
+            </Label>
             <TextBox Name="txtBaseTitle"
                      SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 

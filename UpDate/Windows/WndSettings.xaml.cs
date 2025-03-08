@@ -74,4 +74,42 @@ public partial class WndSettings : Window
     {
         this.Close();
     }
+
+    private void rRestore_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        // restore default title
+        txtBaseTitle.Text = App.AppTitle;
+    }
+
+    private void rRestore_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        UpDateSettings.Current ??= new UpDateSettings();
+        switch (UpDateSettings.Current.ThemeMode)
+        {
+            case FZCore.FZThemeMode.System:
+                if (FZCore.Core.IsDarkModeEnabled() == true)
+                {
+                    goto case FZCore.FZThemeMode.Dark;
+                }
+
+                else
+                {
+                    goto case FZCore.FZThemeMode.Light;
+                }
+
+            case FZCore.FZThemeMode.Dark:
+                rRestore.Foreground = SystemColors.AccentColorLight1Brush;
+                return;
+
+            case FZCore.FZThemeMode.None:
+            case FZCore.FZThemeMode.Light:
+                rRestore.Foreground = SystemColors.AccentColorDark1Brush;
+                return;
+        }
+    }
+
+    private void rRestore_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        rRestore.Foreground = SystemColors.AccentColorBrush;
+    }
 }
