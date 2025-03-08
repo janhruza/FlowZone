@@ -7,6 +7,22 @@ namespace UpDate.Core;
 /// </summary>
 public struct RssChannel
 {
+    #region Static methods
+
+    /// <summary>
+    /// Determines whether the given ´<paramref name="channel"/> is valid or default.
+    /// </summary>
+    /// <param name="channel">Reference to the target RSS channel item.</param>
+    /// <returns>True if the channel is not default, otherwise false.</returns>
+    public static bool IsValid(ref RssChannel channel)
+    {
+        return (string.IsNullOrEmpty(channel.Title) == false &&
+                string.IsNullOrEmpty(channel.Link) == false &&
+                string.IsNullOrEmpty(channel.Description) == false);
+    }
+
+    #endregion
+
     /// <summary>
     /// Creates a new, empty <see cref="RssChannel"/> item.
     /// </summary>

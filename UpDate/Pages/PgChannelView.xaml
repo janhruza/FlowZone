@@ -1,0 +1,40 @@
+﻿<Page x:Class="UpDate.Pages.PgChannelView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UpDate.Pages"
+      Title="Channel View">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0">
+            <TextBlock TextTrimming="CharacterEllipsis"
+                       TextWrapping="Wrap">
+                
+                <Run Name="rTitle"
+                     FontSize="22"
+                     Text="Feed title"
+                     FontWeight="SemiBold"
+                     Foreground="{x:Static SystemColors.AccentColorBrush}"/>
+                
+                <LineBreak />
+                
+                <Run Name="rDescription"
+                     Text="Feed description."
+                     FontSize="14"/>
+
+            </TextBlock>
+        </Label>
+
+        <ListBox Grid.Row="1"
+                 Name="lbFeedItems"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+
+    </Grid>
+</Page>

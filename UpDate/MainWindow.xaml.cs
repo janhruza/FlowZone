@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using FZCore;
+using FZCore.Extensions;
 using FZCore.Windows;
 using UpDate.Core;
+using UpDate.Pages;
 using UpDate.Windows;
 
 namespace UpDate;
@@ -16,6 +19,11 @@ namespace UpDate;
 /// </summary>
 public partial class MainWindow : Window
 {
+    /// <summary>
+    /// Representing the maximum length of the displayed text of all channel items.
+    /// </summary>
+    private const int CHANNEL_MAX_SIZE = 25;
+
     /// <summary>
     /// Creates a new instance of the <see cref="MainWindow"/> class with default parameters.
     /// </summary>
@@ -106,15 +114,35 @@ public partial class MainWindow : Window
                     // create channel item in feeds tree
                     TreeViewItem item = new TreeViewItem
                     {
-                        Header = channel.Title,
+                        Header = channel.Title.Reduce(CHANNEL_MAX_SIZE),
                         Uid = channel.Link,
-                        ToolTip = channel.Description,
+                        ToolTip = new TextBlock
+                        {
+                            Inlines =
+                            {
+                                new Run
+                                {
+                                    Text = channel.Title,
+                                    FontWeight = FontWeights.SemiBold,
+                                    FontSize = 16
+                                },
+
+                                new LineBreak(),
+
+                                new Run
+                                {
+                                    Text = channel.Description
+                                }
+                            }
+                        },
+
                         Padding = new Thickness(0, 5, 5, 5)
                     };
 
-                    item.MouseLeftButtonDown += (s, e) =>
+                    item.Selected += (s, e) =>
                     {
                         // open RSS feed in a feed reader page
+                        frmContent.Content = new PgChannelView(channel);
                     };
 
                     trFeeds.Items.Add(item);
@@ -137,12 +165,13 @@ public partial class MainWindow : Window
         this.Close();
     }
 
-    private void miAddFeed_Click(object sender, RoutedEventArgs e)
+    private async void miAddFeed_Click(object sender, RoutedEventArgs e)
     {
         // add new feed item
         if (new WndAddFeed().ShowDialog() == true)
         {
             // redraw RSS feed sources
+            await ReloadFeedsAsync();
         }
     }
 
