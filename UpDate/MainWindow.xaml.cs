@@ -62,6 +62,10 @@ public partial class MainWindow : Window
     private void miAddFeed_Click(object sender, RoutedEventArgs e)
     {
         // add new feed item
+        if (new WndAddFeed().ShowDialog() == true)
+        {
+            // redraw RSS feed sources
+        }
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
