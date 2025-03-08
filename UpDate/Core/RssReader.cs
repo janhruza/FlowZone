@@ -12,7 +12,7 @@ namespace UpDate.Core;
 /// <summary>
 /// Representing a basic RSS parser.
 /// </summary>
-public class RssPeader
+public class RssReader
 {
     #region Static methods
 
@@ -28,23 +28,50 @@ public class RssPeader
         return data;
     }
 
-    private static async Task<string> RetrieveRssData(Uri source)
+    internal static async Task<string> RetrieveRssData(Uri? source)
     {
-        HttpClient client = new HttpClient
-        {
-            BaseAddress = source
-        };
-
-        HttpResponseMessage msg = await client.GetAsync(source);
-        if (msg.IsSuccessStatusCode == false)
+        if (source == null)
         {
             return string.Empty;
         }
 
-        return await msg.Content.ReadAsStringAsync();
+        try
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.Timeout = TimeSpan.FromSeconds(10); // Set timeout
+                HttpResponseMessage msg = await client.GetAsync(source);
+
+                msg.EnsureSuccessStatusCode();
+
+                if (msg.IsSuccessStatusCode)
+                {
+                    return await msg.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(RetrieveRssData));
+            return string.Empty;
+        }
     }
 
-    private static void ReadXmlData(XmlDocument doc, string data) => doc.LoadXml(data);
+    private static bool ReadXmlData(XmlDocument doc, string data)
+    {
+        if (string.IsNullOrEmpty(data) == true)
+        {
+            return false;
+        }
+
+        doc.LoadXml(data);
+        return true;
+    }
 
     #endregion
 
@@ -58,10 +85,18 @@ public class RssPeader
     #region Constructors
 
     /// <summary>
-    /// Creates a new instance of the <see cref="RssPeader"/> class where the RSS source is a file (<paramref name="rssFile"/>).
+    /// Creates a default nstace of the <see cref="RssReader"/> class.
+    /// </summary>
+    public RssReader()
+    {
+        _data = string.Empty;
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="RssReader"/> class where the RSS source is a file (<paramref name="rssFile"/>).
     /// </summary>
     /// <param name="rssFile">Path to the file that contains RSS feed data. RSS file is a XML file.</param>
-    public RssPeader(string rssFile)
+    public RssReader(string rssFile)
     {
         _data = ReadRssFile(rssFile);
         ReadXmlData(_doc, _data);
@@ -70,6 +105,22 @@ public class RssPeader
     #endregion
 
     #region Methods and properties
+
+    /// <summary>
+    /// Loads the source data from the specified <paramref name="url"/> address.
+    /// </summary>
+    /// <param name="url">Target URL address.</param>
+    /// <returns>True, if data were downloaded, otherwise false.</returns>
+    public async Task<bool> LoadDataAsync(string url)
+    {
+        _data = await RetrieveRssData(new Uri(url, UriKind.RelativeOrAbsolute));
+        if (string.IsNullOrEmpty(_data) == false)
+        {
+            return ReadXmlData(_doc, _data);
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// Reads all RSS channels from the RSS feed.
