@@ -17,9 +17,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <!--Info label-->
         <Label Grid.Row="0"
                Margin="10,10,10,10">
             <Label.Content>
@@ -33,8 +35,27 @@
             </Label.Content>
         </Label>
 
+        <!--Search bar-->
+        <Grid Grid.Row="1"
+              Margin="10">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Content="Search by tag"
+                   Margin="0,0,5,0"
+                   VerticalAlignment="Center"/>
+
+            <TextBox Name="txtSearch"
+                     Grid.Column="1"
+                     TextChanged="txtSearch_TextChanged"/>
+        </Grid>
+        
         <Border Margin="10,0,10,10"
-                Grid.Row="1">
+                Grid.Row="2">
 
             <DataGrid CanUserResizeRows="False"
                       Name="dgEntries"

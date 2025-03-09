@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace FZCore.Windows
@@ -26,15 +28,21 @@ namespace FZCore.Windows
         {
             InitializeComponent();
             dgEntries.RowHeight = double.NaN;
+            _dataLoaded = false;
+            _loadedData = [];
 
             // Load the log file when the window is fully loaded
             this.Loaded += (s, e) =>
             {
-                LoadLogFile(logFilePath);
+                LoadFile(logFilePath);
+                DisplayData(string.Empty);
             };
         }
 
-        private void LoadLogFile(string filename)
+        private bool _dataLoaded;
+        private List<string> _loadedData;
+
+        private void LoadFile(string filename)
         {
             // If the file doesn't exist, display the filename and return
             if (!File.Exists(filename))
@@ -45,6 +53,18 @@ namespace FZCore.Windows
 
             // Display the file path
             rFilename.Text = Path.GetFileName(filename);
+            _loadedData = File.ReadAllLines(filename).ToList();
+            _dataLoaded = true;
+        }
+
+        private void DisplayData(string filter)
+        {
+            // check if data are loaded
+            if (_dataLoaded == false)
+            {
+                // no loaded data
+                return;
+            }
 
             // Create an ObservableCollection for data binding
             ObservableCollection<LogEntry> logEntries = new ObservableCollection<LogEntry>();
@@ -52,7 +72,7 @@ namespace FZCore.Windows
             try
             {
                 // Parse the log file line by line
-                foreach (string line in File.ReadAllLines(filename))
+                foreach (string line in _loadedData)
                 {
                     /*
                      * FORMAT:
@@ -74,7 +94,20 @@ namespace FZCore.Windows
                         Message = parts[3]
                     };
 
-                    logEntries.Add(entry);
+                    // filter tags
+                    if (string.IsNullOrEmpty(filter) == true)
+                    {
+                        // no filter
+                        logEntries.Add(entry);
+                    }
+
+                    else
+                    {
+                        if (entry.Tag.ToLower().Contains(filter.ToLower()))
+                        {
+                            logEntries.Add(entry);
+                        }
+                    }
                 }
 
                 // Bind the ObservableCollection to the DataGrid
@@ -85,6 +118,11 @@ namespace FZCore.Windows
                 // Handle any file parsing or IO exceptions
                 MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void txtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            DisplayData(txtSearch.Text);
         }
     }
 }
