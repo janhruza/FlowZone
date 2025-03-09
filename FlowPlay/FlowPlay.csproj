@@ -14,4 +14,8 @@
     <ProjectReference Include="..\FZCore\FZCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Windows\" />
+  </ItemGroup>
+
 </Project>

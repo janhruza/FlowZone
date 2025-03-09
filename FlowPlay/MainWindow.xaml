@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlowPlay"
         WindowStartupLocation="CenterScreen"
+        Title="FlowPlay"
         ResizeMode="CanResize"
         MinWidth="300"
         MinHeight="300">
