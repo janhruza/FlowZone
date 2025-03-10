@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,8 +48,7 @@ public class DoublePlayer : UIElement
             // swap players and play the next song
             if (_canNext)
             {
-                SwapPlayers();
-                _pCurrent.Play();
+                PlayNext();
             }
         };
 
@@ -87,11 +85,34 @@ public class DoublePlayer : UIElement
     /// Loads the given <paramref name="playlist"/> and validates it.
     /// </summary>
     /// <param name="playlist">A playlist to be loaded and validated. Validation will remove unavailable tracks.</param>
-    /// <returns>A task as the validation is asynchronous.</returns>
-    public async Task LoadPlaylist(MediaPlaylist playlist)
+    public void LoadPlaylist(MediaPlaylist playlist)
     {
-        await ValidatePlaylist(playlist);
+        ValidatePlaylist(playlist);
         Playlist = playlist;
+        return;
+    }
+
+    /// <summary>
+    /// Opens a single media file and begins playing it.
+    /// </summary>
+    /// <param name="fileName">Path to the media file.</param>
+    /// <returns>A new task as this method awaits the <see cref="ValidatePlaylist(MediaPlaylist)"/> method.</returns>
+    public void PlaySingleTrack(string fileName)
+    {
+        if (File.Exists(fileName) == false)
+        {
+            Log.Error($"Target media file \'{fileName}\' was not found.", nameof(PlaySingleTrack));
+            return;
+        }
+
+        MediaPlaylist playlist = new MediaPlaylist
+        {
+            Tracks = [fileName]
+        };
+
+        Playlist = playlist;
+        OpenMedia(fileName);
+        Play();
         return;
     }
 
@@ -105,18 +126,15 @@ public class DoublePlayer : UIElement
         return;
     }
 
-    private Task ValidatePlaylist(MediaPlaylist playlist)
+    private void ValidatePlaylist(MediaPlaylist playlist)
     {
-        return Task.Run(() =>
+        foreach (string track in playlist.Tracks)
         {
-            foreach (string track in playlist.Tracks)
+            if (File.Exists(track) == false)
             {
-                if (File.Exists(track) == false)
-                {
-                    playlist.Tracks.Remove(track);
-                }
+                playlist.Tracks.Remove(track);
             }
-        });
+        }
     }
 
     /// <summary>
@@ -138,12 +156,15 @@ public class DoublePlayer : UIElement
 
     /// <summary>
     /// Loads a file (<paramref name="playlistItem"/>) into the first media player.
+    /// This method will also resets the current playlist index position to 0.
     /// </summary>
-    /// <param name="playlistItem"></param>
+    /// <param name="playlistItem">Path to the media file.</param>
     public void OpenMedia(string playlistItem)
     {
         _pCurrent.Source = new Uri(playlistItem, UriKind.RelativeOrAbsolute);
         _pCurrent.Position = TimeSpan.Zero;
+        Session.Track = playlistItem;
+        playlistIndex = 0;
         return;
     }
 
@@ -191,6 +212,8 @@ public class DoublePlayer : UIElement
         if (_canNext)
         {
             SwapPlayers();
+            _pCurrent.Play();
+            Session.Track = _pCurrent.Source.AbsolutePath;
         }
 
         return;
@@ -206,6 +229,8 @@ public class DoublePlayer : UIElement
             playlistIndex--;
             QueueNext(Playlist.Tracks[playlistIndex]);
             SwapPlayers();
+            _pCurrent.Play();
+            Session.Track = _pCurrent.Source.AbsolutePath;
         }
 
         return;
@@ -262,5 +287,18 @@ public class DoublePlayer : UIElement
         }
 
         return;
+    }
+
+    /// <summary>
+    /// Gets or sets the media volume. The valid values are between 0 and 1. Default value is 0.5.
+    /// </summary>
+    public double Volume
+    {
+        get => _pCurrent.Volume;
+        set
+        {
+            _pCurrent.Volume = value;
+            _pNext.Volume = value;
+        }
     }
 }
