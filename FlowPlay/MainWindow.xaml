@@ -9,9 +9,9 @@
         ResizeMode="CanResize"
         MinWidth="300"
         MinHeight="300">
-    
-    <Grid>
 
+    <Grid>
+        
     </Grid>
     
 </Window>
