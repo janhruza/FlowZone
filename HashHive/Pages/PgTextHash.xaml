@@ -15,16 +15,31 @@
         <Label Content="Hashing method"/>
         <StackPanel Orientation="Horizontal"
                     Margin="0,5,0,5">
-            
+
+            <Button Content="SHA-1"
+                    Name="btnSha1"
+                    Click="btnSha1_Click"/>
+
             <Button Content="SHA-256"
                     Name="btnSha256"
+                    Margin="5,0,0,0"
                     Click="btnSha256_Click"/>
-            
+
+            <Button Content="SHA-384"
+                    Name="btnSha384"
+                    Margin="5,0,0,0"
+                    Click="btnSha384_Click"/>
+
             <Button Content="SHA-512"
                     Name="btnSha512"
                     Margin="5,0,0,0"
                     Click="btnSha512_Click"/>
-            
+
+            <Rectangle Margin="5,0,0,0"
+                       Width="1"
+                       Stroke="{x:Static SystemColors.AccentColorBrush}"
+                       Fill="{x:Static SystemColors.AccentColorBrush}"/>
+
             <Button Content="MD5"
                     Name="btnMD5"
                     Margin="5,0,0,0"
@@ -33,9 +48,24 @@
         </StackPanel>
 
         <Label Content="Result"/>
-        <TextBox Name="txtResult"
-                 IsReadOnly="True"
-                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Name="txtResult"
+                     IsReadOnly="True"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+            <Button Grid.Column="1"
+                    Content="Copy"
+                    Name="btnCopyHash"
+                    Margin="5,0,0,0"
+                    Click="btnCopyHash_Click"/>
+
+        </Grid>
 
     </StackPanel>
     

@@ -16,12 +16,23 @@ public partial class MainWindow : Window
     /// </summary>
     public MainWindow()
     {
+        // sets the current instance value
+        _instance = this;
+
+        // loads the window
         InitializeComponent();
         _toggleButtons = [btnText, btnFile, btnCompare];
 
         // set hashing text page as default
         SetPage(HashHivePage.HashText);
     }
+
+    private static MainWindow? _instance;
+
+    /// <summary>
+    /// Representing the current instance of the <see cref="MainWindow"/> class.
+    /// </summary>
+    public static MainWindow Instance => _instance ??= new MainWindow();
 
     private void SetPage(HashHivePage page)
     {

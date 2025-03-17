@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace HashHive.Pages;
 
@@ -13,7 +14,11 @@ public partial class PgTextHash : Page
     /// </summary>
     public PgTextHash()
     {
+        // loads the page
         InitializeComponent();
+
+        // sets the on load action
+        this.Loaded += (s, e) => App.CenterWindow(MainWindow.Instance);
     }
 
     private static PgTextHash? _instance;
@@ -36,5 +41,23 @@ public partial class PgTextHash : Page
     private void btnMD5_Click(object sender, System.Windows.RoutedEventArgs e)
     {
         txtResult.Text = App.MD5Hash(txtInput.Text);
+    }
+
+    private void btnSha1_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        txtResult.Text = App.SHA1Hash(txtInput.Text);
+    }
+
+    private void btnSha384_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        txtResult.Text = App.SHA384Hash(txtInput.Text);
+    }
+
+    private void btnCopyHash_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(txtResult.Text) == false)
+        {
+            Clipboard.SetText(txtResult.Text);
+        }
     }
 }

@@ -38,6 +38,19 @@ public partial class App : Application
         Log.AppExited();
     }
 
+    /// <summary>
+    /// Centers the given <paramref name="window"/>.
+    /// </summary>
+    /// <param name="window">Target window to be centered.</param>
+    public static void CenterWindow(Window window)
+    {
+        double top = (SystemParameters.PrimaryScreenHeight - window.Height) / 2;
+        double left = (SystemParameters.PrimaryScreenWidth - window.Width) / 2;
+        window.Top = top;
+        window.Left = left;
+        return;
+    }
+
     #region Hashing functions
 
     /// <summary>
@@ -99,6 +112,48 @@ public partial class App : Application
         using (var md5 = MD5.Create())
         {
             byte[] data = md5.ComputeHash(buf);
+            return Convert.ToHexString(data);
+        }
+    }
+
+    /// <summary>
+    /// Computes the SHA-1 hash.
+    /// </summary>
+    /// <param name="input">Input data (as text).</param>
+    /// <returns>SHA-1 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    public static string SHA1Hash(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return "INVALID_INPUT";
+        }
+
+        byte[] buf = Encoding.UTF8.GetBytes(input);
+
+        using (var sha = SHA1.Create())
+        {
+            byte[] data = sha.ComputeHash(buf);
+            return Convert.ToHexString(data);
+        }
+    }
+
+    /// <summary>
+    /// Computes the SHA-384 hash.
+    /// </summary>
+    /// <param name="input">Input data (as text).</param>
+    /// <returns>SHA-384 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    public static string SHA384Hash(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return "INVALID_INPUT";
+        }
+
+        byte[] buf = Encoding.UTF8.GetBytes(input);
+
+        using (var sha = SHA384.Create())
+        {
+            byte[] data = sha.ComputeHash(buf);
             return Convert.ToHexString(data);
         }
     }
