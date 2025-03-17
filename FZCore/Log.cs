@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Policy;
 using System.Text;
 
 namespace FZCore;
@@ -75,4 +76,37 @@ public static class Log
         WriteEntry("OK", message, tag);
         return;
     }
+
+    #region Common method and log calls
+
+    /// <summary>
+    /// Logs an informational message that reads "Application has started.".
+    /// </summary>
+    public static void AppStarted()
+    {
+        Info("Application has started.");
+        return;
+    }
+
+    /// <summary>
+    /// Logs an informational message that reads "Application has exited.".
+    /// </summary>
+    public static void AppExited()
+    {
+        Info("Application has exited.");
+        return;
+    }
+
+    /// <summary>
+    /// Logs an error message and terminates the application.
+    /// </summary>
+    /// <param name="ex">Information about the error.</param>
+    public static void Critical(Exception ex)
+    {
+        Error(ex);
+        Environment.Exit(ex.HResult);
+        return;
+    }
+
+    #endregion
 }
