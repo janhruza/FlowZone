@@ -26,7 +26,7 @@ public class TaskItem
     public long Id { get; init; }
 
     /// <summary>
-    /// Representiong the title of the task.
+    /// Representing the title of the task.
     /// </summary>
     public string Caption { get; set; }
 
