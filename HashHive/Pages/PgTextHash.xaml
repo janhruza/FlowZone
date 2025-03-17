@@ -1,0 +1,42 @@
+﻿<Page x:Class="HashHive.Pages.PgTextHash"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HashHive.Pages"
+      Title="Hash Text">
+
+    <StackPanel Width="400">
+        <Label Content="Input"/>
+        <TextBox Name="txtInput"
+                 Margin="0,5,0,5"
+                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+        <Label Content="Hashing method"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,5,0,5">
+            
+            <Button Content="SHA-256"
+                    Name="btnSha256"
+                    Click="btnSha256_Click"/>
+            
+            <Button Content="SHA-512"
+                    Name="btnSha512"
+                    Margin="5,0,0,0"
+                    Click="btnSha512_Click"/>
+            
+            <Button Content="MD5"
+                    Name="btnMD5"
+                    Margin="5,0,0,0"
+                    Click="btnMD5_Click"/>
+            
+        </StackPanel>
+
+        <Label Content="Result"/>
+        <TextBox Name="txtResult"
+                 IsReadOnly="True"
+                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+    </StackPanel>
+    
+</Page>

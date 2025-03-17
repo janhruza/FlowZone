@@ -10,6 +10,60 @@
         SizeToContent="WidthAndHeight">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="10,10,10,0">
+
+            <ToggleButton Content="Text"
+                          IsChecked="True"
+                          Name="btnText"
+                          Click="btnText_Click"/>
+            
+            <ToggleButton Content="File"
+                          Margin="5,0,0,0"
+                          Name="btnFile"
+                          Click="btnFile_Click"/>
+
+            <ToggleButton Content="Compare"
+                          Margin="5,0,0,0"
+                          Name="btnCompare"
+                          Click="btnCompare_Click"/>
+
+        </StackPanel>
+
+        <Rectangle Grid.Row="1"
+                   Height="1"
+                   Stroke="{x:Static SystemColors.AccentColorBrush}"
+                   Fill="{x:Static SystemColors.AccentColorBrush}"
+                   Margin="10"/>
+
+        <Frame Grid.Row="2"
+               Name="frmContent"
+               Margin="10, 0, 10, 10"
+               NavigationUIVisibility="Hidden"/>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    Margin="10,0,10,10"
+                    HorizontalAlignment="Right">
+
+            <Button Content="Close"
+                    Margin="0,0,5,0"
+                    Name="btnClose"
+                    Click="btnClose_Click"/>
+            
+            <Button Content="OK"
+                    Name="btnOk"
+                    Click="btnClose_Click"/>
+
+        </StackPanel>
         
     </Grid>
     
