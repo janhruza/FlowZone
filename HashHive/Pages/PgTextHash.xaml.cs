@@ -16,9 +16,6 @@ public partial class PgTextHash : Page
     {
         // loads the page
         InitializeComponent();
-
-        // sets the on load action
-        this.Loaded += (s, e) => App.CenterWindow(MainWindow.Instance);
     }
 
     private static PgTextHash? _instance;

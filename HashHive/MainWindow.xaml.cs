@@ -21,7 +21,7 @@ public partial class MainWindow : Window
 
         // loads the window
         InitializeComponent();
-        _toggleButtons = [btnText, btnFile, btnCompare];
+        _toggleButtons = [btnText, btnFile];
 
         // set hashing text page as default
         SetPage(HashHivePage.HashText);
@@ -52,10 +52,6 @@ public partial class MainWindow : Window
             case HashHivePage.HashFile:
                 LoadPage(Pages.PgFileHash.Instance);
                 UncheckAll(btnFile);
-                break;
-
-            case HashHivePage.CompareHashes:
-                UncheckAll(btnCompare);
                 break;
         }
 

@@ -17,7 +17,7 @@ public partial class PgFileHash : Page
     /// </summary>
     public PgFileHash()
     {
-        _instance = this;
+        // loads the page
         InitializeComponent();
     }
 

@@ -25,16 +25,11 @@
                           IsChecked="True"
                           Name="btnText"
                           Click="btnText_Click"/>
-            
+
             <ToggleButton Content="File"
                           Margin="5,0,0,0"
                           Name="btnFile"
                           Click="btnFile_Click"/>
-
-            <ToggleButton Content="Compare"
-                          Margin="5,0,0,0"
-                          Name="btnCompare"
-                          Click="btnCompare_Click"/>
 
         </StackPanel>
 

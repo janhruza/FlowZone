@@ -11,14 +11,9 @@ public enum HashHivePage
     HashText        = 0,
 
     /// <summary>
-    /// 
+    /// Representing the <see cref="Pages.PgFileHash"/> page.
     /// </summary>
     HashFile        = 1,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    CompareHashes   = 2,
 
     /// <summary>
     /// Representing a blank page (no content at all).
