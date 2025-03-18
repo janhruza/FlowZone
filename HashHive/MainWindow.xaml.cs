@@ -50,6 +50,7 @@ public partial class MainWindow : Window
                 break;
 
             case HashHivePage.HashFile:
+                LoadPage(Pages.PgFileHash.Instance);
                 UncheckAll(btnFile);
                 break;
 

@@ -66,12 +66,8 @@ public partial class App : Application
         }
 
         byte[] buf = Encoding.UTF8.GetBytes(input);
-
-        using (var sha = SHA256.Create())
-        {
-            byte[] data = sha.ComputeHash(buf);
-            return Convert.ToHexString(data);
-        }
+        byte[] data = SHA256.HashData(buf);
+        return Convert.ToHexString(data);
     }
 
     /// <summary>
@@ -87,12 +83,8 @@ public partial class App : Application
         }
 
         byte[] buf = Encoding.UTF8.GetBytes(input);
-
-        using (var sha = SHA512.Create())
-        {
-            byte[] data = sha.ComputeHash(buf);
-            return Convert.ToHexString(data);
-        }
+        byte[] data = SHA512.HashData(buf);
+        return Convert.ToHexString(data);
     }
 
     /// <summary>
@@ -108,12 +100,8 @@ public partial class App : Application
         }
 
         byte[] buf = Encoding.UTF8.GetBytes(input);
-
-        using (var md5 = MD5.Create())
-        {
-            byte[] data = md5.ComputeHash(buf);
-            return Convert.ToHexString(data);
-        }
+        byte[] data = MD5.HashData(buf);
+        return Convert.ToHexString(data);
     }
 
     /// <summary>
@@ -129,12 +117,8 @@ public partial class App : Application
         }
 
         byte[] buf = Encoding.UTF8.GetBytes(input);
-
-        using (var sha = SHA1.Create())
-        {
-            byte[] data = sha.ComputeHash(buf);
-            return Convert.ToHexString(data);
-        }
+        byte[] data = SHA1.HashData(buf);
+        return Convert.ToHexString(data);
     }
 
     /// <summary>
@@ -150,12 +134,63 @@ public partial class App : Application
         }
 
         byte[] buf = Encoding.UTF8.GetBytes(input);
+        byte[] data = SHA384.HashData(buf);
+        return Convert.ToHexString(data);
+    }
 
-        using (var sha = SHA384.Create())
-        {
-            byte[] data = sha.ComputeHash(buf);
-            return Convert.ToHexString(data);
-        }
+    /// <summary>
+    /// Computes the SHA-1 hash of the given <paramref name="input"/> data.
+    /// </summary>
+    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <returns>Computed hash.</returns>
+    public static string SHA1Hash(byte[] input)
+    {
+        byte[] hash = SHA1.HashData(input);
+        return Convert.ToHexString(hash);
+    }
+
+    /// <summary>
+    /// Computes the SHA-256 hash of the given <paramref name="input"/> data.
+    /// </summary>
+    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <returns>Computed hash.</returns>
+    public static string SHA256Hash(byte[] input)
+    {
+        byte[] hash = SHA256.HashData(input);
+        return Convert.ToHexString(hash);
+    }
+
+    /// <summary>
+    /// Computes the SHA-384 hash of the given <paramref name="input"/> data.
+    /// </summary>
+    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <returns>Computed hash.</returns>
+    public static string SHA384Hash(byte[] input)
+    {
+        byte[] hash = SHA384.HashData(input);
+        return Convert.ToHexString(hash);
+    }
+
+    /// <summary>
+    /// Computes the SHA-512 hash of the given <paramref name="input"/> data.
+    /// </summary>
+    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <returns>Computed hash.</returns>
+    public static string SHA512Hash(byte[] input)
+    {
+        byte[] hash = SHA512.HashData(input);
+        return Convert.ToHexString(hash);
+    }
+
+    /// <summary>
+    /// Computes the MD5 hash of the given <paramref name="input"/> data.
+    /// </summary>
+    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <returns>Computed hash.</returns>
+    public static string MD5Hash(byte[] input)
+    {
+        byte[] hash = MD5.HashData(input);
+        return Convert.ToHexString(hash);
     }
 
     #endregion

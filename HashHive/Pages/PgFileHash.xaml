@@ -1,0 +1,70 @@
+﻿<Page x:Class="HashHive.Pages.PgFileHash"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HashHive.Pages"
+      Title="Hash File">
+
+    <StackPanel Width="400">
+        <Label Content="File"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="txtPath"
+                     Grid.Column="0"
+                     Margin="0,0,5,0"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+
+            <Button Grid.Column="1"
+                    Name="btnChooseFile"
+                    Content="..."
+                    Click="btnChooseFile_Click"/>
+        </Grid>
+
+        <Label Content="Hashing algorithm"
+               Margin="0,5,0,0"/>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button Content="SHA-1"
+                    Margin="0,0,5,0"
+                    Name="btnSha1"
+                    Click="btnSha1_Click"/>
+            
+            <Button Content="SHA-256"
+                    Margin="0,0,5,0"
+                    Name="btnSha256"
+                    Click="btnSha256_Click"/>
+            
+            <Button Content="SHA-384"
+                    Margin="0,0,5,0"
+                    Name="btnSha384"
+                    Click="btnSha384_Click"/>
+            
+            <Button Content="SHA-512"
+                    Margin="0,0,5,0"
+                    Name="btnSha512"
+                    Click="btnSha512_Click"/>
+
+            <Rectangle Width="1"
+                       Stroke="{x:Static SystemColors.AccentColorBrush}"
+                       Fill="{x:Static SystemColors.AccentColorBrush}"
+                       Margin="0,0,5,0"/>
+
+            <Button Content="MD5"
+                    Name="btnMd5"
+                    Click="btnMd5_Click"/>
+        </StackPanel>
+
+        <Label Content="Computed hash"
+               Margin="0,5,0,0"/>
+        
+        <TextBox Name="txtResult"
+                 IsReadOnly="True"
+                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+    </StackPanel>
+    
+</Page>
