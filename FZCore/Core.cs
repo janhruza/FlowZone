@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -197,5 +198,17 @@ public static class Core
     public static string GetResource(string resource)
     {
         return $"pack://application:,,,/FZCore;component/Resources/{resource}";
+    }
+
+    /// <summary>
+    /// Sets both <see cref="CultureInfo.CurrentCulture"/> and <see cref="CultureInfo.CurrentUICulture"/> from the specified <paramref name="cultureName"/> parameter.
+    /// </summary>
+    /// <param name="cultureName">Name of the culture. You can use the <see cref="CultureInfo.Name"/> property to get the name of the desired culture.</param>
+    public static void SetCulture(string cultureName)
+    {
+        CultureInfo cu = new CultureInfo(cultureName);
+        CultureInfo.CurrentCulture = cu;
+        CultureInfo.CurrentUICulture = cu;
+        return;
     }
 }

@@ -14,6 +14,7 @@ public partial class PgSettings : Page
 {
     /// <summary>
     /// Creates a new instance of the <see cref="PgSettings"/> class.
+    /// This class inherits directly from the <see cref="Page"/> class.
     /// </summary>
     public PgSettings()
     {
@@ -21,61 +22,72 @@ public partial class PgSettings : Page
 
         this.Loaded += (s, e) =>
         {
-            if (UserProfile.Current == null)
+            this.Reload();
+        };
+
+        this.KeyDown += (s, e) =>
+        {
+            if (e.Key == System.Windows.Input.Key.F5)
             {
-                return;
-            }
-
-            // display cultures
-            cbLocales.Items.Clear();
-
-            foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
-            {
-                ComboBoxItem cbi = new ComboBoxItem
-                {
-                    Content = $"{culture.DisplayName} {(string.IsNullOrEmpty(culture.Name) == true ? string.Empty : $"({culture.Name.ToUpper()})")}"
-                };
-
-                cbi.Selected += async (s, e) =>
-                {
-                    // set the new culture
-                    UserProfile.Current.Settings.CultureName = culture.Name;
-                    CultureInfo cu = new CultureInfo(culture.Name);
-                    CultureInfo.CurrentCulture = cu;
-                    CultureInfo.CurrentUICulture = cu;
-                    await UserProfile.SaveSettings(UserProfile.Current);
-                };
-
-                int index = cbLocales.Items.Add(cbi);
-                if (culture.Name == UserProfile.Current.Settings.CultureName)
-                {
-                    cbLocales.SelectedIndex = index;
-                }
-            }
-
-            // set checked theme item
-            switch (UserProfile.Current.Settings.ThemeMode)
-            {
-                case FZThemeMode.None:
-                    rbThemeNone.IsChecked = true;
-                    break;
-
-                case FZThemeMode.Light:
-                    rbThemeLight.IsChecked = true;
-                    break;
-
-                case FZThemeMode.Dark:
-                    rbThemeDark.IsChecked = true;
-                    break;
-
-                case FZThemeMode.System:
-                    rbThemeSystem.IsChecked = true;
-                    break;
-
-                default:
-                    return;
+                this.Reload();
             }
         };
+    }
+
+    private void Reload()
+    {
+        if (UserProfile.Current == null)
+        {
+            return;
+        }
+
+        // display cultures
+        cbLocales.Items.Clear();
+
+        foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+        {
+            ComboBoxItem cbi = new ComboBoxItem
+            {
+                Content = $"{culture.DisplayName} {(string.IsNullOrEmpty(culture.Name) == true ? string.Empty : $"({culture.Name.ToUpper()})")}"
+            };
+
+            int index = cbLocales.Items.Add(cbi);
+            if (culture.Name == UserProfile.Current.Settings.CultureName)
+            {
+                cbLocales.SelectedIndex = index;
+            }
+
+            cbi.Selected += async (s, e) =>
+            {
+                // set the new culture
+                FZCore.Core.SetCulture(culture.Name);
+                UserProfile.Current.Settings.CultureName = culture.Name;
+                await UserProfile.SaveSettings(UserProfile.Current);
+            };
+        }
+
+        // set checked theme item
+        switch (UserProfile.Current.Settings.ThemeMode)
+        {
+            case FZThemeMode.None:
+                rbThemeNone.IsChecked = true;
+                break;
+
+            case FZThemeMode.Light:
+                rbThemeLight.IsChecked = true;
+                break;
+
+            case FZThemeMode.Dark:
+                rbThemeDark.IsChecked = true;
+                break;
+
+            case FZThemeMode.System:
+                rbThemeSystem.IsChecked = true;
+                break;
+
+            default:
+                return;
+        }
     }
 
     private static PgSettings? _instance;
