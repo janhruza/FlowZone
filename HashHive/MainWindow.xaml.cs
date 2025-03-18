@@ -114,9 +114,4 @@ public partial class MainWindow : Window
     {
         SetPage(HashHivePage.HashFile);
     }
-
-    private void btnCompare_Click(object sender, RoutedEventArgs e)
-    {
-        SetPage(HashHivePage.CompareHashes);
-    }
 }
