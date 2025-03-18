@@ -172,6 +172,12 @@ h1, h2, h3, h4, h5, h6 {
                 dateText = item.PublicationDate;
             }
 
+            string description = item.Description.Trim();
+            if (string.IsNullOrEmpty(description) == true)
+            {
+                description = "No description.";
+            }
+
             lbi.Content = new TextBlock
             {
                 TextWrapping = TextWrapping.Wrap,
@@ -197,7 +203,7 @@ h1, h2, h3, h4, h5, h6 {
 
                     new Run
                     {
-                        Text = item.Description.Trim()
+                        Text = description
                     }
                 }
             };
@@ -252,8 +258,8 @@ h1, h2, h3, h4, h5, h6 {
         }
 
         // channel is valid, display its info
-        rTitle.Text = _channel.Title;
-        rDescription.Text = _channel.Description;
+        rTitle.Text = _channel.Title.Trim();
+        rDescription.Text = _channel.Description.Trim();
 
         // get channel items
         lbFeedItems.Items.Clear();

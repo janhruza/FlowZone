@@ -84,7 +84,7 @@ public static class Log
     /// </summary>
     public static void AppStarted()
     {
-        Info("Application has started.");
+        Info("Application has started.", "Application_Startup");
         return;
     }
 
@@ -93,7 +93,7 @@ public static class Log
     /// </summary>
     public static void AppExited()
     {
-        Info("Application has exited.");
+        Info("Application has exited.", "Application_Exit");
         return;
     }
 

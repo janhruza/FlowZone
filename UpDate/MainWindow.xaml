@@ -40,6 +40,12 @@
                           Header="New feed"
                           InputGestureText="Ctrl+N"
                           Click="miAddFeed_Click"/>
+
+                <Separator />
+
+                <MenuItem Name="miRestoreFeed"
+                          Header="Restore default"
+                          Click="miRestoreFeed_Click"/>
             </MenuItem>
             
             <!--Help menu item-->

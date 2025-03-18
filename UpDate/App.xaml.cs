@@ -1,10 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Windows;
+﻿using System.Windows;
 using FZCore;
-using FZCore.Extensions;
-using FZCore.Windows;
-using UpDate.Core;
 
 namespace UpDate;
 
@@ -29,7 +24,7 @@ public partial class App : Application
 
         // create main window with the properties
         // set according to the settings values
-        MainWindow mw = new MainWindow
+        MainWindow mw = new()
         {
             Title = UpDateSettings.Current.Title,
             Width = UpDateSettings.Current.WindowSize.Width,
@@ -45,10 +40,7 @@ public partial class App : Application
     private void Application_Exit(object sender, ExitEventArgs e)
     {
         // save loaded settings
-        if (UpDateSettings.Current != null)
-        {
-            UpDateSettings.Current.SaveAsDefault();
-        }
+        UpDateSettings.Current?.SaveAsDefault();
 
         Log.Info("App exited.", nameof(Application_Exit));
         return;

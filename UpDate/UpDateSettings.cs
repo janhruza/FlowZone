@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
 
@@ -20,8 +19,8 @@ public class UpDateSettings
     /// <returns>Loaded or created instance of the <see cref="UpDateSettings"/> class.</returns>
     public static UpDateSettings EnsureSettings()
     {
-        string jsonData = string.Empty;
-        UpDateSettings settings = new UpDateSettings();
+        string jsonData;
+        UpDateSettings settings = new();
 
         if (File.Exists(SETTINGS_PATH) == false)
         {
@@ -58,6 +57,23 @@ public class UpDateSettings
     /// </summary>
     public static UpDateSettings? Current { get; set; }
 
+    /// <summary>
+    /// Representing the list of default RSS feeds.
+    /// </summary>
+    /// <returns>A new list of default RSS feeds.</returns>
+    public static List<string> GetDefaultFeeds()
+    {
+        return
+        [
+            "https://www.novinky.cz/rss",
+            "https://ct24.ceskatelevize.cz/rss",
+            "https://www.ceskatelevize.cz/sport/rss/vsechny-zpravy/",
+            "https://servis.idnes.cz/rss.aspx?c=zpravodaj",
+            "https://servis.idnes.cz/rss.aspx?c=sport",
+            "https://servis.idnes.cz/rss.aspx?c=ekonomikah"
+        ];
+    }
+
     #endregion
 
     /// <summary>
@@ -67,7 +83,7 @@ public class UpDateSettings
     {
         WindowSize = new Size(640, 400);
         Title = App.AppTitle;
-        Feeds = [];
+        Feeds = GetDefaultFeeds();
         ThemeMode = FZCore.FZThemeMode.System;
     }
 

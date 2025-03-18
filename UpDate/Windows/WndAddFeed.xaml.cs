@@ -54,11 +54,8 @@ public partial class WndAddFeed : Window
                 return false;
             }
 
-            // chech passed, register feed
-            if (UpDateSettings.Current == null)
-            {
-                UpDateSettings.Current = UpDateSettings.EnsureSettings();
-            }
+            // check passed, register feed
+            UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
 
             if (UpDateSettings.Current.Feeds.Contains(uri.AbsoluteUri) == true)
             {

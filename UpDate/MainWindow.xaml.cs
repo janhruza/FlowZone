@@ -121,7 +121,7 @@ public partial class MainWindow : Window
                     // create channel item in feeds tree
                     TreeViewItem item = new TreeViewItem
                     {
-                        Header = channel.Title.Reduce(CHANNEL_MAX_SIZE),
+                        Header = channel.Title.Trim().Reduce(CHANNEL_MAX_SIZE),
                         Uid = channel.Link,
                         ToolTip = new TextBlock
                         {
@@ -129,7 +129,7 @@ public partial class MainWindow : Window
                             {
                                 new Run
                                 {
-                                    Text = channel.Title,
+                                    Text = channel.Title.Trim(),
                                     FontWeight = FontWeights.SemiBold,
                                     FontSize = 16
                                 },
@@ -138,9 +138,12 @@ public partial class MainWindow : Window
 
                                 new Run
                                 {
-                                    Text = channel.Description
+                                    Text = channel.Description.Trim()
                                 }
-                            }
+                            },
+
+                            TextWrapping = TextWrapping.Wrap,
+                            TextTrimming = TextTrimming.CharacterEllipsis
                         },
 
                         Padding = new Thickness(0, 10, 10, 10)
@@ -151,7 +154,7 @@ public partial class MainWindow : Window
                         // open RSS feed in a feed reader page
                         PgChannelView channelView = new PgChannelView(channel);
                         frmContent.Content = channelView;
-                        this.Title = $"{channel.Title} | {UpDateSettings.Current.Title}";
+                        this.Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
                     };
 
                     trFeeds.Items.Add(item);
@@ -231,5 +234,13 @@ public partial class MainWindow : Window
     private void miSettings_Click(object sender, RoutedEventArgs e)
     {
         HandleSettings();
+    }
+
+    private async void miRestoreFeed_Click(object sender, RoutedEventArgs e)
+    {
+        UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
+        UpDateSettings.Current.Feeds = UpDateSettings.GetDefaultFeeds();
+        ApplySettings(UpDateSettings.Current);
+        await ReloadFeedsAsync();
     }
 }
