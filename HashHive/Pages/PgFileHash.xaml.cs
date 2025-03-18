@@ -38,6 +38,7 @@ public partial class PgFileHash : Page
         if (CanComputeHash() == false)
         {
             Log.Error("No file selected.", nameof(ComputeHash));
+            txtResult.Text = "NO_FILE_OPENED";
             return;
         }
 
@@ -108,6 +109,14 @@ public partial class PgFileHash : Page
         if (ofd.ShowDialog() == true)
         {
             txtPath.Text = ofd.FileName;
+        }
+    }
+
+    private void btnCopy_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(txtResult.Text) == false)
+        {
+            Clipboard.SetText(txtResult.Text);
         }
     }
 }

@@ -25,6 +25,8 @@ public partial class MainWindow : Window
 
         // set hashing text page as default
         SetPage(HashHivePage.HashText);
+
+        App.CenterWindow(this);
     }
 
     private static MainWindow? _instance;

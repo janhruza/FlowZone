@@ -21,12 +21,12 @@
                     Orientation="Horizontal"
                     Margin="10,10,10,0">
 
-            <ToggleButton Content="Text"
+            <ToggleButton Content="Hash Text"
                           IsChecked="True"
                           Name="btnText"
                           Click="btnText_Click"/>
 
-            <ToggleButton Content="File"
+            <ToggleButton Content="Hash File"
                           Margin="5,0,0,0"
                           Name="btnFile"
                           Click="btnFile_Click"/>
@@ -37,7 +37,7 @@
                    Height="1"
                    Stroke="{x:Static SystemColors.AccentColorBrush}"
                    Fill="{x:Static SystemColors.AccentColorBrush}"
-                   Margin="10"/>
+                   Margin="10,5,10,10"/>
 
         <Frame Grid.Row="2"
                Name="frmContent"
