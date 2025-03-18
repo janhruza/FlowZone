@@ -70,7 +70,8 @@ public class UpDateSettings
             "https://www.ceskatelevize.cz/sport/rss/vsechny-zpravy/",
             "https://servis.idnes.cz/rss.aspx?c=zpravodaj",
             "https://servis.idnes.cz/rss.aspx?c=sport",
-            "https://servis.idnes.cz/rss.aspx?c=ekonomikah"
+            "https://servis.idnes.cz/rss.aspx?c=ekonomikah",
+            "https://www.irishtimes.com/arc/outboundfeeds/sitemap-news-index/latest/"
         ];
     }
 
