@@ -60,7 +60,7 @@ public partial class PgHome : Page, IExpandoPage
 
     #region Static code
 
-    private static PgHome _instance;
+    private static PgHome? _instance;
 
     /// <summary>
     /// Representing the current instance of the <see cref="PgHome"/> class.

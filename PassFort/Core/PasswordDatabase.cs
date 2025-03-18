@@ -508,8 +508,8 @@ namespace PassFort.Core
             }
 
             // encrypts all sensitive fields/properties inside of the entry
-            entry.Username = EncryptString(entry.Username);
-            entry.Password = EncryptString(entry.Password);
+            entry.Username = EncryptString(entry.Username) ?? string.Empty;
+            entry.Password = EncryptString(entry.Password) ?? string.Empty;
             return true;
         }
 
@@ -522,8 +522,8 @@ namespace PassFort.Core
             }
 
             // decrypts all sensitive fields/properties inside of the entry
-            entry.Username = DecryptString(entry.Username);
-            entry.Password = DecryptString(entry.Password);
+            entry.Username = DecryptString(entry.Username) ?? string.Empty;
+            entry.Password = DecryptString(entry.Password) ?? string.Empty;
             return true;
         }
 

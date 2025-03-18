@@ -25,9 +25,9 @@ public partial class PgInventory : Page
         this.Loaded += this.PgInventory_Loaded;
     }
 
-    private void PgInventory_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private async void PgInventory_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        RefreshItems();
+        await RefreshItems();
     }
 
     private ListBoxItem? CreateListItem(InventoryItem item)
@@ -44,12 +44,12 @@ public partial class PgInventory : Page
             InputGestureText = "Del"
         };
 
-        miDelete.Click += (s, e) =>
+        miDelete.Click += async (s, e) =>
         {
-            RemoveItem(item);
+            await RemoveItem(item);
         };
 
-        // list box item iteself
+        // list box item itself
         ListBoxItem lbi = new ListBoxItem
         {
             Content = item.Name,
@@ -62,18 +62,18 @@ public partial class PgInventory : Page
             }
         };
 
-        lbi.KeyDown += (s, e) =>
+        lbi.KeyDown += async (s, e) =>
         {
             if (e.Key == Key.Delete)
             {
-                RemoveItem(item);
+                await RemoveItem(item);
             }
         };
 
         return lbi;
     }
 
-    private void RemoveItem(InventoryItem item)
+    private async Task RemoveItem(InventoryItem item)
     {
         if (UserProfile.Current == null)
         {
@@ -84,7 +84,7 @@ public partial class PgInventory : Page
         {
             if (UserProfile.Current.Items.Remove(item) == true)
             {
-                RefreshItems();
+                await RefreshItems();
             }
         }
     }

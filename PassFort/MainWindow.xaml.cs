@@ -77,7 +77,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        bool value = PasswordDatabase.Current != null;
+        bool value = true;
         foreach (MenuItem mi in _affectedItems)
         {
             mi.IsEnabled = value;

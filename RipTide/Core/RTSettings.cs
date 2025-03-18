@@ -122,7 +122,7 @@ public class RTSettings
     /// <param name="settingsPath">Path to the settings file.</param>
     /// <param name="settings">Where to store the loaded settings to.</param>
     /// <returns>True, if load was successful, otherwise false.</returns>
-    public static bool Load(string settingsPath, ref RTSettings? settings)
+    public static bool Load(string settingsPath, ref RTSettings settings)
     {
         try
         {
@@ -134,7 +134,12 @@ public class RTSettings
 
             // load JSON structured data and deserialize them
             string data = File.ReadAllText(settingsPath, Encoding.UTF8);
-            settings = (RTSettings?)JsonSerializer.Deserialize<RTSettings>(data);
+            RTSettings? set = (RTSettings?)JsonSerializer.Deserialize<RTSettings>(data);
+
+            if (set != null)
+            {
+                settings = set;
+            }
 
             if (settings == null)
             {

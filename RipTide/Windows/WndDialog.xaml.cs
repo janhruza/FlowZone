@@ -41,7 +41,19 @@ public partial class WndDialog : Window
     /// </summary>
     public char IconGlyph
     {
-        get => (string.IsNullOrEmpty(lImage.Content.ToString()) == false) ? lImage.Content.ToString()[0] : C_INFO;
+        get
+        {
+            if (lImage.Content.ToString() == null)
+            {
+                return C_INFO;
+            }
+
+            else
+            {
+                return this.lImage.ToString()[0];
+            }
+        }
+
         set => lImage.Content = value;
     }
 
