@@ -17,6 +17,7 @@
 |ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|
 |PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|
 |UpDate|WPF|UpDate is a simple, but modern RSS reader. It will keep you up to date with your favorite media!|
+|HashHive|WPF|HashHive is a simple hash computing program. It allows user to calculate hashes of a written text or selected files.|
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
