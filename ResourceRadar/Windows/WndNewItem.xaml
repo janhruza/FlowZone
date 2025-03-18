@@ -79,7 +79,8 @@
                            Margin="0,5,0,0"/>
 
                     <TextBox SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
-                             Name="txtPrice"/>
+                             Name="txtPrice"
+                             Text="0"/>
 
                     <Label Content="Seller"
                            Margin="0,5,0,0"/>
