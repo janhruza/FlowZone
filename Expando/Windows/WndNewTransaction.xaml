@@ -22,13 +22,15 @@
                 <Label Content="Description"/>
                 
                 <TextBox Name="txtDescription"
-                         Width="300"/>
+                         Width="300"
+                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
                 <Label Content="Value"
                        Margin="0,10,0,0"/>
                 
                 <TextBox x:Name="txtValue"
-                         Width="300"/>
+                         Width="300"
+                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
             </StackPanel>
         </Border>
         

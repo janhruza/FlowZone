@@ -22,7 +22,8 @@
             <StackPanel>
                 <Label Content="Enter your profile name"/>
                 <TextBox Width="300"
-                         Name="txtUsername"/>
+                         Name="txtUsername"
+                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
             </StackPanel>
             
         </Border>
