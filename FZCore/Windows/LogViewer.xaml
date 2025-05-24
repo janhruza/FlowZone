@@ -51,6 +51,7 @@
 
             <TextBox Name="txtSearch"
                      Grid.Column="1"
+                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                      TextChanged="txtSearch_TextChanged"/>
         </Grid>
         
