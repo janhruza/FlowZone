@@ -8,10 +8,98 @@
         Title="FlowPlay"
         ResizeMode="CanResize"
         MinWidth="300"
-        MinHeight="300">
+        MinHeight="300"
+        SizeToContent="WidthAndHeight"
+        KeyDown="Window_KeyDown">
 
     <Grid>
-        
+
+        <MediaElement Name="cPlayer"
+                      LoadedBehavior="Manual"
+                      Volume="0.5"
+                      MediaOpened="cPlayer_MediaOpened"
+                      KeyDown="Window_KeyDown"
+                      MouseEnter="cPlayer_MouseEnter"
+                      MouseLeave="cPlayer_MouseLeave">
+
+            <MediaElement.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Open Media"
+                              InputGestureText="F1"
+                              Name="miOpenMedia"
+                              Click="miOpenMedia_Click"/>
+
+                    <Separator />
+
+                    <MenuItem Header="Play/Pause"
+                              InputGestureText="Space"
+                              Name="miPlayPause"
+                              Click="miPlayPause_Click"/>
+
+                    <Separator />
+
+                    <MenuItem Header="Volume Up"
+                              InputGestureText="Up"
+                              Name="miVolumeUp"
+                              Click="miVolumeUp_Click"/>
+
+                    <MenuItem Header="Volume Down"
+                              InputGestureText="Down"
+                              Name="miVolumeDown"
+                              Click="miVolumeDown_Click"/>
+
+                    <Separator />
+
+                    <MenuItem Header="Fit Video"
+                              Name="miFitVideo"
+                              InputGestureText="F2"
+                              Click="miFitVideo_Click"/>
+
+                    <MenuItem Header="Properties"
+                              InputGestureText="F9"/>
+                    
+                </ContextMenu>
+            </MediaElement.ContextMenu>
+
+        </MediaElement>
+
+        <Border Name="bdControls"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Stretch"
+                Margin="10"
+                Padding="5"
+                Background="#80FFFFFF">
+
+            <StackPanel>
+                <Slider Margin="0,0,0,5"
+                        Name="slPosition"/>
+                
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+                    <Button Padding="10,5,10,5"
+                            Name="btnBack"
+                            Content=""
+                            FontFamily="Segoe Fluent Icons"
+                            Click="btnBack_Click"/>
+
+                    <Button Padding="10,5,10,5"
+                            Margin="5,0,5,0"
+                            Name="btnPlayPause"
+                            Content=""
+                            FontFamily="Segoe Fluent Icons"
+                            Click="btnPlayPause_Click"/>
+
+                    <Button Padding="10,5,10,5"
+                            Name="btnNext"
+                            Content=""
+                            FontFamily="Segoe Fluent Icons"
+                            Click="btnNext_Click"/>
+
+                </StackPanel>
+            </StackPanel>
+            
+        </Border>
     </Grid>
-    
+
 </Window>

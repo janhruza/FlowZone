@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using FlowPlay.Core;
@@ -14,7 +13,7 @@ namespace FlowPlay.Controls;
 /// It holds 2 media elements for smooth transitions between songs.
 /// This control derives directly from the <see cref="UIElement"/> class.
 /// </summary>
-public class DoublePlayer : UIElement
+public class DoublePlayer : Control
 {
     #region Fields
 
@@ -40,7 +39,8 @@ public class DoublePlayer : UIElement
 
         this._pCurrent = new MediaElement
         {
-            LoadedBehavior = MediaState.Manual
+            LoadedBehavior = MediaState.Manual,
+            Visibility = Visibility.Visible
         };
 
         _pCurrent.MediaEnded += (s, e) =>
@@ -188,8 +188,17 @@ public class DoublePlayer : UIElement
     /// </summary>
     public TimeSpan Position
     {
-        get => _pCurrent.Position;
-        set => _pCurrent.Position = value;
+        get
+        {
+            if (_pCurrent == null) return TimeSpan.Zero;
+            return _pCurrent.Position;
+        }
+
+        set
+        {
+            if (_pCurrent == null) return;
+            _pCurrent.Position = value;
+        }
     }
 
     /// <summary>
