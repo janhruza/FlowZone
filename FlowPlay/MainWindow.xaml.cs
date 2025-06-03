@@ -22,6 +22,8 @@ public partial class MainWindow : Window
 
     #region Media player controls
 
+    const double POSITION_STEP = 10_000;
+
     private void StopMedia()
     {
         cPlayer.Stop();
@@ -54,24 +56,69 @@ public partial class MainWindow : Window
         }
     }
 
+    private void PlayerRewind()
+    {
+        double cur = cPlayer.Position.TotalMilliseconds;
+        if (cur <= POSITION_STEP)
+        {
+            cPlayer.Position = TimeSpan.FromMilliseconds(0);
+        }
+
+        else
+        {
+            cPlayer.Position = TimeSpan.FromMilliseconds(cur - POSITION_STEP);
+        }
+    }
+
+    private void PlayerForward()
+    {
+        if (cPlayer.NaturalDuration.HasTimeSpan == false)
+        {
+            return;
+        }
+
+        double max = cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+        double cur = cPlayer.Position.TotalMilliseconds;
+
+        if ((max - cur) < POSITION_STEP)
+        {
+            cPlayer.Position = TimeSpan.FromMilliseconds(max);
+        }
+
+        else
+        {
+            cPlayer.Position = TimeSpan.FromMilliseconds(cur + POSITION_STEP);
+        }
+    }
+
     private bool bPlaying = false;
+
+    private void PlayerPause()
+    {
+        dTimer.Stop();
+        cPlayer.Pause();
+        bPlaying = false;
+        btnPlayPause.Content = sPlay;
+    }
+
+    private void PlayerPlay()
+    {
+        cPlayer.Play();
+        bPlaying = true;
+        btnPlayPause.Content = sPause;
+        dTimer.Start();
+    }
 
     private void PlayPause()
     {
         if (bPlaying == true)
         {
-            dTimer.Stop();
-            cPlayer.Pause();
-            bPlaying = false;
-            btnPlayPause.Content = sPlay;
+            PlayerPause();
         }
 
         else
         {
-            cPlayer.Play();
-            bPlaying = true;
-            btnPlayPause.Content = sPause;
-            dTimer.Start();
+            PlayerPlay();
         }
     }
 
@@ -101,6 +148,8 @@ public partial class MainWindow : Window
     private void FitMediaIntoWindow()
     {
         this.SizeToContent = SizeToContent.WidthAndHeight;
+        cPlayer.Width = cPlayer.NaturalVideoWidth;
+        cPlayer.Height = cPlayer.NaturalVideoHeight;
         return;
     }
 
@@ -198,12 +247,12 @@ public partial class MainWindow : Window
             ToggleFullScreen();
         }
 
-        if (e.Key == Key.F2)
+        else if (e.Key == Key.F2)
         {
             FitMediaIntoWindow();
         }
 
-        if (e.Key == Key.F1)
+        else if (e.Key == Key.F1)
         {
             OpenMedia();
         }
@@ -221,6 +270,16 @@ public partial class MainWindow : Window
         else if (e.Key == Key.Space)
         {
             PlayPause();
+        }
+
+        else if (e.Key == Key.Left)
+        {
+            PlayerRewind();
+        }
+
+        else if (e.Key == Key.Right)
+        {
+            PlayerForward();
         }
     }
 
@@ -246,7 +305,7 @@ public partial class MainWindow : Window
 
     private void btnBack_Click(object sender, RoutedEventArgs e)
     {
-
+        PlayerRewind();
     }
 
     private void btnPlayPause_Click(object sender, RoutedEventArgs e)
@@ -256,7 +315,7 @@ public partial class MainWindow : Window
 
     private void btnNext_Click(object sender, RoutedEventArgs e)
     {
-
+        PlayerForward();
     }
 
     private void cPlayer_MouseEnter(object sender, MouseEventArgs e)
@@ -277,5 +336,31 @@ public partial class MainWindow : Window
     private void miFullScreen_Click(object sender, RoutedEventArgs e)
     {
         ToggleFullScreen();
+    }
+
+    private void slPosition_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (cPlayer.IsLoaded == false)
+        {
+            return;
+        }
+
+        if (slPosition.IsMouseOver == true && Mouse.LeftButton == MouseButtonState.Pressed)
+        {
+            PlayerPause();
+            double value = slPosition.Value;
+            cPlayer.Position = TimeSpan.FromMilliseconds(value);
+            PlayerPlay();
+        }
+
+        return;
+    }
+
+    private void miFitSize_Click(object sender, RoutedEventArgs e)
+    {
+        // fill window with player
+        this.SizeToContent = SizeToContent.Manual;
+        cPlayer.Width = double.NaN;
+        cPlayer.Height = double.NaN;
     }
 }

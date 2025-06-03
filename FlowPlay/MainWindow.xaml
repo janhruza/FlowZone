@@ -17,6 +17,10 @@
             <MenuItem Header="Open Media"
                       InputGestureText="F1"
                       Click="miOpenMedia_Click"/>
+
+            <MenuItem Header="Fit Size"
+                      Name="miFitSize"
+                      Click="miFitSize_Click"/>
         </ContextMenu>
     </Window.ContextMenu>
     
@@ -39,10 +43,18 @@
 
                     <Separator />
 
+                    <MenuItem Header="Rewind"
+                              InputGestureText="Left"
+                              Click="btnBack_Click"/>
+
                     <MenuItem Header="Play/Pause"
                               InputGestureText="Space"
                               Name="miPlayPause"
                               Click="miPlayPause_Click"/>
+
+                    <MenuItem Header="Forward"
+                              InputGestureText="Right"
+                              Click="btnNext_Click"/>
 
                     <Separator />
 
@@ -88,7 +100,8 @@
 
             <StackPanel>
                 <Slider Margin="0,0,0,5"
-                        Name="slPosition"/>
+                        Name="slPosition"
+                        ValueChanged="slPosition_ValueChanged"/>
                 
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center">
