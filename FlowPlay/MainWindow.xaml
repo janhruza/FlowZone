@@ -12,6 +12,14 @@
         SizeToContent="WidthAndHeight"
         KeyDown="Window_KeyDown">
 
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Open Media"
+                      InputGestureText="F1"
+                      Click="miOpenMedia_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
+    
     <Grid>
 
         <MediaElement Name="cPlayer"
@@ -54,6 +62,14 @@
                               Name="miFitVideo"
                               InputGestureText="F2"
                               Click="miFitVideo_Click"/>
+
+                    <MenuItem Header="Full Screen Mode"
+                              IsCheckable="True"
+                              IsChecked="False"
+                              Name="miFullScreen"
+                              Click="miFullScreen_Click"/>
+
+                    <Separator />
 
                     <MenuItem Header="Properties"
                               InputGestureText="F9"/>

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using FZCore.Extensions;
 using Microsoft.Win32;
 
 namespace FlowPlay;
@@ -11,6 +13,13 @@ namespace FlowPlay;
 /// </summary>
 public partial class MainWindow : Window
 {
+    #region Native calls
+
+    [DllImport("dwmapi")]
+    static extern int DwmSetWindowAttribute(IntPtr hWnd, int dwAttribute, int[] pwAttribute, int cbAttribute);
+
+    #endregion
+
     #region Media player controls
 
     private void StopMedia()
@@ -95,6 +104,31 @@ public partial class MainWindow : Window
         return;
     }
 
+    private void ToggleFullScreen()
+    {
+        if (WindowState == WindowState.Normal)
+        {
+            // fill window with player
+            this.SizeToContent = SizeToContent.Manual;
+            cPlayer.Width = double.NaN;
+            cPlayer.Height = double.NaN;
+        }
+
+        else
+        {
+            // set window size to the size of the player
+            if (cPlayer.HasVideo)
+            {
+                this.SizeToContent = SizeToContent.WidthAndHeight;
+                cPlayer.Width = cPlayer.NaturalVideoWidth;
+                cPlayer.Height = cPlayer.NaturalVideoHeight;
+            }
+        }
+
+        // toggle full screen mode
+        this.ToggleFullScreenMode();
+    }
+
     #endregion
 
     #region Icon glyphs
@@ -130,6 +164,9 @@ public partial class MainWindow : Window
                 SystemCommands.ShowSystemMenu(this, this.PointToScreen(new Point(0, 0)));
             }
         };
+
+        // set transparent (acrylic) background
+        DwmSetWindowAttribute(this.GetHandle(), 38, [3], sizeof(int));
     }
 
     private void miOpenMedia_Click(object sender, RoutedEventArgs e)
@@ -156,6 +193,11 @@ public partial class MainWindow : Window
 
     private void Window_KeyDown(object sender, KeyEventArgs e)
     {
+        if (e.Key == Key.F10)
+        {
+            ToggleFullScreen();
+        }
+
         if (e.Key == Key.F2)
         {
             FitMediaIntoWindow();
@@ -230,5 +272,10 @@ public partial class MainWindow : Window
         }
 
         bdControls.Visibility = Visibility.Collapsed;
+    }
+
+    private void miFullScreen_Click(object sender, RoutedEventArgs e)
+    {
+        ToggleFullScreen();
     }
 }
