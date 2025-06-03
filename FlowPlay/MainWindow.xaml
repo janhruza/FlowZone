@@ -70,14 +70,50 @@
 
                     <Separator />
 
+                    <MenuItem Header="Playback Speed">
+                        <MenuItem Header="0.25"
+                                  Name="miSpeed025"
+                                  Click="miSpeed025_Click"/>
+                        
+                        <MenuItem Header="0.50"
+                                  Name="miSpeed050"
+                                  Click="miSpeed050_Click"/>
+                        
+                        <MenuItem Header="0.75"
+                                  Name="miSpeed075"
+                                  Click="miSpeed075_Click"/>
+                        
+                        <MenuItem Header="Normal"
+                                  Name="miSpeed100"
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  Click="miSpeed100_Click"/>
+                        
+                        <MenuItem Header="1.25"
+                                  Name="miSpeed125"
+                                  Click="miSpeed125_Click"/>
+                        
+                        <MenuItem Header="1.50"
+                                  Name="miSpeed150"
+                                  Click="miSpeed150_Click"/>
+                        
+                        <MenuItem Header="1.75"
+                                  Name="miSpeed175"
+                                  Click="miSpeed175_Click"/>
+                        
+                        <MenuItem Header="2"
+                                  Name="miSpeed200"
+                                  Click="miSpeed200_Click"/>
+                    </MenuItem>
+                    
+                    <Separator />
+
                     <MenuItem Header="Fit Video"
                               Name="miFitVideo"
                               InputGestureText="F2"
                               Click="miFitVideo_Click"/>
 
-                    <MenuItem Header="Full Screen Mode"
-                              IsCheckable="True"
-                              IsChecked="False"
+                    <MenuItem Header="Toggle Full Screen"
                               Name="miFullScreen"
                               Click="miFullScreen_Click"/>
 

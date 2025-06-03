@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using FZCore.Extensions;
@@ -28,6 +30,42 @@ public partial class MainWindow : Window
     {
         cPlayer.Stop();
         this.Title = "FlowPlay";
+    }
+
+    private void SetPlaybackSpeed(double speed)
+    {
+        if (cPlayer.IsLoaded == false)
+        {
+            return;
+        }
+
+        cPlayer.SpeedRatio = speed;
+        return;
+    }
+
+    List<MenuItem> aSpeeds;
+    private void SetupPlayerSpeeds()
+    {
+        foreach (MenuItem miSpeed in aSpeeds)
+        {
+            miSpeed.Click += (s, e) =>
+            {
+                foreach (MenuItem mi in aSpeeds)
+                {
+                    if (mi == miSpeed)
+                    {
+                        mi.IsCheckable = true;
+                        mi.IsChecked = true;
+                    }
+
+                    else
+                    {
+                        mi.IsCheckable = false;
+                        mi.IsChecked = false;
+                    }
+                }
+            };
+        }
     }
 
     private void VolumeUp()
@@ -195,6 +233,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        aSpeeds = [miSpeed025, miSpeed050, miSpeed075, miSpeed100, miSpeed125, miSpeed150, miSpeed175, miSpeed200];
+        SetupPlayerSpeeds();
+
         dTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(1)
@@ -362,5 +404,45 @@ public partial class MainWindow : Window
         this.SizeToContent = SizeToContent.Manual;
         cPlayer.Width = double.NaN;
         cPlayer.Height = double.NaN;
+    }
+
+    private void miSpeed025_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(0.25);
+    }
+
+    private void miSpeed050_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(0.50);
+    }
+
+    private void miSpeed075_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(0.75);
+    }
+
+    private void miSpeed100_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(1.00);
+    }
+
+    private void miSpeed125_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(1.25);
+    }
+
+    private void miSpeed150_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(1.50);
+    }
+
+    private void miSpeed175_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(1.75);
+    }
+
+    private void miSpeed200_Click(object sender, RoutedEventArgs e)
+    {
+        SetPlaybackSpeed(2.00);
     }
 }
