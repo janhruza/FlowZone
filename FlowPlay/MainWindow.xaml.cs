@@ -408,41 +408,41 @@ public partial class MainWindow : Window
 
     private void miSpeed025_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(0.25);
+        SetPlaybackSpeed(App.SPEED_025);
     }
 
     private void miSpeed050_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(0.50);
+        SetPlaybackSpeed(App.SPEED_050);
     }
 
     private void miSpeed075_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(0.75);
+        SetPlaybackSpeed(App.SPEED_075);
     }
 
     private void miSpeed100_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(1.00);
+        SetPlaybackSpeed(App.SPEED_NORMAL);
     }
 
     private void miSpeed125_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(1.25);
+        SetPlaybackSpeed(App.SPEED_125);
     }
 
     private void miSpeed150_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(1.50);
+        SetPlaybackSpeed(App.SPEED_150);
     }
 
     private void miSpeed175_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(1.75);
+        SetPlaybackSpeed(App.SPEED_175);
     }
 
     private void miSpeed200_Click(object sender, RoutedEventArgs e)
     {
-        SetPlaybackSpeed(2.00);
+        SetPlaybackSpeed(App.SPEED_200);
     }
 }
