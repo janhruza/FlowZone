@@ -115,9 +115,12 @@ public partial class MainWindow : Window
 
     private void RemoveTask(TaskItem task)
     {
-        if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
-            App.RemoveTask(task.Id);
+            if (App.RemoveTask(task.Id)== true)
+            {
+                LoadTasks();
+            }
         }
     }
 
