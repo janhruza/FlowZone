@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using FZCore;
 
 namespace RipTide.Core;
@@ -111,6 +112,74 @@ public class VideoDownloader
             Log.Error(ex, nameof(VideoDownloader.Download));
             return false;
         }
+    }
+
+    /// <summary>
+    /// Attempts to start the asynchronous video download.
+    /// </summary>
+    /// <returns></returns>
+    public Task<bool> DownloadAsync()
+    {
+        return Task.Run(() =>
+        {
+            try
+            {
+                Process process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = CommandPrompt,
+                        UseShellExecute = false,
+                        WindowStyle = ProcessWindowStyle.Normal,
+                        ArgumentList =
+                    {
+                        // YT-DLP command
+                        "/C",
+                        YT_DLP,
+
+                        // folder path
+                        "-P",
+                        Location,
+
+                        // output format
+                        "-o",
+                        Format,
+
+                        // additional parameters
+                        // use cookies (if any)
+                        CookiesByBrowser[Cookies],
+
+                        // user specified params
+                        string.Join(' ', AdditionalParameters),
+
+                        // show progress in the console window title
+                        "--console-title",
+
+                        // video URL
+                        Address
+                    }
+                    }
+                };
+
+                string sList = string.Join(' ', process.StartInfo.ArgumentList);
+
+                // start the download process
+                if (process.Start() == false)
+                {
+                    Log.Error("Failed to start the video download process.", nameof(VideoDownloader.DownloadAsync));
+                    return false;
+                }
+
+                process.WaitForExit();
+                return process.ExitCode == 0;
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(VideoDownloader.Download));
+                return false;
+            }
+        });
     }
 
     #region Static code

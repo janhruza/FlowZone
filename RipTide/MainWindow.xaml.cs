@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -144,6 +145,25 @@ public partial class MainWindow : Window
         return;
     }
 
+    private async Task HandleVideoDownloadAsync()
+    {
+        if (VerifyFields() == false)
+        {
+            // incomplete input data
+            App.ShowMessage(Messages.UnableToVerifyFields, DialogIcon.Error);
+            return;
+        }
+
+        // rebuild additional params list
+        _downloader.AdditionalParameters.Clear();
+        foreach (string param in lbExtraParams.Items)
+        {
+            _downloader.AdditionalParameters.Add(param);
+        }
+
+        await _downloader.DownloadAsync();
+    }
+
     private void SelectFolder()
     {
         OpenFolderDialog openFolderDialog = new OpenFolderDialog
@@ -187,9 +207,9 @@ public partial class MainWindow : Window
         this.Close();
     }
 
-    private void btnDownload_Click(object sender, RoutedEventArgs e)
+    private async void btnDownload_Click(object sender, RoutedEventArgs e)
     {
-        HandleVideoDownload();
+        await HandleVideoDownloadAsync();
     }
 
     private void miClose_Click(object sender, RoutedEventArgs e)
