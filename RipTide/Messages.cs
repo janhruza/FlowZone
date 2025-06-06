@@ -19,4 +19,10 @@ public static class Messages
     /// Select output folder location
     /// </summary>
     public const string SelecOutputFolder = "Select output folder location";
+
+    /// <summary>
+    /// Do you want to delete the custom downloader executable path? After this operation, RipTide will assume the 'yt-dlp.exe' file is placed in the startup directory.
+    /// </summary>
+
+    public const string ResetCustomDownloader = $"Do you want to delete the custom downloader executable path? After this operation, RipTide will assume the 'yt-dlp.exe' file is placed in the startup directory.";
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +59,9 @@ public partial class MainWindow : Window
 
     private void ResetFields()
     {
+        // reset window title
+        this.Title = $"{App.Title} [{VideoDownloader.GetVersion()}]";
+
         txtUrl.Text = string.Empty;
         txtLocation.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
 
@@ -180,6 +184,15 @@ public partial class MainWindow : Window
         return;
     }
 
+    private void ResetDownloader()
+    {
+        VideoDownloader.YT_DLP_CUSTOM_PATH = string.Empty;
+        RTSettings.Current.CustomDownloaderPath = string.Empty;
+        RTSettings.SaveCurrent();
+        ResetFields();
+        return;
+    }
+
     private void AddNewParameter()
     {
         WndNewParameter wnd = new WndNewParameter();
@@ -188,6 +201,26 @@ public partial class MainWindow : Window
             // add parameter
             string param = wnd.ParameterValue;
             lbExtraParams.Items.Add(param);
+        }
+
+        return;
+    }
+
+    private void SelectDownloader()
+    {
+        OpenFileDialog ofd = new OpenFileDialog
+        {
+            FileName = "yt-dlp.exe",
+            Filter = "Executable files (*.exe)|*.exe|All files (*.*)|*.*"
+        };
+
+        if (ofd.ShowDialog() == true)
+        {
+            VideoDownloader.YT_DLP_CUSTOM_PATH = ofd.FileName;
+            RTSettings.Current.CustomDownloaderPath = ofd.FileName;
+            RTSettings.SaveCurrent();
+            ResetFields();
+            VerifyFields();
         }
 
         return;
@@ -348,5 +381,18 @@ public partial class MainWindow : Window
     private void miThemeLegacy_Click(object sender, RoutedEventArgs e)
     {
         SetThemeMode(Core.ThemeMode.None, miThemeLegacy);
+    }
+
+    private void miCustomPath_Click(object sender, RoutedEventArgs e)
+    {
+        SelectDownloader();
+    }
+
+    private void miCustomPathReset_Click(object sender, RoutedEventArgs e)
+    {
+        if (MessageBox.Show(Messages.ResetCustomDownloader, "Reset Downloader", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        {
+            ResetDownloader();
+        }
     }
 }

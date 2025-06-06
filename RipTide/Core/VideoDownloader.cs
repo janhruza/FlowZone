@@ -122,6 +122,12 @@ public class VideoDownloader
     {
         return Task.Run(() =>
         {
+            if (DownloaderExists == false)
+            {
+                Log.Error("Downloader was not found.", nameof(VideoDownloader.DownloadAsync));
+                return false;
+            }
+
             try
             {
                 Process process = new Process
@@ -135,7 +141,7 @@ public class VideoDownloader
                     {
                         // YT-DLP command
                         "/C",
-                        YT_DLP,
+                        _lastPath,
 
                         // folder path
                         "-P",
@@ -215,38 +221,65 @@ public class VideoDownloader
     public const string YT_DLP = "yt-dlp.exe";
 
     /// <summary>
+    /// Representing a custom path for the YT-DLP executable.
+    /// </summary>
+    internal static string YT_DLP_CUSTOM_PATH = string.Empty;
+
+    /// <summary>
     /// Gets the version of the found downloader.
     /// </summary>
     /// <returns></returns>
     public static Version GetVersion()
     {
-        if (DownloaderExists == false)
+        string sPath;
+        if (_downloaderExists(out sPath) == false)
         {
             // downloader was not found
             return new Version(0, 0, 0);
         }
 
-        FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(YT_DLP);
+        FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(sPath);
         return new Version(fileVersion.FileMajorPart, fileVersion.FileMinorPart, fileVersion.FileBuildPart);
     }
 
-    private static bool _downloaderExists()
+    /// <summary>
+    /// Gets the executable path of the video downloader.
+    /// This method works with custom path specified.
+    /// </summary>
+    /// <returns>Path to the YT-DLP file or <see cref="string.Empty"/> if no downloader is found.</returns>
+    public static string GetDownloader()
     {
-        if (File.Exists(YT_DLP) == false)
+        string sOut;
+        _downloaderExists(out sOut);
+        return sOut;
+    }
+
+    private static bool _downloaderExists(out string downloaderPath)
+    {
+        if (File.Exists(YT_DLP_CUSTOM_PATH) == true)
         {
-            // downloader was not found
-            Log.Error("Downloader was not found.", nameof(DownloaderExists));
-            return false;
+            downloaderPath = YT_DLP_CUSTOM_PATH;
+            return true;
         }
 
-        // downloader found
-        return true;
+        else if (File.Exists(YT_DLP) == true)
+        {
+            downloaderPath = YT_DLP;
+            return true;
+        }
+
+        // downloader was not found (net even the default expected path)
+        Log.Error("Downloader was not found.", nameof(DownloaderExists));
+        downloaderPath = string.Empty;
+        return false;
     }
+
+    internal static string _lastPath = string.Empty;
 
     /// <summary>
     /// Determines whether the video downloader was found and is usable to download videos.
     /// </summary>
-    public static bool DownloaderExists => _downloaderExists();
+    public static bool DownloaderExists => _downloaderExists(out _lastPath);
 
     /// <summary>
     /// Representing the default format for the downloaded video.

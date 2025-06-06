@@ -73,6 +73,11 @@ public class RTSettings
     /// </summary>
     public bool AlwaysOnTop { get; set; }
 
+    /// <summary>
+    /// Representing the custom downloader path.
+    /// </summary>
+    public string CustomDownloaderPath { get; set; } = string.Empty;
+
     #endregion
 
     #region Static code

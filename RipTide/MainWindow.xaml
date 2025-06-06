@@ -66,6 +66,18 @@
 
                 <Separator />
 
+                <MenuItem Header="Custom Downloader">
+
+                    <MenuItem Header="Select custom..."
+                              Name="miCustomPath"
+                              Click="miCustomPath_Click"/>
+
+                    <MenuItem Header="Reset to default"
+                              Name="miCustomPathReset"
+                              Click="miCustomPathReset_Click"/>
+
+                </MenuItem>
+                
                 <!--Theme submenu-->
                 <MenuItem Header="Theme">
                     

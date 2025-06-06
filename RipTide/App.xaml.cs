@@ -13,6 +13,18 @@ public partial class App : Application
 {
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        // load saved settings
+        if (RTSettings.LoadCurrent() == true)
+        {
+            // check if custom downloader path is set
+            if (string.IsNullOrEmpty(RTSettings.Current.CustomDownloaderPath) == false)
+            {
+                // load downloader path from the setting file
+                VideoDownloader.YT_DLP_CUSTOM_PATH = RTSettings.Current.CustomDownloaderPath;
+            }
+        }
+
+        // creates the main window
         MainWindow mw = new MainWindow
         {
             Title = $"{App.Title} [{VideoDownloader.GetVersion()}]"
