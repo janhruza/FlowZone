@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowPlay", "FlowPlay\FlowPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashHive", "HashHive\HashHive.csproj", "{CFCEBE2C-8524-485B-8003-CCD1E2538598}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPeek", "WebPeek\WebPeek.csproj", "{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,14 @@ Global
 		{CFCEBE2C-8524-485B-8003-CCD1E2538598}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CFCEBE2C-8524-485B-8003-CCD1E2538598}.Release|x64.ActiveCfg = Release|Any CPU
 		{CFCEBE2C-8524-485B-8003-CCD1E2538598}.Release|x64.Build.0 = Release|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Debug|x64.Build.0 = Debug|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Release|x64.ActiveCfg = Release|Any CPU
+		{DE78F8C3-F8E6-4EA1-B678-92A5E71EAF0E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
