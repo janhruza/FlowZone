@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using FZCore;
+using WebPeek.Core;
 
 namespace WebPeek;
 
@@ -11,7 +12,8 @@ public partial class App : Application
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         // startup initialization
-        Core.SetApplicationTheme(FZThemeMode.System);
+        AppManager.ImportApps();
+        FZCore.Core.SetApplicationTheme(FZThemeMode.System);
 
         // show main window
         MainWindow mw = new MainWindow();
@@ -22,6 +24,7 @@ public partial class App : Application
     private void Application_Exit(object sender, ExitEventArgs e)
     {
         // on app close cleanup
+        AppManager.ExportApps();
         return;
     }
 }

@@ -13,5 +13,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        this.Loaded += (s, e) =>
+        {
+            this.frmContent.Content = new Pages.PgHome();
+        };
     }
 }
