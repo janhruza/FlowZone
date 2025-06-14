@@ -7,10 +7,13 @@
         mc:Ignorable="d"
         Title="Web Peek"
         Height="450"
-        Width="800">
-    
-    <Grid>
+        Width="640"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="300"
+        MinHeight="300">
 
+    <Grid>
+        
     </Grid>
     
 </Window>
