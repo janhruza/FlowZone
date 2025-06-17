@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WebPeek.Core;
 using WebPeek.Windows;
 
@@ -19,6 +20,38 @@ public partial class PgHome : Page
         this.Loaded += (s, e) => RefreshAppsList();
     }
 
+    private void OpenWebApp(WebApplication? app)
+    {
+        // Logic to open the web application, e.g., in a new window or tab
+        if (app == null) return;
+
+        PgWebView pgWebView = new PgWebView(app.Link)
+        {
+            Title = app.Name
+        };
+
+        // Assuming MainWindow is the main application window that can host pages
+        MainWindow.SetActivePage(pgWebView);
+        return;
+    }
+
+    private bool RemoveApp(WebApplication? webApp)
+    {
+        // check if the web application is null
+        if (webApp == null) return false;
+
+        // show confirmation dialog
+        if (MessageBox.Show($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return false;
+
+        if (AppManager.UnregisterApp(webApp) == true)
+        {
+            RefreshAppsList();
+            return true;
+        }
+
+        return false;
+    }
+
     private void RefreshAppsList()
     {
         // Logic to refresh the list of applications
@@ -27,6 +60,83 @@ public partial class PgHome : Page
         foreach (var app in AppManager.GetApps())
         {
             // TODO: add page item to the list
+            Border bd = new Border
+            {
+                BorderThickness = new Thickness(1),
+                BorderBrush = Brushes.Transparent
+            };
+
+            bd.GotFocus += (s, e) =>
+            {
+                bd.BorderBrush = SystemColors.AccentColorBrush;
+            };
+
+            bd.LostFocus += (s, e) =>
+            {
+                bd.BorderBrush = Brushes.Transparent;
+            };
+
+            bd.KeyDown += (s, e) =>
+            {
+                if (bd.IsFocused == true && e.Key == System.Windows.Input.Key.Enter)
+                {
+                    // clidk event for the button
+                    OpenWebApp(app);
+                }
+            };
+
+            Grid g = new Grid
+            {
+                Margin = new Thickness(5)
+            };
+
+            g.ColumnDefinitions.Add(new ColumnDefinition());
+            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto});
+            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto});
+
+            // label
+            Label lbl = new Label
+            {
+                Content = app.Name,
+                Margin = new Thickness(0, 0, 5, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            // delete button
+            Button btnDelete = new Button
+            {
+                Content = $"",
+                FontFamily = new System.Windows.Media.FontFamily(App.FONT_DISPLAY_NAME),
+                Margin = new Thickness(5, 0, 5, 0)
+            };
+
+            btnDelete.Click += (s, e) =>
+            {
+                // Logic to delete the application
+                RemoveApp(app);
+            };
+
+            // run button
+            Button btnStart = new Button
+            {
+                Content = $"",
+                FontFamily = new System.Windows.Media.FontFamily(App.FONT_DISPLAY_NAME)
+            };
+
+            btnStart.Click += (s, e) =>
+            {
+                OpenWebApp(app);
+            };
+
+            g.Children.Add(lbl);
+            g.Children.Add(btnDelete);
+            g.Children.Add(btnStart);
+
+            Grid.SetColumn(btnDelete, 1);
+            Grid.SetColumn(btnStart, 2);
+
+            bd.Child = g;
+            stpApps.Children.Add(bd);
         }
 
         return;

@@ -9,6 +9,7 @@ namespace WebPeek;
 /// </summary>
 public partial class App : Application
 {
+    internal const string FONT_DISPLAY_NAME = "Segoe Fluent Icons";
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         // startup initialization

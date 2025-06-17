@@ -7,14 +7,14 @@ namespace WebPeek.Pages;
 /// <summary>
 /// Representing the WebView2 browser page class.
 /// </summary>
-public partial class BrowserPage : Page
+public partial class PgWebView : Page
 {
     const string DEFAULT_URL = "https://www.bing.com/";
     /// <summary>
-    /// Creates a new instance of the <see cref="BrowserPage"/> class.
+    /// Creates a new instance of the <see cref="PgWebView"/> class.
     /// </summary>
     /// <param name="link">The URL to navigate to.</param>
-    public BrowserPage(string link = DEFAULT_URL)
+    public PgWebView(string link = DEFAULT_URL)
     {
         InitializeComponent();
         WebView = new WebView2
