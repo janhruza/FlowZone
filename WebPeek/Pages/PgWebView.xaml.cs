@@ -17,10 +17,22 @@ public partial class PgWebView : Page
     public PgWebView(string link = DEFAULT_URL)
     {
         InitializeComponent();
-        WebView = new WebView2
+
+        if (Uri.TryCreate(link, UriKind.RelativeOrAbsolute, out var uri) == false)
         {
-            Source = new Uri(link)
-        };
+            WebView = new WebView2
+            {
+                Source = uri
+            };
+        }
+
+        else
+        {
+            WebView = new WebView2
+            {
+                Source = new Uri(DEFAULT_URL)
+            };
+        }
 
         this.Content = WebView;
     }
