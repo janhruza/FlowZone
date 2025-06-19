@@ -14,11 +14,14 @@
                 Width="320">
         
         <Label Content="Display mame"/>
-        <TextBox Name="txtName"/>
+        <TextBox Name="txtName"
+                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
         <Label Content="Website URL"
                Margin="0,5,0,0"/>
-        <TextBox Name="txtUrl"/>
+        
+        <TextBox Name="txtUrl"
+                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
 
         <StackPanel Margin="0,5,0,0"
                     Orientation="Horizontal"
