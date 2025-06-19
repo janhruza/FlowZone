@@ -5,8 +5,21 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WebPeek.Pages"
       mc:Ignorable="d" 
-      Title="Home">
+      Title="Home"
+      KeyDown="Page_KeyDown">
 
+    <Page.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Add Application"
+                      Click="btnAddApp_Click"/>
+
+            <MenuItem Header="Refresh"
+                      Click="btnRefresh_Click"
+                      InputGestureText="F5"/>
+            
+        </ContextMenu>
+    </Page.ContextMenu>
+    
     <Grid Margin="10">
 
         <Grid.RowDefinitions>

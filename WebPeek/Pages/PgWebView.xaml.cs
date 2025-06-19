@@ -18,7 +18,7 @@ public partial class PgWebView : Page
     {
         InitializeComponent();
 
-        if (Uri.TryCreate(link, UriKind.RelativeOrAbsolute, out var uri) == false)
+        if (Uri.TryCreate(link, UriKind.Absolute, out var uri) == true)
         {
             WebView = new WebView2
             {

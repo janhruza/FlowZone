@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WebPeek.Core;
@@ -57,7 +58,22 @@ public partial class PgHome : Page
         // Logic to refresh the list of applications
         stpApps.Children.Clear();
 
-        foreach (var app in AppManager.GetApps())
+        var apps = AppManager.GetApps();
+
+        if (apps.Count() == 0)
+        {
+            // No applications registered, show a message
+            Label lblNoApps = new Label
+            {
+                Content = "No web applications registered. Click the 'Add Application' button to add a new application.",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            stpApps.Children.Add(lblNoApps);
+            return;
+        }
+
+        foreach (var app in apps)
         {
             // TODO: add page item to the list
             Border bd = new Border
@@ -160,5 +176,13 @@ public partial class PgHome : Page
     private void btnAddApp_Click(object sender, RoutedEventArgs e)
     {
         AddNewApp();
+    }
+
+    private void Page_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F5)
+        {
+            RefreshAppsList();
+        }
     }
 }
