@@ -65,9 +65,15 @@ public partial class PgHome : Page
             // No applications registered, show a message
             Label lblNoApps = new Label
             {
-                Content = "No web applications registered. Click the 'Add Application' button to add a new application.",
+                Content = new TextBlock
+                {
+                    Text = "No web applications registered. Click the 'Add Application' button to add a new application.",
+                    TextWrapping = TextWrapping.Wrap,
+                    TextTrimming = TextTrimming.CharacterEllipsis
+                },
+
                 HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
             };
             stpApps.Children.Add(lblNoApps);
             return;
