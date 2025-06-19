@@ -10,7 +10,8 @@
         Width="640"
         WindowStartupLocation="CenterScreen"
         MinWidth="300"
-        MinHeight="300">
+        MinHeight="300"
+        KeyDown="Window_KeyDown">
 
     <Frame Name="frmContent"
            NavigationUIVisibility="Hidden"/>

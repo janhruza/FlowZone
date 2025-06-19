@@ -31,6 +31,15 @@ public partial class MainWindow : Window
             }
         });
 
+        we.AddMenuItem(0x1002, new ExtendedMenuItem
+        {
+            Header = "View Log\tF1",
+            OnClick = () =>
+            {
+                FZCore.Core.ViewLog();
+            }
+        });
+
         this.Loaded += (s, e) =>
         {
             this.frmContent.Content = _homePage;
@@ -84,5 +93,13 @@ public partial class MainWindow : Window
 
         _instance.frmContent.Content = pg;
         return true;
+    }
+
+    private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F1)
+        {
+            FZCore.Core.ViewLog();
+        }
     }
 }
