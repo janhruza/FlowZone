@@ -21,6 +21,7 @@ public partial class MainWindow : Window
 
         // expand the system menu
         WindowExtender we = new WindowExtender(this);
+        we.AddSeparator(0x1000);
         we.AddMenuItem(0x1001, new ExtendedMenuItem
         {
             Header = "Home Page",
