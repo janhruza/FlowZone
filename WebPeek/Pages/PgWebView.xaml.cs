@@ -18,6 +18,11 @@ public partial class PgWebView : Page
     {
         InitializeComponent();
 
+        if (link.ToLower().StartsWith("http://") == false && link.ToLower().StartsWith("https://") == false)
+        {
+            link = "https://" + link;
+        }
+
         if (Uri.TryCreate(link, UriKind.Absolute, out var uri) == true)
         {
             WebView = new WebView2

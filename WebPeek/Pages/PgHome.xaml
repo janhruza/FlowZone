@@ -49,7 +49,6 @@
                     Content="Add Application"
                     Click="btnAddApp_Click"/>
             
-            
         </StackPanel>
 
     </Grid>

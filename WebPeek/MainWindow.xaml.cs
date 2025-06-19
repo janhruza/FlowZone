@@ -46,6 +46,16 @@ public partial class MainWindow : Window
         if (_instance == null) return false;
         if (_instance._homePage == null) return false;
 
+        // check if current page is already home page
+        if (_instance.frmContent.Content == _instance._homePage) return true;
+
+        // dispose current web view if it exists
+        if (_instance.frmContent.Content is PgWebView pgWebView)
+        {
+            pgWebView.WebView?.Dispose();
+        }
+
+        // set the home page as active
         SetActivePage(_instance._homePage, 640, 450);
         return true;
     }
