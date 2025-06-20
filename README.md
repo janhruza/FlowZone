@@ -18,6 +18,8 @@
 |PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|
 |UpDate|WPF|UpDate is a simple, but modern RSS reader. It will keep you up to date with your favorite media!|
 |HashHive|WPF|HashHive is a simple hash computing program. It allows user to calculate hashes of a written text or selected files.|
+|FlowPlay|WPF|FlowPlay is a simple media player application. It supports most of the common formats and codecs.|
+|WebPeek|WPF|WebPeek is a simple program to browse web pages as applications. Based on the Microsoft WebView.|
 
 <p>All of those projects are targetted on the Windows platform.</p>
 
