@@ -36,6 +36,11 @@ public struct Transaction
     /// Representing the user-defined description of this transaction.
     /// </summary>
     public string Description { get; set; }
+    
+    /// <summary>
+    /// Representing the transaction category.
+    /// </summary>
+    public string Category { get; set; }
 
     #region Static data
 

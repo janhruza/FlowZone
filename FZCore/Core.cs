@@ -30,6 +30,17 @@ public static class Core
         _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
         return;
     }
+    
+    /// <summary>
+    /// Shows the popup dialog box with the specified <paramref name="message"/> and window <paramref name="caption"/>.
+    /// </summary>
+    /// <param name="message">Text of the message box.</param>
+    /// <param name="caption">Caption of the message box window.</param>
+    public static void ErrorBox(string message, string caption = "FZCore")
+    {
+        _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+        return;
+    }
 
     /// <summary>
     /// Opens a new <see cref="LogViewer"/> window and displays the application log.
