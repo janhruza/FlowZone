@@ -75,7 +75,7 @@ public partial class App : Application
         catch (Exception ex)
         {
             Log.Error(ex, nameof(ClearCookies));
-            FZCore.Core.InfoBox("An error occurred while clearing cookies. Please try again later.", "WebPeek");
+            FZCore.Core.ErrorBox("An error occurred while clearing cookies. Please try again later.", "WebPeek");
             return;
         }
     }

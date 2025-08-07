@@ -32,7 +32,8 @@ public partial class WndNewTransaction : Window
                 Timestamp = tr.Timestamp,
                 Type = tr.Type,
                 Description = tr.Description,
-                Value = tr.Value
+                Value = tr.Value,
+                Category = tr.Category
             };
         }
 
@@ -46,11 +47,43 @@ public partial class WndNewTransaction : Window
                 Timestamp = dt.ToBinary(),
                 Type = transactionType,
                 Value = decimal.MinValue,
-                Description = string.Empty
+                Description = string.Empty,
+                Category = string.Empty
             };
+        }
+
+        // provide categories based oon transaction types
+        cbType.Items.Clear();
+        switch (transactionType)
+        {
+            // expanse
+            case Transaction.TypeExpanse:
+                foreach (string sExpanse in _expanses)
+                {
+                    cbType.Items.Add(sExpanse);
+                }
+                break;
+            
+            // income
+            case Transaction.TypeIncome:
+                foreach (string sIncome in _incomes)
+                {
+                    cbType.Items.Add(sIncome);
+                }
+                break;
+            
+            default: break;
         }
     }
 
+    private string[] _incomes = ["Salary / Wage", "Donate"];
+    private string[] _expanses = ["Food", "Clothing", "Housing"];
+    
+    /// <summary>
+    /// Representing the category of the transaction.
+    /// </summary>
+    private string transactionCategory;
+    
     /// <summary>
     /// Representing the transaction type.
     /// </summary>
@@ -92,7 +125,8 @@ public partial class WndNewTransaction : Window
                 Timestamp = dt.ToBinary(),
                 Type = transactionType,
                 Value = value,
-                Description = txtDescription.Text.Trim()
+                Description = txtDescription.Text.Trim(),
+                Category = (string)cbType.SelectedItem
             };
 
             return transaction;
@@ -107,7 +141,8 @@ public partial class WndNewTransaction : Window
                 Timestamp = transactionBase.Value.Timestamp,
                 Type = transactionBase.Value.Type,
                 Value = value,
-                Description = txtDescription.Text.Trim()
+                Description = txtDescription.Text.Trim(),
+                Category = (string)cbType.SelectedItem
             };
 
             return transaction;
