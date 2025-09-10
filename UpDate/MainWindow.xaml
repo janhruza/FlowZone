@@ -85,7 +85,8 @@
             <!--Page viever-->
             <Frame Grid.Column="1"
                    Name="frmContent"
-                   Margin="0, 0,10,10"/>
+                   Margin="0, 0,10,10"
+                   NavigationUIVisibility="Hidden"/>
 
         </Grid>
         
