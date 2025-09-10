@@ -43,6 +43,14 @@ public partial class PgWebView : Page
     }
 
     /// <summary>
+    /// Destructor for the page.
+    /// </summary>
+    ~PgWebView()
+    {
+        WebView.Dispose();
+    }
+
+    /// <summary>
     /// Representing the <see cref="WebView2"/> control used for browsing.
     /// </summary>
     public WebView2 WebView { get; }

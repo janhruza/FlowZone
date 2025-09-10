@@ -9,6 +9,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>Expando.App</StartupObject>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

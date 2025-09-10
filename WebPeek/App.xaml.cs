@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using FZCore;
+using Microsoft.Web.WebView2.Wpf;
 using WebPeek.Core;
 using WebPeek.Pages;
 
@@ -15,6 +17,7 @@ namespace WebPeek;
 public partial class App : Application
 {
     internal const string FONT_DISPLAY_NAME = "Segoe Fluent Icons";
+
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         FZCore.Log.AppStarted();
