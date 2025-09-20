@@ -172,7 +172,7 @@ public partial class MainWindow : Window
 
     private void GetNewTask()
     {
-        if (NewTaskWindow.CreateTask() == true)
+        if (NewTaskWindow.CreateTask(this) == true)
         {
             LoadTasks();
         }
@@ -180,7 +180,7 @@ public partial class MainWindow : Window
 
     private void ModifyTask(ref TaskItem task)
     {
-        if (NewTaskWindow.Modify(task) == true)
+        if (NewTaskWindow.Modify(task, this) == true)
         {
             LoadTasks();
         }

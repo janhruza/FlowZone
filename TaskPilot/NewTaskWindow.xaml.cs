@@ -55,10 +55,16 @@ public partial class NewTaskWindow : Window
     /// <summary>
     /// Shows the <see cref="NewTaskWindow"/> as a dialog and returns true if a new user-defined task was created, otherwise false.
     /// </summary>
+    /// <param name="parent">Optional. Window owner.</param>
     /// <returns>True if a new task is created, otherwise false.</returns>
-    public static bool CreateTask()
+    public static bool CreateTask(Window? parent = null)
     {
-        NewTaskWindow window = new NewTaskWindow();
+        NewTaskWindow window = new NewTaskWindow
+        {
+            Owner = parent,
+            WindowStartupLocation = (parent == null) ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner
+        };
+
         return window.ShowDialog() == true;
     }
 
@@ -66,10 +72,16 @@ public partial class NewTaskWindow : Window
     /// Shows the <see cref="NewTaskWindow"/> as a dialog and returns true if a user-defined task was modified, otherwise false.
     /// </summary>
     /// <param name="task"></param>
+    /// <param name="parent">Optional. Window owner.</param>
     /// <returns></returns>
-    public static bool Modify(TaskItem task)
+    public static bool Modify(TaskItem task, Window? parent = null)
     {
-        NewTaskWindow window = new NewTaskWindow(task);
+        NewTaskWindow window = new NewTaskWindow(task)
+        {
+            Owner = parent,
+            WindowStartupLocation = (parent == null) ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner
+        };
+
         return window.ShowDialog() == true;
     }
 
