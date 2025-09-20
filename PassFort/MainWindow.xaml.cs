@@ -74,6 +74,12 @@ public partial class MainWindow : Window
     {
         if (PasswordDatabase.Current == null)
         {
+            foreach (MenuItem mi in _affectedItems)
+            {
+                mi.IsEnabled = false;
+            }
+
+            this.Title = "PassFort";
             return;
         }
 
@@ -156,11 +162,10 @@ public partial class MainWindow : Window
         // closes the opened database
         if (PasswordDatabase.Current != null)
         {
-            if (PasswordDatabase.Current.CloseArchive() == true)
-            {
-                RedrawUIElements();
-            }
+            PasswordDatabase.Current.CloseArchive();
         }
+
+        RedrawUIElements();
     }
 
     private void miDbAddEntry_Click(object sender, RoutedEventArgs e)
@@ -174,5 +179,10 @@ public partial class MainWindow : Window
                 // TODO refresh UI password list
             }
         }
+    }
+
+    private void miFrameRefresh_Click(object sender, RoutedEventArgs e)
+    {
+        frmContent.Refresh();
     }
 }

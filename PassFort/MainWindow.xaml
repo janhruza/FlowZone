@@ -88,7 +88,18 @@
                       HorizontalScrollBarVisibility="Disabled">
 
             <Frame Name="frmContent"
-                   NavigationUIVisibility="Hidden"/>
+                   NavigationUIVisibility="Hidden">
+
+                <Frame.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Refresh"
+                                  InputGestureText="F5"
+                                  Name="miFrameRefresh"
+                                  Click="miFrameRefresh_Click"/>
+                    </ContextMenu>
+                </Frame.ContextMenu>
+                
+            </Frame>
 
         </ScrollViewer>
     </Grid>
