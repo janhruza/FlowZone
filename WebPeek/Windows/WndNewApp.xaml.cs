@@ -14,12 +14,14 @@ public partial class WndNewApp : Window
     public WndNewApp()
     {
         InitializeComponent();
-        Result = new WebApplication();
+        webApp = new WebApplication();
+        Result = webApp;
     }
 
     private bool bDialog;
 
     private WebApplication webApp;
+
     /// <summary>
     /// Representing the result of the application registration.
     /// </summary>

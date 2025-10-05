@@ -251,7 +251,7 @@ public class DialogWindow
     /// </summary>
     public TDReturn Show()
     {
-        // create window
+        // Create window
         Window wnd = new Window
         {
             Title = this.Title,
@@ -262,33 +262,18 @@ public class DialogWindow
             MinWidth = 320
         };
 
-        wnd.Loaded += (s, e) =>
-        {
-            GetSound(Image).Play();
-        };
+        wnd.Loaded += (s, e) => GetSound(Image).Play();
 
-        // window created, set default return value
         _result = TDReturn.IDCANCEL;
 
-        // create layout
-        // display caption, message, image and selected buttons
+        // Layout root
+        Grid rootGrid = new Grid { Margin = new Thickness(10) };
+        StackPanel mainPanel = new StackPanel();
 
-        Grid g = new Grid
-        {
-            Margin = new Thickness(10)
-        };
-
-        StackPanel stp = new StackPanel();
-
-        // top grid - image and caption
-        Grid gTop = new Grid
-        {
-            ColumnDefinitions =
-            {
-                new ColumnDefinition {Width = GridLength.Auto },
-                new ColumnDefinition { }
-            }
-        };
+        // Top section: image + caption
+        Grid topGrid = new Grid();
+        topGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        topGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
         Image img = new Image
         {
@@ -297,7 +282,7 @@ public class DialogWindow
             Height = 32
         };
 
-        Label lbl = new Label
+        Label captionLabel = new Label
         {
             Content = this.Caption,
             Foreground = SystemColors.AccentColorBrush,
@@ -306,16 +291,15 @@ public class DialogWindow
             Margin = new Thickness(5, 0, 0, 0)
         };
 
-        gTop.Children.Add(img);
-        gTop.Children.Add(lbl);
-
+        topGrid.Children.Add(img);
+        topGrid.Children.Add(captionLabel);
         Grid.SetColumn(img, 0);
-        Grid.SetColumn(lbl, 1);
+        Grid.SetColumn(captionLabel, 1);
 
-        stp.Children.Add(gTop);
+        mainPanel.Children.Add(topGrid);
 
-        // message itself
-        Label lblMessage = new Label
+        // Message
+        mainPanel.Children.Add(new Label
         {
             Content = new TextBlock
             {
@@ -323,53 +307,60 @@ public class DialogWindow
                 TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.CharacterEllipsis
             },
-
             Margin = new Thickness(0, 5, 0, 0)
-        };
+        });
 
-        stp.Children.Add(lblMessage);
-
-        StackPanel stpFooter = new StackPanel
+        // Footer buttons
+        StackPanel footerPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
             HorizontalAlignment = HorizontalAlignment.Right,
             Margin = new Thickness(0, 10, 0, 0)
         };
 
-        // draw buttons
-        foreach (DWButton btn in Enum.GetValues<DWButton>())
+        if (this.Buttons == DWButton.OK)
         {
-            if (this.Buttons.HasFlag(btn) == true)
+            AddButton(footerPanel, DWButton.OK, wnd);
+        }
+
+        else
+        {
+            foreach (DWButton btn in Enum.GetValues<DWButton>())
             {
-                // draw button
-                Button b = new Button
-                {
-                    Content = GetButtonText(btn),
-                    Margin = new Thickness(5, 0, 0, 0)
-                };
+                if (btn == DWButton.OK) continue; // Skip 0-value flag
 
-                b.Click += (s, e) =>
+                if ((this.Buttons & btn) == btn)
                 {
-                    // set status and close
-                    _result = GetResult(btn);
-                    wnd.Close();
-                };
-
-                stpFooter.Children.Add(b);
+                    AddButton(footerPanel, btn, wnd);
+                }
             }
         }
 
-        stp.Children.Add(stpFooter);
+        mainPanel.Children.Add(footerPanel);
+        rootGrid.Children.Add(mainPanel);
+        wnd.Content = rootGrid;
 
-        g.Children.Add(stp);
-        wnd.Content = g;
-
-        // show window as dialog
-        _ = wnd.ShowDialog();
-
-        // return result
+        wnd.ShowDialog();
         return _result;
     }
+
+    private void AddButton(StackPanel panel, DWButton btn, Window wnd)
+    {
+        Button b = new Button
+        {
+            Content = GetButtonText(btn),
+            Margin = new Thickness(5, 0, 0, 0)
+        };
+
+        b.Click += (s, e) =>
+        {
+            _result = GetResult(btn);
+            wnd.Close();
+        };
+
+        panel.Children.Add(b);
+    }
+
 
     #endregion
 

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using FZCore.Windows;
+
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -42,7 +44,7 @@ public partial class PgHome : Page
         if (webApp == null) return false;
 
         // show confirmation dialog
-        if (MessageBox.Show($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return false;
+        if (DialogWindow.ShowDialog($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", caption: $"Remove \'{webApp.Name}\'", DWImage.WARNING, DWButton.YES | DWButton.NO) != TDReturn.IDYES) return false;
 
         if (AppManager.UnregisterApp(webApp) == true)
         {
@@ -56,26 +58,19 @@ public partial class PgHome : Page
     private void RefreshAppsList()
     {
         // Logic to refresh the list of applications
-        stpApps.Children.Clear();
+        lbxApps.Items.Clear();
 
         var apps = AppManager.GetApps();
 
         if (apps.Count() == 0)
         {
             // No applications registered, show a message
-            Label lblNoApps = new Label
+            ListBoxItem lbi = new ListBoxItem
             {
-                Content = new TextBlock
-                {
-                    Text = "No web applications registered. Click the 'Add Application' button to add a new application.",
-                    TextWrapping = TextWrapping.Wrap,
-                    TextTrimming = TextTrimming.CharacterEllipsis
-                },
+                Content = "No web applications registered. Click the 'Add Application' button to add a new application."
+			};
 
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-            stpApps.Children.Add(lblNoApps);
+            lbxApps.Items.Add(lbi);
             return;
         }
 
@@ -88,16 +83,6 @@ public partial class PgHome : Page
                 BorderBrush = Brushes.Transparent
             };
 
-            bd.GotFocus += (s, e) =>
-            {
-                bd.BorderBrush = SystemColors.AccentColorBrush;
-            };
-
-            bd.LostFocus += (s, e) =>
-            {
-                bd.BorderBrush = Brushes.Transparent;
-            };
-
             bd.KeyDown += (s, e) =>
             {
                 if (bd.IsFocused == true && e.Key == System.Windows.Input.Key.Enter)
@@ -107,14 +92,10 @@ public partial class PgHome : Page
                 }
             };
 
-            Grid g = new Grid
-            {
-                Margin = new Thickness(5)
-            };
-
+            Grid g = new Grid();
             g.ColumnDefinitions.Add(new ColumnDefinition());
-            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto});
-            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto});
+            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             // label
             Label lbl = new Label
@@ -158,7 +139,14 @@ public partial class PgHome : Page
             Grid.SetColumn(btnStart, 2);
 
             bd.Child = g;
-            stpApps.Children.Add(bd);
+
+            ListBoxItem lbi = new ListBoxItem
+            {
+                Content = bd,
+                HorizontalContentAlignment = HorizontalAlignment.Stretch
+            };
+
+            lbxApps.Items.Add(lbi);
         }
 
         return;

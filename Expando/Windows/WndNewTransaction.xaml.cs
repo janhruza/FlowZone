@@ -71,8 +71,6 @@ public partial class WndNewTransaction : Window
                     cbType.Items.Add(sIncome);
                 }
                 break;
-            
-            default: break;
         }
     }
 
@@ -82,7 +80,7 @@ public partial class WndNewTransaction : Window
     /// <summary>
     /// Representing the category of the transaction.
     /// </summary>
-    private string transactionCategory;
+    private string? transactionCategory;
     
     /// <summary>
     /// Representing the transaction type.
