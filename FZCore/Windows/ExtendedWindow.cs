@@ -56,6 +56,10 @@ public class ExtendedWindow : Window
 
         // extends the window with basic extended functionality
         _extender.EmpowerWindow();
+
+        // disable independent pixels unit
+        SnapsToDevicePixels = true;
+        UseLayoutRounding = false;
     }
 
     #region Private members and methods

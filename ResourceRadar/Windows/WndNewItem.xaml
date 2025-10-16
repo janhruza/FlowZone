@@ -7,7 +7,9 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="New inventory item"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
     
     <Grid Width="420">
         <Grid.RowDefinitions>

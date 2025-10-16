@@ -10,7 +10,9 @@
         MinWidth="450"
         MinHeight="300"
         Width="1000"
-        Height="680">
+        Height="680"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
 
     <Grid>
         <Grid.RowDefinitions>

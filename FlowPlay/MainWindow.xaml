@@ -10,6 +10,8 @@
         MinWidth="300"
         MinHeight="300"
         SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         KeyDown="Window_KeyDown">
 
     <Window.ContextMenu>

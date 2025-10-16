@@ -259,7 +259,9 @@ public class DialogWindow
             ResizeMode = ResizeMode.NoResize,
             SizeToContent = SizeToContent.WidthAndHeight,
             MaxWidth = 640,
-            MinWidth = 320
+            MinWidth = 320,
+            SnapsToDevicePixels = true,
+            UseLayoutRounding = false
         };
 
         wnd.Loaded += (s, e) => GetSound(Image).Play();

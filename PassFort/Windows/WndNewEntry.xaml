@@ -7,7 +7,9 @@
         WindowStartupLocation="CenterScreen"
         Title="New Entry"
         ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
     
     <Grid>
         <Grid.RowDefinitions>

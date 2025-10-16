@@ -10,7 +10,9 @@
         MinHeight="300"
         Title="Expando"
         Height="600"
-        Width="1000">
+        Width="1000"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
 
     <Grid>
         <Grid.RowDefinitions>

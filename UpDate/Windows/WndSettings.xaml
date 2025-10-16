@@ -7,6 +7,8 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="Settings"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         SizeToContent="WidthAndHeight">
     
     <Grid Width="400">

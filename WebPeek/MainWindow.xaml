@@ -11,6 +11,8 @@
         WindowStartupLocation="CenterScreen"
         MinWidth="300"
         MinHeight="300"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         KeyDown="Window_KeyDown">
 
     <Frame Name="frmContent"

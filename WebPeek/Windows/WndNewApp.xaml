@@ -8,7 +8,9 @@
         Title="Add page as application"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
 
     <StackPanel Margin="10"
                 Width="320">

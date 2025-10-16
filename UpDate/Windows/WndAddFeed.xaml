@@ -8,6 +8,8 @@
         WindowStartupLocation="CenterScreen"
         Title="Add new feed"
         ResizeMode="CanMinimize"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         SizeToContent="WidthAndHeight">
     
     <Grid Width="400">

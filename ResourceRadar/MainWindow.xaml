@@ -8,7 +8,9 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         Title="Resource Radar"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

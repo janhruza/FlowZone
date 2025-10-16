@@ -7,7 +7,9 @@
         WindowStartupLocation="CenterScreen"
         Title="Create new database"
         SizeToContent="WidthAndHeight"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
     
     <Grid>
         <Grid.RowDefinitions>

@@ -11,6 +11,8 @@
         Width="640"
         Height="400"
         Title="UpDate"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         Closing="Window_Closing">
 
     <Grid>

@@ -9,6 +9,8 @@
         Title="RipTide - Simple video downloader"
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         KeyDown="Window_KeyDown">
 
     <Grid>

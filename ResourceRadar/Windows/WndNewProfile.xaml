@@ -8,6 +8,8 @@
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
         Title="Create new profile"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         Loaded="Window_Loaded">
     
     <Grid>

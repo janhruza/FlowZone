@@ -8,7 +8,9 @@
         Title="Vault Pack"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
 
     <Window.ContextMenu>
         <ContextMenu>

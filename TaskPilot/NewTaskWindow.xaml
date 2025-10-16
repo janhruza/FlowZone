@@ -8,7 +8,9 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="Create a new task"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False">
     
     <Grid>
         <Grid.RowDefinitions>

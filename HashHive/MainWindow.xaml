@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:HashHive"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="False"
         Title="HashHive"
         SizeToContent="WidthAndHeight">
 
