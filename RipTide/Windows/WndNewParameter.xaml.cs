@@ -1,6 +1,7 @@
-﻿using System.Media;
+﻿using RipTide.Core;
+
+using System.Media;
 using System.Windows;
-using RipTide.Core;
 
 namespace RipTide.Windows;
 

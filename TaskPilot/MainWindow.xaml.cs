@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+
 using TaskPilot.Core;
 
 namespace TaskPilot;
@@ -117,7 +118,7 @@ public partial class MainWindow : Window
     {
         if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
-            if (App.RemoveTask(task.Id)== true)
+            if (App.RemoveTask(task.Id) == true)
             {
                 LoadTasks();
             }

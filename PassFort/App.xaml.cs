@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Windows;
-using FZCore;
 
 namespace PassFort;
 

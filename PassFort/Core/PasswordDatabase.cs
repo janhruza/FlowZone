@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
-using FZCore;
 
 using static PassFort.Messages;
 
@@ -32,8 +33,8 @@ namespace PassFort.Core
         /// </summary>
         public PasswordCollection Entries => _entries;
 
-        private static readonly string _metadata    = "metadata";
-        private static readonly string _passwords   = "index";
+        private static readonly string _metadata = "metadata";
+        private static readonly string _passwords = "index";
         private static readonly int _keySize = 32;
         private static readonly int _ivSize = 16;
 
@@ -383,7 +384,7 @@ namespace PassFort.Core
                 // create archive in the new file
                 // overwrite the original archive with the new one
                 // delete the temporary file
-                
+
                 using (FileStream fs = File.OpenWrite(_filePath))
                 {
                     ZipFile.CreateFromDirectory(_dirPath, fs, CompressionLevel.NoCompression, false);
@@ -540,7 +541,7 @@ namespace PassFort.Core
         public static PasswordDatabase? Create(string name, string path)
         {
             // create instance
-            PasswordDatabase db = new PasswordDatabase(filePath:path, name:name);
+            PasswordDatabase db = new PasswordDatabase(filePath: path, name: name);
 
             // write data
             // create temp folder

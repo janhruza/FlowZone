@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ResourceRadar.Core;
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using ResourceRadar.Core;
 
 namespace ResourceRadar.Windows;
 

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
-using FZCore;
 
 namespace HashHive;
 

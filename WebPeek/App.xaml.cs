@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FZCore;
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using FZCore;
-using Microsoft.Web.WebView2.Wpf;
+
 using WebPeek.Core;
 using WebPeek.Pages;
 

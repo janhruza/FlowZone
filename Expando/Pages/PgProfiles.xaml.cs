@@ -1,7 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Expando.Core;
+﻿using Expando.Core;
 using Expando.Windows;
+
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Expando.Pages;
 

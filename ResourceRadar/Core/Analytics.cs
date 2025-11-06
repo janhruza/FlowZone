@@ -116,7 +116,7 @@ public class Analytics
         {
             // logic checks
             if (collection.Any() == false) return null;
-            
+
             // gets the most expansive item
             return collection.OrderByDescending(x => x.PurchasePrice).First();
         });

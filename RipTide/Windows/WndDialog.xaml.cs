@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using RipTide.Core;
+
+using System.Collections.Generic;
 using System.Media;
 using System.Windows;
-using RipTide.Core;
 
 namespace RipTide.Windows;
 

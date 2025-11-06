@@ -1,12 +1,14 @@
-﻿using System;
+﻿using FZCore;
+using FZCore.Extensions;
+using FZCore.Windows;
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using FZCore;
-using FZCore.Extensions;
-using FZCore.Windows;
+
 using UpDate.Core;
 using UpDate.Pages;
 using UpDate.Windows;

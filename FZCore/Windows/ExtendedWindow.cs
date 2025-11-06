@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FZCore.Extensions;
+
+using System;
 using System.Windows;
-using FZCore.Extensions;
 
 namespace FZCore.Windows;
 

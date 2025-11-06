@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+
+using RipTide.Core;
+using RipTide.Windows;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,9 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Microsoft.Win32;
-using RipTide.Core;
-using RipTide.Windows;
 
 namespace RipTide;
 

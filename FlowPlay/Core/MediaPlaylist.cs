@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using FZCore;
+
+using System.Collections.Generic;
 using System.IO;
-using FZCore;
 
 namespace FlowPlay.Core
 {

@@ -1,7 +1,8 @@
-﻿using System.IO;
-using System.Linq;
-using FlowPlay.Controls;
+﻿using FlowPlay.Controls;
 using FlowPlay.Core;
+
+using System.IO;
+using System.Linq;
 
 namespace FlowPlay;
 
@@ -37,7 +38,7 @@ public static class Session
     public static void RestartPlayer()
     {
         _player = new DoublePlayer();
-        
+
         if (File.Exists(Track) == true)
         {
             _player.LoadPlaylist(new MediaPlaylist

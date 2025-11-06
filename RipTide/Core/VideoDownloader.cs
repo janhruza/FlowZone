@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using FZCore;
 
 namespace RipTide.Core;
 
@@ -47,7 +48,7 @@ public class VideoDownloader
     /// <summary>
     /// Representing a browser to use it's cookies from to download videos.
     /// </summary>
-    public CookiesBrowser Cookies {  get; set; }
+    public CookiesBrowser Cookies { get; set; }
 
     /// <summary>
     /// Attempts to start the video download.

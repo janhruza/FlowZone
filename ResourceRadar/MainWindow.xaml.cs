@@ -1,9 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using FZCore;
+﻿using FZCore;
+
 using ResourceRadar.Core.Authentication;
 using ResourceRadar.Pages;
+
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace ResourceRadar;
 

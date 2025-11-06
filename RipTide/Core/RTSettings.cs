@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
-using FZCore;
 
 namespace RipTide.Core;
 
@@ -16,22 +17,22 @@ public enum ThemeMode : byte
     /// Representing the system theme mode. This mode automatically decides whether to use the
     /// <see cref="Light"/> or <see cref="Dark"/> mode based on your operating system configuration.
     /// </summary>
-    System  = 0,
+    System = 0,
 
     /// <summary>
     /// Representing the light theme mode.
     /// </summary>
-    Light   = 1,
+    Light = 1,
 
     /// <summary>
     /// Representing the dark theme mode.
     /// </summary>
-    Dark    = 2,
+    Dark = 2,
 
     /// <summary>
     /// No Windows Fluent theme.
     /// </summary>
-    None    = 3
+    None = 3
 }
 
 /// <summary>

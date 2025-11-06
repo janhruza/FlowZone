@@ -1,9 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using Expando.Core;
+﻿using Expando.Core;
+
 using FZCore;
 using FZCore.Windows;
+
+using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Expando.Pages;
 

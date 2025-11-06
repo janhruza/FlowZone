@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Expando.Core;
+
+using System;
 using System.Windows;
-using Expando.Core;
 
 namespace Expando.Windows;
 
@@ -66,7 +67,7 @@ public partial class WndNewProfile : Window
                 this.DialogResult = true;
                 this.Close();
             }
-            
+
             else
             {
                 _ = MessageBox.Show(Messages.CantCreateProfile, "Create profile", MessageBoxButton.OK, MessageBoxImage.Error);

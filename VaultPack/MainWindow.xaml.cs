@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using FZCore;
+using FZCore.Windows;
+
+using Microsoft.Win32;
+
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
-using FZCore;
-using FZCore.Windows;
 
 namespace VaultPack;
 
@@ -218,7 +220,7 @@ public partial class MainWindow : Window
                 // get number of entries
                 int count = br.ReadInt32();
 
-                for (int x = 0; x <count; x++)
+                for (int x = 0; x < count; x++)
                 {
                     string name = br.ReadString();
                     long size = br.ReadInt64();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Security.Policy;
 using System.Text;
 
 namespace FZCore;

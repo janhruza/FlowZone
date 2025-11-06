@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace ResourceRadar
+﻿namespace ResourceRadar
 {
     /// <summary>
     /// Representing a data class with various in-app messages.

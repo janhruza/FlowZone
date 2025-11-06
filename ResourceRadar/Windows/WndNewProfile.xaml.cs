@@ -1,8 +1,9 @@
-﻿using System.Globalization;
+﻿using ResourceRadar.Core.Authentication;
+
+using System.Globalization;
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Windows;
 

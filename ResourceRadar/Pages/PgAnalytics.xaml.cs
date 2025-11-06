@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using ResourceRadar.Core;
+using ResourceRadar.Core.Authentication;
+
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using ResourceRadar.Core;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 

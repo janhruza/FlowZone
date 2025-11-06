@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Expando.Core;
+
+using System;
 using System.Linq;
 using System.Windows;
-using Expando.Core;
 
 namespace Expando.Windows;
 
@@ -63,7 +64,7 @@ public partial class WndNewTransaction : Window
                     cbType.Items.Add(sExpanse);
                 }
                 break;
-            
+
             // income
             case Transaction.TypeIncome:
                 foreach (string sIncome in _incomes)
@@ -76,12 +77,12 @@ public partial class WndNewTransaction : Window
 
     private string[] _incomes = ["Salary / Wage", "Donate"];
     private string[] _expanses = ["Food", "Clothing", "Housing"];
-    
+
     /// <summary>
     /// Representing the category of the transaction.
     /// </summary>
     private string? transactionCategory;
-    
+
     /// <summary>
     /// Representing the transaction type.
     /// </summary>
@@ -129,7 +130,7 @@ public partial class WndNewTransaction : Window
 
             return transaction;
         }
-        
+
         else
         {
             transaction = new Transaction

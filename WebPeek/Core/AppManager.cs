@@ -60,9 +60,9 @@ public static class AppManager
                     bw.Write(webApp.Name); // name
                     bw.Write(webApp.Link); // link
                 }
-            }   
+            }
         }
-        
+
         return true;
     }
 

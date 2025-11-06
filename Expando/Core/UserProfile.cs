@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using FZCore;
 
 namespace Expando.Core;
 
@@ -550,7 +551,7 @@ public class UserProfile
                 int count;
 
                 // it's important to leave the stream open for the BinaryWriter that writes data into the stream later
-                using (BinaryReader reader = new BinaryReader(fs, Encoding.Default, leaveOpen:true))
+                using (BinaryReader reader = new BinaryReader(fs, Encoding.Default, leaveOpen: true))
                 {
                     count = reader.ReadInt32();
                     count++;

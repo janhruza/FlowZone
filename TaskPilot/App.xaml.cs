@@ -1,10 +1,11 @@
-﻿using System.IO;
-using System.Windows;
-using System;
-using TaskPilot.Core;
-using System.Linq;
+﻿using FZCore;
 
-using FZCore;
+using System;
+using System.IO;
+using System.Linq;
+using System.Windows;
+
+using TaskPilot.Core;
 
 namespace TaskPilot;
 
@@ -169,7 +170,7 @@ public partial class App : Application
         if (!Tasks.Select(x => x.Id == taskId).Any()) return false;
 
         // remove item
-        Tasks.Remove(Tasks.Where(x=>x.Id == taskId).First());
+        Tasks.Remove(Tasks.Where(x => x.Id == taskId).First());
         return true;
     }
 

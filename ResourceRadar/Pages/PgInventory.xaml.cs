@@ -1,12 +1,13 @@
-﻿using System.Linq;
+﻿using FZCore;
+
+using ResourceRadar.Core;
+using ResourceRadar.Core.Authentication;
+
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using FZCore;
-using ResourceRadar.Core;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore.Extensions;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +8,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using FZCore.Extensions;
 
 namespace FZCore.Windows;
 

@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
+﻿using ResourceRadar.Core;
+using ResourceRadar.Core.Authentication;
+
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ResourceRadar.Core;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 
@@ -43,7 +43,7 @@ public partial class PgDashboard : Page
         var items = UserProfile.Current.Items;
         if (items.Count == 0)
         {
-            stpHistory.Children.Add(new Label { Content = "No items created so far.", Foreground = Brushes.Red, FontWeight = FontWeights.Bold});
+            stpHistory.Children.Add(new Label { Content = "No items created so far.", Foreground = Brushes.Red, FontWeight = FontWeights.Bold });
         }
 
         else
@@ -67,7 +67,7 @@ public partial class PgDashboard : Page
             Label lblDate = new Label
             {
                 Content = item.PurchaseDate.ToShortDateString(),
-                Margin = new Thickness(10,0,10,0),
+                Margin = new Thickness(10, 0, 10, 0),
                 VerticalAlignment = VerticalAlignment.Center,
                 FontFamily = new FontFamily("Cascadia Mono")
             };

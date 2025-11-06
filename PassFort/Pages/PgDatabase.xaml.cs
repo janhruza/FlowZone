@@ -1,12 +1,14 @@
-﻿using System;
+﻿using FZCore;
+
+using PassFort.Core;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using FZCore;
-using PassFort.Core;
 
 namespace PassFort.Pages;
 
@@ -99,7 +101,7 @@ public partial class PgDatabase : Page
 
                             new Run($"{item.CreationTime.ToShortDateString()} {item.CreationTime.ToShortTimeString()}")
                             {
-                                
+
                             }
                         }
                     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 using WebPeek.Core;
 using WebPeek.Windows;
 
@@ -68,7 +69,7 @@ public partial class PgHome : Page
             ListBoxItem lbi = new ListBoxItem
             {
                 Content = "No web applications registered. Click the 'Add Application' button to add a new application."
-			};
+            };
 
             lbxApps.Items.Add(lbi);
             return;

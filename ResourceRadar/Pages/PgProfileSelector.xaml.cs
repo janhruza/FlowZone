@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using ResourceRadar.Core.Authentication;
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 

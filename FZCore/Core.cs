@@ -1,12 +1,14 @@
-﻿using System;
+﻿using FZCore.Windows;
+
+using Microsoft.Win32;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using FZCore.Windows;
-using Microsoft.Win32;
 
 namespace FZCore;
 
@@ -30,7 +32,7 @@ public static class Core
         _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
         return;
     }
-    
+
     /// <summary>
     /// Shows the popup dialog box with the specified <paramref name="message"/> and window <paramref name="caption"/>.
     /// </summary>

@@ -1,9 +1,11 @@
-﻿using System.Globalization;
+﻿using FZCore;
+
+using ResourceRadar.Core.Authentication;
+
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using FZCore;
-using ResourceRadar.Core.Authentication;
 
 namespace ResourceRadar.Pages;
 

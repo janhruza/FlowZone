@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using RipTide.Core;
+using RipTide.Windows;
+
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
-using RipTide.Core;
-using RipTide.Windows;
 
 namespace RipTide;
 
@@ -149,7 +150,7 @@ public partial class App : Application
             window.Top = RTSettings.Current.WindowPosition.Y;
             window.Topmost = RTSettings.Current.AlwaysOnTop;
         }
-        
+
         return;
     }
 

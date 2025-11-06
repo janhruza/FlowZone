@@ -1,12 +1,14 @@
-﻿using System;
+﻿using FZCore.Extensions;
+
+using Microsoft.Win32;
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using FZCore.Extensions;
-using Microsoft.Win32;
 
 namespace FlowPlay;
 

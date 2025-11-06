@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+
+using PassFort.Core;
+
+using System;
 using System.Windows;
 using System.Windows.Threading;
-using Microsoft.Win32;
-using PassFort.Core;
 
 namespace PassFort.Windows;
 

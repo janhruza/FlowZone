@@ -48,7 +48,7 @@ public class PgNoProfile : Page, IExpandoPage
         {
             Content = "Go to Profiles",
             VerticalAlignment = System.Windows.VerticalAlignment.Center,
-            HorizontalAlignment= System.Windows.HorizontalAlignment.Right
+            HorizontalAlignment = System.Windows.HorizontalAlignment.Right
         };
 
         btnProfiles.Click += (s, e) =>

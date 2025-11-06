@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Media;
 using System.Windows;
-using FZCore;
 
 namespace UpDate.Windows;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using FZCore;
 
 namespace ResourceRadar.Core.Authentication;
 
@@ -174,7 +175,8 @@ public class UserProfile
             return false;
         }
 
-        bool result = await Task.Run<bool>(() => {
+        bool result = await Task.Run<bool>(() =>
+        {
             try
             {
                 string path = Path.Combine(ProfilesFolder, profile.Id.ToString(), FILE_ITEMS);
@@ -235,7 +237,7 @@ public class UserProfile
                 return true;
             }
 
-            catch  (Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, nameof(WriteUserItems));
                 return false;

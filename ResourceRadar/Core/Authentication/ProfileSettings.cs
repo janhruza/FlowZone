@@ -1,5 +1,6 @@
-﻿using System.Globalization;
-using FZCore;
+﻿using FZCore;
+
+using System.Globalization;
 
 namespace ResourceRadar.Core.Authentication;
 

@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using FZCore;
+
+using Microsoft.Win32;
+
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using FZCore;
-using Microsoft.Win32;
 
 namespace HashHive.Pages;
 
@@ -63,7 +65,7 @@ public partial class PgFileHash : Page
                 break;
 
             case HashAlgorithm.SHA512:
-                txtResult.Text= App.SHA512Hash(data);
+                txtResult.Text = App.SHA512Hash(data);
                 break;
 
             case HashAlgorithm.MD5:

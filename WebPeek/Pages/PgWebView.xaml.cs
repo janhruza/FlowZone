@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.Web.WebView2.Wpf;
+
+using System;
 using System.Windows.Controls;
-using Microsoft.Web.WebView2.Wpf;
 
 namespace WebPeek.Pages;
 

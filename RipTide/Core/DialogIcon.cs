@@ -15,15 +15,15 @@ public enum DialogIcon : byte
     /// <summary>
     /// Representing the error sign.
     /// </summary>
-    Error       = 1,
+    Error = 1,
 
     /// <summary>
     /// Representing the warning sign.
     /// </summary>
-    Warning     = 2,
+    Warning = 2,
 
     /// <summary>
     /// Representing the success sign.
     /// </summary>
-    Success     = 3
+    Success = 3
 }
