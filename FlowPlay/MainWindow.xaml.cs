@@ -259,7 +259,8 @@ public partial class MainWindow : Window
         };
 
         // set transparent (acrylic) background
-        DwmSetWindowAttribute(this.GetHandle(), 38, [3], sizeof(int));
+        //DwmSetWindowAttribute(this.GetHandle(), 38, [3], sizeof(int));
+        DwmSetWindowAttribute(this.GetHandle(), 38, [2], sizeof(int));
     }
 
     private void miOpenMedia_Click(object sender, RoutedEventArgs e)

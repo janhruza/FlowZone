@@ -133,8 +133,9 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Stretch"
                 Margin="10"
-                Padding="5"
-                Background="#80FFFFFF">
+                Padding="10"
+                Background="#65000000"
+                CornerRadius="5">
 
             <StackPanel>
                 <Slider Margin="0,0,0,5"
