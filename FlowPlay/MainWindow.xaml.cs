@@ -1,4 +1,7 @@
-﻿using FZCore.Extensions;
+﻿using FlowPlay.Core;
+
+using FZCore;
+using FZCore.Extensions;
 using FZCore.Windows;
 
 using Microsoft.Win32;
@@ -165,25 +168,61 @@ public partial class MainWindow : IconlessWindow
 
     private void StartMedia()
     {
+        dTimer.Stop();
         bPlaying = false;
         PlayPause();
+        dTimer.Start();
     }
 
     private void OpenMedia()
     {
         OpenFileDialog ofd = new OpenFileDialog
         {
-            Filter = "All files|*.*"
+            Filter = "Video|*.wmv;*.mpeg;*.avi;*.mp4|Audio|*.mp3;*.wav|Other|*.*"
         };
 
         if (ofd.ShowDialog() == true)
         {
+            StopMedia();
+
             this.SizeToContent = SizeToContent.WidthAndHeight;
             cPlayer.Source = new Uri(ofd.FileName);
             StartMedia();
 
             this.Title = $"{ofd.SafeFileName} | FlowPlay";
         }
+    }
+
+    private bool LoadAudioTrackInfo(string filename)
+    {
+        if (string.IsNullOrEmpty(filename) == true)
+        {
+            return false;
+        }
+
+        string ext = System.IO.Path.GetExtension(filename).ToLowerInvariant();
+        AudioTagInfo tag = AudioTagInfo.Empty;
+        bool result;
+
+        switch (ext)
+        {
+            case ".mp3":
+                result = AudioTagParser.ParseMp3File(filename, out tag);
+                break;
+
+            case ".wav":
+                result = AudioTagParser.ParseWavFile(filename, out tag);
+                break;
+
+            default:
+                result = false;
+                break;
+        }
+
+        rArtist.Text = tag.Artist;
+        rTitle.Text = tag.Title;
+
+        return result;
     }
 
     private void FitMediaIntoWindow()
@@ -264,6 +303,12 @@ public partial class MainWindow : IconlessWindow
         //DwmSetWindowAttribute(this.GetHandle(), 38, [2], sizeof(int));
     }
 
+    private void RestoreDefaultSize()
+    {
+        this.Width = 300;
+        this.Height = 300;
+    }
+
     private void miOpenMedia_Click(object sender, RoutedEventArgs e)
     {
         OpenMedia();
@@ -273,10 +318,31 @@ public partial class MainWindow : IconlessWindow
     {
         if (cPlayer.HasVideo == false)
         {
+            // hide the player for audio files and show track info instead
+            cPlayer.Visibility = Visibility.Collapsed;
+            tbTrackInfo.Visibility = Visibility.Visible;
+
             slPosition.Minimum = 0;
             slPosition.Maximum = cPlayer.NaturalDuration.HasTimeSpan ? cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
+            bdControls.Visibility = Visibility.Visible;
+
+            if (cPlayer.Source != null || string.IsNullOrEmpty(cPlayer.Source!.LocalPath) == false)
+            {
+                string filename = cPlayer.Source!.LocalPath;
+                if (LoadAudioTrackInfo(filename) == false)
+                {
+                    Log.Error("Failed to load audio track info for file: " + filename, nameof(cPlayer_MediaOpened));
+                }
+            }
+
+            // restore default size
+            RestoreDefaultSize();
             return;
         }
+
+        // show the player and hide track info
+        tbTrackInfo.Visibility = Visibility.Collapsed;
+        cPlayer.Visibility = Visibility.Visible;
 
         int w = cPlayer.NaturalVideoWidth;
         int h = cPlayer.NaturalVideoHeight;
@@ -286,6 +352,7 @@ public partial class MainWindow : IconlessWindow
 
         slPosition.Minimum = 0;
         slPosition.Maximum = cPlayer.NaturalDuration.HasTimeSpan ? cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
+        return;
     }
 
     private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -450,5 +517,19 @@ public partial class MainWindow : IconlessWindow
     private void miSpeed200_Click(object sender, RoutedEventArgs e)
     {
         SetPlaybackSpeed(App.SPEED_200);
+    }
+
+    private void IconlessWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        double newSize = e.NewSize.Width / 3;
+        if (newSize != double.NaN)
+        {
+            tbNote.FontSize = newSize;
+        }
+
+        else
+        {
+            tbNote.FontSize = 100;
+        }
     }
 }
