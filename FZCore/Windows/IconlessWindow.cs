@@ -70,6 +70,14 @@ public class IconlessWindow : Window
             // Ensure the window is redrawn correctly when the source is updated
             RemoveDialogFrame();
         };
+
+        this.KeyDown += (s, e) =>
+        {
+            if (e.Key == System.Windows.Input.Key.F1)
+            {
+                FZCore.Core.ShowLicense();
+            }
+        };
     }
 
     /// <summary>
