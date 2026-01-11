@@ -1,4 +1,4 @@
-﻿using FZCore.WinAPI;
+﻿using FZCore.Win32;
 
 using System;
 using System.Runtime.InteropServices;
@@ -54,7 +54,7 @@ public class IconlessWindow : Window
             cyBottomHeight = -1
         };
 
-        Win32.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+        WinAPI.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
     }
 
     /// <summary>
