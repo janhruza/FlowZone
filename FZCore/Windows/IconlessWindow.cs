@@ -54,7 +54,7 @@ public class IconlessWindow : Window
             cyBottomHeight = -1
         };
 
-        WinAPI.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+        _ = WinAPI.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
     }
 
     /// <summary>
