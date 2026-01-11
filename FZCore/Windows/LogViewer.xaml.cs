@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace FZCore.Windows
@@ -32,17 +33,17 @@ namespace FZCore.Windows
             _loadedData = [];
 
             // Load the log file when the window is fully loaded
-            this.Loaded += (s, e) =>
+            this.Loaded += async (s, e) =>
             {
-                LoadFile(logFilePath);
-                DisplayData(string.Empty);
+                await LoadFile(logFilePath);
+                await DisplayData(string.Empty);
             };
         }
 
         private bool _dataLoaded;
         private List<string> _loadedData;
 
-        private void LoadFile(string filename)
+        private async Task LoadFile(string filename)
         {
             // If the file doesn't exist, display the filename and return
             if (!File.Exists(filename))
@@ -53,11 +54,13 @@ namespace FZCore.Windows
 
             // Display the file path
             rFilename.Text = Path.GetFileName(filename);
-            _loadedData = File.ReadAllLines(filename).ToList();
+            string[] data = await File.ReadAllLinesAsync(filename);
+            _loadedData = data.ToList();
             _dataLoaded = true;
+            return;
         }
 
-        private void DisplayData(string filter)
+        private async Task DisplayData(string filter)
         {
             // check if data are loaded
             if (_dataLoaded == false)
@@ -65,6 +68,8 @@ namespace FZCore.Windows
                 // no loaded data
                 return;
             }
+
+            ProgressIntermediate();
 
             // Create an ObservableCollection for data binding
             ObservableCollection<LogEntry> logEntries = new ObservableCollection<LogEntry>();
@@ -118,11 +123,16 @@ namespace FZCore.Windows
                 // Handle any file parsing or IO exceptions
                 MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            finally
+            {
+                ProgressDisable();
+            }
         }
 
-        private void txtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private async void txtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            DisplayData(txtSearch.Text);
+            await DisplayData(txtSearch.Text);
         }
     }
 }
