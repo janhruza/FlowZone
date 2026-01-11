@@ -1,4 +1,6 @@
-﻿using RipTide.Core;
+﻿using FZCore.Windows;
+
+using RipTide.Core;
 
 using System.Media;
 using System.Windows;
@@ -8,7 +10,7 @@ namespace RipTide.Windows;
 /// <summary>
 /// Representing the missing downloader dialog window.
 /// </summary>
-public partial class WndMissingDownloader : Window
+public partial class WndMissingDownloader : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndMissingDownloader"/> class.

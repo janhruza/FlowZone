@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using FZCore.Windows;
+
+using Microsoft.Win32;
 
 using RipTide.Core;
 using RipTide.Windows;
@@ -17,7 +19,7 @@ namespace RipTide;
 /// <summary>
 /// Representing the main window class.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="MainWindow"/> class.

@@ -19,7 +19,7 @@ namespace UpDate;
 /// Representing the main application window class.
 /// This class derives from the <see cref="Window"/> class.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : IconlessWindow
 {
     /// <summary>
     /// Representing the maximum length of the displayed text of all channel items.

@@ -1,5 +1,7 @@
 ﻿using Expando.Core;
 
+using FZCore.Windows;
+
 using System;
 using System.Linq;
 using System.Windows;
@@ -9,7 +11,7 @@ namespace Expando.Windows;
 /// <summary>
 /// Representing the new transaction window.
 /// </summary>
-public partial class WndNewTransaction : Window
+public partial class WndNewTransaction : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewTransaction"/> class.

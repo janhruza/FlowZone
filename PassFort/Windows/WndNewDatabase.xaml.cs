@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using FZCore.Windows;
+
+using Microsoft.Win32;
 
 using PassFort.Core;
 
@@ -11,7 +13,7 @@ namespace PassFort.Windows;
 /// <summary>
 /// Representing a database creation window.
 /// </summary>
-public partial class WndNewDatabase : Window
+public partial class WndNewDatabase : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewDatabase"/> class.

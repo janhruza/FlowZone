@@ -15,7 +15,7 @@ namespace PassFort;
 /// <summary>
 /// Repreenting the main application window.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : IconlessWindow
 {
     /// <summary>
     /// Ctreates a new instance of the <see cref="MainWindow"/> class.

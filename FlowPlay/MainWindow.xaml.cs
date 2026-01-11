@@ -1,4 +1,5 @@
 ﻿using FZCore.Extensions;
+using FZCore.Windows;
 
 using Microsoft.Win32;
 
@@ -15,7 +16,7 @@ namespace FlowPlay;
 /// <summary>
 /// Representing the main application window.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : IconlessWindow
 {
     #region Native calls
 

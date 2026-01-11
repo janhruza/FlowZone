@@ -1,9 +1,10 @@
-﻿<Window x:Class="Expando.MainWindow"
+﻿<core:IconlessWindow x:Class="Expando.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Expando"
+        xmlns:core="clr-namespace:FZCore.Windows;assembly=FZCore"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         MinWidth="450"
@@ -61,4 +62,4 @@
 
     </Grid>
     
-</Window>
+</core:IconlessWindow>

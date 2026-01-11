@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore.Windows;
+
+using System;
 using System.Windows;
 
 using TaskPilot.Core;
@@ -8,7 +10,7 @@ namespace TaskPilot;
 /// <summary>
 /// Representing a window with the add task functionality.
 /// </summary>
-public partial class NewTaskWindow : Window
+public partial class NewTaskWindow : IconlessWindow
 {
     private bool _isNewTask;
 

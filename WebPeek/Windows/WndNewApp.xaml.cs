@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using FZCore.Windows;
+
+using System.Windows;
 
 using WebPeek.Core;
 
@@ -7,7 +9,7 @@ namespace WebPeek.Windows;
 /// <summary>
 /// Representing the window for adding a new application.
 /// </summary>
-public partial class WndNewApp : Window
+public partial class WndNewApp : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewApp"/> class.

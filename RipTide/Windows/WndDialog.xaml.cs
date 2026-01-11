@@ -1,4 +1,6 @@
-﻿using RipTide.Core;
+﻿using FZCore.Windows;
+
+using RipTide.Core;
 
 using System.Collections.Generic;
 using System.Media;
@@ -9,7 +11,7 @@ namespace RipTide.Windows;
 /// <summary>
 /// Representing the custom dialog window.
 /// </summary>
-public partial class WndDialog : Window
+public partial class WndDialog : IconlessWindow
 {
     #region Static data
 

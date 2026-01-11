@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Windows;
 
 using System;
 using System.Media;
@@ -9,7 +10,7 @@ namespace UpDate.Windows;
 /// <summary>
 /// Representing the window for adding new RSS feeds.
 /// </summary>
-public partial class WndAddFeed : Window
+public partial class WndAddFeed : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndAddFeed"/> class.

@@ -1,4 +1,6 @@
-﻿using ResourceRadar.Core.Authentication;
+﻿using FZCore.Windows;
+
+using ResourceRadar.Core.Authentication;
 
 using System.Globalization;
 using System.Media;
@@ -10,7 +12,7 @@ namespace ResourceRadar.Windows;
 /// <summary>
 /// Representing the profile creation window.
 /// </summary>
-public partial class WndNewProfile : Window
+public partial class WndNewProfile : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewProfile"/> class.

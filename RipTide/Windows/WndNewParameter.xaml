@@ -1,9 +1,10 @@
-﻿<Window x:Class="RipTide.Windows.WndNewParameter"
+﻿<core:IconlessWindow x:Class="RipTide.Windows.WndNewParameter"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RipTide.Windows"
+        xmlns:core="clr-namespace:FZCore.Windows;assembly=FZCore"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -59,4 +60,4 @@
         </StackPanel>
     </Grid>
     
-</Window>
+</core:IconlessWindow>

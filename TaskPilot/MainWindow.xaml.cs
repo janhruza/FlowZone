@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore.Windows;
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,7 +13,7 @@ namespace TaskPilot;
 /// <summary>
 /// Representing the main window class.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="MainWindow"/> class.

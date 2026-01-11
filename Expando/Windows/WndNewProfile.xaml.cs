@@ -1,5 +1,7 @@
 ﻿using Expando.Core;
 
+using FZCore.Windows;
+
 using System;
 using System.Windows;
 
@@ -8,7 +10,7 @@ namespace Expando.Windows;
 /// <summary>
 /// Representing a new user creation window.
 /// </summary>
-public partial class WndNewProfile : Window
+public partial class WndNewProfile : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewProfile"/> class.

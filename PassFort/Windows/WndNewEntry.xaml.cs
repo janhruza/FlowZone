@@ -1,5 +1,6 @@
 ﻿using FZCore;
 using FZCore.Extensions;
+using FZCore.Windows;
 
 using PassFort.Core;
 
@@ -10,7 +11,7 @@ namespace PassFort.Windows;
 /// <summary>
 /// Representing a window for creating new password entries.
 /// </summary>
-public partial class WndNewEntry : Window
+public partial class WndNewEntry : IconlessWindow
 {
     private bool isDialog;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore.Windows;
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +9,7 @@ namespace UpDate.Windows;
 /// <summary>
 /// Representing the settings window.
 /// </summary>
-public partial class WndSettings : Window
+public partial class WndSettings : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndSettings"/> class.

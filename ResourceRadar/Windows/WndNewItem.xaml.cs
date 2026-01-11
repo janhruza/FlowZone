@@ -1,4 +1,6 @@
-﻿using ResourceRadar.Core;
+﻿using FZCore.Windows;
+
+using ResourceRadar.Core;
 
 using System;
 using System.Windows;
@@ -9,7 +11,7 @@ namespace ResourceRadar.Windows;
 /// <summary>
 /// Representing the new inventory iem window.
 /// </summary>
-public partial class WndNewItem : Window
+public partial class WndNewItem : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewItem"/> class.

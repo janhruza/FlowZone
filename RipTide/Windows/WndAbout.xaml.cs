@@ -1,4 +1,6 @@
-﻿using System.Media;
+﻿using FZCore.Windows;
+
+using System.Media;
 using System.Windows;
 
 namespace RipTide.Windows;
@@ -6,7 +8,7 @@ namespace RipTide.Windows;
 /// <summary>
 /// Representing the about RipTide dialog window.
 /// </summary>
-public partial class WndAbout : Window
+public partial class WndAbout : IconlessWindow
 {
     /// <summary>
     /// Create a new instance of the <see cref="WndAbout"/> class.

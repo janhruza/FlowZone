@@ -1,4 +1,6 @@
-﻿using RipTide.Core;
+﻿using FZCore.Windows;
+
+using RipTide.Core;
 
 using System.Media;
 using System.Windows;
@@ -8,7 +10,7 @@ namespace RipTide.Windows;
 /// <summary>
 /// Representing a window responsible for adding new user-specified parameters.
 /// </summary>
-public partial class WndNewParameter : Window
+public partial class WndNewParameter : IconlessWindow
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WndNewParameter"/> class.
