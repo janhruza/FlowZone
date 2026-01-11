@@ -261,7 +261,7 @@ public partial class MainWindow : IconlessWindow
 
         // set transparent (acrylic) background
         //DwmSetWindowAttribute(this.GetHandle(), 38, [3], sizeof(int));
-        DwmSetWindowAttribute(this.GetHandle(), 38, [2], sizeof(int));
+        //DwmSetWindowAttribute(this.GetHandle(), 38, [2], sizeof(int));
     }
 
     private void miOpenMedia_Click(object sender, RoutedEventArgs e)
@@ -273,6 +273,8 @@ public partial class MainWindow : IconlessWindow
     {
         if (cPlayer.HasVideo == false)
         {
+            slPosition.Minimum = 0;
+            slPosition.Maximum = cPlayer.NaturalDuration.HasTimeSpan ? cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
             return;
         }
 
