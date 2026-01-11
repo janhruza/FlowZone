@@ -18,6 +18,7 @@ public class BaseWindow : Window
     public BaseWindow()
     {
         this.Owner = null;
+        this.Initialize();
     }
 
     /// <summary>
@@ -27,6 +28,21 @@ public class BaseWindow : Window
     public BaseWindow(Window owner)
     {
         this.Owner = owner;
+        this.Initialize();
+    }
+
+    private bool _initialized = false;
+    private void Initialize()
+    {
+        // allow only one initialization
+        if (_initialized == true) return;
+
+        // initialize the window
+        this.SnapsToDevicePixels = true;
+        this.UseLayoutRounding = true;
+        this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
+        _initialized = true;
+        return;
     }
 
     /// <summary>
@@ -80,5 +96,72 @@ public class BaseWindow : Window
         }
 
         return base.ShowDialog();
+    }
+
+    /// <summary>
+    /// Sets the progress value for the taskbar item, updating its visual progress indicator.
+    /// </summary>
+    /// <remarks>If the specified progress value exceeds 1, it is treated as a percentage and divided by 100
+    /// before being applied. The progress indicator reflects the value set, where 0 represents no progress and 1
+    /// represents completion.</remarks>
+    /// <param name="progress">The progress value to display, typically between 0 and 1. Values greater than 1 are interpreted as percentages
+    /// and automatically scaled.</param>
+    public void ProgressUpdate(double progress)
+    {
+        if (progress > 1)
+        {
+            progress /= 100;
+        }
+
+        this.TaskbarItemInfo.ProgressValue = progress;
+        return;
+    }
+
+    /// <summary>
+    /// Sets the taskbar progress indicator to the paused state, visually indicating that the current operation is
+    /// temporarily halted.
+    /// </summary>
+    /// <remarks>Use this method to signal to users that a process is paused but not completed or canceled.
+    /// The taskbar button will display the paused progress state until updated by another method.</remarks>
+    public void ProgressPause()
+    {
+        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Paused;
+        return;
+    }
+
+    /// <summary>
+    /// Sets the taskbar progress state to indicate an error condition.
+    /// </summary>
+    /// <remarks>Call this method to visually signal an error on the application's taskbar button, typically
+    /// when a background operation fails. The taskbar will display the progress indicator in the error state, which is
+    /// usually shown as a red overlay. This method does not reset or clear any previous progress value.</remarks>
+    public void ProgressError()
+    {
+        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Error;
+        return;
+    }
+
+    /// <summary>
+    /// Sets the taskbar progress indicator to the indeterminate state, indicating that progress is ongoing but its
+    /// completion percentage is unknown.
+    /// </summary>
+    /// <remarks>Use this method when the duration or completion of the associated task cannot be determined.
+    /// The taskbar will display a continuous animation to signal activity without a specific progress value.</remarks>
+    public void ProgressIntermediate()
+    {
+        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+        return;
+    }
+
+    /// <summary>
+    /// Removes the progress indicator from the application's taskbar button.
+    /// </summary>
+    /// <remarks>Call this method to clear any progress state previously set on the taskbar button, such as
+    /// when an operation completes or is canceled. This method has no effect if no progress indicator is currently
+    /// displayed.</remarks>
+    public void ProgressDisable()
+    {
+        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+        return;
     }
 }

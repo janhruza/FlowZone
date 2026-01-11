@@ -36,7 +36,7 @@ public enum ExtendedWindowState : byte
 /// Representing the already extended <see cref="Window"/>.
 /// This <see cref="Window"/> can be used as a base for other windows.
 /// </summary>
-public class ExtendedWindow : Window
+public class ExtendedWindow : BaseWindow
 {
     /// <summary>
     /// Initializes a new <see cref="ExtendedWindow"/>.
@@ -60,7 +60,7 @@ public class ExtendedWindow : Window
 
         // disable independent pixels unit
         SnapsToDevicePixels = true;
-        UseLayoutRounding = false;
+        UseLayoutRounding = true;
     }
 
     #region Private members and methods
