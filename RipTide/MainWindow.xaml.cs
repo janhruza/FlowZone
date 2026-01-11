@@ -202,7 +202,11 @@ public partial class MainWindow : IconlessWindow
 
     private void AddNewParameter()
     {
-        WndNewParameter wnd = new WndNewParameter();
+        WndNewParameter wnd = new WndNewParameter
+        {
+            Owner = this
+        };
+
         if (wnd.ShowDialog() == true)
         {
             // add parameter
@@ -266,13 +270,13 @@ public partial class MainWindow : IconlessWindow
     private void miMissingDownloader_Click(object sender, RoutedEventArgs e)
     {
         // show the help page
-        App.ShowMissingDownloaderDialog();
+        App.ShowMissingDownloaderDialog(this);
     }
 
     private void miAbout_Click(object sender, RoutedEventArgs e)
     {
         // show the about product dialog
-        App.ShowAboutDialog();
+        App.ShowAboutDialog(this);
     }
 
     private void btnChooseLocation_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,6 @@
-﻿using RipTide.Core;
+﻿using FZCore.Windows;
+
+using RipTide.Core;
 using RipTide.Windows;
 
 using System.Collections.Generic;
@@ -107,18 +109,28 @@ public partial class App : Application
     /// <summary>
     /// Shows the about dialog.
     /// </summary>
-    public static void ShowAboutDialog()
+    public static void ShowAboutDialog(Window? owner = null)
     {
-        _ = new WndAbout().ShowDialog();
+        WndAbout wnd = new WndAbout
+        {
+            Owner = owner
+        };
+
+        _ = wnd.ShowDialog();
         return;
     }
 
     /// <summary>
     /// Shows the missing downloader dialog.
     /// </summary>
-    public static void ShowMissingDownloaderDialog()
+    public static void ShowMissingDownloaderDialog(Window? owner = null)
     {
-        _ = new WndMissingDownloader().ShowDialog();
+        WndMissingDownloader wnd = new WndMissingDownloader
+        {
+            Owner = owner
+        };
+
+        _ = wnd.ShowDialog();
         return;
     }
 
