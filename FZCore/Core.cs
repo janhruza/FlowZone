@@ -224,4 +224,35 @@ public static class Core
         CultureInfo.CurrentUICulture = cu;
         return;
     }
+
+    /// <summary>
+    /// Starts a new process for the specified executable file with the given arguments.
+    /// </summary>
+    /// <remarks>The process is started with <see cref="ProcessStartInfo.UseShellExecute"/> set to <see
+    /// langword="false"/>. If the process fails to start, <paramref name="proc"/> is set to <see langword="null"/> and
+    /// the method returns <see langword="false"/>.</remarks>
+    /// <param name="filename">The path to the executable file to start. Cannot be null or empty.</param>
+    /// <param name="args">The command-line arguments to pass to the executable. Can be an empty string if no arguments are required.</param>
+    /// <param name="proc">When this method returns, contains a reference to the started <see cref="Process"/> if the process was started
+    /// successfully; otherwise, <see langword="null"/>.</param>
+    /// <returns><see langword="true"/> if the process was started successfully; otherwise, <see langword="false"/>.</returns>
+    public static bool StartProcess(string filename, string args, out Process proc)
+    {
+        try
+        {
+            proc = Process.Start(new ProcessStartInfo
+            {
+                FileName = filename,
+                Arguments = args,
+                UseShellExecute = false
+            }) ?? throw new InvalidOperationException("Process.Start returned null.");
+            return true;
+        }
+
+        catch
+        {
+            proc = null!;
+            return false;
+        }
+    }
 }

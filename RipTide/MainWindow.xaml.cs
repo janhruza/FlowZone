@@ -14,6 +14,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using FZCore.Win32;
+
 namespace RipTide;
 
 /// <summary>
@@ -168,7 +170,9 @@ public partial class MainWindow : IconlessWindow
             _downloader.AdditionalParameters.Add(param);
         }
 
+        WinAPI.AllocConsole();
         await _downloader.DownloadAsync();
+        WinAPI.FreeConsole();
     }
 
     private void SelectFolder()
@@ -396,6 +400,24 @@ public partial class MainWindow : IconlessWindow
         if (MessageBox.Show(Messages.ResetCustomDownloader, "Reset Downloader", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
             ResetDownloader();
+        }
+    }
+
+    private async void miCheckForUpdates_Click(object sender, RoutedEventArgs e)
+    {
+        // check for yt-dlp updates
+        WinAPI.AllocConsole();
+
+        if (FZCore.Core.StartProcess(VideoDownloader.GetDownloader(), "--update", out Process proc) == true)
+        {
+            await proc.WaitForExitAsync();
+        }
+
+        WinAPI.FreeConsole();
+
+        if (proc.ExitCode == 0)
+        {
+            this.ResetFields();
         }
     }
 }
