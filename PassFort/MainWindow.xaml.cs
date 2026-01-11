@@ -31,7 +31,7 @@ public partial class MainWindow : IconlessWindow
         wex.AddSeparator(idx++);
         wex.AddMenuItem(idx++, new ExtendedMenuItem
         {
-            Header = "View Log",
+            Header = "View Log\tF1",
             OnClick = () => FZCore.Core.ViewLog()
         });
 

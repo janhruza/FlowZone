@@ -18,7 +18,7 @@ namespace FZCore.Windows
     /// <summary>
     /// Represents the event viewer window.
     /// </summary>
-    public partial class LogViewer : Window
+    public partial class LogViewer : IconlessWindow
     {
         /// <summary>
         /// Creates a new instance of the <see cref="LogViewer"/> class.

@@ -2,7 +2,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Interop;
 
 namespace FZCore.Windows;
@@ -13,7 +12,7 @@ namespace FZCore.Windows;
 /// <remarks>
 /// This class inplements the Win32 API to remove the icon from the window's title bar.
 /// </remarks>
-public class IconlessWindow : Window
+public class IconlessWindow : BaseWindow
 {
     const int GWL_EXSTYLE = -20;
     const int WS_EX_DLGMODALFRAME = 0x0001;
@@ -70,20 +69,7 @@ public class IconlessWindow : Window
             // Ensure the window is redrawn correctly when the source is updated
             RemoveDialogFrame();
         };
-
-        this.KeyDown += (s, e) =>
-        {
-            if (e.Key == System.Windows.Input.Key.F1)
-            {
-                FZCore.Core.ShowLicense();
-            }
-        };
     }
-
-    /// <summary>
-    /// Representing the window handle.
-    /// </summary>
-    public nint Handle { get; private set; }
 
     /// <summary>
     /// Handles additional initialization when the window's underlying source is created.
