@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FZCore.WinAPI;
+
+using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -42,6 +44,19 @@ public class IconlessWindow : Window
             SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
     }
 
+    private void ExtendFrameIntoClient()
+    {
+        MARGINS margins = new MARGINS
+        {
+            cxLeftWidth = -1,
+            cxRightWidth = -1,
+            cyTopHeight = -1,
+            cyBottomHeight = -1
+        };
+
+        Win32.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+    }
+
     /// <summary>
     /// Creates a new instance of the <see cref="IconlessWindow"/> class.
     /// </summary>
@@ -49,6 +64,12 @@ public class IconlessWindow : Window
     {
         this.SnapsToDevicePixels = true;
         this.UseLayoutRounding = true;
+
+        this.SourceUpdated += (s, e) =>
+        {
+            // Ensure the window is redrawn correctly when the source is updated
+            RemoveDialogFrame();
+        };
     }
 
     /// <summary>
@@ -68,5 +89,6 @@ public class IconlessWindow : Window
 
         // remove the icon from the window using the Win32 API
         RemoveDialogFrame();
+        ExtendFrameIntoClient();
     }
 }
