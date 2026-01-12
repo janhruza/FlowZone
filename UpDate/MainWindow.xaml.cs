@@ -4,11 +4,11 @@ using FZCore.Windows;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media.Imaging;
 
 using UpDate.Core;
 using UpDate.Pages;
@@ -80,102 +80,237 @@ public partial class MainWindow : IconlessWindow
         return;
     }
 
+    //private async Task<bool> ReloadFeedsAsync()
+    //{
+    //    try
+    //    {
+    //        if (UpDateSettings.Current == null)
+    //        {
+    //            UpDateSettings.Current = UpDateSettings.EnsureSettings();
+    //        }
+
+    //        // clear data
+    //        trFeeds.Items.Clear();
+    //        frmContent.Content = null;
+
+    //        var feedSources = UpDateSettings.Current.Feeds;
+    //        if (feedSources.Count == 0)
+    //        {
+    //            // draw info about no available feeds
+    //            TreeViewItem item = new TreeViewItem
+    //            {
+    //                Header = "No feeds available.",
+    //                Padding = new Thickness(0, 10, 10, 10)
+    //            };
+
+    //            trFeeds.Items.Add(item);
+    //            return true;
+    //        }
+
+    //        foreach (string feedSource in feedSources)
+    //        {
+    //            RssReader reader = new RssReader();
+    //            bool result = await reader.LoadDataAsync(feedSource);
+
+    //            if (result == false)
+    //            {
+    //                continue;
+    //            }
+
+    //            List<RssChannel> channels = await reader.ReadChannelsAsync();
+
+    //            foreach (RssChannel channel in channels)
+    //            {
+    //                // create channel item in feeds tree
+    //                TreeViewItem item = new TreeViewItem
+    //                {
+    //                    Header = channel.Title.Trim().Reduce(CHANNEL_MAX_SIZE),
+    //                    Uid = channel.Link,
+    //                    ToolTip = new TextBlock
+    //                    {
+    //                        Inlines =
+    //                        {
+    //                            new Run
+    //                            {
+    //                                Text = channel.Title.Trim(),
+    //                                FontWeight = FontWeights.SemiBold,
+    //                                FontSize = 16
+    //                            },
+
+    //                            new LineBreak(),
+
+    //                            new Run
+    //                            {
+    //                                Text = channel.Description.Trim()
+    //                            }
+    //                        },
+
+    //                        TextWrapping = TextWrapping.Wrap,
+    //                        TextTrimming = TextTrimming.CharacterEllipsis
+    //                    },
+
+    //                    Padding = new Thickness(0, 10, 10, 10)
+    //                };
+
+    //                item.Selected += (s, e) =>
+    //                {
+    //                    // open RSS feed in a feed reader page
+    //                    PgChannelView channelView = new PgChannelView(channel);
+    //                    frmContent.Content = channelView;
+    //                    this.Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
+    //                };
+
+    //                trFeeds.Items.Add(item);
+    //            }
+
+    //            if (trFeeds.Items.Count > 0)
+    //            {
+    //                TreeViewItem? first = trFeeds.Items[0] as TreeViewItem;
+    //                if (first != null)
+    //                {
+    //                    first.IsSelected = true;
+    //                }
+    //            }
+    //        }
+
+    //        return true;
+    //    }
+
+    //    catch (Exception ex)
+    //    {
+    //        Log.Error(ex, nameof(ReloadFeedsAsync));
+    //        return false;
+    //    }
+    //}
+
+    //private async Task<bool> ReloadFeedsAsync()
+    //{
+    //    try
+    //    {
+    //        UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
+
+    //        // UI Reset
+    //        trFeeds.Items.Clear();
+    //        frmContent.Content = null;
+
+    //        var feedSources = UpDateSettings.Current.Feeds;
+    //        if (feedSources.Count == 0)
+    //        {
+    //            trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
+    //            return true;
+    //        }
+
+    //        // 1. Start all download tasks in parallel
+    //        var loadTasks = feedSources.Select(async source =>
+    //        {
+    //            var reader = new RssReader();
+    //            if (await reader.LoadDataAsync(source))
+    //            {
+    //                return await reader.ReadChannelsAsync();
+    //            }
+    //            return new List<RssChannel>();
+    //        });
+
+    //        // 2. Wait for all feeds to finish downloading
+    //        var results = await Task.WhenAll(loadTasks);
+    //        var allChannels = results.SelectMany(c => c).ToList();
+
+    //        // 3. Populate UI on the main thread
+    //        foreach (var channel in allChannels)
+    //        {
+    //            var item = CreateTreeViewItem(channel);
+    //            trFeeds.Items.Add(item);
+    //        }
+
+    //        // Select first item if exists
+    //        if (trFeeds.Items.Count > 0 && trFeeds.Items[0] is TreeViewItem firstItem)
+    //        {
+    //            firstItem.IsSelected = true;
+    //        }
+
+    //        return true;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Log.Error(ex, nameof(ReloadFeedsAsync));
+    //        return false;
+    //    }
+    //}
+
+    // Helper method to keep UI logic clean
+    private TreeViewItem CreateTreeViewItem(RssChannel channel)
+    {
+        var item = new TreeViewItem
+        {
+            Header = channel.Title.Trim().Reduce(CHANNEL_MAX_SIZE),
+            Uid = channel.Link,
+            Padding = new Thickness(0, 10, 10, 10),
+            ToolTip = new TextBlock
+            {
+                TextWrapping = TextWrapping.Wrap,
+                TextTrimming = TextTrimming.CharacterEllipsis,
+                Inlines = {
+                new Run { Text = channel.Title.Trim(), FontWeight = FontWeights.SemiBold, FontSize = 16 },
+                new LineBreak(),
+                new Run { Text = channel.Description.Trim() }
+            }
+            }
+        };
+
+        item.Selected += (s, e) =>
+        {
+            frmContent.Content = new PgChannelView(channel);
+            this.Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
+        };
+
+        return item;
+    }
+
     private async Task<bool> ReloadFeedsAsync()
     {
         try
         {
-            if (UpDateSettings.Current == null)
-            {
-                UpDateSettings.Current = UpDateSettings.EnsureSettings();
-            }
+            UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
 
-            // clear data
+            // UI Reset
             trFeeds.Items.Clear();
             frmContent.Content = null;
 
             var feedSources = UpDateSettings.Current.Feeds;
             if (feedSources.Count == 0)
             {
-                // draw info about no available feeds
-                TreeViewItem item = new TreeViewItem
-                {
-                    Header = "No feeds available.",
-                    Padding = new Thickness(0, 10, 10, 10)
-                };
-
-                trFeeds.Items.Add(item);
+                trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
                 return true;
             }
 
-            foreach (string feedSource in feedSources)
+            // 1. Create a list of all download tasks
+            var tasks = feedSources.Select(async source =>
             {
-                RssReader reader = new RssReader();
-                bool result = await reader.LoadDataAsync(feedSource);
-
-                if (result == false)
+                var reader = new RssReader();
+                if (await reader.LoadDataAsync(source))
                 {
-                    continue;
-                }
+                    var channels = await reader.ReadChannelsAsync();
 
-                List<RssChannel> channels = await reader.ReadChannelsAsync();
-
-                foreach (RssChannel channel in channels)
-                {
-                    // create channel item in feeds tree
-                    TreeViewItem item = new TreeViewItem
+                    // 2. Immediately jump back to the UI thread to add items as they arrive
+                    foreach (var channel in channels)
                     {
-                        Header = channel.Title.Trim().Reduce(CHANNEL_MAX_SIZE),
-                        Uid = channel.Link,
-                        ToolTip = new TextBlock
+                        var item = CreateTreeViewItem(channel);
+                        trFeeds.Items.Add(item);
+
+                        // Auto-select the very first item that arrives to fill the preview pane
+                        if (trFeeds.Items.Count == 1)
                         {
-                            Inlines =
-                            {
-                                new Run
-                                {
-                                    Text = channel.Title.Trim(),
-                                    FontWeight = FontWeights.SemiBold,
-                                    FontSize = 16
-                                },
-
-                                new LineBreak(),
-
-                                new Run
-                                {
-                                    Text = channel.Description.Trim()
-                                }
-                            },
-
-                            TextWrapping = TextWrapping.Wrap,
-                            TextTrimming = TextTrimming.CharacterEllipsis
-                        },
-
-                        Padding = new Thickness(0, 10, 10, 10)
-                    };
-
-                    item.Selected += (s, e) =>
-                    {
-                        // open RSS feed in a feed reader page
-                        PgChannelView channelView = new PgChannelView(channel);
-                        frmContent.Content = channelView;
-                        this.Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
-                    };
-
-                    trFeeds.Items.Add(item);
-                }
-
-                if (trFeeds.Items.Count > 0)
-                {
-                    TreeViewItem? first = trFeeds.Items[0] as TreeViewItem;
-                    if (first != null)
-                    {
-                        first.IsSelected = true;
+                            item.IsSelected = true;
+                        }
                     }
                 }
-            }
+            }).ToList();
+
+            // 3. Keep the method alive until all background tasks finish
+            await Task.WhenAll(tasks);
 
             return true;
         }
-
         catch (Exception ex)
         {
             Log.Error(ex, nameof(ReloadFeedsAsync));

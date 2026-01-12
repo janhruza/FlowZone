@@ -71,7 +71,32 @@ public class UpDateSettings
             "https://servis.idnes.cz/rss.aspx?c=zpravodaj",
             "https://servis.idnes.cz/rss.aspx?c=sport",
             "https://servis.idnes.cz/rss.aspx?c=ekonomikah",
-            "https://www.irishtimes.com/arc/outboundfeeds/sitemap-news-index/latest/"
+            "https://www.irishtimes.com/arc/outboundfeeds/sitemap-news-index/latest/",
+            "https://celebrityinsider.org/feed/",
+            "https://variety.com/feed/",
+            "https://www.economist.com/latest/rss.xml",
+            "https://feeds.bloomberg.com/markets/news.rss",
+            "https://www.theverge.com/rss/index.xml",
+            "https://www.wired.com/feed/rss",
+            "https://www.theregister.com/headlines.atom",
+            "https://www.economist.com/latest/rss.xml",
+            "https://www.businessinsider.com/rss",
+            "https://feeds.bbci.co.uk/sport/rss.xml",
+            "https://www.espn.com/espn/rss/news",
+            "https://www.rollingstone.com/music/music-news/feed/",
+            "https://runningonrealfood.com/feed/",
+            "https://lovesweatfitness.com/blogs/news.atom",
+            "https://www.cntraveler.com/feed/rss",
+            "https://www.adventure-journal.com/feed/",
+            "https://www.sciencemag.org/rss/current.xml",
+            "https://www.sciencedaily.com/rss/",
+            "https://scitechdaily.com/feed/",
+            "https://www.vogue.com/feed/rss",
+            "https://www.elle.com/rss/all.xml/",
+            "https://hollywoodlife.com/feed/",
+            "https://www.billboard.com/feed/",
+            "https://www.latimes.com/sports.rss",
+            "https://nypost.com/feed/"
         ];
     }
 
