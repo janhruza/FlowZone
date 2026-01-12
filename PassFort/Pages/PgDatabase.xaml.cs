@@ -1,6 +1,7 @@
 ﻿using FZCore;
 
 using PassFort.Core;
+using PassFort.Windows;
 
 using System;
 using System.Collections.Generic;
@@ -118,5 +119,26 @@ public partial class PgDatabase : Page
     private async void miRefresh_Click(object sender, RoutedEventArgs e)
     {
         await RefreshEntriesAsync();
+    }
+
+    private void btnNewPassword_Click(object sender, RoutedEventArgs e)
+    {
+        if (PasswordDatabase.Current == null)
+        {
+            Log.Error(Messages.NO_DB_OPENED, nameof(btnNewPassword_Click));
+            App.CriticalError(Messages.NO_DB_OPENED, "NO_DB_OPENED");
+            return;
+        }
+
+        // show new entry window
+        if (PasswordDatabase.Current != null)
+        {
+            // add new password
+            if (WndNewEntry.CreateEntry() == true)
+            {
+                // TODO refresh UI password list
+                MainWindow.Instance.Refresh();
+            }
+        }
     }
 }

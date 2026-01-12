@@ -34,7 +34,9 @@
                     Margin="10"
                     HorizontalAlignment="Right">
 
-            <Button Content="New password"/>
+            <Button Content="New password"
+                    Name="btnNewPassword"
+                    Click="btnNewPassword_Click"/>
 
         </StackPanel>
         

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPilot", "TaskPilot\TaskPilot.csproj", "{652B2A36-B455-49B5-8B9E-7691548F2B34}"
 EndProject
@@ -13,8 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultPack", "VaultPack\VaultPack.csproj", "{6545E394-AC7F-4418-832E-F881AE56104E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceRadar", "ResourceRadar\ResourceRadar.csproj", "{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassFort", "PassFort\PassFort.csproj", "{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpDate", "UpDate\UpDate.csproj", "{DF9CC96B-BE17-4448-B219-F870ACAD2DD9}"
 EndProject
@@ -80,14 +78,6 @@ Global
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|x64.ActiveCfg = Release|Any CPU
 		{8FA49B77-6FA8-414D-8BD2-A03B3EA46E99}.Release|x64.Build.0 = Release|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|x64.ActiveCfg = Debug|x64
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Debug|x64.Build.0 = Debug|x64
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|x64.ActiveCfg = Release|Any CPU
-		{AF8C6136-883E-42A1-BC43-AB19BA63C0D0}.Release|x64.Build.0 = Release|Any CPU
 		{DF9CC96B-BE17-4448-B219-F870ACAD2DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF9CC96B-BE17-4448-B219-F870ACAD2DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9CC96B-BE17-4448-B219-F870ACAD2DD9}.Debug|x64.ActiveCfg = Debug|x64

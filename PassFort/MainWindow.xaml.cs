@@ -7,6 +7,7 @@ using PassFort.Pages;
 using PassFort.Windows;
 
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -126,6 +127,12 @@ public partial class MainWindow : IconlessWindow
         return;
     }
 
+    private bool OpenDatabase(string filename)
+    {
+        PasswordDatabase db = new PasswordDatabase(filename);
+        return db.OpenArchive() == true && db.ReadMetadata() == true && db.ReadPasswordEntries(out _) == true;
+    }
+
     private void miOpenDatabase_Click(object sender, RoutedEventArgs e)
     {
         // open a database file
@@ -136,10 +143,9 @@ public partial class MainWindow : IconlessWindow
 
         if (ofd.ShowDialog() == true)
         {
-            PasswordDatabase db = new PasswordDatabase(ofd.FileName);
-            if (db.OpenArchive() == true && db.ReadMetadata() == true)
+            if (OpenDatabase(ofd.FileName) == true)
             {
-                RedrawUIElements();
+                this.Refresh();
             }
         }
 
@@ -149,7 +155,10 @@ public partial class MainWindow : IconlessWindow
     private void miNewDatabase_Click(object sender, RoutedEventArgs e)
     {
         // TODO open create new database window
-        WndNewDatabase.CreateDatabase();
+        if (WndNewDatabase.CreateDatabase() == false)
+        {
+            App.CriticalError("Unable to create a new database.", "DB_CREATE_FAIL");
+        }
         return;
     }
 
@@ -168,10 +177,10 @@ public partial class MainWindow : IconlessWindow
             PasswordDatabase.Current.CloseArchive();
         }
 
-        RedrawUIElements();
+        this.Refresh();
     }
 
-    private void miDbAddEntry_Click(object sender, RoutedEventArgs e)
+    private void CreateNewPassword()
     {
         // show new entry window
         if (PasswordDatabase.Current != null)
@@ -180,12 +189,31 @@ public partial class MainWindow : IconlessWindow
             if (WndNewEntry.CreateEntry() == true)
             {
                 // TODO refresh UI password list
+                this.Refresh();
             }
         }
     }
 
+    private void miDbAddEntry_Click(object sender, RoutedEventArgs e)
+    {
+        CreateNewPassword();
+    }
+
+    /// <summary>
+    /// Refreshes the display of the content area, updating all visible UI elements to reflect the current state.
+    /// </summary>
+    /// <remarks>Call this method to ensure that any changes to the underlying data or UI controls are
+    /// immediately rendered. This method is typically used after modifying content or layout to force a visual
+    /// update.</remarks>
+    public void Refresh()
+    {
+        RedrawUIElements();
+        this.frmContent.Refresh();
+        return;
+    }
+
     private void miFrameRefresh_Click(object sender, RoutedEventArgs e)
     {
-        frmContent.Refresh();
+        this.Refresh();
     }
 }
