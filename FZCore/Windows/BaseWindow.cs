@@ -1,5 +1,7 @@
 ﻿using FZCore.Win32;
 
+using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace FZCore.Windows;
@@ -31,24 +33,66 @@ public class BaseWindow : Window
         this.Initialize();
     }
 
+    /// <summary>
+    /// Window destructor.
+    /// </summary>
+    ~BaseWindow()
+    {
+        _windows.Remove(this);
+    }
+
+    /// <summary>
+    /// Occurs when the user presses the Help key, allowing subscribers to respond to help requests.
+    /// </summary>
+    /// <remarks>Subscribe to this event to provide custom help functionality when the Help key is activated.
+    /// The event handler receives standard event arguments and does not provide additional context about the help
+    /// request.</remarks>
+    public event EventHandler? HelpKeyPressed;
+
     private bool _initialized = false;
     private void Initialize()
     {
         // allow only one initialization
         if (_initialized == true) return;
 
+        // top priority setup
+        _windows.Add(this);
+
         // initialize the window
         this.SnapsToDevicePixels = true;
         this.UseLayoutRounding = true;
         this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
+
+        // enable events
+        this.KeyDown += (s, e) =>
+        {
+            if (e.Key == (System.Windows.Input.Key.F1) || e.Key == System.Windows.Input.Key.Help)
+            {
+                HelpKeyPressed?.Invoke(this, EventArgs.Empty);
+            }
+        };
+
+        // window initialized
         _initialized = true;
         return;
     }
 
+    private nint _handle;
+
     /// <summary>
     /// Representing the window handle.
     /// </summary>
-    public nint Handle { get; protected set; }
+    public nint Handle => _handle;
+
+    /// <summary>
+    /// Overrides the OnSourceInitialized method to capture the window handle after the source is initialized.
+    /// </summary>
+    /// <param name="e">Possible arguments.</param>
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        _handle = new System.Windows.Interop.WindowInteropHelper(this).EnsureHandle();
+    }
 
     /// <summary>
     /// Enables or disables dark mode for the window.
@@ -60,7 +104,7 @@ public class BaseWindow : Window
     public bool SetDarkMode(bool value)
     {
         int iValue = value == true ? 1 : 0;
-        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(this.Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, [iValue], sizeof(int)));
+        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(_handle, (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, [iValue], sizeof(int)));
     }
 
     /// <summary>
@@ -72,7 +116,7 @@ public class BaseWindow : Window
     /// <returns>true if the system backdrop was successfully set to transient; otherwise, false.</returns>
     public bool MakeTransient()
     {
-        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(this.Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], sizeof(int)));
+        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(_handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], sizeof(int)));
     }
 
     /// <summary>
@@ -164,4 +208,15 @@ public class BaseWindow : Window
         this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
         return;
     }
+
+    #region Static section
+
+    private static readonly List<BaseWindow> _windows = [];
+
+    /// <summary>
+    /// Retrieves a list of all currently active BaseWindow instances.
+    /// </summary>
+    public static List<BaseWindow> ActiveWindows => _windows;
+
+    #endregion
 }

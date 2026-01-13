@@ -34,7 +34,6 @@ public class IconlessWindow : BaseWindow
     private void RemoveDialogFrame()
     {
         var hwnd = new WindowInteropHelper(this).Handle;
-        this.Handle = hwnd;
         int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
         SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_DLGMODALFRAME);
 
