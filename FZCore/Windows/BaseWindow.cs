@@ -47,7 +47,12 @@ public class BaseWindow : Window
     /// <remarks>Subscribe to this event to provide custom help functionality when the Help key is activated.
     /// The event handler receives standard event arguments and does not provide additional context about the help
     /// request.</remarks>
-    public event EventHandler? HelpKeyPressed;
+    public event EventHandler HelpKeyPressed = delegate { };
+
+    /// <summary>
+    /// Occurrs when the F12 key is pressed.
+    /// </summary>
+    public event EventHandler DevToolsKeyPressed = delegate { };
 
     private bool _initialized = false;
     private void Initialize()
@@ -66,9 +71,14 @@ public class BaseWindow : Window
         // enable events
         this.KeyDown += (s, e) =>
         {
-            if (e.Key == (System.Windows.Input.Key.F1) || e.Key == System.Windows.Input.Key.Help)
+            if (e.Key == System.Windows.Input.Key.F1 || e.Key == System.Windows.Input.Key.Help)
             {
-                HelpKeyPressed?.Invoke(this, EventArgs.Empty);
+                HelpKeyPressed.Invoke(this, EventArgs.Empty);
+            }
+
+            else if (e.Key == System.Windows.Input.Key.F12)
+            {
+                DevToolsKeyPressed.Invoke(this, EventArgs.Empty);
             }
         };
 

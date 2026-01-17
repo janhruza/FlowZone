@@ -9,13 +9,14 @@
                      WindowStartupLocation="CenterScreen"
                      ResizeMode="CanResize"
                      Title="Path Finder"
-                     MinWidth="350"
+                     MinWidth="400"
                      MinHeight="350"
                      Height="600"
                      Width="950"
                      SnapsToDevicePixels="True"
                      UseLayoutRounding="True"
-                     Loaded="IconlessWindow_Loaded">
+                     Loaded="IconlessWindow_Loaded"
+                     DevToolsKeyPressed="IconlessWindow_DevToolsKeyPressed">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,11 +36,15 @@
               Name="gdContent">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            
+
+            <TreeView Grid.Column="0"
+                      Name="tvDrives"
+                      Margin="0,0,10,0"/>
+
+            <!--Space reserved for the view item-->
             
         </Grid>
         

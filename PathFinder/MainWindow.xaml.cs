@@ -1,7 +1,10 @@
-﻿using FZCore.Windows;
+﻿using FZCore.Win32;
+using FZCore.Windows;
 
 using PathFinder.Controls;
 
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -51,8 +54,49 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
+    private void LoadDrives()
+    {
+        tvDrives.Items.Clear();
+        foreach (string drive in Environment.GetLogicalDrives())
+        {
+            DriveInfo di = new DriveInfo(drive);
+            if (di.IsReady)
+            {
+                TreeViewItem ti = new TreeViewItem
+                {
+                    Header = $"{(string.IsNullOrWhiteSpace(di.VolumeLabel) == false ? di.VolumeLabel : "Drive")} ({di.Name})"
+                };
+
+                ti.MouseDoubleClick += (s, e) =>
+                {
+                    CtlFVDetails ctl = (CtlFVDetails)ctlView;
+                    ctl.OpenFolder(di.Name);
+                };
+
+                tvDrives.Items.Add(ti);
+            }
+        }
+    }
+
     private void IconlessWindow_Loaded(object? sender, RoutedEventArgs e)
     {
         SetStatusMessage(string.Empty);
+        LoadDrives();
+    }
+
+    bool consoleOpen = false;
+    private void IconlessWindow_DevToolsKeyPressed(object sender, EventArgs e)
+    {
+        if (consoleOpen == false)
+        {
+            WinAPI.AllocConsole();
+            consoleOpen = true;
+        }
+
+        else
+        {
+            WinAPI.FreeConsole();
+            consoleOpen = false;
+        }
     }
 }

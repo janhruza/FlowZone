@@ -36,10 +36,6 @@ public class BaseApplication : Application
     {
         base.OnStartup(e);
         Log.AppStarted();
-
-#if DEBUG
-        Win32.WinAPI.AllocConsole();
-#endif
     }
 
     protected override void OnExit(ExitEventArgs e)
