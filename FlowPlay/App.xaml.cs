@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using System.Windows;
 
@@ -7,7 +8,7 @@ namespace FlowPlay;
 /// <summary>
 /// Representing the main application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     internal const double SPEED_025 = 0.25;
     internal const double SPEED_050 = 0.50;

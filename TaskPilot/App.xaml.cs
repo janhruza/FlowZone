@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using System;
 using System.IO;
@@ -12,7 +13,7 @@ namespace TaskPilot;
 /// <summary>
 /// Main Task Pilot application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     /// <summary>
     /// Creates a new instance of the <see cref="App"/> class.

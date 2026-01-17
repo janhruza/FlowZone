@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using System;
 using System.Security.Cryptography;
@@ -12,7 +13,7 @@ namespace HashHive;
 /// This class contains the Main method (<see cref="Application_Startup(object, StartupEventArgs)"/>).
 /// This class derives directly from the <see cref="Application"/> class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     /// <summary>
     /// Representing the base application title.

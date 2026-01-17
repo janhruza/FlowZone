@@ -1,4 +1,5 @@
-﻿using FZCore.Windows;
+﻿using FZCore.Extra;
+using FZCore.Windows;
 
 using RipTide.Core;
 using RipTide.Windows;
@@ -12,7 +13,7 @@ namespace RipTide;
 /// <summary>
 /// Representing the main application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     private void Application_Startup(object sender, StartupEventArgs e)
     {

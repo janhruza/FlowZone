@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using System;
 using System.IO;
@@ -14,7 +15,7 @@ namespace WebPeek;
 /// <summary>
 /// Representing the application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     internal const string FONT_DISPLAY_NAME = "Segoe Fluent Icons";
 

@@ -1,11 +1,13 @@
-﻿using System.Windows;
+﻿using FZCore.Extra;
+
+using System.Windows;
 
 namespace VaultPack;
 
 /// <summary>
 /// Representing the main application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     private void Application_Startup(object sender, StartupEventArgs e)
     {

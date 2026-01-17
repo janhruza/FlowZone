@@ -1,17 +1,16 @@
-﻿<!-- ReSharper disable ObsoleteElementError -->
-<Application x:Class="ResourceRadar.App"
+﻿<extra:BaseApplication x:Class="ResourceRadar.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ResourceRadar"
+             xmlns:extra="clr-namespace:FZCore.Extra;assembly=FZCore"
              ThemeMode="System"
              Exit="Application_Exit"
              Startup="Application_Startup">
-    <!-- ReSharper restore ObsoleteElementError -->
 
-    <Application.Resources>
+    <extra:BaseApplication.Resources>
 
         <FontFamily x:Key="IconsFont">Segoe Fluent Icons</FontFamily>
         
-    </Application.Resources>
+    </extra:BaseApplication.Resources>
     
-</Application>
+</extra:BaseApplication>

@@ -1,7 +1,7 @@
-﻿<Application x:Class="FlowPlay.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:FlowPlay"
-             Startup="Application_Startup"
-             Exit="Application_Exit">
-</Application>
+﻿<extra:BaseApplication x:Class="FlowPlay.App"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:local="clr-namespace:FlowPlay"
+                       xmlns:extra="clr-namespace:FZCore.Extra;assembly=FZCore"
+                       Startup="Application_Startup"
+                       Exit="Application_Exit" />

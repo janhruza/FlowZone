@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using System.Windows;
 
@@ -8,7 +9,7 @@ namespace UpDate;
 /// Representing the main application class.
 /// This class contains the application entry point - the <see cref="Application_Startup(object, StartupEventArgs)"/> method.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     /// <summary>
     /// Representing the pure main window title.

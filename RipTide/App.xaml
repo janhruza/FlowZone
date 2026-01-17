@@ -1,15 +1,14 @@
-﻿<!-- ReSharper disable ObsoleteElementError -->
-<Application x:Class="RipTide.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:RipTide"
-             Startup="Application_Startup"
-             Exit="Application_Exit"
-             ThemeMode="System">
-    <!-- ReSharper restore ObsoleteElementError -->
+﻿<extra:BaseApplication x:Class="RipTide.App"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:local="clr-namespace:RipTide"
+                       xmlns:extra="clr-namespace:FZCore.Extra;assembly=FZCore"
+                       Startup="Application_Startup"
+                       Exit="Application_Exit"
+                       ThemeMode="System">
 
-    <Application.Resources>
+    <extra:BaseApplication.Resources>
         <FontFamily x:Key="IconsFont">Segoe Fluent Icons</FontFamily>
-    </Application.Resources>
+    </extra:BaseApplication.Resources>
     
-</Application>
+</extra:BaseApplication>

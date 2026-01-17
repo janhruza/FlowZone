@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Extra;
 
 using ResourceRadar.Core;
 using ResourceRadar.Core.Authentication;
@@ -11,7 +12,7 @@ namespace ResourceRadar;
 /// <summary>
 /// Representing the main application class.
 /// </summary>
-public partial class App : Application
+public partial class App : BaseApplication
 {
     /// <summary>
     /// Representing the base window title.
