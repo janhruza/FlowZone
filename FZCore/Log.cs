@@ -18,6 +18,11 @@ public static class Log
     {
         string line = $"{DateTime.Now.ToString()};{key};{(string.IsNullOrEmpty(tag) == false ? tag : "ALL")};{value}{Environment.NewLine}";
         File.AppendAllText(Path, line, Encoding.UTF8);
+
+#if DEBUG
+        Console.WriteLine(line);
+#endif
+
         return;
     }
 

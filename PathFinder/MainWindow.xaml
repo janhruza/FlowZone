@@ -1,0 +1,57 @@
+﻿<core:IconlessWindow x:Class="PathFinder.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:local="clr-namespace:PathFinder"
+                     xmlns:core="clr-namespace:FZCore.Windows;assembly=FZCore"
+                     mc:Ignorable="d"
+                     WindowStartupLocation="CenterScreen"
+                     ResizeMode="CanResize"
+                     Title="Path Finder"
+                     MinWidth="350"
+                     MinHeight="350"
+                     Height="600"
+                     Width="950"
+                     SnapsToDevicePixels="True"
+                     UseLayoutRounding="True"
+                     Loaded="IconlessWindow_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+
+            <!--Toolbar panel-->
+            <RowDefinition Height="Auto"/>
+
+            <!--Main part-->
+            <RowDefinition />
+
+            <!--Status bar panel-->
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1"
+              Name="gdContent">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            
+            
+        </Grid>
+        
+        <!--The status bar-->
+        <StatusBar Grid.Row="2"
+                   Name="statusBar">
+
+            <StatusBarItem Name="sbStatusText"
+                           Content="Status bar message"/>
+
+        </StatusBar>
+
+    </Grid>
+    
+</core:IconlessWindow>
