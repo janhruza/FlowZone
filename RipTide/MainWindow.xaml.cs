@@ -1,4 +1,5 @@
-﻿using FZCore.Windows;
+﻿using FZCore.Win32;
+using FZCore.Windows;
 
 using Microsoft.Win32;
 
@@ -13,8 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-
-using FZCore.Win32;
 
 namespace RipTide;
 

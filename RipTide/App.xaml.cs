@@ -1,5 +1,4 @@
 ﻿using FZCore.Extra;
-using FZCore.Windows;
 
 using RipTide.Core;
 using RipTide.Windows;

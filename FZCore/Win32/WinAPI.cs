@@ -1,9 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-using LPARAM = nint;
-using WPARAM = nint;
 using DWORD = int;
 using HWND = nint;
+using LPARAM = nint;
+using WPARAM = nint;
 
 namespace FZCore.Win32;
 

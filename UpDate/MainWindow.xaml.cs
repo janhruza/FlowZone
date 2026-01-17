@@ -3,7 +3,6 @@ using FZCore.Extensions;
 using FZCore.Windows;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
