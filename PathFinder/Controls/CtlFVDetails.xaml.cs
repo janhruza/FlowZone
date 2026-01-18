@@ -6,11 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-using static PathFinder.Core;
+using static PathFinder.Core.FileSystem;
 
 namespace PathFinder.Controls;
 
@@ -170,9 +169,11 @@ public partial class CtlFVDetails : CtlFolderViewBase
             lbi.MouseDoubleClick += (s, e) =>
             {
                 // open file
-                Process proc = new Process
+                try
                 {
-                    StartInfo =
+                    Process proc = new Process
+                    {
+                        StartInfo =
                             {
                                 FileName = fi.Name,
                                 WorkingDirectory = folderPath,
@@ -180,9 +181,16 @@ public partial class CtlFVDetails : CtlFolderViewBase
                                 CreateNoWindow = true,
                                 WindowStyle = ProcessWindowStyle.Hidden
                             }
-                };
+                    };
 
-                _ = proc.Start();
+                    _ = proc.Start();
+                }
+
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                    FZCore.Core.ErrorBox(ex.Message, "Start Process");
+                }
             };
 
             listBox.Items.Add(lbi);

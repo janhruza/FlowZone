@@ -7,14 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Windows.Documents;
 
-namespace PathFinder;
+namespace PathFinder.Core;
 
 /// <summary>
 /// Representing core functions.
 /// </summary>
-public static class Core
+public static class FileSystem
 {
     private const string FILTER_ALL = "*";
 
