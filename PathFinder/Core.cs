@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace PathFinder;
 
@@ -15,6 +16,8 @@ namespace PathFinder;
 /// </summary>
 public static class Core
 {
+    private const string FILTER_ALL = "*";
+
     /// <summary>
     /// Representing a text of a separator item placeholder.
     /// </summary>
@@ -78,6 +81,112 @@ public static class Core
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Retrieves all subfolders in the given <paramref name="folderPath"/>.
+    /// </summary>
+    /// <param name="folderPath">target folder path.</param>
+    /// <param name="includeHidden">Determines whether to include hidden folders in the <paramref name="outputList"/>.</param>
+    /// <param name="outputList">Output list object where all the entries will be stored.</param>
+    /// <returns>Operation result.</returns>
+    public static bool FsFetchAllFolders(string folderPath,
+                                         bool includeHidden,
+                                         out List<string> outputList)
+    {
+        outputList = new List<string>();
+
+        if (Directory.Exists (folderPath) == false)
+        {
+            Log.Error($"Folder \'{folderPath}\' not found.", nameof(FsFetchAllFolders));
+            return false;
+        }
+
+        try
+        {
+            if (includeHidden == true)
+            {
+                // return the entire list
+                IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath);
+                outputList.AddRange(dirs);
+            }
+
+            else
+            {
+                // filter out the hidden items
+                DirectoryInfo di = new DirectoryInfo(folderPath);
+
+                EnumerationOptions options = new EnumerationOptions
+                {
+                    AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
+                    RecurseSubdirectories = false
+                };
+
+                IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath, FILTER_ALL, options);
+                outputList.AddRange(dirs);
+            }
+
+            return true;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves all files in the given <paramref name="folderPath"/>.
+    /// </summary>
+    /// <param name="folderPath">target folder path.</param>
+    /// <param name="includeHidden">Determines whether to include hidden files in the <paramref name="outputList"/>.</param>
+    /// <param name="outputList">Output list object where all the entries will be stored.</param>
+    /// <returns>Operation result.</returns>
+    public static bool FsFetchAllFiles(string folderPath,
+                                         bool includeHidden,
+                                         out List<string> outputList)
+    {
+        outputList = new List<string>();
+
+        if (Directory.Exists(folderPath) == false)
+        {
+            Log.Error($"Folder \'{folderPath}\' not found.", nameof(FsFetchAllFolders));
+            return false;
+        }
+
+        try
+        {
+            if (includeHidden == true)
+            {
+                // return the entire list
+                IEnumerable<string> files = Directory.EnumerateFiles(folderPath);
+                outputList.AddRange(files);
+            }
+
+            else
+            {
+                // filter out the hidden items
+                DirectoryInfo di = new DirectoryInfo(folderPath);
+
+                EnumerationOptions options = new EnumerationOptions
+                {
+                    AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
+                    RecurseSubdirectories = false
+                };
+
+                IEnumerable<string> files = di.EnumerateFiles(FILTER_ALL, options).Select(x => x.FullName);
+                outputList.AddRange(files);
+            }
+
+            return true;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+            return false;
+        }
     }
 
     /// <summary>

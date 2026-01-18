@@ -81,8 +81,15 @@ public partial class CtlFVDetails : CtlFolderViewBase
             IsEnabled = false
         });
 
-        List<string> paths = [];
-        if (FsGetAllEntries(folderPath, SortFoldersFirst, out paths) == false)
+        List<string> dirs = [];
+        List<string> files = [];
+
+        if (FsFetchAllFolders(folderPath, false, out dirs) == false)
+        {
+            return false;
+        }
+
+        if (FsFetchAllFiles(folderPath, false, out files) == false)
         {
             return false;
         }
@@ -99,43 +106,73 @@ public partial class CtlFVDetails : CtlFolderViewBase
             listBox.Items.Add(lbiParent);
         }
 
-        if (paths.Count <= 1) // including the separator
+        if (dirs.Count == 0) // including the separator
         {
             // folder is empty
             return true;
         }
 
-        if (hasParent)
+        if (hasParent && dirs.Count > 0)
         {
             listBox.Items.Add(new Separator());
         }
 
-        foreach (string path in paths)
+        foreach (string dir in dirs)
         {
-            Console.WriteLine(path);
+            Console.WriteLine(dir);
+            if (FsGetItemInfo(dir, out FSObjectInfo obj) == false) continue;
+            if (obj.IsFile == true) continue; // file check
 
-            if (FsGetItemInfo(path, out FSObjectInfo obj) == true)
+            DirectoryInfo di = (DirectoryInfo)obj.Info;
+            ListBoxItem lbi = new ListBoxItem
             {
-                ListBoxItem lbi;
-                if (obj.IsFile == true)
+                Content = new CtlItemDetailView(ref obj)
                 {
-                    FileInfo fi = (FileInfo)obj.Info;
-                    lbi = new ListBoxItem
-                    {
-                        Content = new CtlItemDetailView(ref obj)
-                        {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
-                        },
-                        Tag = obj,
-                        HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
-                    };
+                    HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
+                },
+                Tag = obj,
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
+            };
 
-                    lbi.MouseDoubleClick += (s, e) =>
-                    {
-                        // open file
-                        Process proc = new Process
-                        {
-                            StartInfo =
+            lbi.MouseDoubleClick += (s, e) =>
+            {
+                if (OpenFolder(di.FullName) == false)
+                {
+                    FZCore.Core.ErrorBox($"Unable to open the given folder: {di.FullName}");
+                }
+            };
+            listBox.Items.Add(lbi);
+        }
+
+        if (files.Count == 0)
+        {
+            return true;
+        }
+
+        listBox.Items.Add(new Separator());
+
+        foreach (string file in files)
+        {
+            if (FsGetItemInfo(file, out FSObjectInfo obj) == false) continue;
+            if (obj.IsFile == false) continue; // directory check
+
+            FileInfo fi = (FileInfo)obj.Info;
+            ListBoxItem lbi = new ListBoxItem
+            {
+                Content = new CtlItemDetailView(ref obj)
+                {
+                    HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
+                },
+                Tag = obj,
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
+            };
+
+            lbi.MouseDoubleClick += (s, e) =>
+            {
+                // open file
+                Process proc = new Process
+                {
+                    StartInfo =
                             {
                                 FileName = fi.Name,
                                 WorkingDirectory = folderPath,
@@ -143,45 +180,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
                                 CreateNoWindow = true,
                                 WindowStyle = ProcessWindowStyle.Hidden
                             }
-                        };
+                };
 
-                        _ = proc.Start();
-                    };
-                }
+                _ = proc.Start();
+            };
 
-                else
-                {
-                    // Check if it's special (separator) AND not at the boundaries
-                    if (obj.IsSpecial == true)
-                    {
-                        // object is a separator and not first or last in the list
-                        // (first item is always after a separator from the parent folder item)
-                        listBox.Items.Add(new Separator());
-                        continue;
-                    }
-
-                    DirectoryInfo di = (DirectoryInfo)obj.Info;
-                    lbi = new ListBoxItem
-                    {
-                        Content = new CtlItemDetailView(ref obj)
-                        {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
-                        },
-                        Tag = obj,
-                        HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
-                    };
-
-                    lbi.MouseDoubleClick += (s, e) =>
-                    {
-                        if (OpenFolder(di.FullName) == false)
-                        {
-                            FZCore.Core.ErrorBox($"Unable to open the given folder: {di.FullName}");
-                        }
-                    };
-                }
-
-                listBox.Items.Add(lbi);
-            }
+            listBox.Items.Add(lbi);
         }
 
         return true;
