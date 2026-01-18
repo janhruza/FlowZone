@@ -21,9 +21,18 @@ public partial class MainWindow : IconlessWindow
     public MainWindow()
     {
         InitializeComponent();
-        ctlView = new CtlFVDetails();
-        ctlView.OpenFolder("C:\\");
+        CtlFVDetails ctl = new CtlFVDetails
+        {
+            BorderThickness = new Thickness(0)
+        };
 
+        ctl.SortFoldersFirst = true;
+        ctl.FolderChanged += (s, folderPath) =>
+        {
+            SetStatusMessage(folderPath);
+        };
+
+        ctlView = ctl;
         gdContent.Children.Add(ctlView);
         Grid.SetColumn(ctlView, 1);
     }
@@ -67,7 +76,7 @@ public partial class MainWindow : IconlessWindow
                     Header = $"{(string.IsNullOrWhiteSpace(di.VolumeLabel) == false ? di.VolumeLabel : "Drive")} ({di.Name})"
                 };
 
-                ti.MouseDoubleClick += (s, e) =>
+                ti.Selected += (s, e) =>
                 {
                     CtlFVDetails ctl = (CtlFVDetails)ctlView;
                     ctl.OpenFolder(di.Name);
@@ -90,6 +99,7 @@ public partial class MainWindow : IconlessWindow
         if (consoleOpen == false)
         {
             WinAPI.AllocConsole();
+            Console.Title = this.Title;
             consoleOpen = true;
         }
 

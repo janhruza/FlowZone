@@ -16,6 +16,11 @@ namespace PathFinder;
 public static class Core
 {
     /// <summary>
+    /// Representing a text of a separator item placeholder.
+    /// </summary>
+    public static readonly string TEXT_SEPARATOR = new string('-', 80);
+
+    /// <summary>
     /// Gets all filesystem entries from the given directory.
     /// </summary>
     /// <param name="folderPath">Target folder path.</param>
@@ -57,6 +62,9 @@ public static class Core
                 string[] dirs = Directory.GetDirectories(folderPath);
                 list.AddRange(dirs);
 
+                // add separator
+                list.Add(TEXT_SEPARATOR);
+
                 // get files after directories
                 string[] files = Directory.GetFiles(folderPath);
                 list.AddRange(files);
@@ -81,11 +89,25 @@ public static class Core
     /// <returns>Operation result.</returns>
     public static bool FsGetItemInfo(string path, [NotNull] out FSObjectInfo info)
     {
+        if (path == TEXT_SEPARATOR)
+        {
+            info = new FSObjectInfo
+            {
+                IsFile = false,
+                Info = new object(),
+                Exists = false,
+                IsSpecial = true
+            };
+
+            return true;
+        }
+
         if (Path.Exists(path) == false)
         {
             info = new FSObjectInfo
             {
-                Exists = false
+                Exists = false,
+                IsSpecial = false
             };
 
             return false;
@@ -97,7 +119,8 @@ public static class Core
             {
                 Exists = true,
                 Info = new FileInfo(path),
-                IsFile = true
+                IsFile = true,
+                IsSpecial = false
             };
 
             return info.Exists;
@@ -109,7 +132,8 @@ public static class Core
             {
                 Exists = true,
                 Info = new DirectoryInfo(path),
-                IsFile = false
+                IsFile = false,
+                IsSpecial = false
             };
 
             return info.Exists;

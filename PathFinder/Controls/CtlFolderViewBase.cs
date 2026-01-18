@@ -28,6 +28,7 @@ public class CtlFolderViewBase : UserControl, IFolderView
     /// <inheritdoc/>
     public bool OpenFolder(string folderPath)
     {
+        FolderChanged.Invoke(this, folderPath);
         return false;
     }
 
@@ -36,4 +37,9 @@ public class CtlFolderViewBase : UserControl, IFolderView
     {
         return new object();
     }
+
+    /// <summary>
+    /// Occurrs when the current folder changes.
+    /// </summary>
+    public event EventHandler<string> FolderChanged = delegate { };
 }

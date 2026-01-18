@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 using static PathFinder.Core;
@@ -46,7 +47,8 @@ public partial class CtlFVDetails : CtlFolderViewBase
         ListBoxItem lbi = new ListBoxItem
         {
             Content = "[Parent directory]",
-            Uid = parent
+            Uid = parent,
+            FontSize = SystemFonts.StatusFontSize
         };
 
         lbi.MouseDoubleClick += (s, e) =>
@@ -67,9 +69,17 @@ public partial class CtlFVDetails : CtlFolderViewBase
         }
 
         listBox.Items.Clear();
-        // get parent folder item
-        ListBoxItem lbiParent = (ListBoxItem)CreateParentFolderItem(folderPath);
-        listBox.Items.Add(lbiParent);
+        listBox.Items.Add(new ListBoxItem
+        {
+            Content = new CtlItemDetailView()
+            {
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                FontSize = SystemFonts.StatusFontSize + 2
+            },
+
+            HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
+            IsEnabled = false
+        });
 
         List<string> paths = [];
         if (FsGetAllEntries(folderPath, SortFoldersFirst, out paths) == false)
@@ -77,13 +87,29 @@ public partial class CtlFVDetails : CtlFolderViewBase
             return false;
         }
 
-        if (paths.Count == 0)
+        // folder exists
+        _folderPath = folderPath;
+        FolderChanged.Invoke(this, folderPath);
+
+        // get parent folder item
+        bool hasParent = Directory.GetParent(folderPath) != null;
+        if (hasParent)
+        {
+            ListBoxItem lbiParent = (ListBoxItem)CreateParentFolderItem(folderPath);
+            listBox.Items.Add(lbiParent);
+        }
+
+        if (paths.Count <= 1) // including the separator
         {
             // folder is empty
             return true;
         }
 
-        listBox.Items.Add(new Separator());
+        if (hasParent)
+        {
+            listBox.Items.Add(new Separator());
+        }
+
         foreach (string path in paths)
         {
             Console.WriteLine(path);
@@ -96,8 +122,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
                     FileInfo fi = (FileInfo)obj.Info;
                     lbi = new ListBoxItem
                     {
-                        Content = fi.Name,
-                        Uid = fi.FullName
+                        Content = new CtlItemDetailView(ref obj)
+                        {
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
+                        },
+                        Tag = obj,
+                        HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
                     };
 
                     lbi.MouseDoubleClick += (s, e) =>
@@ -107,8 +137,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
                         {
                             StartInfo =
                             {
-                                FileName = "cmd.exe",
-                                Arguments = $"/C {fi.FullName}",
+                                FileName = fi.Name,
                                 WorkingDirectory = folderPath,
                                 UseShellExecute = true,
                                 CreateNoWindow = true,
@@ -122,11 +151,24 @@ public partial class CtlFVDetails : CtlFolderViewBase
 
                 else
                 {
+                    // Check if it's special (separator) AND not at the boundaries
+                    if (obj.IsSpecial == true)
+                    {
+                        // object is a separator and not first or last in the list
+                        // (first item is always after a separator from the parent folder item)
+                        listBox.Items.Add(new Separator());
+                        continue;
+                    }
+
                     DirectoryInfo di = (DirectoryInfo)obj.Info;
                     lbi = new ListBoxItem
                     {
-                        Content = di.Name,
-                        Uid = di.FullName
+                        Content = new CtlItemDetailView(ref obj)
+                        {
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
+                        },
+                        Tag = obj,
+                        HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
                     };
 
                     lbi.MouseDoubleClick += (s, e) =>
@@ -142,11 +184,13 @@ public partial class CtlFVDetails : CtlFolderViewBase
             }
         }
 
-        _folderPath = folderPath;
         return true;
     }
 
     private string _folderPath = string.Empty;
+
+    /// <inheritdoc/>
+    public new event EventHandler<string> FolderChanged = delegate { };
 
     /// <inheritdoc/>
     public new string FolderName => _folderPath;
