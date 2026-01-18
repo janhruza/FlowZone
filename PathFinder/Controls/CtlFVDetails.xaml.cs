@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
+using static PathFinder.Core.ContextMenus;
 using static PathFinder.Core.FileSystem;
 
 namespace PathFinder.Controls;
@@ -83,12 +84,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
         List<string> dirs = [];
         List<string> files = [];
 
-        if (FsFetchAllFolders(folderPath, false, out dirs) == false)
+        if (FsFetchAllFolders(folderPath, true, out dirs) == false)
         {
             return false;
         }
 
-        if (FsFetchAllFiles(folderPath, false, out files) == false)
+        if (FsFetchAllFiles(folderPath, true, out files) == false)
         {
             return false;
         }
@@ -103,12 +104,6 @@ public partial class CtlFVDetails : CtlFolderViewBase
         {
             ListBoxItem lbiParent = (ListBoxItem)CreateParentFolderItem(folderPath);
             listBox.Items.Add(lbiParent);
-        }
-
-        if (dirs.Count == 0) // including the separator
-        {
-            // folder is empty
-            return true;
         }
 
         if (hasParent && dirs.Count > 0)
@@ -132,6 +127,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
                 Tag = obj,
                 HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
             };
+
+            // folder context menu
+            if (CmFolderMenu(di.FullName, out ContextMenu cm) == true)
+            {
+                lbi.ContextMenu = cm;
+            }
 
             lbi.MouseDoubleClick += (s, e) =>
             {
@@ -165,6 +166,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
                 Tag = obj,
                 HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
             };
+
+            // file context menu
+            if (CmFileMenu(fi.FullName, out ContextMenu cm) == true)
+            {
+                lbi.ContextMenu = cm;
+            }
 
             lbi.MouseDoubleClick += (s, e) =>
             {
@@ -210,5 +217,10 @@ public partial class CtlFVDetails : CtlFolderViewBase
     private void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
         OpenFolder(_folderPath);
+    }
+
+    private void miExplorer_Click(object sender, RoutedEventArgs e)
+    {
+        _ = Process.Start("explorer", _folderPath);
     }
 }

@@ -16,6 +16,13 @@
                       InputGestureText="F5"
                       Name="miRefresh"
                       Click="miRefresh_Click"/>
+
+            <Separator />
+
+            <MenuItem Header="Open in Explorer"
+                      Name="miExplorer"
+                      Click="miExplorer_Click"/>
+
         </ContextMenu>
     </local:CtlFolderViewBase.ContextMenu>
     

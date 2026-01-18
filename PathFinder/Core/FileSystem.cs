@@ -1,4 +1,5 @@
 ﻿using FZCore;
+using FZCore.Win32;
 
 using PathFinder.Data;
 
@@ -108,6 +109,7 @@ public static class FileSystem
                 // return the entire list
                 IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath);
                 outputList.AddRange(dirs);
+                return true;
             }
 
             else
@@ -142,41 +144,76 @@ public static class FileSystem
     /// <param name="includeHidden">Determines whether to include hidden files in the <paramref name="outputList"/>.</param>
     /// <param name="outputList">Output list object where all the entries will be stored.</param>
     /// <returns>Operation result.</returns>
-    public static bool FsFetchAllFiles(string folderPath,
-                                         bool includeHidden,
-                                         out List<string> outputList)
+    //public static bool FsFetchAllFiles(string folderPath,
+    //                                     bool includeHidden,
+    //                                     out List<string> outputList)
+    //{
+    //    outputList = new List<string>();
+
+    //    if (Directory.Exists(folderPath) == false)
+    //    {
+    //        Log.Error($"Folder \'{folderPath}\' not found.", nameof(FsFetchAllFiles));
+    //        return false;
+    //    }
+
+    //    try
+    //    {
+    //        if (includeHidden == true)
+    //        {
+    //            // return the entire list
+    //            IEnumerable<string> files = Directory.EnumerateFiles(folderPath);
+    //            outputList.AddRange(files);
+    //            return true;
+    //        }
+
+    //        else
+    //        {
+    //            // filter out the hidden items
+    //            EnumerationOptions options = new EnumerationOptions
+    //            {
+    //                AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
+    //                RecurseSubdirectories = false
+    //            };
+
+    //            IEnumerable<string> files = Directory.EnumerateFiles(folderPath, FILTER_ALL, options);
+    //            outputList.AddRange(files);
+    //        }
+
+    //        return true;
+    //    }
+
+    //    catch (Exception ex)
+    //    {
+    //        Log.Error(ex);
+    //        return false;
+    //    }
+    //}
+
+    public static bool FsFetchAllFiles(string folderPath, bool includeHidden, out List<string> outputList)
     {
         outputList = new List<string>();
 
-        if (Directory.Exists(folderPath) == false)
+        // Ošetření Long Path prefixu
+        string preparedPath = folderPath;
+        if (!preparedPath.StartsWith(@"\\?\") && Path.IsPathRooted(preparedPath))
         {
-            Log.Error($"Folder \'{folderPath}\' not found.", nameof(FsFetchAllFolders));
-            return false;
+            preparedPath = @"\\?\" + preparedPath;
         }
 
         try
         {
-            if (includeHidden == true)
+            EnumerationOptions options = new EnumerationOptions
             {
-                // return the entire list
-                IEnumerable<string> files = Directory.EnumerateFiles(folderPath);
-                outputList.AddRange(files);
-            }
+                AttributesToSkip = includeHidden ? 0 : FileAttributes.Hidden,
+                IgnoreInaccessible = true,
+                RecurseSubdirectories = false
+            };
 
-            else
-            {
-                // filter out the hidden items
-                DirectoryInfo di = new DirectoryInfo(folderPath);
+            // Directory.EnumerateFiles s prefixem \\?\ zvládne i extrémně dlouhé názvy
+            var files = Directory.EnumerateFiles(preparedPath, "*", options);
 
-                EnumerationOptions options = new EnumerationOptions
-                {
-                    AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
-                    RecurseSubdirectories = false
-                };
-
-                IEnumerable<string> files = di.EnumerateFiles(FILTER_ALL, options).Select(x => x.FullName);
-                outputList.AddRange(files);
-            }
+            // Při ukládání do seznamu můžete prefix zase odstranit, aby s tím zbytek aplikace mohl pracovat
+            outputList.AddRange(files);
 
             return true;
         }

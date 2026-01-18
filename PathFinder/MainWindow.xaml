@@ -40,9 +40,26 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TreeView Grid.Column="0"
-                      Name="tvDrives"
-                      Margin="0,0,10,0"/>
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--Drives list-->
+                <TreeView Grid.Row="0"
+                          Name="tvDrives"
+                          Margin="0,0,10,0"
+                          BorderThickness="0"/>
+                
+                <!--Quick access-->
+                <TreeView Grid.Row="1"
+                          Name="tvFavorites"
+                          Margin="0,0,10,0"
+                          BorderThickness="0"/>
+
+            </Grid>
 
             <!--Space reserved for the view item-->
             
