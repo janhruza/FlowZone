@@ -33,7 +33,8 @@ public static class ContextMenus
     /// </summary>
     /// <param name="folderPath">Path to the folder.</param>
     /// <param name="menu"></param>
-    /// <returns></returns>
+    /// <returns>Operation result.</returns>
+    /// <remarks>Also returns false if the number of items is 0.</remarks>
     public static bool CmFolderMenu(string folderPath, out ContextMenu menu)
     {
         menu = new ContextMenu();
@@ -54,7 +55,7 @@ public static class ContextMenus
             menu.Items.Add(item);
         }
 
-        return true;
+        return menu.Items.Count > 0;
     }
 
     /// <summary>
@@ -62,7 +63,8 @@ public static class ContextMenus
     /// </summary>
     /// <param name="filePath">Path to the file.</param>
     /// <param name="menu"></param>
-    /// <returns></returns>
+    /// <returns>Operation result.</returns>
+    /// <remarks>Also returns false if the number of items is 0.</remarks>
     public static bool CmFileMenu(string filePath, out ContextMenu menu)
     {
         menu = new ContextMenu();
@@ -83,6 +85,6 @@ public static class ContextMenus
             menu.Items.Add(item);
         }
 
-        return true;
+        return menu.Items.Count > 0;
     }
 }

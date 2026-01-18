@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 using DWORD = int;
 using HWND = nint;
@@ -13,8 +12,6 @@ namespace FZCore.Win32;
 /// </summary>
 public static class WinAPI
 {
-    public const int STD_OUTPUT_HANDLE = -11;
-
     [DllImport("dwmapi")]
     internal static extern HRESULT DwmExtendFrameIntoClientArea(HWND hwnd, ref MARGINS margins);
 
@@ -24,8 +21,6 @@ public static class WinAPI
     [DllImport("user32.dll", SetLastError = true)]
     internal static extern bool PostMessage(HWND hWnd, uint Msg, WPARAM wParam, LPARAM lParam);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern IntPtr GetStdHandle(int nStdHandle);
 
     /// <summary>
     /// Allocates a new console for the calling process.

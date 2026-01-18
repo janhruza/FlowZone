@@ -113,7 +113,6 @@ public partial class CtlFVDetails : CtlFolderViewBase
 
         foreach (string dir in dirs)
         {
-            Console.WriteLine(dir);
             if (FsGetItemInfo(dir, out FSObjectInfo obj) == false) continue;
             if (obj.IsFile == true) continue; // file check
 

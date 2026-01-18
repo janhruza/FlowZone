@@ -5,4 +5,14 @@
                        xmlns:extra="clr-namespace:FZCore.Extra;assembly=FZCore"
                        Startup="BaseApplication_Startup"
                        Exit="BaseApplication_Exit"
-                       ThemeMode="None"/>
+                       ThemeMode="None">
+
+    <extra:BaseApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Fonts.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </extra:BaseApplication.Resources>
+    
+</extra:BaseApplication>

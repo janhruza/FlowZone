@@ -106,21 +106,24 @@ public static class FileSystem
         {
             if (includeHidden == true)
             {
+                EnumerationOptions options = new EnumerationOptions
+                {
+                    IgnoreInaccessible = true
+                };
+
                 // return the entire list
-                IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath);
+                IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath, FILTER_ALL, options);
                 outputList.AddRange(dirs);
                 return true;
             }
 
             else
             {
-                // filter out the hidden items
-                DirectoryInfo di = new DirectoryInfo(folderPath);
-
                 EnumerationOptions options = new EnumerationOptions
                 {
                     AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
-                    RecurseSubdirectories = false
+                    RecurseSubdirectories = false,
+                    IgnoreInaccessible = true
                 };
 
                 IEnumerable<string> dirs = Directory.EnumerateDirectories(folderPath, FILTER_ALL, options);
@@ -210,7 +213,7 @@ public static class FileSystem
             };
 
             // Directory.EnumerateFiles s prefixem \\?\ zvládne i extrémně dlouhé názvy
-            var files = Directory.EnumerateFiles(preparedPath, "*", options);
+            var files = Directory.EnumerateFiles(preparedPath, FILTER_ALL, options);
 
             // Při ukládání do seznamu můžete prefix zase odstranit, aby s tím zbytek aplikace mohl pracovat
             outputList.AddRange(files);

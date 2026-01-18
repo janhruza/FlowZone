@@ -1,4 +1,5 @@
-﻿using FZCore.Win32;
+﻿using FZCore;
+using FZCore.Win32;
 using FZCore.Windows;
 
 using PathFinder.Controls;
@@ -29,9 +30,9 @@ public partial class MainWindow : IconlessWindow
         };
 
         ctl.SortFoldersFirst = true;
-        ctl.FolderChanged += (s, folderPath) =>
+        ctl.FolderChanged += async (s, folderPath) =>
         {
-            SetStatusMessage(folderPath);
+            await SetStatusMessage(folderPath);
         };
 
         ctlView = ctl;
@@ -62,7 +63,8 @@ public partial class MainWindow : IconlessWindow
             TreeViewItem tvi = new TreeViewItem
             {
                 Header = entry.Key,
-                Tag = entry.Value
+                Tag = entry.Value,
+                FontSize = SystemFonts.StatusFontSize
             };
 
             tvi.Selected += (s, e) =>
@@ -131,20 +133,16 @@ public partial class MainWindow : IconlessWindow
         await SetFavoriteFolders();
     }
 
-    bool consoleOpen = false;
     private void IconlessWindow_DevToolsKeyPressed(object sender, EventArgs e)
     {
-        if (consoleOpen == false)
+        if (DevConsole.IsActive)
         {
-            WinAPI.AllocConsole();
-            Console.Title = this.Title;
-            consoleOpen = true;
+            DevConsole.CloseConsole();
         }
 
         else
         {
-            WinAPI.FreeConsole();
-            consoleOpen = false;
+            DevConsole.OpenConsole();
         }
     }
 }

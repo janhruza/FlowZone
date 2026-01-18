@@ -24,6 +24,13 @@ public static class DevConsole
     private const int STD_OUTPUT_HANDLE = -11;
     private const int STD_ERROR_HANDLE = -12;
 
+    static bool _opened = false;
+
+    /// <summary>
+    /// Determines whether the developer console is active or not.
+    /// </summary>
+    public static bool IsActive => _opened;
+
     /// <summary>
     /// Allocates a new console for the current process and redirects Standard Input, Output, and Error streams.
     /// </summary>
@@ -34,9 +41,7 @@ public static class DevConsole
             SetOutStream(STD_OUTPUT_HANDLE, isError: false);
             SetOutStream(STD_ERROR_HANDLE, isError: true);
             SetInStream();
-
-            Console.Clear();
-            Console.WriteLine("=== DEV LOG CONSOLE INITIALIZED ===");
+            _opened = true;
         }
     }
 
@@ -48,6 +53,7 @@ public static class DevConsole
         Console.SetOut(TextWriter.Null);
         Console.SetIn(TextReader.Null);
         FreeConsole();
+        _opened = false;
     }
 
     /// <summary>

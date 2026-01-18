@@ -32,6 +32,10 @@
 
         </Grid.RowDefinitions>
 
+        <Menu Grid.Row="0">
+            
+        </Menu>
+        
         <Grid Grid.Row="1"
               Name="gdContent">
             
@@ -40,26 +44,21 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0">
 
                 <!--Drives list-->
-                <TreeView Grid.Row="0"
-                          Name="tvDrives"
-                          Margin="0,0,10,0"
-                          BorderThickness="0"/>
-                
-                <!--Quick access-->
-                <TreeView Grid.Row="1"
-                          Name="tvFavorites"
+                <TreeView Name="tvDrives"
                           Margin="0,0,10,0"
                           BorderThickness="0"/>
 
-            </Grid>
+                <Separator />
+
+                <!--Quick access-->
+                <TreeView Name="tvFavorites"
+                          Margin="0,0,10,0"
+                          BorderThickness="0"/>
+
+            </StackPanel>
 
             <!--Space reserved for the view item-->
             
