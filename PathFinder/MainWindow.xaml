@@ -32,7 +32,57 @@
 
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0"
+              FontFamily="{x:Static SystemFonts.MenuFontFamily}"
+              FontWeight="{x:Static SystemFonts.MenuFontWeight}">
+            <MenuItem Header="File">
+                <MenuItem Header="Close"
+                          InputGestureText="Alt+F4"
+                          FontWeight="SemiBold"
+                          Name="miClose"
+                          Click="miClose_Click"/>
+            </MenuItem>
+            
+            <MenuItem Header="View">
+                <MenuItem Header="Details"
+                          IsChecked="True"/>
+            </MenuItem>
+            
+            <MenuItem Header="Help">
+                <MenuItem Header="About FlowZone"
+                          InputGestureText="F1"
+                          Name="miAbout"
+                          Click="miAbout_Click"/>
+            </MenuItem>
+
+            <MenuItem Header="Settings">
+
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Default"
+                              Name="miThemeDefault"
+                              IsChecked="True"
+                              IsCheckable="True"
+                              Checked="miThemeDefault_Checked"/>
+                    
+                    <MenuItem Header="Light"
+                              Name="miThemeLight"
+                              IsCheckable="True"
+                              Checked="miThemeLight_Checked"/>
+                    
+                    <MenuItem Header="Dark"
+                              Name="miThemeDark"
+                              IsCheckable="True"
+                              Checked="miThemeDark_Checked"/>
+                    
+                    <Separator />
+                    
+                    <MenuItem Header="System"
+                              Name="miThemeSystem"
+                              IsCheckable="True"
+                              Checked="miThemeSystem_Checked"/>
+                </MenuItem>
+                
+            </MenuItem>
             
         </Menu>
         

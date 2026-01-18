@@ -19,4 +19,24 @@ public static class FZData
     /// Representing the original author's name.
     /// </summary>
     public const string Author = "Jan Hrůza";
+
+    /// <summary>
+    /// Representing the about text.
+    /// </summary>
+    public const string About =
+        "FlowZone Solution\n" +
+        "A unified ecosystem for desktop productivity and system management.\n\n" +
+
+        "Core Components:\n" +
+        "• FZCore: The central engine powering all modules.\n" +
+        "• TaskPilot & PathFinder: Intelligent automation and navigation.\n" +
+        "• HashHive & VaultPack: Advanced security and data archival.\n" +
+        "• ResourceRadar: Real-time system asset monitoring.\n\n" +
+
+        "Utilities:\n" +
+        "• WebPeek: Web connectivity and data retrieval.\n" +
+        "• FlowPlay & Expando: Media handling and UI enhancements.\n" +
+        "• UpDate: Automated solution maintenance.\n\n" +
+
+        "Developed with C# for high-performance Windows workflows.";
 }

@@ -24,6 +24,10 @@ public partial class MainWindow : IconlessWindow
     public MainWindow()
     {
         InitializeComponent();
+
+        // init the theme items array
+        _themeItems = [miThemeDefault, miThemeLight, miThemeDark, miThemeSystem];
+
         CtlFVDetails ctl = new CtlFVDetails
         {
             BorderThickness = new Thickness(0)
@@ -41,6 +45,8 @@ public partial class MainWindow : IconlessWindow
     }
 
     private CtlFolderViewBase ctlView;
+
+    private MenuItem[] _themeItems;
 
     private Dictionary<string, string> GetFavoriteFolders()
     {
@@ -144,5 +150,41 @@ public partial class MainWindow : IconlessWindow
         {
             DevConsole.OpenConsole();
         }
+    }
+
+    private void SetAppThemeUIWrapper(FZCore.FZThemeMode themeMode)
+    {
+        // TODO change toggle state of the theme menu items
+        return;
+    }
+
+    private void miClose_Click(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+    private void miAbout_Click(object sender, RoutedEventArgs e)
+    {
+        FZCore.Core.AboutBox();
+    }
+
+    private void miThemeDefault_Checked(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void miThemeLight_Checked(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void miThemeDark_Checked(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void miThemeSystem_Checked(object sender, RoutedEventArgs e)
+    {
+
     }
 }

@@ -62,10 +62,20 @@ public static class Core
     /// <summary>
     /// Shows the license for all the products inside of the FlowZone suite.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Always true.</returns>
     public static bool ShowLicense()
     {
         InfoBox(FZData.License, FZData.Solution);
+        return true;
+    }
+
+    /// <summary>
+    /// Shows the about box.
+    /// </summary>
+    /// <returns>Always true.</returns>
+    public static bool AboutBox()
+    {
+        InfoBox(FZData.About, FZData.Solution);
         return true;
     }
 
