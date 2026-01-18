@@ -73,7 +73,8 @@ public partial class MainWindow : IconlessWindow
             {
                 TreeViewItem ti = new TreeViewItem
                 {
-                    Header = $"{(string.IsNullOrWhiteSpace(di.VolumeLabel) == false ? di.VolumeLabel : "Drive")} ({di.Name})"
+                    Header = $"{(string.IsNullOrWhiteSpace(di.VolumeLabel) == false ? di.VolumeLabel : "Drive")} ({di.Name})",
+                    FontSize = SystemFonts.StatusFontSize
                 };
 
                 ti.Selected += (s, e) =>
