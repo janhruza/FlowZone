@@ -4,7 +4,9 @@ using FZCore.Windows;
 using PathFinder.Controls;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -39,6 +41,40 @@ public partial class MainWindow : IconlessWindow
 
     private CtlFolderViewBase ctlView;
 
+    private Dictionary<string, string> GetFavoriteFolders()
+    {
+        return new Dictionary<string, string>
+        {
+            { "Desktop", Environment.GetFolderPath(Environment.SpecialFolder.Desktop) },
+            { "Downloads", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads") },
+            { "Documents", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
+            { "Pictures", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) },
+            { "Music", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic) },
+            { "Videos", Environment.GetFolderPath(Environment.SpecialFolder.MyVideos) }
+        };
+    }
+
+    private async Task SetFavoriteFolders()
+    {
+        tvFavorites.Items.Clear();
+        foreach (var entry in GetFavoriteFolders())
+        {
+            TreeViewItem tvi = new TreeViewItem
+            {
+                Header = entry.Key,
+                Tag = entry.Value
+            };
+
+            tvi.Selected += (s, e) =>
+            {
+                CtlFVDetails ctl = (CtlFVDetails)ctlView;
+                ctl.OpenFolder(entry.Value);
+            };
+
+            tvFavorites.Items.Add(tvi);
+        }
+    }
+
     /// <summary>
     /// Sets the status message.
     /// </summary>
@@ -46,7 +82,7 @@ public partial class MainWindow : IconlessWindow
     /// <remarks>
     /// If the <paramref name="message"/> is set to <see cref="string.Empty"/>, it hides the status bar entirely.
     /// </remarks>
-    public void SetStatusMessage(string message)
+    public async Task SetStatusMessage(string message)
     {
         if (string.IsNullOrWhiteSpace(message))
         {
@@ -63,7 +99,7 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
-    private void LoadDrives()
+    private async Task LoadDrives()
     {
         tvDrives.Items.Clear();
         foreach (string drive in Environment.GetLogicalDrives())
@@ -88,10 +124,11 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
-    private void IconlessWindow_Loaded(object? sender, RoutedEventArgs e)
+    private async void IconlessWindow_Loaded(object? sender, RoutedEventArgs e)
     {
-        SetStatusMessage(string.Empty);
-        LoadDrives();
+        await SetStatusMessage(string.Empty);
+        await LoadDrives();
+        await SetFavoriteFolders();
     }
 
     bool consoleOpen = false;

@@ -58,7 +58,7 @@ public partial class CtlItemDetailView : UserControl
             name = fi.Name;
             ext = fi.Extension;
             modified = fi.LastWriteTime.ToString();
-            size = fi.Length.ToString("n");
+            size = fi.Length.ToString();
         }
 
         else
