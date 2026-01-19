@@ -65,16 +65,19 @@
                     
                     <MenuItem Header="Light"
                               Name="miThemeLight"
+                              IsCheckable="True"
                               Click="miThemeLight_Click"/>
                     
                     <MenuItem Header="Dark"
                               Name="miThemeDark"
+                              IsCheckable="True"
                               Click="miThemeDark_Click"/>
                     
                     <Separator />
                     
                     <MenuItem Header="System"
                               Name="miThemeSystem"
+                              IsCheckable="True"
                               Click="miThemeSystem_Click"/>
                 </MenuItem>
                 
