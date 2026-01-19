@@ -19,7 +19,7 @@ public partial class PgDashboard : Page
     public PgDashboard()
     {
         InitializeComponent();
-        this.Loaded += async (s, e) =>
+        Loaded += async (s, e) =>
         {
             await RefreshUI();
         };

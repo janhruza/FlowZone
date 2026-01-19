@@ -20,7 +20,7 @@ public partial class PgProfileSelector : Page
         _instance = this;
         InitializeComponent();
 
-        this.Loaded += this.PgProfileSelector_Loaded;
+        Loaded += PgProfileSelector_Loaded;
     }
 
     private async void PgProfileSelector_Loaded(object sender, System.Windows.RoutedEventArgs e)

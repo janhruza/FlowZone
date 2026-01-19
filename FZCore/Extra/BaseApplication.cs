@@ -1,7 +1,5 @@
 ﻿using FZCore.Windows;
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 
 namespace FZCore.Extra;

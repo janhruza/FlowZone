@@ -13,7 +13,7 @@ public class PgNoProfile : Page, IExpandoPage
     public PgNoProfile()
     {
         // set page properties
-        this.Title = "No profile loaded";
+        Title = "No profile loaded";
 
         // reload page UI
         ReloadUI();
@@ -68,7 +68,7 @@ public class PgNoProfile : Page, IExpandoPage
         };
 
         bd.Child = sp;
-        this.Content = bd;
+        Content = bd;
         return;
     }
 

@@ -22,16 +22,16 @@ public partial class PgSettings : Page
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
-            this.Reload();
+            Reload();
         };
 
-        this.KeyDown += (s, e) =>
+        KeyDown += (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F5)
             {
-                this.Reload();
+                Reload();
             }
         };
     }

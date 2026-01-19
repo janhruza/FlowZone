@@ -21,7 +21,7 @@ public partial class PgHome : Page
     public PgHome()
     {
         InitializeComponent();
-        this.Loaded += (s, e) => RefreshAppsList();
+        Loaded += (s, e) => RefreshAppsList();
     }
 
     private void OpenWebApp(WebApplication? app)

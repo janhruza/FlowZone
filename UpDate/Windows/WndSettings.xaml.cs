@@ -69,12 +69,12 @@ public partial class WndSettings : IconlessWindow
         UpDateSettings.Current.ThemeMode = (FZCore.FZThemeMode)item.Tag;
 
         Result = true;
-        this.Close();
+        Close();
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private void rRestore_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

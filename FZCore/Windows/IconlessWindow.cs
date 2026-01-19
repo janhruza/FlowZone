@@ -52,7 +52,7 @@ public class IconlessWindow : BaseWindow
             cyBottomHeight = -1
         };
 
-        _ = WinAPI.DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+        _ = WinAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
     }
 
     /// <summary>
@@ -60,10 +60,10 @@ public class IconlessWindow : BaseWindow
     /// </summary>
     public IconlessWindow()
     {
-        this.SnapsToDevicePixels = true;
-        this.UseLayoutRounding = true;
+        SnapsToDevicePixels = true;
+        UseLayoutRounding = true;
 
-        this.SourceUpdated += (s, e) =>
+        SourceUpdated += (s, e) =>
         {
             // Ensure the window is redrawn correctly when the source is updated
             RemoveDialogFrame();

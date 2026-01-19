@@ -19,8 +19,8 @@ public class BaseWindow : Window
     /// </summary>
     public BaseWindow()
     {
-        this.Owner = null;
-        this.Initialize();
+        Owner = null;
+        Initialize();
     }
 
     /// <summary>
@@ -29,8 +29,8 @@ public class BaseWindow : Window
     /// <param name="owner">The window that will act as the owner of this window. Can be null if the window has no owner.</param>
     public BaseWindow(Window owner)
     {
-        this.Owner = owner;
-        this.Initialize();
+        Owner = owner;
+        Initialize();
     }
 
     /// <summary>
@@ -64,12 +64,12 @@ public class BaseWindow : Window
         _windows.Add(this);
 
         // initialize the window
-        this.SnapsToDevicePixels = true;
-        this.UseLayoutRounding = true;
-        this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
+        SnapsToDevicePixels = true;
+        UseLayoutRounding = true;
+        TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
 
         // enable events
-        this.KeyDown += (s, e) =>
+        KeyDown += (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F1 || e.Key == System.Windows.Input.Key.Help)
             {
@@ -139,14 +139,14 @@ public class BaseWindow : Window
     /// dialog box; or <see langword="null"/> if the dialog result is not set.</returns>
     public new bool? ShowDialog()
     {
-        if (this.Owner != null)
+        if (Owner != null)
         {
-            this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
         }
 
         else
         {
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         return base.ShowDialog();
@@ -167,7 +167,7 @@ public class BaseWindow : Window
             progress /= 100;
         }
 
-        this.TaskbarItemInfo.ProgressValue = progress;
+        TaskbarItemInfo.ProgressValue = progress;
         return;
     }
 
@@ -179,7 +179,7 @@ public class BaseWindow : Window
     /// The taskbar button will display the paused progress state until updated by another method.</remarks>
     public void ProgressPause()
     {
-        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Paused;
+        TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Paused;
         return;
     }
 
@@ -191,7 +191,7 @@ public class BaseWindow : Window
     /// usually shown as a red overlay. This method does not reset or clear any previous progress value.</remarks>
     public void ProgressError()
     {
-        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Error;
+        TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Error;
         return;
     }
 
@@ -203,7 +203,7 @@ public class BaseWindow : Window
     /// The taskbar will display a continuous animation to signal activity without a specific progress value.</remarks>
     public void ProgressIntermediate()
     {
-        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+        TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
         return;
     }
 
@@ -215,7 +215,7 @@ public class BaseWindow : Window
     /// displayed.</remarks>
     public void ProgressDisable()
     {
-        this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
+        TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
         return;
     }
 

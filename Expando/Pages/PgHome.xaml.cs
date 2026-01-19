@@ -21,7 +21,7 @@ public partial class PgHome : Page, IExpandoPage
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             // reloads the UI
             ReloadUI();
@@ -42,7 +42,7 @@ public partial class PgHome : Page, IExpandoPage
     /// </summary>
     public void ReloadUI()
     {
-        if (this.IsLoaded == false) return;
+        if (IsLoaded == false) return;
 
         rName.Text = UserProfile.Current?.Username ?? "Anonymous";
         rDate.Text = DateTime.Now.ToLongDateString();

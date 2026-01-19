@@ -28,7 +28,7 @@ public partial class WndNewTransaction : IconlessWindow
         if (transactionBase.HasValue && editMode == true)
         {
             Transaction tr = transactionBase.Value;
-            this._transaction = new Transaction
+            _transaction = new Transaction
             {
                 Id = tr.Id,
                 UserId = tr.UserId,
@@ -152,8 +152,8 @@ public partial class WndNewTransaction : IconlessWindow
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.DialogResult = false;
-        this.Close();
+        DialogResult = false;
+        Close();
     }
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -186,8 +186,8 @@ public partial class WndNewTransaction : IconlessWindow
                 }
 
                 // close the window with successful dialog result state
-                this.DialogResult = true;
-                this.Close();
+                DialogResult = true;
+                Close();
             }
 
             else

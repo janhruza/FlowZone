@@ -44,7 +44,7 @@ public partial class MainWindow : IconlessWindow
         wex.EmpowerWindow();
 
         // add hooks
-        this.KeyDown += async (s, e) =>
+        KeyDown += async (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F2)
             {
@@ -57,7 +57,7 @@ public partial class MainWindow : IconlessWindow
             }
         };
 
-        this.Loaded += async (s, e) =>
+        Loaded += async (s, e) =>
         {
             await ReloadFeedsAsync();
         };
@@ -71,9 +71,9 @@ public partial class MainWindow : IconlessWindow
             return;
         }
 
-        this.Title = settings.Title;
-        this.Width = settings.WindowSize.Width;
-        this.Height = settings.WindowSize.Height;
+        Title = settings.Title;
+        Width = settings.WindowSize.Width;
+        Height = settings.WindowSize.Height;
 
         FZCore.Core.SetApplicationTheme(settings.ThemeMode);
         return;
@@ -259,7 +259,7 @@ public partial class MainWindow : IconlessWindow
         item.Selected += (s, e) =>
         {
             frmContent.Content = new PgChannelView(channel);
-            this.Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
+            Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
         };
 
         return item;
@@ -320,7 +320,7 @@ public partial class MainWindow : IconlessWindow
     private void miClose_Click(object sender, RoutedEventArgs e)
     {
         // close window
-        this.Close();
+        Close();
     }
 
     private async void miAddFeed_Click(object sender, RoutedEventArgs e)
@@ -338,7 +338,7 @@ public partial class MainWindow : IconlessWindow
         // check if settings exists
         if (UpDateSettings.Current != null)
         {
-            UpDateSettings.Current.WindowSize = new Size(this.Width, this.Height);
+            UpDateSettings.Current.WindowSize = new Size(Width, Height);
         }
     }
 

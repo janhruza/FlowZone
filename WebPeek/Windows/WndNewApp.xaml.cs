@@ -56,7 +56,7 @@ public partial class WndNewApp : IconlessWindow
             DialogResult = false;
         }
 
-        this.Close();
+        Close();
     }
 
     private bool ExportApp()
@@ -80,6 +80,6 @@ public partial class WndNewApp : IconlessWindow
             DialogResult = true;
         }
 
-        this.Close();
+        Close();
     }
 }

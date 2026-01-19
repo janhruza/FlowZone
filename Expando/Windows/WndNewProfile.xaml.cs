@@ -18,7 +18,7 @@ public partial class WndNewProfile : IconlessWindow
     public WndNewProfile()
     {
         InitializeComponent();
-        this.txtUsername.Text = Environment.UserName;
+        txtUsername.Text = Environment.UserName;
     }
 
     private UserProfile _profile = new UserProfile();
@@ -30,24 +30,24 @@ public partial class WndNewProfile : IconlessWindow
 
     private bool ValidateData()
     {
-        if (this._profile.Id == ulong.MinValue) return false;
-        if (this._profile.CreationDate == DateTime.MinValue) return false;
-        if (string.IsNullOrEmpty(this._profile.Username.Trim())) return false;
+        if (_profile.Id == ulong.MinValue) return false;
+        if (_profile.CreationDate == DateTime.MinValue) return false;
+        if (string.IsNullOrEmpty(_profile.Username.Trim())) return false;
 
         return true;
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.DialogResult = false;
-        this.Close();
+        DialogResult = false;
+        Close();
     }
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         // set the data
         DateTime dt = DateTime.Now;
-        this._profile = new UserProfile
+        _profile = new UserProfile
         {
             Id = (ulong)dt.ToBinary(),
             Username = txtUsername.Text,
@@ -62,12 +62,12 @@ public partial class WndNewProfile : IconlessWindow
 
         else
         {
-            UserProfile profile = this._profile;
+            UserProfile profile = _profile;
             if (UserProfile.CreateUser(ref profile) == 0)
             {
                 UserProfile.Profiles.Add(profile);
-                this.DialogResult = true;
-                this.Close();
+                DialogResult = true;
+                Close();
             }
 
             else

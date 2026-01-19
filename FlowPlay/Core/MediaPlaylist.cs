@@ -42,7 +42,7 @@ namespace FlowPlay.Core
                 return false;
             }
 
-            this.Tracks.Add(fileName);
+            Tracks.Add(fileName);
             return true;
         }
 
@@ -59,13 +59,13 @@ namespace FlowPlay.Core
                 return false;
             }
 
-            if (this.Tracks.Contains(fileName) == false)
+            if (Tracks.Contains(fileName) == false)
             {
                 Log.Error($"Target file \'{fileName}\' is not present in the playlist.", nameof(Remove));
                 return false;
             }
 
-            this.Tracks.Remove(fileName);
+            Tracks.Remove(fileName);
             return true;
         }
     }

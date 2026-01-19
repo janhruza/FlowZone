@@ -91,7 +91,7 @@ public partial class NewTaskWindow : IconlessWindow
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
-        this.Close();
+        Close();
     }
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -114,12 +114,12 @@ public partial class NewTaskWindow : IconlessWindow
             if (_isNewTask == true)
             {
                 // create only if it's a new task
-                App.Tasks.Add(this.Task);
+                App.Tasks.Add(Task);
             }
 
             // close dialog
             DialogResult = true;
-            this.Close();
+            Close();
         }
     }
 

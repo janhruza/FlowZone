@@ -42,9 +42,9 @@ public partial class MainWindow : IconlessWindow
             }
         });
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
-            this.frmContent.Content = _homePage;
+            frmContent.Content = _homePage;
         };
 
         _homePage = new PgHome();

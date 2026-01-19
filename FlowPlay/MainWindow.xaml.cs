@@ -35,7 +35,7 @@ public partial class MainWindow : IconlessWindow
     private void StopMedia()
     {
         cPlayer.Stop();
-        this.Title = "FlowPlay";
+        Title = "FlowPlay";
     }
 
     private void SetPlaybackSpeed(double speed)
@@ -185,11 +185,11 @@ public partial class MainWindow : IconlessWindow
         {
             StopMedia();
 
-            this.SizeToContent = SizeToContent.WidthAndHeight;
+            SizeToContent = SizeToContent.WidthAndHeight;
             cPlayer.Source = new Uri(ofd.FileName);
             StartMedia();
 
-            this.Title = $"{ofd.SafeFileName} | FlowPlay";
+            Title = $"{ofd.SafeFileName} | FlowPlay";
         }
     }
 
@@ -227,7 +227,7 @@ public partial class MainWindow : IconlessWindow
 
     private void FitMediaIntoWindow()
     {
-        this.SizeToContent = SizeToContent.WidthAndHeight;
+        SizeToContent = SizeToContent.WidthAndHeight;
         cPlayer.Width = cPlayer.NaturalVideoWidth;
         cPlayer.Height = cPlayer.NaturalVideoHeight;
         return;
@@ -238,7 +238,7 @@ public partial class MainWindow : IconlessWindow
         if (WindowState == WindowState.Normal)
         {
             // fill window with player
-            this.SizeToContent = SizeToContent.Manual;
+            SizeToContent = SizeToContent.Manual;
             cPlayer.Width = double.NaN;
             cPlayer.Height = double.NaN;
         }
@@ -248,7 +248,7 @@ public partial class MainWindow : IconlessWindow
             // set window size to the size of the player
             if (cPlayer.HasVideo)
             {
-                this.SizeToContent = SizeToContent.WidthAndHeight;
+                SizeToContent = SizeToContent.WidthAndHeight;
                 cPlayer.Width = cPlayer.NaturalVideoWidth;
                 cPlayer.Height = cPlayer.NaturalVideoHeight;
             }
@@ -290,11 +290,11 @@ public partial class MainWindow : IconlessWindow
             slPosition.Value = cPlayer.Position.TotalMilliseconds;
         };
 
-        this.KeyDown += (s, e) =>
+        KeyDown += (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.Apps)
             {
-                SystemCommands.ShowSystemMenu(this, this.PointToScreen(new Point(0, 0)));
+                SystemCommands.ShowSystemMenu(this, PointToScreen(new Point(0, 0)));
             }
         };
 
@@ -305,8 +305,8 @@ public partial class MainWindow : IconlessWindow
 
     private void RestoreDefaultSize()
     {
-        this.Width = 300;
-        this.Height = 300;
+        Width = 300;
+        Height = 300;
     }
 
     private void miOpenMedia_Click(object sender, RoutedEventArgs e)
@@ -474,7 +474,7 @@ public partial class MainWindow : IconlessWindow
     private void miFitSize_Click(object sender, RoutedEventArgs e)
     {
         // fill window with player
-        this.SizeToContent = SizeToContent.Manual;
+        SizeToContent = SizeToContent.Manual;
         cPlayer.Width = double.NaN;
         cPlayer.Height = double.NaN;
     }

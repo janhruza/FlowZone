@@ -23,7 +23,7 @@ public partial class PgInventory : Page
     {
         InitializeComponent();
 
-        this.Loaded += this.PgInventory_Loaded;
+        Loaded += PgInventory_Loaded;
     }
 
     private async void PgInventory_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -178,7 +178,7 @@ public partial class PgInventory : Page
             if (item == null)
             {
                 Log.Error(Messages.NO_ITEM_CREATED, nameof(btnAddItem_Click));
-                _ = MessageBox.Show(Messages.NO_ITEM_CREATED, this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(Messages.NO_ITEM_CREATED, Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

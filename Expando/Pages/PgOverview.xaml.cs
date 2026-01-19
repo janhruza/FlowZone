@@ -17,7 +17,7 @@ public partial class PgOverview : Page, IExpandoPage
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             ReloadUI();
         };

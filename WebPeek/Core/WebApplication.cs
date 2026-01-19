@@ -10,8 +10,8 @@ public class WebApplication
     /// </summary>
     public WebApplication()
     {
-        this.Name = string.Empty;
-        this.Link = string.Empty;
+        Name = string.Empty;
+        Link = string.Empty;
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public class WebApplication
     /// <param name="sLink">Link to the associated web page.</param>
     public WebApplication(string sName, string sLink)
     {
-        this.Name = sName;
-        this.Link = sLink;
+        Name = sName;
+        Link = sLink;
     }
 
     /// <summary>

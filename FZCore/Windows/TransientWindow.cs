@@ -22,6 +22,6 @@ public class TransientWindow : IconlessWindow
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
-        WinAPI.DwmSetWindowAttribute(this.Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], Marshal.SizeOf<int>());
+        WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], Marshal.SizeOf<int>());
     }
 }

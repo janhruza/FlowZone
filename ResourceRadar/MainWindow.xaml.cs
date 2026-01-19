@@ -27,15 +27,15 @@ public partial class MainWindow : IconlessWindow
         navButons = [btnDashboard, btnInventory, btnAnalytics, btnSettings];
 
         // Initialize window properties
-        this.Loaded += (s, e) => InitWindow();
+        Loaded += (s, e) => InitWindow();
     }
 
     private ToggleButton[] navButons;
 
     private void InitWindow()
     {
-        this.MinWidth = this.ActualWidth;
-        this.MinHeight = this.ActualHeight;
+        MinWidth = ActualWidth;
+        MinHeight = ActualHeight;
 
         NavSetPage(PgProfileSelector.Instance, null);
     }
@@ -76,7 +76,7 @@ public partial class MainWindow : IconlessWindow
         }
 
         frmContent.Content = page;
-        this.Title = $"{page.Title} - {App.Title}";
+        Title = $"{page.Title} - {App.Title}";
         NavUncheckAll(toggle);
         return true;
     }

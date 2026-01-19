@@ -33,7 +33,7 @@ namespace FZCore.Windows
             _loadedData = [];
 
             // Load the log file when the window is fully loaded
-            this.Loaded += async (s, e) =>
+            Loaded += async (s, e) =>
             {
                 await LoadFile(logFilePath);
                 await DisplayData(string.Empty);

@@ -16,7 +16,7 @@ public partial class PgIncomes : Page, IExpandoPage
     public PgIncomes()
     {
         InitializeComponent();
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             ReloadUI();
         };

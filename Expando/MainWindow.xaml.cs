@@ -25,7 +25,7 @@ public partial class MainWindow : IconlessWindow
 
         _instance = this;
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             // contructs the _navButtons list
             _navButtons = [btnHome, btnOverview, btnIncomes, btnExpanses, btnProfile];
@@ -68,7 +68,7 @@ public partial class MainWindow : IconlessWindow
         }
 
         frmContent.Content = page;
-        this.Title = $"{page.Title}{(UserProfile.IsProfileLoaded() ? $" ({UserProfile.Current?.Username})" : string.Empty)} - {Messages.AppTitle}";
+        Title = $"{page.Title}{(UserProfile.IsProfileLoaded() ? $" ({UserProfile.Current?.Username})" : string.Empty)} - {Messages.AppTitle}";
         Log.Info($"Navigation changed to: {page.Title}", nameof(NavSetPage));
         return true;
     }

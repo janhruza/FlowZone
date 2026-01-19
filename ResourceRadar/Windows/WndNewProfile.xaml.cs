@@ -20,7 +20,7 @@ public partial class WndNewProfile : IconlessWindow
     public WndNewProfile()
     {
         InitializeComponent();
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             // load cultures
             cbLocales.Items.Clear();
@@ -65,8 +65,8 @@ public partial class WndNewProfile : IconlessWindow
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.DialogResult = false;
-        this.Close();
+        DialogResult = false;
+        Close();
     }
 
     private async void btnOk_Click(object sender, RoutedEventArgs e)
@@ -76,21 +76,21 @@ public partial class WndNewProfile : IconlessWindow
             bool result = await UserProfile.CreateUserProfile(sName, sDescription);
             if (result == true)
             {
-                this.DialogResult = true;
-                this.Close();
+                DialogResult = true;
+                Close();
                 return;
             }
 
             else
             {
-                _ = MessageBox.Show(Messages.CREATE_USER_FAILED, this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(Messages.CREATE_USER_FAILED, Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         else
         {
-            _ = MessageBox.Show(Messages.CREATE_USER_CHECK_FAILED, this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBox.Show(Messages.CREATE_USER_CHECK_FAILED, Title, MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
     }

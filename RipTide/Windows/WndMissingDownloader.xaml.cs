@@ -19,7 +19,7 @@ public partial class WndMissingDownloader : IconlessWindow
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             SystemSounds.Beep.Play();
         };
@@ -27,7 +27,7 @@ public partial class WndMissingDownloader : IconlessWindow
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private void rDownloadLink_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

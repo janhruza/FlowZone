@@ -16,7 +16,7 @@ public partial class CtlItemDetailView : UserControl
     public CtlItemDetailView()
     {
         InitializeComponent();
-        this.Loaded += (s,e) =>
+        Loaded += (s, e) =>
         {
             tbName.Text = "Name";
             tbExtension.Text = "Extension";
@@ -32,7 +32,7 @@ public partial class CtlItemDetailView : UserControl
     {
         InitializeComponent();
         _info = obj;
-        this.Loaded += CtlItemDetailView_Loaded;
+        Loaded += CtlItemDetailView_Loaded;
     }
 
     private FSObjectInfo _info;

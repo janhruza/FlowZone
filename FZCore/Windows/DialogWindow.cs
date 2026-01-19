@@ -123,11 +123,11 @@ public class DialogWindow
     /// </summary>
     public DialogWindow()
     {
-        this.Title = string.Empty;
-        this.Caption = string.Empty;
-        this.Message = string.Empty;
-        this.Image = DWImage.INFO;
-        this.Buttons = DWButton.OK;
+        Title = string.Empty;
+        Caption = string.Empty;
+        Message = string.Empty;
+        Image = DWImage.INFO;
+        Buttons = DWButton.OK;
     }
 
     #region Private members and methods
@@ -254,7 +254,7 @@ public class DialogWindow
         // Create window
         Window wnd = new Window
         {
-            Title = this.Title,
+            Title = Title,
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
             ResizeMode = ResizeMode.NoResize,
             SizeToContent = SizeToContent.WidthAndHeight,
@@ -279,14 +279,14 @@ public class DialogWindow
 
         Image img = new Image
         {
-            Source = GetImage(this.Image),
+            Source = GetImage(Image),
             Width = 32,
             Height = 32
         };
 
         Label captionLabel = new Label
         {
-            Content = this.Caption,
+            Content = Caption,
             Foreground = SystemColors.AccentColorBrush,
             FontSize = 20,
             VerticalAlignment = VerticalAlignment.Center,
@@ -305,7 +305,7 @@ public class DialogWindow
         {
             Content = new TextBlock
             {
-                Text = this.Message,
+                Text = Message,
                 TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.CharacterEllipsis
             },
@@ -320,7 +320,7 @@ public class DialogWindow
             Margin = new Thickness(0, 10, 0, 0)
         };
 
-        if (this.Buttons == DWButton.OK)
+        if (Buttons == DWButton.OK)
         {
             AddButton(footerPanel, DWButton.OK, wnd);
         }
@@ -331,7 +331,7 @@ public class DialogWindow
             {
                 if (btn == DWButton.OK) continue; // Skip 0-value flag
 
-                if ((this.Buttons & btn) == btn)
+                if ((Buttons & btn) == btn)
                 {
                     AddButton(footerPanel, btn, wnd);
                 }

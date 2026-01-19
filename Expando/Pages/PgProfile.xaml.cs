@@ -18,7 +18,7 @@ public partial class PgMyProfile : Page, IExpandoPage
         InitializeComponent();
 
         // load info on load
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             ReloadUI();
         };
@@ -39,9 +39,9 @@ public partial class PgMyProfile : Page, IExpandoPage
         }
 
         // show profile info
-        this.rUsername.Text = UserProfile.Current?.Username.ToUpper();
-        this.rCreation.Text = $"{UserProfile.Current?.CreationDate.ToShortDateString()} {UserProfile.Current?.CreationDate.ToShortTimeString()}";
-        this.rId.Text = UserProfile.Current?.Id.ToString();
+        rUsername.Text = UserProfile.Current?.Username.ToUpper();
+        rCreation.Text = $"{UserProfile.Current?.CreationDate.ToShortDateString()} {UserProfile.Current?.CreationDate.ToShortTimeString()}";
+        rId.Text = UserProfile.Current?.Id.ToString();
 
         return;
     }

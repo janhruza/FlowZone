@@ -101,7 +101,7 @@ public partial class MainWindow : IconlessWindow
         else
         {
             sbStatusText.Content = message;
-            statusBar.Visibility= Visibility.Visible;
+            statusBar.Visibility = Visibility.Visible;
             return;
         }
     }
@@ -193,7 +193,7 @@ public partial class MainWindow : IconlessWindow
 
     private void miClose_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private void miAbout_Click(object sender, RoutedEventArgs e)

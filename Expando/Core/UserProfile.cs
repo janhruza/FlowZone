@@ -100,7 +100,7 @@ public class UserProfile
         try
         {
             int count = Transactions.Count;
-            string path = Path.Combine(UserFolders, this.Id.ToString(), TransactionsFile);
+            string path = Path.Combine(UserFolders, Id.ToString(), TransactionsFile);
             using (FileStream fs = File.Create(path))
             {
                 using (BinaryWriter bw = new BinaryWriter(fs))
@@ -123,7 +123,7 @@ public class UserProfile
                 }
             }
 
-            Log.Success($"Transactions for user '{this.Id}' were saved.", nameof(SaveTransactions));
+            Log.Success($"Transactions for user '{Id}' were saved.", nameof(SaveTransactions));
             return true;
         }
 

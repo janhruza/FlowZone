@@ -77,13 +77,13 @@ public class ExtendedWindow : BaseWindow
 
     private void RemoveBorders()
     {
-        this.WindowStyle = WindowStyle.None;
+        WindowStyle = WindowStyle.None;
         return;
     }
 
     private void RestoreBorders()
     {
-        this.WindowStyle = WindowStyle.SingleBorderWindow;
+        WindowStyle = WindowStyle.SingleBorderWindow;
         return;
     }
 
@@ -133,25 +133,25 @@ public class ExtendedWindow : BaseWindow
                 return;
 
             case ExtendedWindowState.Normal:
-                this.WindowState = WindowState.Normal;
+                WindowState = WindowState.Normal;
                 RestoreBorders();
-                this.Topmost = false;
+                Topmost = false;
                 return;
 
             case ExtendedWindowState.Minimized:
-                this.WindowState = WindowState.Minimized;
+                WindowState = WindowState.Minimized;
                 return;
 
             case ExtendedWindowState.Maximized:
                 RestoreBorders();
-                this.WindowState = WindowState.Maximized;
-                this.Topmost = false;
+                WindowState = WindowState.Maximized;
+                Topmost = false;
                 return;
 
             case ExtendedWindowState.Fullscreen:
                 RemoveBorders();
-                this.WindowState = WindowState.Maximized;
-                this.Topmost = true;
+                WindowState = WindowState.Maximized;
+                Topmost = true;
                 return;
         }
     }

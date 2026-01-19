@@ -17,7 +17,7 @@ public partial class WndAbout : IconlessWindow
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             SystemSounds.Beep.Play();
         };
@@ -25,6 +25,6 @@ public partial class WndAbout : IconlessWindow
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 }

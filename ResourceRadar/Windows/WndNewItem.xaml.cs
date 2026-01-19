@@ -49,7 +49,7 @@ public partial class WndNewItem : IconlessWindow
     private void Close(bool result)
     {
         DialogResult = result;
-        this.Close();
+        Close();
         return;
     }
 
@@ -83,13 +83,13 @@ public partial class WndNewItem : IconlessWindow
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        this.Close(false);
+        Close(false);
     }
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         ValidateData();
-        this.Close(true);
+        Close(true);
     }
 
     private void cbHasWarranty_Checked(object sender, RoutedEventArgs e)

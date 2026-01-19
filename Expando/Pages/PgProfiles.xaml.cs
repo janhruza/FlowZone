@@ -18,12 +18,12 @@ public partial class PgProfiles : Page, IExpandoPage
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             ReloadUI();
         };
 
-        this.KeyDown += (s, e) =>
+        KeyDown += (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F5)
             {

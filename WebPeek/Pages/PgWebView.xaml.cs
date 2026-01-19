@@ -40,7 +40,7 @@ public partial class PgWebView : Page
             };
         }
 
-        this.Content = WebView;
+        Content = WebView;
     }
 
     /// <summary>

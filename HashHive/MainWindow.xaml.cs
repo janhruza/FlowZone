@@ -100,13 +100,13 @@ public partial class MainWindow : IconlessWindow
         }
 
         frmContent.Content = page;
-        this.Title = $"{page.Title} - {App.Title}";
+        Title = $"{page.Title} - {App.Title}";
         return true;
     }
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private void btnText_Click(object sender, RoutedEventArgs e)

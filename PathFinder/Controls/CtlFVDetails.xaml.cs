@@ -27,7 +27,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
         InitializeComponent();
         SortFoldersFirst = false;
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             _folderPath = $"C:\\";
             OpenFolder(_folderPath);

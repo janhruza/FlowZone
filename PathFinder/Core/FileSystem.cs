@@ -1,5 +1,4 @@
 ﻿using FZCore;
-using FZCore.Win32;
 
 using PathFinder.Data;
 
@@ -49,7 +48,7 @@ public static class FileSystem
             {
                 list = Directory.GetFileSystemEntries(folderPath).ToList();
             }
-            
+
             catch (Exception ex)
             {
                 Log.Error(ex);
@@ -96,7 +95,7 @@ public static class FileSystem
     {
         outputList = new List<string>();
 
-        if (Directory.Exists (folderPath) == false)
+        if (Directory.Exists(folderPath) == false)
         {
             Log.Error($"Folder \'{folderPath}\' not found.", nameof(FsFetchAllFolders));
             return false;

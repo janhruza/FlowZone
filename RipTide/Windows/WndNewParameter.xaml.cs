@@ -19,7 +19,7 @@ public partial class WndNewParameter : IconlessWindow
     {
         InitializeComponent();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             SystemSounds.Beep.Play();
         };
@@ -35,8 +35,8 @@ public partial class WndNewParameter : IconlessWindow
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         _parameter = string.Empty;
-        this.DialogResult = false;
-        this.Close();
+        DialogResult = false;
+        Close();
     }
 
     private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -45,8 +45,8 @@ public partial class WndNewParameter : IconlessWindow
 
         if (string.IsNullOrEmpty(_parameter) == false)
         {
-            this.DialogResult = true;
-            this.Close();
+            DialogResult = true;
+            Close();
         }
 
         return;

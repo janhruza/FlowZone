@@ -39,7 +39,7 @@ public class DoublePlayer : Control
         Playlist = new MediaPlaylist();
         Position = TimeSpan.Zero;
 
-        this._pCurrent = new MediaElement
+        _pCurrent = new MediaElement
         {
             LoadedBehavior = MediaState.Manual,
             Visibility = Visibility.Visible
@@ -70,7 +70,7 @@ public class DoublePlayer : Control
             }
         };
 
-        this._pNext = new MediaElement
+        _pNext = new MediaElement
         {
             LoadedBehavior = MediaState.Manual
         };

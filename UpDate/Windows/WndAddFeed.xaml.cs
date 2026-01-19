@@ -38,7 +38,7 @@ public partial class WndAddFeed : IconlessWindow
     public new bool? ShowDialog()
     {
         _isDialog = true;
-        this.Loaded += (s, e) => SystemSounds.Beep.Play();
+        Loaded += (s, e) => SystemSounds.Beep.Play();
         return base.ShowDialog();
     }
 
@@ -52,7 +52,7 @@ public partial class WndAddFeed : IconlessWindow
             if (string.IsNullOrEmpty(url) == true || Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri) == false)
             {
                 // invalid input, show error
-                _ = MessageBox.Show($"Unable to add the RSS feed. The given address is not a valid URL.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show($"Unable to add the RSS feed. The given address is not a valid URL.", Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
@@ -81,10 +81,10 @@ public partial class WndAddFeed : IconlessWindow
     {
         if (_isDialog)
         {
-            this.DialogResult = false;
+            DialogResult = false;
         }
 
-        this.Close();
+        Close();
     }
 
     private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -97,10 +97,10 @@ public partial class WndAddFeed : IconlessWindow
 
         if (_isDialog)
         {
-            this.DialogResult = true;
+            DialogResult = true;
         }
 
-        this.Close();
+        Close();
     }
 
     private void txtUrl_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

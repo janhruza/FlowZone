@@ -44,7 +44,7 @@ public partial class MainWindow : IconlessWindow
         // creates an instance of a video downloader
         _downloader = new VideoDownloader();
 
-        this.Loaded += (s, e) =>
+        Loaded += (s, e) =>
         {
             // handle window settings
             App.HandleWindowSettings(this);
@@ -64,7 +64,7 @@ public partial class MainWindow : IconlessWindow
     private void ResetFields()
     {
         // reset window title
-        this.Title = $"{App.Title} [{VideoDownloader.GetVersion()}]";
+        Title = $"{App.Title} [{VideoDownloader.GetVersion()}]";
 
         txtUrl.Text = string.Empty;
         txtLocation.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
@@ -146,9 +146,9 @@ public partial class MainWindow : IconlessWindow
             return;
         }
 
-        this.Visibility = Visibility.Hidden;
+        Visibility = Visibility.Hidden;
         pDownload?.WaitForExit();
-        this.Visibility = Visibility.Visible;
+        Visibility = Visibility.Visible;
 
         return;
     }
@@ -247,7 +247,7 @@ public partial class MainWindow : IconlessWindow
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private async void btnDownload_Click(object sender, RoutedEventArgs e)
@@ -257,7 +257,7 @@ public partial class MainWindow : IconlessWindow
 
     private void miClose_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 
     private void miSupportedSites_Click(object sender, RoutedEventArgs e)
@@ -364,13 +364,13 @@ public partial class MainWindow : IconlessWindow
     private void miAoT_Checked(object sender, RoutedEventArgs e)
     {
         RTSettings.Current.AlwaysOnTop = true;
-        this.Topmost = true;
+        Topmost = true;
     }
 
     private void miAoT_Unchecked(object sender, RoutedEventArgs e)
     {
         RTSettings.Current.AlwaysOnTop = false;
-        this.Topmost = false;
+        Topmost = false;
     }
 
     private void miThemeLight_Click(object sender, RoutedEventArgs e)
@@ -420,7 +420,7 @@ public partial class MainWindow : IconlessWindow
 
         if (proc.ExitCode == 0)
         {
-            this.ResetFields();
+            ResetFields();
         }
     }
 }

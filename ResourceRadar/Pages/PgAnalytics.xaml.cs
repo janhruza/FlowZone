@@ -18,12 +18,12 @@ public partial class PgAnalytics : Page
     public PgAnalytics()
     {
         InitializeComponent();
-        this.Loaded += async (s, e) =>
+        Loaded += async (s, e) =>
         {
             await ReloadUI();
         };
 
-        this.KeyDown += async (s, e) =>
+        KeyDown += async (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.F5)
             {

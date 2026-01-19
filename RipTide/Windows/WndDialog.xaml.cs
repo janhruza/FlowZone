@@ -53,7 +53,7 @@ public partial class WndDialog : IconlessWindow
 
             else
             {
-                return this.lImage.ToString()[0];
+                return lImage.ToString()[0];
             }
         }
 
@@ -135,7 +135,7 @@ public partial class WndDialog : IconlessWindow
 
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
-        this.DialogResult = true;
-        this.Close();
+        DialogResult = true;
+        Close();
     }
 }
