@@ -61,25 +61,21 @@
                     <MenuItem Header="Default"
                               Name="miThemeDefault"
                               IsChecked="True"
-                              IsCheckable="True"
-                              Checked="miThemeDefault_Checked"/>
+                              Click="miThemeDefault_Click"/>
                     
                     <MenuItem Header="Light"
                               Name="miThemeLight"
-                              IsCheckable="True"
-                              Checked="miThemeLight_Checked"/>
+                              Click="miThemeLight_Click"/>
                     
                     <MenuItem Header="Dark"
                               Name="miThemeDark"
-                              IsCheckable="True"
-                              Checked="miThemeDark_Checked"/>
+                              Click="miThemeDark_Click"/>
                     
                     <Separator />
                     
                     <MenuItem Header="System"
                               Name="miThemeSystem"
-                              IsCheckable="True"
-                              Checked="miThemeSystem_Checked"/>
+                              Click="miThemeSystem_Click"/>
                 </MenuItem>
                 
             </MenuItem>

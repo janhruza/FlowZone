@@ -152,9 +152,43 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
-    private void SetAppThemeUIWrapper(FZCore.FZThemeMode themeMode)
+    private void UncheckAllThemeButtons()
+    {
+        if (_themeItems == null) return;
+
+        foreach (MenuItem mi in _themeItems)
+        {
+            mi.IsChecked = false;
+        }
+
+        return;
+    }
+
+    private void SetAppThemeUIWrapper(FZThemeMode themeMode)
     {
         // TODO change toggle state of the theme menu items
+        FZCore.Core.SetApplicationTheme(themeMode);
+        UncheckAllThemeButtons();
+
+        switch (themeMode)
+        {
+            case FZThemeMode.None:
+                miThemeDefault.IsChecked = true;
+                break;
+
+            case FZThemeMode.Light:
+                miThemeLight.IsChecked = true;
+                break;
+
+            case FZThemeMode.Dark:
+                miThemeDark.IsChecked = true;
+                break;
+
+            case FZThemeMode.System:
+                miThemeSystem.IsChecked = true;
+                break;
+        }
+
         return;
     }
 
@@ -168,23 +202,23 @@ public partial class MainWindow : IconlessWindow
         FZCore.Core.AboutBox();
     }
 
-    private void miThemeDefault_Checked(object sender, RoutedEventArgs e)
+    private void miThemeDark_Click(object sender, RoutedEventArgs e)
     {
-
+        SetAppThemeUIWrapper(FZThemeMode.Dark);
     }
 
-    private void miThemeLight_Checked(object sender, RoutedEventArgs e)
+    private void miThemeSystem_Click(object sender, RoutedEventArgs e)
     {
-
+        SetAppThemeUIWrapper(FZThemeMode.System);
     }
 
-    private void miThemeDark_Checked(object sender, RoutedEventArgs e)
+    private void miThemeDefault_Click(object sender, RoutedEventArgs e)
     {
-
+        SetAppThemeUIWrapper(FZThemeMode.None);
     }
 
-    private void miThemeSystem_Checked(object sender, RoutedEventArgs e)
+    private void miThemeLight_Click(object sender, RoutedEventArgs e)
     {
-
+        SetAppThemeUIWrapper(FZThemeMode.Light);
     }
 }
