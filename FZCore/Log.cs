@@ -20,7 +20,7 @@ public static class Log
         File.AppendAllText(Path, line, Encoding.UTF8);
 
 #if DEBUG
-        Console.WriteLine(line);
+        Console.WriteLine(line.Trim());
 #endif
 
         return;
