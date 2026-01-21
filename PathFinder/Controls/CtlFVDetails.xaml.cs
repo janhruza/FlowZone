@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,10 +28,10 @@ public partial class CtlFVDetails : CtlFolderViewBase
         InitializeComponent();
         SortFoldersFirst = false;
 
-        Loaded += (s, e) =>
+        Loaded += async (s, e) =>
         {
             _folderPath = $"C:\\";
-            OpenFolder(_folderPath);
+            await OpenFolder(_folderPath);
         };
     }
 
@@ -51,16 +52,16 @@ public partial class CtlFVDetails : CtlFolderViewBase
             FontSize = SystemFonts.StatusFontSize
         };
 
-        lbi.MouseDoubleClick += (s, e) =>
+        lbi.MouseDoubleClick += async (s, e) =>
         {
-            OpenFolder(parent);
+            await OpenFolder(parent);
         };
 
         return lbi;
     }
 
     /// <inheritdoc/>
-    public new bool OpenFolder(string folderPath)
+    public new async Task<bool> OpenFolder(string folderPath)
     {
         if (Directory.Exists(folderPath) == false)
         {
@@ -124,7 +125,8 @@ public partial class CtlFVDetails : CtlFolderViewBase
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
                 },
                 Tag = obj,
-                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
+                Uid = di.FullName
             };
 
             // folder context menu
@@ -133,9 +135,9 @@ public partial class CtlFVDetails : CtlFolderViewBase
                 lbi.ContextMenu = cm;
             }
 
-            lbi.MouseDoubleClick += (s, e) =>
+            lbi.MouseDoubleClick += async (s, e) =>
             {
-                if (OpenFolder(di.FullName) == false)
+                if (await OpenFolder(di.FullName) == false)
                 {
                     FZCore.Core.ErrorBox($"Unable to open the given folder: {di.FullName}");
                 }
@@ -163,7 +165,8 @@ public partial class CtlFVDetails : CtlFolderViewBase
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch
                 },
                 Tag = obj,
-                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
+                Uid = fi.FullName
             };
 
             // file context menu
@@ -213,13 +216,23 @@ public partial class CtlFVDetails : CtlFolderViewBase
     /// <inheritdoc/>
     public new string FolderName => _folderPath;
 
-    private void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
+    private async void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        OpenFolder(_folderPath);
+        await OpenFolder(_folderPath);
     }
 
     private void miExplorer_Click(object sender, RoutedEventArgs e)
     {
-        _ = Process.Start("explorer", _folderPath);
+        if (listBox.SelectedIndex != -1 && listBox.SelectedItem is ListBoxItem li)
+        {
+            string path = li.Uid;
+            _ = Process.Start("explorer", $"/select, {path}");
+        }
+
+        else
+        {
+            // open folder
+            _ = Process.Start("explorer", _folderPath);
+        }
     }
 }

@@ -46,6 +46,14 @@
             <MenuItem Header="View">
                 <MenuItem Header="Details"
                           IsChecked="True"/>
+
+                <Separator />
+
+                <MenuItem Header="Status Panel"
+                          IsCheckable="True"
+                          Name="miStatusPanel"
+                          Checked="miStatusPanel_Checked"
+                          Unchecked="miStatusPanel_Unchecked"/>
             </MenuItem>
             
             <MenuItem Header="Help">

@@ -5,7 +5,7 @@
                        xmlns:extra="clr-namespace:FZCore.Extra;assembly=FZCore"
                        Startup="BaseApplication_Startup"
                        Exit="BaseApplication_Exit"
-                       ThemeMode="None">
+                       ThemeMode="System">
 
     <extra:BaseApplication.Resources>
         <ResourceDictionary>

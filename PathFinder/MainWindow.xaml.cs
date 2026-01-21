@@ -60,6 +60,28 @@ public partial class MainWindow : IconlessWindow
         };
     }
 
+    private void DeselectDriveItems()
+    {
+        foreach (object obj in tvDrives.Items)
+        {
+            if (obj is TreeViewItem ti)
+            {
+                ti.IsSelected = false;
+            }
+        }
+    }
+
+    private void DeselectFavoriteItems()
+    {
+        foreach (object obj in tvFavorites.Items)
+        {
+            if (obj is TreeViewItem ti)
+            {
+                ti.IsSelected = false;
+            }
+        }
+    }
+
     private async Task SetFavoriteFolders()
     {
         tvFavorites.Items.Clear();
@@ -72,10 +94,13 @@ public partial class MainWindow : IconlessWindow
                 FontSize = SystemFonts.StatusFontSize
             };
 
-            tvi.Selected += (s, e) =>
+            tvi.Selected += async (s, e) =>
             {
                 CtlFVDetails ctl = (CtlFVDetails)ctlView;
-                ctl.OpenFolder(entry.Value);
+                await ctl.OpenFolder(entry.Value);
+
+                // deselect all drive items
+                DeselectDriveItems();
             };
 
             tvFavorites.Items.Add(tvi);
@@ -95,6 +120,7 @@ public partial class MainWindow : IconlessWindow
         {
             sbStatusText.Content = string.Empty;
             statusBar.Visibility = Visibility.Collapsed;
+            miStatusPanel.IsChecked = false;
             return;
         }
 
@@ -102,6 +128,7 @@ public partial class MainWindow : IconlessWindow
         {
             sbStatusText.Content = message;
             statusBar.Visibility = Visibility.Visible;
+            miStatusPanel.IsChecked = true;
             return;
         }
     }
@@ -120,10 +147,13 @@ public partial class MainWindow : IconlessWindow
                     FontSize = SystemFonts.StatusFontSize
                 };
 
-                ti.Selected += (s, e) =>
+                ti.Selected += async (s, e) =>
                 {
                     CtlFVDetails ctl = (CtlFVDetails)ctlView;
-                    ctl.OpenFolder(di.Name);
+                    await ctl.OpenFolder(di.Name);
+
+                    // deselect favorite items
+                    DeselectFavoriteItems();
                 };
 
                 tvDrives.Items.Add(ti);
@@ -219,5 +249,15 @@ public partial class MainWindow : IconlessWindow
     private void miThemeLight_Click(object sender, RoutedEventArgs e)
     {
         SetAppThemeUIWrapper(FZThemeMode.Light);
+    }
+
+    private void miStatusPanel_Checked(object sender, RoutedEventArgs e)
+    {
+        statusBar.Visibility = Visibility.Visible;
+    }
+
+    private void miStatusPanel_Unchecked(object sender, RoutedEventArgs e)
+    {
+        statusBar.Visibility=Visibility.Collapsed;
     }
 }
