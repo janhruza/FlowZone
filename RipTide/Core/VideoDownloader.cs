@@ -139,32 +139,32 @@ public class VideoDownloader
                         UseShellExecute = false,
                         WindowStyle = ProcessWindowStyle.Normal,
                         ArgumentList =
-                    {
-                        // YT-DLP command
-                        "/C",
-                        _lastPath,
+                        {
+                            // YT-DLP command
+                            "/C",
+                            _lastPath,
 
-                        // folder path
-                        "-P",
-                        Location,
+                            // folder path
+                            "-P",
+                            Location,
 
-                        // output format
-                        "-o",
-                        Format,
+                            // output format
+                            "-o",
+                            Format,
 
-                        // additional parameters
-                        // use cookies (if any)
-                        CookiesByBrowser[Cookies],
+                            // additional parameters
+                            // use cookies (if any)
+                            CookiesByBrowser[Cookies],
 
-                        // user specified params
-                        string.Join(' ', AdditionalParameters),
+                            // user specified params
+                            string.Join(' ', AdditionalParameters),
 
-                        // show progress in the console window title
-                        "--console-title",
+                            // show progress in the console window title
+                            "--console-title",
 
-                        // video URL
-                        Address
-                    }
+                            // video URL
+                            Address
+                        }
                     }
                 };
 

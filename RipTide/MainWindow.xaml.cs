@@ -1,4 +1,5 @@
-﻿using FZCore.Win32;
+﻿using FZCore;
+using FZCore.Win32;
 using FZCore.Windows;
 
 using Microsoft.Win32;
@@ -169,9 +170,9 @@ public partial class MainWindow : IconlessWindow
             _downloader.AdditionalParameters.Add(param);
         }
 
-        WinAPI.AllocConsole();
+        DevConsole.OpenConsole();
         await _downloader.DownloadAsync();
-        WinAPI.FreeConsole();
+        DevConsole.CloseConsole();
     }
 
     private void SelectFolder()
