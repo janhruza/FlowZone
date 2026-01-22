@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace PathFinder.Controls;
@@ -18,7 +19,7 @@ public class CtlFolderViewBase : UserControl, IFolderView
         set
         {
             field = value;
-            OpenFolder(FolderName);
+            _ = OpenFolder(FolderName);
         }
     }
 
@@ -26,7 +27,7 @@ public class CtlFolderViewBase : UserControl, IFolderView
     public event EventHandler FolderOpened = delegate { };
 
     /// <inheritdoc/>
-    public bool OpenFolder(string folderPath)
+    public async Task<bool> OpenFolder(string folderPath)
     {
         FolderChanged.Invoke(this, folderPath);
         return false;

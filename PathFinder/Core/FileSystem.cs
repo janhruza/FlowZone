@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PathFinder.Core;
 
@@ -225,6 +226,34 @@ public static class FileSystem
             Log.Error(ex);
             return false;
         }
+    }
+
+    /// <summary>
+    /// Retrieves all subfolders in the given <paramref name="folderPath"/> asynchronously.
+    /// </summary>
+    /// <param name="folderPath">target folder path.</param>
+    /// <param name="includeHidden">Determines whether to include hidden folders in the <paramref name="outputList"/>.</param>
+    /// <param name="outputList">Output list object where all the entries will be stored.</param>
+    /// <returns>Operation result.</returns>
+    public static async Task<bool> FsFetchAllFoldersAsync(string folderPath,
+                                                          bool includeHidden,
+                                                          List<string> outputList)
+    {
+        return FsFetchAllFolders(folderPath, includeHidden, out outputList);
+    }
+
+    /// <summary>
+    /// Retrieves all files in the given <paramref name="folderPath"/> asynchronously.
+    /// </summary>
+    /// <param name="folderPath">target folder path.</param>
+    /// <param name="includeHidden">Determines whether to include hidden files in the <paramref name="outputList"/>.</param>
+    /// <param name="outputList">Output list object where all the entries will be stored.</param>
+    /// <returns>Operation result.</returns>
+    public static async Task<bool> FsFetchAllFilesAsync(string folderPath,
+                                                        bool includeHidden,
+                                                        List<string> outputList)
+    {
+        return FsFetchAllFiles(folderPath, includeHidden, out outputList);
     }
 
     /// <summary>

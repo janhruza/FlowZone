@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace PathFinder.Controls;
 
@@ -15,7 +16,7 @@ public interface IFolderView
     /// <remarks>
     /// This method should also set the value of the <see cref="FolderName"/> property.
     /// </remarks>
-    bool OpenFolder(string folderPath);
+    Task<bool> OpenFolder(string folderPath);
 
     /// <summary>
     /// Gets the currently opened folder name.
