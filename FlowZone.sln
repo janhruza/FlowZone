@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPeek", "WebPeek\WebPeek.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathFinder", "PathFinder\PathFinder.csproj", "{762BD7DF-674A-4337-8EFF-E33903AC1CF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FZTest", "FZTest\FZTest.csproj", "{883115A6-987D-41A4-9F17-1EE29103595D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,14 @@ Global
 		{762BD7DF-674A-4337-8EFF-E33903AC1CF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{762BD7DF-674A-4337-8EFF-E33903AC1CF8}.Release|x64.ActiveCfg = Release|Any CPU
 		{762BD7DF-674A-4337-8EFF-E33903AC1CF8}.Release|x64.Build.0 = Release|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Debug|x64.ActiveCfg = Debug|x64
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Debug|x64.Build.0 = Debug|x64
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Release|x64.ActiveCfg = Release|Any CPU
+		{883115A6-987D-41A4-9F17-1EE29103595D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
