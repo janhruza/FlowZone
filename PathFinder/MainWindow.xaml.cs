@@ -258,6 +258,6 @@ public partial class MainWindow : IconlessWindow
 
     private void miStatusPanel_Unchecked(object sender, RoutedEventArgs e)
     {
-        statusBar.Visibility=Visibility.Collapsed;
+        statusBar.Visibility = Visibility.Collapsed;
     }
 }
