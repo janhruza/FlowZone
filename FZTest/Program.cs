@@ -17,7 +17,9 @@ internal class Program
         {
             Width = 800,
             Height = 500,
-            Title = "My Awesome Window"
+            Title = "My Awesome Window",
+            Background = Brushes.Black,
+            Foreground = Brushes.White
         };
 
         fw.MouseLeftButtonDown += (s, e) => fw.DragMove();

@@ -13,12 +13,15 @@ public partial class CtlCaptionButtons : UserControl
     private const string TEXT_BTN_MAXIMIZE = "";
     private const string TEXT_BTN_RESTORE = "";
 
+    private Button[] _buttons;
+
     /// <summary>
     /// Creatse a new <see cref="CtlCaptionButtons"/> instance.
     /// </summary>
     public CtlCaptionButtons()
     {
         InitializeComponent();
+        _buttons = [btnClose, btnMaximize, btnMinimize];
     }
 
     /// <summary>
@@ -46,6 +49,10 @@ public partial class CtlCaptionButtons : UserControl
             if (_window != null)
             {
                 _window.StateChanged += _window_StateChanged;
+                foreach (Button btn in _buttons)
+                {
+                    btn.Foreground = _window.Foreground;
+                }
             }
         }
     }
