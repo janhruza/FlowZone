@@ -32,7 +32,7 @@ public partial class MainWindow : IconlessWindow
             Header = "View Log",
             OnClick = () =>
             {
-                Core.ViewLog();
+                Core.ViewLog(this);
             }
         });
     }
@@ -275,6 +275,6 @@ public partial class MainWindow : IconlessWindow
 
     private void miViewLog_Click(object sender, RoutedEventArgs e)
     {
-        Core.ViewLog();
+        Core.ViewLog(this);
     }
 }

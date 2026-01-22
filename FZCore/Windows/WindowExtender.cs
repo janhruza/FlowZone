@@ -153,7 +153,7 @@ public class WindowExtender
             if (e.Key == Key.F1)
             {
                 // open app log
-                Core.ViewLog();
+                Core.ViewLog(_window);
             }
 
             if (e.Key == System.Windows.Input.Key.F11)

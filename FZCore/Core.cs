@@ -47,16 +47,22 @@ public static class Core
     /// <summary>
     /// Opens a new <see cref="LogViewer"/> window and displays the application log.
     /// </summary>
+    /// <param name="owner">Specifies the window owner. Default <see langword="null"/>.</param>
     /// <returns>True, if the log window is opened, otherwise false.</returns>
-    public static bool ViewLog()
+    public static bool ViewLog(Window? owner = null)
     {
         if (File.Exists(Log.Path) == false)
         {
             return false;
         }
 
-        _ = new LogViewer(Log.Path).ShowDialog();
-        return true;
+        LogViewer wnd = new LogViewer(Log.Path)
+        {
+            Owner = owner,
+            WindowStartupLocation = owner != null ? WindowStartupLocation.CenterOwner : WindowStartupLocation.CenterScreen
+        };
+
+        return wnd.ShowDialog() == true;
     }
 
     /// <summary>

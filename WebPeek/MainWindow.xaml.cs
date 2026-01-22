@@ -38,7 +38,7 @@ public partial class MainWindow : IconlessWindow
             Header = "View Log\tF1",
             OnClick = () =>
             {
-                FZCore.Core.ViewLog();
+                FZCore.Core.ViewLog(this);
             }
         });
 
@@ -101,7 +101,7 @@ public partial class MainWindow : IconlessWindow
     {
         if (e.Key == System.Windows.Input.Key.F1)
         {
-            FZCore.Core.ViewLog();
+            FZCore.Core.ViewLog(this);
         }
     }
 }

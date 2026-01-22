@@ -38,7 +38,7 @@ public partial class MainWindow : IconlessWindow
         WindowExtender wex = new WindowExtender(this);
         wex.AddSeparator(0x11);
         wex.AddMenuItem(0x12, "Refresh\tF5", async () => await ReloadFeedsAsync());
-        wex.AddMenuItem(0x13, "View log\tF1", () => FZCore.Core.ViewLog());
+        wex.AddMenuItem(0x13, "View log\tF1", () => FZCore.Core.ViewLog(this));
 
         // activate all extensions
         wex.EmpowerWindow();
