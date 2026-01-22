@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Windows.Media;
+using System.Windows;
 using System.Windows.Shell;
 
 namespace FZCore.Windows;
@@ -15,13 +16,14 @@ public class FreeWindow : BaseWindow
     {
         MinWidth = 350;
         MinHeight = 350;
+        Background = Brushes.Transparent;
 
         WindowChrome wc = new WindowChrome
         {
-            UseAeroCaptionButtons = false,
-            CaptionHeight = 0,
             GlassFrameThickness = new System.Windows.Thickness(1),
-            ResizeBorderThickness = new System.Windows.Thickness(5)
+            ResizeBorderThickness = new System.Windows.Thickness(5),
+            CornerRadius = new CornerRadius(15),
+            CaptionHeight = 0
         };
 
         WindowChrome.SetWindowChrome(this, wc);
