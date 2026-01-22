@@ -4,7 +4,7 @@ using FZCore.Windows;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace FZTest;
 
@@ -20,28 +20,22 @@ internal class Program
             Title = "My Awesome Window"
         };
 
-        FZCore.Core.SetWindowTheme(fw, FZCore.FZThemeMode.System);
+        fw.MouseLeftButtonDown += (s, e) => fw.DragMove();
 
-        Grid g = new Grid
-        {
-            RowDefinitions =
-            {
-                new RowDefinition { Height = GridLength.Auto },
-                new RowDefinition()
-            }
-        };
+        FZCore.Core.SetWindowTheme(fw, FZCore.FZThemeMode.None);
 
+        Grid g = new Grid();
         fw.Content = g;
 
-        CtlCaptionBar ctlCaption = new CtlCaptionBar
+        CtlCaptionButtons ctlButtons = new CtlCaptionButtons
         {
             Target = fw,
-            Background = fw.Background
+            VerticalAlignment = VerticalAlignment.Top,
+            HorizontalAlignment = HorizontalAlignment.Right
         };
 
-        g.Children.Add(ctlCaption);
-        Grid.SetRow(ctlCaption, 0);
-
+        g.Children.Add(ctlButtons);
+        fw.UpdateLayout();
         fw.ShowDialog();
         return 0;
     }
