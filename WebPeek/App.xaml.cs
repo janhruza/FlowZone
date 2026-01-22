@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 using WebPeek.Core;
@@ -21,13 +22,12 @@ public partial class App : BaseApplication
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        FZCore.Log.AppStarted();
+        Log.AppStarted();
 
         if (e.Args.Length != 1)
         {
             // startup initialization
             AppManager.ImportApps();
-            FZCore.Core.SetApplicationTheme(FZThemeMode.System);
 
             // show main window
             MainWindow mw = new MainWindow();
@@ -43,7 +43,6 @@ public partial class App : BaseApplication
 
             // create main window
             MainWindow mw = new MainWindow();
-            FZCore.Core.SetApplicationTheme(FZThemeMode.System);
 
             // create content page
             PgWebView pg = new PgWebView(addr);
@@ -59,10 +58,13 @@ public partial class App : BaseApplication
         }
     }
 
-    private static void ClearCookies()
+    private static async Task ClearCookies()
     {
         try
         {
+            // small hack to wait for the opened files to be closed
+            await Task.Delay(100);
+
             // clear stored cookies
             // get cookies folder path
             string path = $"{Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location)}.exe.WebView2";
@@ -79,18 +81,18 @@ public partial class App : BaseApplication
         catch (Exception ex)
         {
             Log.Error(ex, nameof(ClearCookies));
-            FZCore.Core.ErrorBox("An error occurred while clearing cookies. Please try again later.", "WebPeek");
+            FZCore.Core.ErrorBox($"An error occurred while clearing cookies. Please try again later.\n\nError message:\n{ex.Message}", "WebPeek");
             return;
         }
     }
 
-    private void Application_Exit(object sender, ExitEventArgs e)
+    private async void Application_Exit(object sender, ExitEventArgs e)
     {
         // on app close cleanup
         AppManager.ExportApps();
 
         // clear cookies
-        ClearCookies();
+        await ClearCookies();
 
         Log.AppExited();
         return;

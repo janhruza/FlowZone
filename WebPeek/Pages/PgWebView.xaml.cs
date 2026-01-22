@@ -19,7 +19,7 @@ public partial class PgWebView : Page
     {
         InitializeComponent();
 
-        if (link.ToLower().StartsWith("http://") == false && link.ToLower().StartsWith("https://") == false)
+        if (link.StartsWith("http://", StringComparison.CurrentCultureIgnoreCase) == false && link.StartsWith("https://", StringComparison.CurrentCultureIgnoreCase) == false)
         {
             link = "https://" + link;
         }
