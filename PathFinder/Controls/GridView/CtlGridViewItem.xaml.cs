@@ -69,6 +69,6 @@ public partial class CtlGridViewItem : UserControl
     /// <returns>Operation result.</returns>
     public async Task<bool> ReloadUIAsync()
     {
-        return this.ReloadUI();
+        return ReloadUI();
     }
 }

@@ -2,8 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-using Windows.UI;
-
 namespace FZCore.Controls;
 
 /// <summary>
@@ -107,7 +105,7 @@ public partial class CtlCaptionBar : UserControl
 
         _window = window;
         window.StateChanged += Window_StateChanged;
-        this.Title = window.Title;
+        Title = window.Title;
     }
 
     /// <summary>

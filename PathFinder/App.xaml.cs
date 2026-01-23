@@ -1,5 +1,4 @@
-﻿using FZCore;
-using FZCore.Extra;
+﻿using FZCore.Extra;
 
 namespace PathFinder;
 
@@ -14,17 +13,17 @@ public partial class App : BaseApplication
         MainWindow = mw;
         MainWindow.Show();
 
-//#if DEBUG
-//        DevConsole.OpenConsole();
-//#endif
+        //#if DEBUG
+        //        DevConsole.OpenConsole();
+        //#endif
     }
 
     private void BaseApplication_Exit(object sender, System.Windows.ExitEventArgs e)
     {
         // exit cleanup
-//#if DEBUG
-//        DevConsole.CloseConsole();
-//#endif
+        //#if DEBUG
+        //        DevConsole.CloseConsole();
+        //#endif
         return;
     }
 }

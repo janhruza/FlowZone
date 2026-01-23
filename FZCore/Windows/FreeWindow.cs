@@ -1,5 +1,5 @@
-﻿using System.Windows.Media;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shell;
 
 namespace FZCore.Windows;
@@ -28,18 +28,18 @@ public class FreeWindow : BaseWindow
 
         WindowChrome.SetWindowChrome(this, wc);
 
-        this.StateChanged += FreeWindow_StateChanged;
+        StateChanged += FreeWindow_StateChanged;
     }
 
     private void FreeWindow_StateChanged(object? sender, System.EventArgs e)
     {
-        if (this.WindowState == WindowState.Maximized)
+        if (WindowState == WindowState.Maximized)
         {
 
             var thickness = SystemParameters.WindowResizeBorderThickness;
             var fixedFrame = SystemParameters.FixedFrameHorizontalBorderHeight;
             double overhead = thickness.Top + fixedFrame + 1;
-            this.BorderThickness = new Thickness(overhead);
+            BorderThickness = new Thickness(overhead);
 
             //this.Padding = new Thickness(
             //SystemParameters.WindowResizeBorderThickness.Left,
@@ -49,8 +49,8 @@ public class FreeWindow : BaseWindow
         }
         else
         {
-            this.Padding = new Thickness(0);
-            this.BorderThickness = new Thickness(0);
+            Padding = new Thickness(0);
+            BorderThickness = new Thickness(0);
         }
     }
 }
