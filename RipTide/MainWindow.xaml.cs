@@ -424,4 +424,10 @@ public partial class MainWindow : IconlessWindow
             ResetFields();
         }
     }
+
+    private void lbExtraParams_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        btnRemoveParam.IsEnabled = lbExtraParams.SelectedIndex != -1;
+        return;
+    }
 }

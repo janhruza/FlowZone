@@ -171,7 +171,8 @@
 
                     <Label Content="Additional command line parameters"/>
                     <ListBox Height="120"
-                             Name="lbExtraParams"/>
+                             Name="lbExtraParams"
+                             SelectionChanged="lbExtraParams_SelectionChanged"/>
 
                     <Grid Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
@@ -187,7 +188,8 @@
                             <Button Content="Remove selected"
                                     Name="btnRemoveParam"
                                     Click="btnRemoveParam_Click"
-                                    Margin="0,0,5,0"/>
+                                    Margin="0,0,5,0"
+                                    IsEnabled="False"/>
 
                             <Button Content="Add parameter"
                                     Name="btnAddParam"
