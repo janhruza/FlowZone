@@ -61,7 +61,7 @@ public partial class PgHome : Page
         // Logic to refresh the list of applications
         lbxApps.Items.Clear();
 
-        var apps = AppManager.GetApps();
+        var apps = AppManager.GetApps().OrderBy(x => x.Name);
 
         if (apps.Count() == 0)
         {
