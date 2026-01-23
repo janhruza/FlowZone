@@ -165,9 +165,9 @@
                 HorizontalAlignment="Stretch"
                 Margin="10"
                 Padding="10"
-                Background="#40000000"
+                Background="#40808080"
                 BorderThickness="1"
-                BorderBrush="#20000000"
+                BorderBrush="#20808080"
                 CornerRadius="5">
 
             <StackPanel>

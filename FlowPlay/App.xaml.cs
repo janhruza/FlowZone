@@ -23,9 +23,6 @@ public partial class App : BaseApplication
         // startup log
         Log.AppStarted();
 
-        // set app theme
-        FZCore.Core.SetApplicationTheme(FZThemeMode.System);
-
         // create and show the main window
         MainWindow mw = new MainWindow();
         MainWindow = mw;
