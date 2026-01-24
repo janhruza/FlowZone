@@ -388,6 +388,11 @@ public partial class MainWindow : IconlessWindow
             OpenMedia();
         }
 
+        else if (e.Key == Key.F11)
+        {
+            ToggleFullScreen();
+        }
+
         else if (e.Key == Key.Down)
         {
             VolumeDown();
