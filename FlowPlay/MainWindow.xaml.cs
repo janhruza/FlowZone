@@ -1,4 +1,5 @@
 ﻿using FlowPlay.Core;
+using FlowPlay.Windows;
 
 using FZCore;
 using FZCore.Extensions;
@@ -8,6 +9,7 @@ using Microsoft.Win32;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -290,17 +292,31 @@ public partial class MainWindow : IconlessWindow
             slPosition.Value = cPlayer.Position.TotalMilliseconds;
         };
 
-        KeyDown += (s, e) =>
-        {
-            if (e.Key == System.Windows.Input.Key.Apps)
-            {
-                SystemCommands.ShowSystemMenu(this, PointToScreen(new Point(0, 0)));
-            }
-        };
-
         // set transparent (acrylic) background
         //DwmSetWindowAttribute(this.GetHandle(), 38, [3], sizeof(int));
         //DwmSetWindowAttribute(this.GetHandle(), 38, [2], sizeof(int));
+    }
+
+    private void ShowLoadedVideoProperties()
+    {
+        // input checks
+        if (cPlayer.HasVideo == false) return;
+        if (cPlayer.Source == null) return;
+
+        // only local files supported
+        string path = cPlayer.Source.LocalPath;
+
+        // get the video properties
+        VideoProperties vp = new VideoProperties
+        {
+            Path = path,
+            Height = cPlayer.NaturalVideoHeight,
+            Width = cPlayer.NaturalVideoWidth,
+            Duration = cPlayer.NaturalDuration.TimeSpan
+        };
+
+        // show the properties window
+        _ = new WndVideoProperties(ref vp).ShowDialog();
     }
 
     private void RestoreDefaultSize()
@@ -395,6 +411,16 @@ public partial class MainWindow : IconlessWindow
         else if (e.Key == Key.Right)
         {
             PlayerForward();
+        }
+
+        else if (e.Key == Key.Apps)
+        {
+            SystemCommands.ShowSystemMenu(this, PointToScreen(new Point(0, 0)));
+        }
+
+        else if (e.Key == Key.F9)
+        {
+            ShowLoadedVideoProperties();
         }
     }
 
@@ -531,5 +557,10 @@ public partial class MainWindow : IconlessWindow
         {
             tbNote.FontSize = 100;
         }
+    }
+
+    private void miVideoProperties_Click(object sender, RoutedEventArgs e)
+    {
+        ShowLoadedVideoProperties();
     }
 }

@@ -1,19 +1,19 @@
 ﻿<core:IconlessWindow x:Class="FlowPlay.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FlowPlay"
-        xmlns:core="clr-namespace:FZCore.Windows;assembly=FZCore"
-        WindowStartupLocation="CenterScreen"
-        Title="FlowPlay"
-        ResizeMode="CanResize"
-        MinWidth="300"
-        MinHeight="300"
-        SizeToContent="WidthAndHeight"
-        SnapsToDevicePixels="True"
-        UseLayoutRounding="False"
-        KeyDown="Window_KeyDown"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:local="clr-namespace:FlowPlay"
+                     xmlns:core="clr-namespace:FZCore.Windows;assembly=FZCore"
+                     WindowStartupLocation="CenterScreen"
+                     Title="FlowPlay"
+                     ResizeMode="CanResize"
+                     MinWidth="300"
+                     MinHeight="300"
+                     SizeToContent="WidthAndHeight"
+                     SnapsToDevicePixels="True"
+                     UseLayoutRounding="True"
+                     KeyDown="Window_KeyDown"
                      SizeChanged="IconlessWindow_SizeChanged">
 
     <core:IconlessWindow.ContextMenu>
@@ -153,7 +153,9 @@
                     <Separator />
 
                     <MenuItem Header="Properties"
-                              InputGestureText="F9"/>
+                              InputGestureText="F9"
+                              Name="miVideoProperties"
+                              Click="miVideoProperties_Click"/>
                     
                 </ContextMenu>
             </MediaElement.ContextMenu>

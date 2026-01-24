@@ -1,0 +1,82 @@
+﻿<extra:IconlessWindow x:Class="FlowPlay.Windows.WndVideoProperties"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:FlowPlay.Windows"
+                      xmlns:extra="clr-namespace:FZCore.Windows;assembly=FZCore"
+                      WindowStartupLocation="CenterScreen"
+                      ResizeMode="NoResize"
+                      mc:Ignorable="d"
+                      Title="Properties"
+                      SizeToContent="WidthAndHeight"
+                      Loaded="IconlessWindow_Loaded">
+
+    <extra:BaseWindow.Resources>
+
+        <Style TargetType="TextBlock"
+               x:Key="HeaderStyle">
+
+            <Setter Property="Foreground"
+                    Value="{x:Static SystemColors.AccentColorBrush}"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+        </Style>
+        
+    </extra:BaseWindow.Resources>
+    
+    <Grid Margin="10">
+        <StackPanel Width="400">
+            <TextBlock Text="File name"
+                       Style="{DynamicResource HeaderStyle}"
+                       TextWrapping="Wrap"
+                       TextTrimming="CharacterEllipsis"/>
+
+            <TextBlock>
+                <Run Name="rFilename"
+                     Text="Filename"/>
+            </TextBlock>
+
+            <TextBlock Text="Dimensions"
+                       Style="{DynamicResource HeaderStyle}"
+                       Margin="0,5,0,0"/>
+            
+            <TextBlock>
+                <Run Text="Width"
+                     Name="rWidth"/>
+                
+                <Run Text="x"/>
+                
+                <Run Text="Height"
+                     Name="rHeight"/>
+            </TextBlock>
+
+            <TextBlock Text="Duration"
+                       Style="{DynamicResource HeaderStyle}"
+                       Margin="0,5,0,0"/>
+
+            <TextBlock>
+                <Run Name="rDuration"
+                     Text="00:00:00"/>
+            </TextBlock>
+
+            <StackPanel Margin="0,10,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+
+                <Button Content="Cancel"
+                        Name="miCancel"
+                        Margin="0,0,5,0"
+                        Click="miCancel_Click"/>
+                
+                <Button Content="OK"
+                        Click="miCancel_Click"/>
+
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+    
+</extra:IconlessWindow>
