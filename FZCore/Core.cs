@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace FZCore;
@@ -161,11 +162,11 @@ public static class Core
     /// </summary>
     /// <param name="application">Target application.</param>
     /// <param name="theme">Desired application theme.</param>
-    public static void SetApplicationTheme(Application? application, FZThemeMode theme)
+    public static bool SetApplicationTheme(Application? application, FZThemeMode theme)
     {
         if (application == null)
         {
-            return;
+            return false;
         }
 
         application.ThemeMode = ThemesByNames[theme];
@@ -197,7 +198,8 @@ public static class Core
         {
             WindowExtender.EnableSystemMode();
         }
-        return;
+
+        return true;
     }
 
     /// <summary>
@@ -233,12 +235,21 @@ public static class Core
     /// Sets both <see cref="CultureInfo.CurrentCulture"/> and <see cref="CultureInfo.CurrentUICulture"/> from the specified <paramref name="cultureName"/> parameter.
     /// </summary>
     /// <param name="cultureName">Name of the culture. You can use the <see cref="CultureInfo.Name"/> property to get the name of the desired culture.</param>
-    public static void SetCulture(string cultureName)
+    public static bool SetCulture(string cultureName)
     {
-        CultureInfo cu = new CultureInfo(cultureName);
-        CultureInfo.CurrentCulture = cu;
-        CultureInfo.CurrentUICulture = cu;
-        return;
+        try
+        {
+            CultureInfo cu = new CultureInfo(cultureName);
+            CultureInfo.CurrentCulture = cu;
+            CultureInfo.CurrentUICulture = cu;
+            return true;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+            return false;
+        }
     }
 
     /// <summary>
@@ -267,7 +278,7 @@ public static class Core
 
         catch
         {
-            proc = null!;
+            proc = new Process();
             return false;
         }
     }

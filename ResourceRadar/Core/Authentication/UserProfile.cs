@@ -316,8 +316,8 @@ public class UserProfile
         }
 
         _current = profile;
-        FZCore.Core.SetCulture(profile.Settings.CultureName);
-        FZCore.Core.SetApplicationTheme(App.Current, profile.Settings.ThemeMode);
+        _ = FZCore.Core.SetCulture(profile.Settings.CultureName);
+        _ = FZCore.Core.SetApplicationTheme(App.Current, profile.Settings.ThemeMode);
         return true;
     }
 
