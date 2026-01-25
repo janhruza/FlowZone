@@ -1,8 +1,6 @@
 ﻿using FZCore;
 using FZCore.Windows;
 
-using Microsoft.Win32;
-
 using PathFinder.Controls;
 
 using System;
