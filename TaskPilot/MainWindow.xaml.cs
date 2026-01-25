@@ -1,6 +1,7 @@
 ﻿using FZCore.Windows;
 
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -22,9 +23,6 @@ public partial class MainWindow : IconlessWindow
     {
         // default init
         InitializeComponent();
-
-        // load tasks
-        LoadTasks();
     }
 
     private void DisplayTask(TaskItem task)
@@ -66,11 +64,11 @@ public partial class MainWindow : IconlessWindow
             Content = tb,
         };
 
-        lbi.KeyDown += (s, e) =>
+        lbi.KeyDown += async (s, e) =>
         {
             if (e.Key == System.Windows.Input.Key.Delete)
             {
-                RemoveTask(task);
+                await RemoveTask(task);
             }
         };
 
@@ -89,10 +87,10 @@ public partial class MainWindow : IconlessWindow
                 Header = "Modify"
             };
 
-            miUpdate.Click += (s, e) =>
+            miUpdate.Click += async (s, e) =>
             {
                 // modify task
-                ModifyTask(ref task);
+                await ModifyTask(task);
             };
 
             MenuItem miDelete = new MenuItem
@@ -101,10 +99,10 @@ public partial class MainWindow : IconlessWindow
                 InputGestureText = "Del"
             };
 
-            miDelete.Click += (s, e) =>
+            miDelete.Click += async (s, e) =>
             {
                 // confirm deleting
-                RemoveTask(task);
+                await RemoveTask(task);
             };
 
             // add items to the menu
@@ -116,18 +114,18 @@ public partial class MainWindow : IconlessWindow
         lbTasks.Items.Add(lbi);
     }
 
-    private void RemoveTask(TaskItem task)
+    private async Task RemoveTask(TaskItem task)
     {
         if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
         {
             if (App.RemoveTask(task.Id) == true)
             {
-                LoadTasks();
+                await LoadTasks();
             }
         }
     }
 
-    private void LoadTasks()
+    private async Task LoadTasks()
     {
         lbTasks.Items.Clear();
 
@@ -173,51 +171,61 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
-    private void GetNewTask()
+    private async Task GetNewTask()
     {
         if (NewTaskWindow.CreateTask(this) == true)
         {
-            LoadTasks();
+            await LoadTasks();
         }
     }
 
-    private void ModifyTask(ref TaskItem task)
+    private async Task ModifyTask(TaskItem task)
     {
         if (NewTaskWindow.Modify(task, this) == true)
         {
-            LoadTasks();
+            await LoadTasks();
         }
     }
 
-    private void SaveTasks()
+    private async Task<bool> SaveTasks()
     {
         TasksCollection tasks = App.Tasks;
-        if (App.SaveTasks(App.TasksFileLocation, ref tasks) == false)
+        return App.SaveTasks(App.TasksFileLocation, ref tasks);
+    }
+
+    private async void btnRefresh_Click(object sender, RoutedEventArgs e)
+    {
+        await LoadTasks();
+    }
+
+    private async void btnNewTask_Click(object sender, RoutedEventArgs e)
+    {
+        await GetNewTask();
+    }
+
+    private async void btnSave_Click(object sender, RoutedEventArgs e)
+    {
+        if (await SaveTasks() == false)
         {
-            // unabke to save tasks
             _ = MessageBox.Show(Messages.TasksSavingFailed, "Saving failed", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-        return;
     }
 
-    private void btnRefresh_Click(object sender, RoutedEventArgs e)
+    private async void miRefreshView_Click(object sender, RoutedEventArgs e)
     {
-        LoadTasks();
+        await LoadTasks();
     }
 
-    private void btnNewTask_Click(object sender, RoutedEventArgs e)
+    private async void IconlessWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-        GetNewTask();
+        if (e.Key == System.Windows.Input.Key.F5)
+        {
+            await LoadTasks();
+        }
     }
 
-    private void btnSave_Click(object sender, RoutedEventArgs e)
+    private async void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        SaveTasks();
-    }
-
-    private void miRefreshView_Click(object sender, RoutedEventArgs e)
-    {
-        LoadTasks();
+        await LoadTasks();
     }
 }
