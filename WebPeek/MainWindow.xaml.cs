@@ -1,6 +1,5 @@
 ﻿using FZCore.Windows;
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -113,16 +112,16 @@ public partial class MainWindow : IconlessWindow
 
     private void ToggleFullScreen()
     {
-        if (this.WindowState == WindowState.Normal)
+        if (WindowState == WindowState.Normal)
         {
-            this.WindowStyle = WindowStyle.None;
-            this.WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
         }
 
-        else if (this.WindowState == WindowState.Maximized)
+        else if (WindowState == WindowState.Maximized)
         {
-            this.WindowState = WindowState.Normal;
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            WindowState = WindowState.Normal;
+            WindowStyle = WindowStyle.SingleBorderWindow;
         }
 
         else return;
