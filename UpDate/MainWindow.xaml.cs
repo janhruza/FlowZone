@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 using UpDate.Core;
 using UpDate.Pages;
@@ -42,25 +43,29 @@ public partial class MainWindow : IconlessWindow
 
         // activate all extensions
         wex.EmpowerWindow();
+    }
 
-        // add hooks
-        KeyDown += async (s, e) =>
+    private async void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        await ReloadFeedsAsync();
+    }
+
+    private async void IconlessWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F2)
         {
-            if (e.Key == System.Windows.Input.Key.F2)
-            {
-                HandleSettings();
-            }
+            HandleSettings();
+        }
 
-            if (e.Key == System.Windows.Input.Key.F5)
-            {
-                await ReloadFeedsAsync();
-            }
-        };
-
-        Loaded += async (s, e) =>
+        else if (e.Key == System.Windows.Input.Key.F5)
         {
             await ReloadFeedsAsync();
-        };
+        }
+
+        else if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.N)
+        {
+            await AddNewFeed();
+        }
     }
 
     private void ApplySettings(UpDateSettings? settings)
@@ -259,7 +264,7 @@ public partial class MainWindow : IconlessWindow
         item.Selected += (s, e) =>
         {
             frmContent.Content = new PgChannelView(channel);
-            Title = $"{channel.Title.Trim()} | {UpDateSettings.Current.Title}";
+            Title = $"{channel.Title.Trim()} | {(UpDateSettings.Current?.Title ?? App.AppTitle)}";
         };
 
         return item;
@@ -317,6 +322,16 @@ public partial class MainWindow : IconlessWindow
         }
     }
 
+    private async Task AddNewFeed()
+    {
+        // add new feed item
+        if (new WndAddFeed().ShowDialog() == true)
+        {
+            // redraw RSS feed sources
+            await ReloadFeedsAsync();
+        }
+    }
+
     private void miClose_Click(object sender, RoutedEventArgs e)
     {
         // close window
@@ -325,12 +340,7 @@ public partial class MainWindow : IconlessWindow
 
     private async void miAddFeed_Click(object sender, RoutedEventArgs e)
     {
-        // add new feed item
-        if (new WndAddFeed().ShowDialog() == true)
-        {
-            // redraw RSS feed sources
-            await ReloadFeedsAsync();
-        }
+        await AddNewFeed();
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
