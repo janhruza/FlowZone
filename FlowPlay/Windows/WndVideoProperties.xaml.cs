@@ -39,6 +39,6 @@ public partial class WndVideoProperties : IconlessWindow
 
     private void miCancel_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 }
