@@ -123,37 +123,6 @@ public partial class MainWindow : IconlessWindow
         return true;
     }
 
-    private void HandleVideoDownload()
-    {
-        if (VerifyFields() == false)
-        {
-            // incomplete input data
-            App.ShowMessage(Messages.UnableToVerifyFields, DialogIcon.Error);
-            return;
-        }
-
-        // rebuild additional params list
-        _downloader.AdditionalParameters.Clear();
-        foreach (string param in lbExtraParams.Items)
-        {
-            _downloader.AdditionalParameters.Add(param);
-        }
-
-        Process? pDownload;
-        if (_downloader.Download(out pDownload) == false)
-        {
-            // unable to start download
-            App.ShowMessage(Messages.UnableToStartDownload, DialogIcon.Error);
-            return;
-        }
-
-        Visibility = Visibility.Hidden;
-        pDownload?.WaitForExit();
-        Visibility = Visibility.Visible;
-
-        return;
-    }
-
     private async Task HandleVideoDownloadAsync()
     {
         if (VerifyFields() == false)
@@ -410,14 +379,14 @@ public partial class MainWindow : IconlessWindow
     private async void miCheckForUpdates_Click(object sender, RoutedEventArgs e)
     {
         // check for yt-dlp updates
-        WinAPI.AllocConsole();
+        DevConsole.OpenConsole();
 
         if (FZCore.Core.StartProcess(VideoDownloader.GetDownloader(), "--update", out Process proc) == true)
         {
             await proc.WaitForExitAsync();
         }
 
-        WinAPI.FreeConsole();
+        DevConsole.CloseConsole();
 
         if (proc.ExitCode == 0)
         {
