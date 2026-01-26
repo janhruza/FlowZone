@@ -9,16 +9,17 @@
 
 |Project|Technology|Description|Status|
 |-------|----------|-----------|------|
-|FZCore|Class Library|FZCore is a library with all the common functionality.|Active|
-|TaskPilot|WPF|Task Pilot is a simple task manager application. It offers a simple yet intuitive UI.|Active|
 |Expando|WPF|Expando is a simple expanse tracker application with modern UI and multi profile support.|Active|
-|RipTide|WPF|RipTide is a simple video downloader build on top of the [yt-dlp](https://github.com/yt-dlp/yt-dlp) project.|Active|
-|VaultPack|WPF|VaultPack is a simple archiving utility. It is really basic and offers no compression algorithms.|Active|
-|ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|Active|
-|PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|Discontinued|
-|UpDate|WPF|UpDate is a simple, but modern RSS reader. It will keep you up to date with your favorite media!|Active|
-|HashHive|WPF|HashHive is a simple hash computing program. It allows user to calculate hashes of a written text or selected files.|Active|
 |FlowPlay|WPF|FlowPlay is a simple media player application. It supports most of the common formats and codecs.|Active|
+|FZCore|Class Library|FZCore is a library with all the common functionality.|Active|
+|HashHive|WPF|HashHive is a simple hash computing program. It allows user to calculate hashes of a written text or selected files.|Active|
+|PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|Discontinued|
+|PathFinder|WPF|Simple file explorer application.|Paused|
+|ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|Active|
+|RipTide|WPF|RipTide is a simple video downloader build on top of the [yt-dlp](https://github.com/yt-dlp/yt-dlp) project.|Active|
+|TaskPilot|WPF|Task Pilot is a simple task manager application. It offers a simple yet intuitive UI.|Active|
+|UpDate|WPF|UpDate is a simple, but modern RSS reader. It will keep you up to date with your favorite media!|Active|
+|VaultPack|WPF|VaultPack is a simple archiving utility. It is really basic and offers no compression algorithms.|Active|
 |WebPeek|WPF|WebPeek is a simple program to browse web pages as applications. Based on the Microsoft WebView.|Active|
 
 <p>All of those projects are targetted on the Windows platform.</p>

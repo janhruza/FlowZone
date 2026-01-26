@@ -88,7 +88,16 @@ public partial class PgHome : Page
             {
                 if (bd.IsFocused == true && e.Key == System.Windows.Input.Key.Enter)
                 {
-                    // clidk event for the button
+                    // click event for the button
+                    OpenWebApp(app);
+                }
+            };
+
+            bd.MouseLeftButtonDown += (s, e) =>
+            {
+                if (e.ClickCount == 2)
+                {
+                    // open on mouse double click as well
                     OpenWebApp(app);
                 }
             };

@@ -24,6 +24,20 @@ public class BaseWindow : Window
     }
 
     /// <summary>
+    /// Gets or sets the window theme.
+    /// This property is a replacement of the <see cref="Window.ThemeMode"/> property.
+    /// </summary>
+    public new FZThemeMode ThemeMode
+    {
+        get => field;
+        set
+        {
+            FZCore.Core.SetWindowTheme(this, value);
+            field = value;
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of the BaseWindow class with the specified owner window.
     /// </summary>
     /// <param name="owner">The window that will act as the owner of this window. Can be null if the window has no owner.</param>
