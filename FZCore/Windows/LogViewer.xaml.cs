@@ -72,7 +72,7 @@ namespace FZCore.Windows
             ProgressIntermediate();
 
             // Create an ObservableCollection for data binding
-            ObservableCollection<LogEntry> logEntries = new ObservableCollection<LogEntry>();
+            List<LogEntry> logEntries = new List<LogEntry>();
 
             try
             {
@@ -114,6 +114,9 @@ namespace FZCore.Windows
                         }
                     }
                 }
+
+                // sort by date (newest first)
+                logEntries = [.. logEntries.OrderByDescending(x => DateTime.Parse(x.Date))];
 
                 // Bind the ObservableCollection to the DataGrid
                 dgEntries.ItemsSource = logEntries;
