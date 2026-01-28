@@ -10,7 +10,7 @@
         Title="Add new feed"
         ResizeMode="CanMinimize"
         SnapsToDevicePixels="True"
-        UseLayoutRounding="False"
+        UseLayoutRounding="True"
         SizeToContent="WidthAndHeight">
     
     <Grid Width="400">

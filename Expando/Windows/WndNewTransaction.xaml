@@ -11,7 +11,7 @@
         Title="New transaction"
         SizeToContent="WidthAndHeight"
         SnapsToDevicePixels="True"
-        UseLayoutRounding="False">
+        UseLayoutRounding="True">
     
     <Grid>
         <Grid.RowDefinitions>

@@ -11,7 +11,7 @@
                      Title="Resource Radar"
                      SizeToContent="WidthAndHeight"
                      SnapsToDevicePixels="True"
-                     UseLayoutRounding="False">
+                     UseLayoutRounding="True">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

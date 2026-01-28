@@ -11,7 +11,7 @@
                      ResizeMode="CanMinimize"
                      SizeToContent="WidthAndHeight"
                      SnapsToDevicePixels="True"
-                     UseLayoutRounding="False"
+                     UseLayoutRounding="True"
                      KeyDown="Window_KeyDown">
 
     <core:IconlessWindow.ContextMenu>

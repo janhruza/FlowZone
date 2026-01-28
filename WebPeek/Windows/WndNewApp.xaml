@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         SnapsToDevicePixels="True"
-        UseLayoutRounding="False">
+        UseLayoutRounding="True">
 
     <StackPanel Margin="10"
                 Width="320">

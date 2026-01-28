@@ -10,7 +10,7 @@
         SizeToContent="WidthAndHeight"
         Title="Create new profile"
         SnapsToDevicePixels="True"
-        UseLayoutRounding="False"
+        UseLayoutRounding="True"
         Loaded="Window_Loaded">
     
     <Grid>

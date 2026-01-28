@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         SnapsToDevicePixels="True"
-        UseLayoutRounding="False"
+        UseLayoutRounding="True"
         Title="HashHive"
         SizeToContent="WidthAndHeight">
 

@@ -14,7 +14,7 @@
                       MinWidth="350"
                       MinHeight="350"
                       SnapsToDevicePixels="True"
-                      UseLayoutRounding="False">
+                      UseLayoutRounding="True">
 
     <Grid>
         <Grid.RowDefinitions>

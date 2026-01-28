@@ -10,7 +10,7 @@
                      Title="New inventory item"
                      SizeToContent="WidthAndHeight"
                      SnapsToDevicePixels="True"
-                     UseLayoutRounding="False">
+                     UseLayoutRounding="True">
     
     <Grid Width="420">
         <Grid.RowDefinitions>
