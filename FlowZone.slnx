@@ -3,6 +3,9 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Project Path="Exchange/Exchange.csproj" Id="120d8d47-0017-425e-8bd5-06d9fa05408b">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="Expando/Expando.csproj">
     <Platform Solution="Debug|x64" Project="x64" />
   </Project>

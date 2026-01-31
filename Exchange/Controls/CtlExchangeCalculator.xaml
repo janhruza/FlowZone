@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Exchange.Controls.CtlExchangeCalculator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Exchange.Controls"
+             mc:Ignorable="d"
+             d:DesignWidth="250">
+
+    <Grid>
+        <Grid.RowDefinitions>
+
+            <!--Data row-->
+            <RowDefinition />
+            
+            <!--Controls row-->
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <Label Content="Input currency"/>
+            <ComboBox Name="cbxInput"/>
+
+            <Label Content="Output currency"
+                   Margin="0,5,0,0"/>
+            
+            <ComboBox Name="cbxOutput"/>
+
+            <Label Content="Conversion result"
+                   Margin="0,5,0,0"/>
+
+            <TextBox Name="txtResult"
+                     IsReadOnly="True"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Margin="0,10,0,0">
+
+            <Button Name="btnClear"
+                    Content="Clear"
+                    Margin="0,0,5,0"/>
+            
+            <Button Name="btnConvert"
+                    Content="Convert"/>
+
+        </StackPanel>
+    </Grid>
+    
+</UserControl>
