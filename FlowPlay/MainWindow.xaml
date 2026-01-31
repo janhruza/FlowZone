@@ -190,7 +190,9 @@
                     <Slider Grid.Column="1"
                             Name="slVolume"
                             Minimum="0"
+                            MinWidth="0"
                             Maximum="1"
+                            ToolTip="{Binding ElementName=slVolume, Path=Value}"
                             Value="{Binding ElementName=cPlayer, Path=Volume}"/>
                 </Grid>
 
