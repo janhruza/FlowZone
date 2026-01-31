@@ -2,8 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Exchange.Data;
@@ -29,6 +32,8 @@ public struct ExchangeReport
     public List<CurrencyInfo> Currencies;
 
     #region Static code
+
+    internal static string ReportsPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Reports");
 
     private static DateOnly? ParseReportDate(string dateText)
     {
@@ -77,35 +82,63 @@ public struct ExchangeReport
         }
     }
 
+    private static string HashText(string text)
+    {
+        byte[] data = Encoding.UTF8.GetBytes(text);
+        byte[] hashedData = SHA1.HashData(data);
+        return Convert.ToHexString(hashedData).ToUpper();
+    }
+
+    internal static async Task<bool> SaveReport(string reportData)
+    {
+        if (Directory.Exists(ReportsPath) == false)
+        {
+            _ = Directory.CreateDirectory(ReportsPath);
+        }
+
+        string hash = HashText(reportData);
+        string filename = Path.Combine(ReportsPath, $"{hash}.txt");
+
+        if (ReportExists(hash) == false)
+        {
+            File.WriteAllText(filename, reportData, Encoding.UTF8);
+            return true;
+        }
+
+        return false;
+    }
+
+    internal static async Task<ExchangeReport?> LoadReport(string path)
+    {
+        if (File.Exists(path) == false)
+        {
+            Log.Error($"File \'{path}\' not found.");
+            return null;
+        }
+
+        string data = await File.ReadAllTextAsync(path);
+        return await TryParse(data);
+    }
+
+    internal static bool ReportExists(string hash)
+    {
+        string path = Path.Combine(ReportsPath, $"{hash}.txt");
+        return File.Exists(path);
+    }
+
     /// <summary>
-    /// Attempts to fetch a currency report.
+    /// Attempts to parse the exchange report data.
     /// </summary>
-    /// <param name="date">Specified date or <see langword="null"/>. If this field is <see langword="null"/>, the current report will be fetched.</param>
-    /// <returns>Fetched report or <see langword="null"/> if an error occurred.</returns>
-    public static async Task<ExchangeReport?> FetchAsync(DateOnly? date)
+    /// <param name="data">Input report data.</param>
+    /// <returns>Parsed report or <see langword="null"/> if an error occurred.</returns>
+    public static async Task<ExchangeReport?> TryParse(string data)
     {
         try
         {
-            string url = date.HasValue switch
-            {
-                true => Core.GetExchangeRatesHistoryUrl(date.Value),
-                false => Core.ExchangeRatesUrl,
-            };
-
-            HttpResponseMessage response = await Core.HttpClient.GetAsync(url);
-            if (response.IsSuccessStatusCode == false)
-            {
-                Log.Error($"Get request failed. Reason: {response.ReasonPhrase ?? "Unknown"} - status code: {(int)response.StatusCode}", nameof(FetchAsync));
-                return null;
-            }
-
-            // gets the message content
-            string data = await response.Content.ReadAsStringAsync();
-
             string[] lines = data.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length <= 2)
             {
-                Log.Error($"The response is empty or invalid.", nameof(FetchAsync));
+                Log.Error($"The response is empty or invalid.", nameof(TryParse));
                 return null;
             }
 
@@ -138,6 +171,41 @@ public struct ExchangeReport
 
             report.Currencies = [.. currencies.OrderBy(x => x.Currency)];
             return report;
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(TryParse));
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Attempts to fetch a currency report.
+    /// </summary>
+    /// <param name="date">Specified date or <see langword="null"/>. If this field is <see langword="null"/>, the current report will be fetched.</param>
+    /// <returns>Fetched report or <see langword="null"/> if an error occurred.</returns>
+    public static async Task<ExchangeReport?> FetchAsync(DateOnly? date)
+    {
+        try
+        {
+            string url = date.HasValue switch
+            {
+                true => Core.GetExchangeRatesHistoryUrl(date.Value),
+                false => Core.ExchangeRatesUrl,
+            };
+
+            HttpResponseMessage response = await Core.HttpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode == false)
+            {
+                Log.Error($"Get request failed. Reason: {response.ReasonPhrase ?? "Unknown"} - status code: {(int)response.StatusCode}", nameof(FetchAsync));
+                return null;
+            }
+
+            // gets the message content
+            string data = await response.Content.ReadAsStringAsync();
+            await SaveReport(data);
+            return await TryParse(data);
         }
 
         catch (Exception ex)
