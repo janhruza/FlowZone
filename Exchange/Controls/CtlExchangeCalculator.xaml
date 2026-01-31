@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Exchange.Controls"
              mc:Ignorable="d"
-             d:DesignWidth="250">
+             d:DesignWidth="250"
+             Loaded="UserControl_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,6 +28,12 @@
             
             <ComboBox Name="cbxOutput"/>
 
+            <Label Content="Conversion amount"
+                   Margin="0,5,0,0"/>
+
+            <TextBox Name="txtAmount"
+                     PreviewKeyDown="txtAmount_PreviewKeyDown"/>
+
             <Label Content="Conversion result"
                    Margin="0,5,0,0"/>
 
@@ -42,10 +49,12 @@
 
             <Button Name="btnClear"
                     Content="Clear"
-                    Margin="0,0,5,0"/>
+                    Margin="0,0,5,0"
+                    Click="btnClear_Click"/>
             
             <Button Name="btnConvert"
-                    Content="Convert"/>
+                    Content="Convert"
+                    Click="btnConvert_Click"/>
 
         </StackPanel>
     </Grid>

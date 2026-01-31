@@ -48,13 +48,13 @@ public struct CurrencyInfo
 
         try
         {
-            string[] parts = data.Split(';', StringSplitOptions.TrimEntries);
+            string[] parts = data.Split('|', StringSplitOptions.TrimEntries);
 
             result.Country = parts[0];
             result.Currency = parts[1];
-            result.Amount = int.Parse(parts[2]);
+            result.Amount = int.Parse(parts[2], App.InputCulture);
             result.Code = parts[3];
-            result.Rate = decimal.Parse(parts[4]);
+            result.Rate = decimal.Parse(parts[4], App.InputCulture);
 
             return true;
         }

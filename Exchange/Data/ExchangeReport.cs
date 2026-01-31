@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -80,11 +81,9 @@ public struct ExchangeReport
     /// Attempts to fetch a currency report.
     /// </summary>
     /// <param name="date">Specified date or <see langword="null"/>. If this field is <see langword="null"/>, the current report will be fetched.</param>
-    /// <returns>Fetched report.</returns>
-    public static async Task<ExchangeReport> FetchAsync(DateOnly? date = null)
+    /// <returns>Fetched report or <see langword="null"/> if an error occurred.</returns>
+    public static async Task<ExchangeReport?> FetchAsync(DateOnly? date)
     {
-        ExchangeReport report = new ExchangeReport();
-
         try
         {
             string url = date.HasValue switch
@@ -93,42 +92,42 @@ public struct ExchangeReport
                 false => Core.ExchangeRatesUrl,
             };
 
-            HttpClient client = new HttpClient();
-
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await Core.HttpClient.GetAsync(url);
             if (response.IsSuccessStatusCode == false)
             {
-                Log.Error($"Get request failed. Reason: {response.ReasonPhrase ?? "Unknown"} - status code: {response.StatusCode}", nameof(FetchAsync));
-                return report;
+                Log.Error($"Get request failed. Reason: {response.ReasonPhrase ?? "Unknown"} - status code: {(int)response.StatusCode}", nameof(FetchAsync));
+                return null;
             }
 
             // gets the message content
             string data = await response.Content.ReadAsStringAsync();
 
-            string[] lines = data.Split(Environment.NewLine, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = data.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length <= 2)
             {
                 Log.Error($"The response is empty or invalid.", nameof(FetchAsync));
-                return report;
+                return null;
             }
 
             // get the metadata (first two lines)
             string[] metadata = lines[0].Split(' ');
+            ExchangeReport report = new ExchangeReport();
             report.Date = ParseReportDate(metadata[0]) ?? new DateOnly();
             report.Id = ParseReportId(metadata[1]) ?? int.MinValue;
-            report.Currencies = [];
+
+            List<CurrencyInfo> currencies = [];
 
             // get the currency infos
             for (int i = 2; i < lines.Length; i++)
             {
                 if (CurrencyInfo.TryParse(lines[i], out CurrencyInfo currencyInfo) == true)
                 {
-                    report.Currencies.Add(currencyInfo);
+                    currencies.Add(currencyInfo);
                 }
             }
 
             // add the CZK currency
-            report.Currencies.Add(new CurrencyInfo
+            currencies.Add(new CurrencyInfo
             {
                 Code = "CZK",
                 Amount = 1,
@@ -137,14 +136,24 @@ public struct ExchangeReport
                 Currency = "koruna"
             });
 
+            report.Currencies = [.. currencies.OrderBy(x => x.Currency)];
             return report;
         }
 
         catch (Exception ex)
         {
             Log.Error(ex, nameof(FetchAsync));
-            return report;
+            return null;
         }
+    }
+
+    /// <summary>
+    /// Attempts to fetch the current currency report.
+    /// </summary>
+    /// <returns>Fetched report or <see langword="null"/> if an error occurred.</returns>
+    public static async Task<ExchangeReport?> FetchAsync()
+    {
+        return await FetchAsync(null);
     }
 
     #endregion

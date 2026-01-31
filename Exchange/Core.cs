@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace Exchange;
 
@@ -7,6 +8,16 @@ namespace Exchange;
 /// </summary>
 public static class Core
 {
+    static Core()
+    {
+        HttpClient = new HttpClient();
+    }
+
+    /// <summary>
+    /// Representing a shared HTTP client.
+    /// </summary>
+    public static HttpClient HttpClient { get; }
+
     /// <summary>
     /// Representing a link to the current exchange rates.
     /// </summary>

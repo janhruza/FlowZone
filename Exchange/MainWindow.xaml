@@ -12,19 +12,35 @@
                      ResizeMode="CanMinimize"
                      SizeToContent="WidthAndHeight"
                      SnapsToDevicePixels="True"
-                     UseLayoutRounding="True">
+                     UseLayoutRounding="True"
+                     Loaded="IconlessWindow_Loaded">
 
-    <TabControl Margin="10"
-                Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <TabItem Header="Currency Exchange">
-            <controls:CtlExchangeCalculator Margin="0,5,0,0"/>
-        </TabItem>
+        <TabControl Margin="10"
+                    Width="400">
+
+            <TabItem Header="Currency Exchange">
+                <controls:CtlExchangeCalculator Margin="0,5,0,0"/>
+            </TabItem>
+
+            <TabItem Header="Conversion History">
+                <controls:CtlExchangeHistory />
+            </TabItem>
+
+        </TabControl>
+
+        <StatusBar Grid.Row="1"
+                   Name="statusBar"
+                   Visibility="Collapsed">
+            
+            <StatusBarItem Name="sbiMessage"/>
+        </StatusBar>
         
-        <TabItem Header="Conversion History">
-            <controls:CtlExchangeHistory />
-        </TabItem>
-        
-    </TabControl>
+    </Grid>
     
 </core:IconlessWindow>
