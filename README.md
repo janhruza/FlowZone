@@ -15,7 +15,7 @@
 |HashHive|WPF|HashHive is a simple hash computing program. It allows user to calculate hashes of a written text or selected files.|Active|
 |PassFort|WPF|Pass Fort is a simple, yet effective, password manager application. Its robust encryption will make your passwords safely stored.|Discontinued|
 |PathFinder|WPF|Simple file explorer application.|Paused|
-|ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|Active|
+|ResourceRadar|WPF|Resource Radar is a simple, personal inventory assistant that keeps track of your items.|Discontinued|
 |RipTide|WPF|RipTide is a simple video downloader build on top of the [yt-dlp](https://github.com/yt-dlp/yt-dlp) project.|Active|
 |TaskPilot|WPF|Task Pilot is a simple task manager application. It offers a simple yet intuitive UI.|Active|
 |UpDate|WPF|UpDate is a simple, but modern RSS reader. It will keep you up to date with your favorite media!|Active|
