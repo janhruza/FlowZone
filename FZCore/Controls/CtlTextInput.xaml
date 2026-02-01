@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="FZCore.Controls.CtlTextInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FZCore.Controls"
+             mc:Ignorable="d"
+             SnapsToDevicePixels="True"
+             UseLayoutRounding="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0"
+               Name="lbl"
+               Content="Header text"/>
+
+        <TextBox Grid.Row="1"
+                 Name="txt"
+                 Text="Input value"
+                 TextChanged="txt_TextChanged"/>
+
+        <Border Grid.Row="1"
+                BorderThickness="1"
+                BorderBrush="Transparent"
+                IsHitTestVisible="False"
+                Width="{Binding ElementName=txt, Path=Width}"
+                Height="{Binding ElementName=txt, Path=Height}">
+
+            <TextBlock IsHitTestVisible="False"
+                       Name="tbPlaceholder"
+                       Opacity="0.5"
+                       Text="Input value"
+                       FontWeight="{Binding ElementName=txt, Path=FontWeight}"
+                       FontSize="{Binding ElementName=txt, Path=FontSize}"
+                       Margin="{Binding ElementName=txt, Path=Margin}"
+                       Padding="{Binding ElementName=txt, Path=Padding}"
+                       FontStyle="{Binding ElementName=txt, Path=FontStyle}"
+                       TextAlignment="{Binding ElementName=txt, Path=TextAlignment}"
+                       VerticalAlignment="{Binding ElementName=txt, Path=VerticalAlignment}"
+                       HorizontalAlignment="{Binding ElementName=txt, Path=HorizontalAlignment}"/>
+
+        </Border>
+    </Grid>
+
+</UserControl>
