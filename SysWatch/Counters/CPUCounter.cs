@@ -11,7 +11,7 @@ public class CPUCounter : Counter
     /// <remarks>The timer is set to trigger at 500-millisecond intervals, which determines how frequently CPU
     /// usage data is sampled. This constructor prepares the instance for use but does not start monitoring
     /// automatically.</remarks>
-    public CPUCounter() : base("Processor", "% Processor Time", "_Total", Counter.Interval)
+    public CPUCounter() : base("Processor", "% Processor Time", "_Total")
     {
     }
 }

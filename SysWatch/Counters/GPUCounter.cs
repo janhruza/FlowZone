@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows.Threading;
 
 namespace SysWatch.Counters;
 
@@ -17,8 +16,10 @@ namespace SysWatch.Counters;
 /// This class is not thread-safe and should be used from the UI thread when integrating with DispatcherTimer.</remarks>
 public class GPUCounter : ICounter
 {
-    private DispatcherTimer _timer;
     private List<PerformanceCounter> _counters = new();
+
+    /// <inheritdoc />
+    public bool IsActive { get; private set; }
 
     /// <inheritdoc />
     public event EventHandler<float> ValueObtained = delegate { };
@@ -31,8 +32,6 @@ public class GPUCounter : ICounter
     /// monitoring.</remarks>
     public GPUCounter()
     {
-        _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
-        _timer.Tick += _timer_Tick;
         InitializeCounters();
     }
 
@@ -57,17 +56,26 @@ public class GPUCounter : ICounter
     }
 
     /// <inheritdoc />
-    public void Start() => _timer.Start();
+    public void Start() => IsActive = true;
 
     /// <inheritdoc />
-    public void Stop() => _timer.Stop();
+    public void Stop() => IsActive = false;
 
-    private void _timer_Tick(object? sender, EventArgs e)
+    /// <inheritdoc />
+    public void Update()
     {
         float totalUsage = 0;
         foreach (var counter in _counters)
         {
-            try { totalUsage += counter.NextValue(); } catch { }
+            try
+            {
+                totalUsage += counter.NextValue();
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex, nameof(Update));
+            }
         }
 
         // multiple GPUs can cause results > 100%

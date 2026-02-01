@@ -15,5 +15,5 @@ public class DiskUsageCounter : Counter
     /// </summary>
     /// <remarks>This counter aggregates disk activity across all physical disks on the system. The sampling
     /// interval is set to 500 milliseconds by default.</remarks>
-    public DiskUsageCounter() : base("PhysicalDisk", "% Disk Time", "_Total", Counter.Interval) { }
+    public DiskUsageCounter() : base("PhysicalDisk", "% Disk Time", "_Total") { }
 }

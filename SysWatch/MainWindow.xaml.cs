@@ -11,7 +11,7 @@ namespace SysWatch;
 /// <summary>
 /// Representing the main window.
 /// </summary>
-public partial class MainWindow : FreeWindow
+public partial class MainWindow : IconlessWindow
 {
     const string DefaultTitle = "System Watch";
 

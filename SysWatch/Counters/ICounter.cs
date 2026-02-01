@@ -20,13 +20,20 @@ public interface ICounter
     /// <summary>
     /// Initiates the operation or process represented by the current instance.
     /// </summary>
+    void Update();
+
+    /// <summary>
+    /// Activates the counter.
+    /// </summary>
     void Start();
 
     /// <summary>
-    /// Stops the current operation or service.
+    /// Deactivates the timer.
     /// </summary>
-    /// <remarks>Call this method to halt ongoing activity. The specific behavior depends on the
-    /// implementation; some operations may complete gracefully, while others may terminate immediately. This method is
-    /// typically used to release resources or transition the object to an inactive state.</remarks>
-    void Stop();
+    void Stop();   // Nastaví IsActive = false
+
+    /// <summary>
+    /// Determines whether the counter is active or not.
+    /// </summary>
+    bool IsActive { get; }
 }

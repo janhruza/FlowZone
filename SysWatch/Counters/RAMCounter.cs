@@ -15,5 +15,5 @@ public class RAMCounter : Counter
     /// <remarks>This constructor configures the counter to track overall memory usage as a percentage of
     /// committed bytes. Use this instance to retrieve real-time memory utilization metrics for performance monitoring
     /// or diagnostics.</remarks>
-    public RAMCounter() : base("Memory", "% Committed Bytes In Use", string.Empty, Counter.Interval) { }
+    public RAMCounter() : base("Memory", "% Committed Bytes In Use", string.Empty) { }
 }

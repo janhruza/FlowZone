@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FZCore;
+
+using System;
 using System.Diagnostics;
-using System.Windows.Threading;
 
 namespace SysWatch.Counters;
 
@@ -13,57 +14,55 @@ namespace SysWatch.Counters;
 /// scenarios where real-time or periodic performance monitoring is required.</remarks>
 public class Counter : ICounter
 {
-    private DispatcherTimer _timer;
     private PerformanceCounter _counter;
 
     /// <inheritdoc />
     public event EventHandler<float> ValueObtained = delegate { };
 
-    /// <inheritdoc />
-    public void Start()
-    {
-        _timer.Start();
-    }
-
-    /// <inheritdoc />
-    public void Stop()
-    {
-        _timer.Stop();
-    }
-
-    private void _timer_Tick(object? sender, EventArgs e)
-    {
-        float value = _counter.NextValue();
-        this.ValueObtained.Invoke(this, value);
-    }
-
     /// <summary>
-    /// Initializes a new instance of the Counter class for monitoring a specific performance counter instance.
+    /// Initializes a new instance of the Counter class for the specified performance counter category, counter, and
+    /// instance.
     /// </summary>
-    /// <remarks>This constructor sets up the Counter to periodically sample the specified performance
-    /// counter. Ensure that the provided category, counter, and instance names correspond to valid performance counters
-    /// on the system.</remarks>
-    /// <param name="categoryName">The name of the performance counter category to monitor. Cannot be null or empty.</param>
+    /// <remarks>Use this constructor to create a Counter object that targets a specific performance counter.
+    /// Ensure that the specified category, counter, and instance exist on the system; otherwise, an exception may be
+    /// thrown when accessing the counter.</remarks>
+    /// <param name="categoryName">The name of the performance counter category. Cannot be null or empty.</param>
     /// <param name="counterName">The name of the performance counter within the specified category. Cannot be null or empty.</param>
-    /// <param name="instanceName">The name of the instance of the performance counter to monitor. Use an empty string for the default instance.</param>
-    /// <param name="interval">The interval of the timer.</param>
-    public Counter(string categoryName, string counterName, string instanceName, int interval)
+    /// <param name="instanceName">The name of the performance counter instance. Specify an empty string for single-instance counters.</param>
+    public Counter(string categoryName, string counterName, string instanceName)
     {
-        _timer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromMilliseconds(interval)
-        };
-
         _counter = new PerformanceCounter(categoryName, counterName, instanceName);
-        _timer.Tick += _timer_Tick;
+        try { _counter.NextValue(); } catch { }
     }
 
-    #region Static code
+    /// <inheritdoc />
+    public bool IsActive { get; set; }
 
     /// <summary>
-    /// Represents the default interval value, in milliseconds, used for timing operations.
+    /// Enables the component, allowing it to begin operation.
     /// </summary>
-    public const int Interval = 500;
+    public void Start() => IsActive = true;
 
-    #endregion
+    /// <summary>
+    /// Disables the current instance, stopping any ongoing activity or processing.
+    /// </summary>
+    public void Stop() => IsActive = false;
+
+    /// <summary>
+    /// Gets the latest value from the counter.
+    /// </summary>
+    public void Update()
+    {
+        try
+        {
+            if (!IsActive) return;
+
+            float value = _counter.NextValue();
+            ValueObtained.Invoke(this, value);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(Update));
+        }
+    }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
+using SysWatch.Counters;
 
 namespace SysWatch.Pages;
 
@@ -17,8 +20,19 @@ public partial class PgDashboard : Page
         InitializeComponent();
     }
 
-    private void SubscribeCounters()
+    private async Task SubscribeCounters()
     {
+    start:
+        ICounter[] counters = [App.CPUCounter, App.RAMCounter, App.DriveCounter, App.GPUCounter];
+        foreach (ICounter counter in counters)
+        {
+            if (counter is null)
+            {
+                await Task.Delay(1000);
+                goto start;
+            }
+        }
+
         App.CPUCounter.ValueObtained += CPUCounter_ValueObtained;
         App.RAMCounter.ValueObtained += RAMCounter_ValueObtained;
         App.DriveCounter.ValueObtained += DriveCounter_ValueObtained;
@@ -65,9 +79,9 @@ public partial class PgDashboard : Page
         });
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        this.SubscribeCounters();
+        await this.SubscribeCounters();
         return;
     }
 

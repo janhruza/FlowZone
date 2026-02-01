@@ -1,6 +1,7 @@
 ﻿using Expando.Core;
 
 using FZCore;
+using FZCore.Windows.Extra;
 
 using System;
 using System.Windows;
