@@ -14,7 +14,8 @@
                      SnapsToDevicePixels="True"
                      UseLayoutRounding="True"
                      MaxHeight="600"
-                     Loaded="IconlessWindow_Loaded">
+                     Loaded="IconlessWindow_Loaded"
+                     KeyDown="IconlessWindow_KeyDown">
 
     <Grid>
         <Grid.RowDefinitions>

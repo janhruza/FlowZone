@@ -13,6 +13,20 @@ public partial class MainWindow : IconlessWindow
     public MainWindow()
     {
         InitializeComponent();
+
+        WindowExtender extender = new WindowExtender(this);
+        extender.AddSeparator(0x1000);
+        extender.AddMenuItem(0x1001, new ExtendedMenuItem
+        {
+            Header = "View Log\tF1",
+            OnClick = () => ViewLog()
+        });
+    }
+
+    private void ViewLog()
+    {
+        _ = FZCore.Core.ViewLog(this);
+        return;
     }
 
     /// <summary>
@@ -43,5 +57,13 @@ public partial class MainWindow : IconlessWindow
     private void IconlessWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
         _ = SetStatusMessage("Window is ready.");
+    }
+
+    private void IconlessWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F1)
+        {
+            ViewLog();
+        }
     }
 }
