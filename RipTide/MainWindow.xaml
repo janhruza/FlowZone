@@ -139,8 +139,7 @@
             <Label Content="Video URL"/>
             <TextBox Width="450"
                      Name="txtUrl"
-                     Margin="0,0,0,5"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                     Margin="0,0,0,5"/>
 
             <Label Content="Save location"/>
             <Grid>
@@ -150,8 +149,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0"
-                         Name="txtLocation"
-                         SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                         Name="txtLocation"/>
 
                 <Button Grid.Column="1"
                         Margin="5,0,0,0"

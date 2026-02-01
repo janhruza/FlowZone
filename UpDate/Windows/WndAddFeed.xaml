@@ -25,7 +25,6 @@
 
             <Label Content="Feed URL address"/>
             <TextBox Name="txtUrl"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                      TextChanged="txtUrl_TextChanged"/>
 
         </StackPanel>

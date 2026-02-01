@@ -26,7 +26,7 @@
                         <Run Text="Enter parameter value -"/>
                         <Run Text="supported parameters"
                              Name="rSupportedSites"
-                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"
                              MouseEnter="rSupportedSites_MouseEnter"
                              MouseLeave="rSupportedSites_MouseLeave"
                              MouseLeftButtonDown="rSupportedSites_MouseLeftButtonDown"/>
@@ -36,7 +36,6 @@
             
             <TextBox Name="txtParam"
                      Width="350"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                      TextChanged="txtParam_TextChanged"/>
 
         </StackPanel>

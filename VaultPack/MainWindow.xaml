@@ -64,7 +64,6 @@
 
                             <TextBox Grid.Column="0"
                                      Margin="0,0,5,0"
-                                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                                      Name="txtCreatePath"/>
 
                             <Button Grid.Column="1"
@@ -113,8 +112,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Name="txtArchivePath"
-                                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                            <TextBox Name="txtArchivePath"/>
                             <Button Grid.Column="1"
                                 Margin="5,0,0,0"
                                 Content="..."
@@ -131,8 +129,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Name="txtExtractFolder"
-                                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                            <TextBox Name="txtExtractFolder"/>
                             <Button Grid.Column="1"
                                     Margin="5,0,0,0"
                                     Content="..."

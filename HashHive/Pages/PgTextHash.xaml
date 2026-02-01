@@ -9,8 +9,7 @@
     <StackPanel Width="400">
         <Label Content="Input data"/>
         <TextBox Name="txtInput"
-                 Margin="0,0,0,5"
-                 SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                 Margin="0,0,0,5"/>
 
         <Label Content="Hashing algorithm"/>
         <StackPanel Orientation="Horizontal"
@@ -56,8 +55,7 @@
 
             <TextBox Grid.Column="0"
                      Name="txtResult"
-                     IsReadOnly="True"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                     IsReadOnly="True"/>
 
             <Button Grid.Column="1"
                     Content="Copy"

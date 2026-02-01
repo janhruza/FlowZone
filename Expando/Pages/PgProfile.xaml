@@ -66,8 +66,8 @@
                                 Click="btnClearTransactions_Click"/>
                         
                         <Button Content="Delete profile"
-                                Background="{x:Static SystemColors.AccentColorDark1Brush}"
-                                BorderBrush="{x:Static SystemColors.AccentColorDark1Brush}"
+                                Background="{x:Static SystemColors.AccentColorBrush}"
+                                BorderBrush="{x:Static SystemColors.AccentColorBrush}"
                                 Name="btnDeleteProfile"
                                 Click="btnDeleteProfile_Click"/>
                     </StackPanel>

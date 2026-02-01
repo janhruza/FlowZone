@@ -33,8 +33,7 @@
                                         MouseLeave="rRestore_MouseLeave"/><Run Text=")"/>
                 </TextBlock>
             </Label>
-            <TextBox Name="txtBaseTitle"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+            <TextBox Name="txtBaseTitle"/>
 
             <Label Content="Theme mode"
                    Margin="0,5,0,0"/>

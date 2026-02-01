@@ -16,8 +16,7 @@
 
             <TextBox Name="txtPath"
                      Grid.Column="0"
-                     Margin="0,0,5,0"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"/>
+                     Margin="0,0,5,0"/>
 
             <Button Grid.Column="1"
                     Name="btnChooseFile"
@@ -70,7 +69,6 @@
             
             <TextBox Name="txtResult"
                      IsReadOnly="True"
-                     SelectionBrush="{x:Static SystemColors.AccentColorBrush}"
                      Margin="0,0,5,0"/>
 
             <Button Grid.Column="1"
