@@ -27,6 +27,9 @@
   <Project Path="RipTide/RipTide.csproj">
     <Platform Solution="Debug|x64" Project="x64" />
   </Project>
+  <Project Path="SysWatch/SysWatch.csproj" Id="76bad830-faee-49c8-84fc-cc94f62bee84">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="TaskPilot/TaskPilot.csproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>

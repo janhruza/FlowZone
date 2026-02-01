@@ -42,6 +42,7 @@ public static class Core
     public static void ErrorBox(string message, string caption = "FZCore")
     {
         _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+        //_ = DialogWindow.ShowDialog(message, caption, caption, DWImage.ERROR, DWButton.OK);
         return;
     }
 

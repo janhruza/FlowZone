@@ -1,7 +1,7 @@
-﻿using FZCore.Controls;
-using FZCore.Windows;
+﻿using FZCore.Windows;
 
 using System;
+using System.Windows.Controls;
 
 namespace FZTest;
 
@@ -10,25 +10,41 @@ internal class Program
     [STAThread]
     private static int Main(string[] args)
     {
-        CtlTextInput ctlInput = new CtlTextInput
+        Console.Title = "FlowZone Test Utility";
+
+        const int MIN_WIDTH = 250;
+        const int MIN_HEIGHT = 100;
+
+        MenuItem miClose = new MenuItem
         {
-            Margin = new System.Windows.Thickness(10),
-            Width = 220
+            Header = "Close",
+            InputGestureText = "Alt+F4"
         };
 
-        BaseWindow wnd = new BaseWindow
+        ContextMenu cm = new ContextMenu
         {
-            ResizeMode = System.Windows.ResizeMode.NoResize,
-            Title = "Control Test",
-            SizeToContent = System.Windows.SizeToContent.WidthAndHeight,
-            Content = ctlInput,
-            MinWidth = ctlInput.RenderSize.Width,
-            MinHeight = ctlInput.RenderSize.Height
+            Items =
+            {
+                miClose
+            }
         };
+
+        BaseWindow wnd = new FreeWindow
+        {
+            Title = Console.Title,
+            MinWidth = MIN_WIDTH,
+            MinHeight = MIN_HEIGHT,
+            Width = MIN_WIDTH,
+            Height = MIN_HEIGHT,
+            ContextMenu = cm,
+            ThemeMode = FZCore.FZThemeMode.System
+        };
+
+        miClose.Click += (s, e) => wnd.Close();
 
         wnd.MouseLeftButtonDown += (s, e) => wnd.DragMove();
-
         _ = wnd.ShowDialog();
+
         return 0;
     }
 }
