@@ -30,6 +30,6 @@ public static class StringExtensions
             return value;
         }
 
-        return value.Substring(0, length) + "...";
+        return value[..length] + "...";
     }
 }

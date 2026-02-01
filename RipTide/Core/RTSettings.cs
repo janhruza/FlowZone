@@ -140,7 +140,7 @@ public class RTSettings
 
             // load JSON structured data and deserialize them
             string data = File.ReadAllText(settingsPath, Encoding.UTF8);
-            RTSettings? set = (RTSettings?)JsonSerializer.Deserialize<RTSettings>(data);
+            RTSettings? set = JsonSerializer.Deserialize<RTSettings>(data);
 
             if (set != null)
             {

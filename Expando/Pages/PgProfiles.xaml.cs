@@ -105,7 +105,7 @@ public partial class PgProfiles : Page, IExpandoPage
 
         Label lProfileId = new Label
         {
-            Content = "ID: " + ((ulong)profile.Id).ToString(),
+            Content = "ID: " + profile.Id.ToString(),
             FontSize = 12
         };
 

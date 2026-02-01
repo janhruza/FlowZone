@@ -128,7 +128,7 @@ public static class AudioTagParser
                                     case "IART": info.Artist = value; break; // Artist
                                     case "IPRD": info.Album = value; break;  // Product/Album
                                     case "ICRD":                             // Creation Date
-                                        if (int.TryParse(value.Length >= 4 ? value.Substring(0, 4) : "", out int year))
+                                        if (int.TryParse(value.Length >= 4 ? value[..4] : "", out int year))
                                             info.Year = year;
                                         break;
                                 }

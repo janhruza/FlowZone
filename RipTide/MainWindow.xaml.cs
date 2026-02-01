@@ -290,7 +290,6 @@ public partial class MainWindow : IconlessWindow
 
     private void SetThemeMode(Core.ThemeMode mode, MenuItem? toggleOn)
     {
-#pragma warning disable WPF0001
         // disable all theme-related check boxes (on menu items)
         miThemeLight.IsChecked = false;
         miThemeDark.IsChecked = false;
@@ -327,7 +326,6 @@ public partial class MainWindow : IconlessWindow
         {
             toggleOn.IsChecked = true;
         }
-#pragma warning restore WPF0001
     }
 
     private void miAoT_Checked(object sender, RoutedEventArgs e)
