@@ -114,16 +114,16 @@ public partial class MainWindow : FreeWindow
 
     private void tviCPU_Selected(object sender, RoutedEventArgs e)
     {
-
+        return;
     }
 
     private void tviRAM_Selected(object sender, RoutedEventArgs e)
     {
-
+        return;
     }
 
     private void tviTasks_Selected(object sender, RoutedEventArgs e)
     {
-
+        return;
     }
 }

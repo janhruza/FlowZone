@@ -57,4 +57,13 @@ public class Counter : ICounter
         _counter = new PerformanceCounter(categoryName, counterName, instanceName);
         _timer.Tick += _timer_Tick;
     }
+
+    #region Static code
+
+    /// <summary>
+    /// Represents the default interval value, in milliseconds, used for timing operations.
+    /// </summary>
+    public const int Interval = 500;
+
+    #endregion
 }

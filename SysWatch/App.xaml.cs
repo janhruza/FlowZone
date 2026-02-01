@@ -31,6 +31,26 @@ public partial class App : BaseApplication
     /// returns a new instance; reuse the instance if you require consistent measurements over time.</remarks>
     public static CPUCounter CPUCounter { get; } = new CPUCounter();
 
+    /// <summary>
+    /// Gets a shared instance of the RAMCounter used to monitor system memory usage.
+    /// </summary>
+    /// <remarks>This property provides a singleton RAMCounter that can be used throughout the application to
+    /// retrieve memory statistics. The instance is thread-safe and intended for global access.</remarks>
+    public static RAMCounter RAMCounter { get; } = new RAMCounter();
+
+    /// <summary>
+    /// Gets a static counter that provides disk usage statistics for the system drive.
+    /// </summary>
+    public static DiskUsageCounter DriveCounter { get; } = new DiskUsageCounter();
+
+    /// <summary>
+    /// Gets the global GPU counter instance used to monitor GPU-related metrics.
+    /// </summary>
+    /// <remarks>This property provides access to a shared GPUCounter object for tracking GPU performance
+    /// statistics across the application. The returned instance is thread-safe and intended for use throughout the
+    /// application's lifetime.</remarks>
+    public static GPUCounter GPUCounter { get; } = new GPUCounter();
+
     #endregion
 
     /// <summary>
@@ -48,7 +68,11 @@ public partial class App : BaseApplication
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         // start the counters
-        App.CPUCounter.Start();
+        ICounter[] counters = [CPUCounter, RAMCounter, DriveCounter, GPUCounter];
+        foreach (ICounter counter in counters)
+        {
+            counter.Start();
+        }
 
         // show the main window
         MainWindow.Show();
