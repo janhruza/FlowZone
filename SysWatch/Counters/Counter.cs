@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SysWatch.Counters;
 
@@ -14,7 +15,7 @@ namespace SysWatch.Counters;
 /// scenarios where real-time or periodic performance monitoring is required.</remarks>
 public class Counter : ICounter
 {
-    private PerformanceCounter _counter;
+    protected PerformanceCounter _counter;
 
     /// <inheritdoc />
     public event EventHandler<float> ValueObtained = delegate { };
@@ -32,7 +33,7 @@ public class Counter : ICounter
     public Counter(string categoryName, string counterName, string instanceName)
     {
         _counter = new PerformanceCounter(categoryName, counterName, instanceName);
-        try { _counter.NextValue(); } catch { }
+        try { _ = _counter.NextValue(); } catch { }
     }
 
     /// <inheritdoc />
@@ -51,7 +52,7 @@ public class Counter : ICounter
     /// <summary>
     /// Gets the latest value from the counter.
     /// </summary>
-    public void Update()
+    public virtual async Task Update() // must be virtual
     {
         try
         {

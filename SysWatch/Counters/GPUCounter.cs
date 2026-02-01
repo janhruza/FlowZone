@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SysWatch.Counters;
 
@@ -49,7 +50,7 @@ public class GPUCounter : ICounter
             }
         }
 
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Log.Error(ex, nameof(InitializeCounters));
         }
@@ -62,7 +63,7 @@ public class GPUCounter : ICounter
     public void Stop() => IsActive = false;
 
     /// <inheritdoc />
-    public void Update()
+    public async Task Update()
     {
         float totalUsage = 0;
         foreach (var counter in _counters)

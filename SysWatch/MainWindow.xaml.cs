@@ -13,7 +13,7 @@ namespace SysWatch;
 /// </summary>
 public partial class MainWindow : IconlessWindow
 {
-    const string DefaultTitle = "System Watch";
+    private const string DefaultTitle = "System Watch";
 
     /// <summary>
     /// Creates a new <see cref="MainWindow"/> instance.
@@ -98,18 +98,18 @@ public partial class MainWindow : IconlessWindow
         // update the window title
         if (e.Content is Page pg)
         {
-            this.Title = $"{pg.Title} - {DefaultTitle}";
+            Title = $"{pg.Title} - {DefaultTitle}";
         }
     }
 
     private void wnd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        this.DragMove();
+        DragMove();
     }
 
     private async void tviDashboard_Selected(object sender, RoutedEventArgs e)
     {
-        await ActivatePage(App.PgDashboard);
+        _ = await ActivatePage(App.PgDashboard);
     }
 
     private void tviCPU_Selected(object sender, RoutedEventArgs e)

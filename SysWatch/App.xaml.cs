@@ -1,7 +1,6 @@
 ﻿using FZCore;
 using FZCore.Extra;
 
-using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -60,9 +59,6 @@ public partial class App : BaseApplication
 
     private async void Application_Startup(object sender, StartupEventArgs e)
     {
-        DevConsole.OpenConsole();
-
-        // 1. Nejdřív vytvoříme čítače na pozadí (těch 15s)
         await Task.Run(() =>
         {
             CPUCounter = new CPUCounter();
@@ -71,22 +67,14 @@ public partial class App : BaseApplication
             DriveCounter = new DiskUsageCounter();
         });
 
-        MonitorService.Register(CPUCounter);
-        MonitorService.Register(RAMCounter);
-        MonitorService.Register(GPUCounter);
-        MonitorService.Register(DriveCounter);
-
-        // 2. TEĎ jsme zpět v UI vlákně (STA). Vytvoříme stránku a okno.
         PgDashboard = new PgDashboard();
         MainWindow = new MainWindow();
 
         MainWindow.Show();
-        MonitorService.Start();
     }
 
     private void Application_Exit(object sender, ExitEventArgs e)
     {
         MonitorService.Stop();
-        DevConsole.CloseConsole();
     }
 }

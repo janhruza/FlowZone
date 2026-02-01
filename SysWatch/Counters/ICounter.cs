@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace SysWatch.Counters;
 
@@ -20,7 +21,7 @@ public interface ICounter
     /// <summary>
     /// Initiates the operation or process represented by the current instance.
     /// </summary>
-    void Update();
+    Task Update();
 
     /// <summary>
     /// Activates the counter.

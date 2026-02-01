@@ -63,12 +63,28 @@ public partial class PgDashboard : Page
         });
     }
 
-    private void UnsubscribeCounters()
+    private async Task UnsubscribeCounters()
     {
         App.CPUCounter.ValueObtained -= CPUCounter_ValueObtained;
         App.RAMCounter.ValueObtained -= RAMCounter_ValueObtained;
         App.DriveCounter.ValueObtained -= DriveCounter_ValueObtained;
         App.GPUCounter.ValueObtained -= GPUCounter_ValueObtained;
+    }
+
+    private async Task RegisterCounters()
+    {
+        MonitorService.Register(App.CPUCounter);
+        MonitorService.Register(App.RAMCounter);
+        MonitorService.Register(App.GPUCounter);
+        MonitorService.Register(App.DriveCounter);
+    }
+
+    private async Task UnregisterCounters()
+    {
+        MonitorService.Unregister(App.CPUCounter);
+        MonitorService.Unregister(App.RAMCounter);
+        MonitorService.Unregister(App.GPUCounter);
+        MonitorService.Unregister(App.DriveCounter);
     }
 
     private void CPUCounter_ValueObtained(object? sender, float e)
@@ -81,13 +97,17 @@ public partial class PgDashboard : Page
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        await this.SubscribeCounters();
+        await RegisterCounters();
+
+        await SubscribeCounters();
+        MonitorService.Start();
         return;
     }
 
-    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    private async void Page_Unloaded(object sender, RoutedEventArgs e)
     {
-        this.UnsubscribeCounters();
+        await UnregisterCounters();
+        await UnsubscribeCounters();
         return;
     }
 }

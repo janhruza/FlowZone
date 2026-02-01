@@ -24,12 +24,11 @@ public static class MonitorService
         _masterTimer.Tick += _masterTimer_Tick;
     }
 
-    private static void _masterTimer_Tick(object? sender, EventArgs e)
+    private static async void _masterTimer_Tick(object? sender, EventArgs e)
     {
-        Console.WriteLine("Counters: {0}", _activeCounters.Count);
         foreach (var counter in _activeCounters)
         {
-            counter.Update();
+            await counter.Update();
         }
     }
 
@@ -38,6 +37,18 @@ public static class MonitorService
     /// </summary>
     /// <param name="counter">The counter to register. Cannot be null.</param>
     public static void Register(ICounter counter) => _activeCounters.Add(counter);
+
+    /// <summary>
+    /// Registers the specified counter from receiving updates from the system.
+    /// </summary>
+    /// <param name="counter">The counter to register. Cannot be null.</param>
+    public static void Unregister(ICounter counter)
+    {
+        if (_activeCounters.Contains(counter) == true)
+        {
+            _activeCounters.Remove(counter);
+        }
+    }
 
     /// <summary>
     /// Starts the master timer if it is not already running.
