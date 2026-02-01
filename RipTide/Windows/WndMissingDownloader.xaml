@@ -19,13 +19,13 @@
 
         <!--Content panel-->
         <StackPanel Grid.Row="0"
-                    Margin="10,10,10,0">
+                    Margin="10">
             <Label>
                 <Label.Content>
                     <TextBlock Text="Missing video downloader"
                                FontSize="24"
                                FontWeight="Bold"
-                               Foreground="{x:Static SystemColors.AccentColorLight1Brush}"/>
+                               Foreground="{x:Static SystemColors.AccentColorBrush}"/>
                 </Label.Content>
             </Label>
 
@@ -35,7 +35,7 @@
                         <Run Text="RipTide's downloader"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Foreground="{x:Static SystemColors.AccentColorLight2Brush}" />
+                               Foreground="{x:Static SystemColors.AccentColorBrush}" />
                         
                         <LineBreak />
                         
@@ -47,14 +47,14 @@
                         <Run Text="Step 1: Download YT-DLP"
                              FontSize="16"
                              FontWeight="SemiBold"
-                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"/>
                         
                         <LineBreak />
                         
                         <Run Text="To continue using RipTide, you need to download the latest version of YT-DLP. You can get it directly from the official source:"/>
                         
                         <Run Text="https://github.com/yt-dlp/yt-dlp/releases/latest"
-                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"
                              Name="rDownloadLink"
                              MouseEnter="rDownloadLink_MouseEnter"
                              MouseLeave="rDownloadLink_MouseLeave"
@@ -66,7 +66,7 @@
                         <Run Text="Step 2: Place YT-DLP in RipTide’s Directory"
                              FontSize="16"
                              FontWeight="SemiBold"
-                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"/>
                         
                         <LineBreak />
                         
@@ -85,7 +85,7 @@
                         <Run Text="Step 3: Refresh RipTide"
                              FontSize="16"
                              FontWeight="SemiBold"
-                             Foreground="{x:Static SystemColors.AccentColorLight3Brush}"/>
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"/>
 
                         <LineBreak />
                         
@@ -99,18 +99,7 @@
                     </TextBlock>
                 </Label.Content>
             </Label>
-            
-        </StackPanel>
 
-        <!--Control buttons-->
-        <StackPanel Grid.Row="1"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"
-                    Margin="10">
-            
-            <Button Content="Close"
-                    Name="btnClose"
-                    Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
     

@@ -19,26 +19,26 @@
 
         <!--Main content-->
         <StackPanel Grid.Row="0"
-                    Margin="10,10,10,0">
-            
+                    Margin="10">
+
             <Label Content="RipTide Video Downloader"
                    FontSize="24"
-                   Foreground="{x:Static SystemColors.AccentColorLight1Brush}"
+                   Foreground="{x:Static SystemColors.AccentColorBrush}"
                    FontWeight="Bold"/>
 
             <Label Margin="0,5,0,0">
-                
+
                 <Label.Content>
                     <TextBlock TextWrapping="Wrap">
                         <Run Text="About RipTide"
                              FontSize="18"
                              FontWeight="SemiBold"
-                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"/>
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"/>
                         
                         <LineBreak />
                         
                         <Run Text="RipTide is a simple video downloader based on the YT-DLP downloader. RipTide is a part of the FlowZone solution."/>
-                        
+
                     </TextBlock>
                 </Label.Content>
             </Label>
@@ -50,7 +50,7 @@
                         <Run Text="License"
                              FontSize="18"
                              FontWeight="SemiBold"
-                             Foreground="{x:Static SystemColors.AccentColorLight2Brush}"/>
+                             Foreground="{x:Static SystemColors.AccentColorBrush}"/>
                         
                         <LineBreak />
                         
@@ -69,18 +69,6 @@
                     </TextBlock>
                 </Label.Content>
             </Label>
-            
-        </StackPanel>
-
-        <!--Control buttons-->
-        <StackPanel Grid.Row="1"
-                    Margin="10"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right">
-
-            <Button Content="Close"
-                    Name="btnOk"
-                    Click="btnOk_Click"/>
 
         </StackPanel>
     </Grid>
