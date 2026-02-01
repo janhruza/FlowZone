@@ -13,6 +13,7 @@
                      SizeToContent="WidthAndHeight"
                      SnapsToDevicePixels="True"
                      UseLayoutRounding="True"
+                     MaxHeight="600"
                      Loaded="IconlessWindow_Loaded">
 
     <Grid>
@@ -24,12 +25,12 @@
         <TabControl Margin="10"
                     Width="400">
 
-            <TabItem Header="Currency Exchange">
+            <TabItem Header="Statistics">
                 <controls:CtlExchangeCalculator Margin="0,5,0,0"/>
             </TabItem>
 
             <TabItem Header="Conversion History">
-                <controls:CtlExchangeHistory />
+                <controls:CtlExchangeHistory Margin="0,5,0,0"/>
             </TabItem>
 
         </TabControl>

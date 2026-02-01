@@ -4,9 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Exchange.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             SnapsToDevicePixels="True"
+             UseLayoutRounding="True"
+             Loaded="UserControl_Loaded">
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <UniformGrid Columns="2"
+                     Grid.Row="0">
+
+            <StackPanel Margin="0,0,5,0">
+                <Label Content="Currency"/>
+                <ComboBox Name="cbxCurrency"/>
+            </StackPanel>
+
+            <StackPanel Margin="5,0,0,0">
+                <Label Content="Metric"/>
+                <ComboBox Name="cbxMetric"/>
+            </StackPanel>
             
+        </UniformGrid>
+
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="0,5,0,0"
+                      Name="sv">
+            
+            <Canvas Background="Transparent"
+                    Name="canvas"/>
+            
+        </ScrollViewer>
+        
     </Grid>
+    
 </UserControl>

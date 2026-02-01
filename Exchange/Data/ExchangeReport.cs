@@ -170,6 +170,7 @@ public struct ExchangeReport
             });
 
             report.Currencies = [.. currencies.OrderBy(x => x.Currency)];
+            LatestReport = report; // set the latest processed report value
             return report;
         }
 
@@ -223,6 +224,11 @@ public struct ExchangeReport
     {
         return await FetchAsync(null);
     }
+
+    /// <summary>
+    /// Representing the last fetched report.
+    /// </summary>
+    public static ExchangeReport? LatestReport;
 
     #endregion
 }
