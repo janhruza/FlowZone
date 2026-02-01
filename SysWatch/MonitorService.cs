@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 using SysWatch.Counters;
@@ -20,16 +22,19 @@ public static class MonitorService
 
     static MonitorService()
     {
-        _masterTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
+        _masterTimer = new DispatcherTimer(DispatcherPriority.Background);
+        _masterTimer.Interval = TimeSpan.FromMilliseconds(1000);
         _masterTimer.Tick += _masterTimer_Tick;
     }
 
     private static async void _masterTimer_Tick(object? sender, EventArgs e)
     {
-        foreach (var counter in _activeCounters)
-        {
-            await counter.Update();
-        }
+        //foreach (var counter in _activeCounters)
+        //{
+        //    await counter.Update();
+        //}
+        var tasks = _activeCounters.Select(c => Task.Run(() => c.Update()));
+        await Task.WhenAll(tasks);
     }
 
     /// <summary>
