@@ -21,7 +21,6 @@ public static class WinAPI
     [DllImport("user32.dll", SetLastError = true)]
     internal static extern bool PostMessage(HWND hWnd, uint Msg, WPARAM wParam, LPARAM lParam);
 
-
     /// <summary>
     /// Allocates a new console for the calling process.
     /// </summary>

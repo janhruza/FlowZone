@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace FZCore.Controls;
 
@@ -22,6 +23,7 @@ public partial class CtlCaptionButtons : UserControl
     {
         InitializeComponent();
         _buttons = [btnClose, btnMaximize, btnMinimize];
+        Foreground = SystemColors.WindowTextBrush;
     }
 
     /// <summary>
@@ -49,11 +51,34 @@ public partial class CtlCaptionButtons : UserControl
             if (_window != null)
             {
                 _window.StateChanged += _window_StateChanged;
-                foreach (Button btn in _buttons)
-                {
-                    btn.Foreground = _window.Foreground;
-                }
+                //foreach (Button btn in _buttons)
+                //{
+                //    btn.Foreground = _window.Foreground;
+                //}
             }
+        }
+    }
+
+    private void SetForeground(Brush color)
+    {
+        foreach (Button btn in _buttons)
+        {
+            btn.Foreground = color;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the brush used to paint the foreground of the control and its child buttons.
+    /// </summary>
+    /// <remarks>Setting this property updates the foreground brush for all contained buttons. This property
+    /// overrides the base class implementation to ensure consistency across child elements.</remarks>
+    public new Brush Foreground
+    {
+        get => field;
+        set
+        {
+            SetForeground(value);
+            field = value;
         }
     }
 

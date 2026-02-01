@@ -16,4 +16,9 @@
     <ProjectReference Include="..\FZCore\FZCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Controls\" />
+  </ItemGroup>
+
 </Project>

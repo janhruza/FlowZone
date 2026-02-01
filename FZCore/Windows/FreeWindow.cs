@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using FZCore.Win32;
+
+using System;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Shell;
 
 namespace FZCore.Windows;
@@ -18,18 +23,25 @@ public class FreeWindow : BaseWindow
 
         WindowChrome wc = new WindowChrome
         {
-            GlassFrameThickness = new System.Windows.Thickness(1),
-            ResizeBorderThickness = new System.Windows.Thickness(5),
+            GlassFrameThickness = new Thickness(-1),
+            ResizeBorderThickness = new Thickness(5),
             CornerRadius = new CornerRadius(15),
             CaptionHeight = 0
         };
 
         WindowChrome.SetWindowChrome(this, wc);
-
         StateChanged += FreeWindow_StateChanged;
+        SourceInitialized += FreeWindow_SourceInitialized;
     }
 
-    private void FreeWindow_StateChanged(object? sender, System.EventArgs e)
+    private void FreeWindow_SourceInitialized(object? sender, EventArgs e)
+    {
+        nint hwnd = new WindowInteropHelper(this).EnsureHandle();
+        WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [2], Marshal.SizeOf<int>());
+        return;
+    }
+
+    private void FreeWindow_StateChanged(object? sender, EventArgs e)
     {
         if (WindowState == WindowState.Maximized)
         {
