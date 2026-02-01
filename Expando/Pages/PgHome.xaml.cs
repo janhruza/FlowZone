@@ -50,7 +50,7 @@ public partial class PgHome : Page, IExpandoPage
     private void rChangeUser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         Page pg = PgProfiles.Instance;
-        MainWindow.SetActivePage(ref pg);
+        _ = MainWindow.SetActivePage(ref pg);
     }
 
     private void rLog_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

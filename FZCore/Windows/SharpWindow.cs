@@ -19,6 +19,6 @@ public class SharpWindow : IconlessWindow
     protected override void OnSourceInitialized(System.EventArgs e)
     {
         base.OnSourceInitialized(e);
-        WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, [1], Marshal.SizeOf<int>());
+        _ = WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, [1], Marshal.SizeOf<int>());
     }
 }

@@ -293,15 +293,15 @@ public class DialogWindow
             Margin = new Thickness(5, 0, 0, 0)
         };
 
-        topGrid.Children.Add(img);
-        topGrid.Children.Add(captionLabel);
+        _ = topGrid.Children.Add(img);
+        _ = topGrid.Children.Add(captionLabel);
         Grid.SetColumn(img, 0);
         Grid.SetColumn(captionLabel, 1);
 
-        mainPanel.Children.Add(topGrid);
+        _ = mainPanel.Children.Add(topGrid);
 
         // Message
-        mainPanel.Children.Add(new Label
+        _ = mainPanel.Children.Add(new Label
         {
             Content = new TextBlock
             {
@@ -338,11 +338,11 @@ public class DialogWindow
             }
         }
 
-        mainPanel.Children.Add(footerPanel);
-        rootGrid.Children.Add(mainPanel);
+        _ = mainPanel.Children.Add(footerPanel);
+        _ = rootGrid.Children.Add(mainPanel);
         wnd.Content = rootGrid;
 
-        wnd.ShowDialog();
+        _ = wnd.ShowDialog();
         return _result;
     }
 
@@ -360,7 +360,7 @@ public class DialogWindow
             wnd.Close();
         };
 
-        panel.Children.Add(b);
+        _ = panel.Children.Add(b);
     }
 
 

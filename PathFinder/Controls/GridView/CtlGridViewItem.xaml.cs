@@ -32,7 +32,7 @@ public partial class CtlGridViewItem : UserControl
     {
         InitializeComponent();
         _info = obj;
-        ReloadUI();
+        _ = ReloadUI();
     }
 
     private const string TEXT_ICON_FILE = "";

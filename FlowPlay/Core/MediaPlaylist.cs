@@ -65,7 +65,7 @@ public class MediaPlaylist
             return false;
         }
 
-        Tracks.Remove(fileName);
+        _ = Tracks.Remove(fileName);
         return true;
     }
 }

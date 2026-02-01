@@ -209,7 +209,7 @@ public static class Core
     /// <param name="theme">Desired application theme.</param>
     public static void SetApplicationTheme(FZThemeMode theme)
     {
-        SetApplicationTheme(Application.Current, theme);
+        _ = SetApplicationTheme(Application.Current, theme);
         return;
     }
 

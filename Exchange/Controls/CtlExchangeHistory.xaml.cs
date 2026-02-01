@@ -17,8 +17,8 @@ namespace Exchange.Controls;
 /// </summary>
 public partial class CtlExchangeHistory : UserControl
 {
-    const int BAR_WIDTH = 10;
-    const int BAR_SPACE = 10;
+    private const int BAR_WIDTH = 10;
+    private const int BAR_SPACE = 10;
 
     /// <summary>
     /// Creates a new <see cref="CtlExchangeHistory"/> instance.
@@ -82,14 +82,14 @@ public partial class CtlExchangeHistory : UserControl
         for (int x = 0; x < rects.Count; x++)
         {
             Rectangle rect = rects[x];
-            canvas.Children.Add(rect);
+            _ = canvas.Children.Add(rect);
             Canvas.SetLeft(rect, x * (BAR_WIDTH + BAR_SPACE));
             Canvas.SetBottom(rect, 0);
         }
 
         CanvasApplyMargins();
 
-        App.MainWindow.SetStatusMessage(Messages.MetricApplied);
+        _ = App.MainWindow.SetStatusMessage(Messages.MetricApplied);
         return true;
     }
 
@@ -107,8 +107,8 @@ public partial class CtlExchangeHistory : UserControl
             Content = "(Select a metric)"
         };
 
-        cbxMetric.Items.Add(cbiFirst);
-        cbxMetric.Items.Add(new Separator());
+        _ = cbxMetric.Items.Add(cbiFirst);
+        _ = cbxMetric.Items.Add(new Separator());
 
         foreach (var metric in _metrics)
         {
@@ -120,7 +120,7 @@ public partial class CtlExchangeHistory : UserControl
 
             cbi.Selected += async (s, e) => await SelectMetricWrapper(metric.Key);
 
-            cbxMetric.Items.Add(cbi);
+            _ = cbxMetric.Items.Add(cbi);
         }
 
         if (cbxMetric.Items.Count > 0) cbxMetric.SelectedIndex = 0;
@@ -177,13 +177,13 @@ public partial class CtlExchangeHistory : UserControl
                 Content = $"{currency.Currency} ({currency.Country})"
             };
 
-            cbxCurrency.Items.Add(cbi);
+            _ = cbxCurrency.Items.Add(cbi);
         }
 
         // select the top item
         if (cbxCurrency.Items.Count > 0) cbxCurrency.SelectedIndex = 0;
 
-        App.MainWindow.SetStatusMessage($"History reloaded.");
+        _ = App.MainWindow.SetStatusMessage($"History reloaded.");
         return true;
     }
 
@@ -194,7 +194,7 @@ public partial class CtlExchangeHistory : UserControl
         if (await ReloadHistory() == false)
         {
             FZCore.Core.ErrorBox(Messages.ProcessingHistoryFailed, App.Title);
-            App.MainWindow.SetStatusMessage(Messages.ProcessingHistoryFailed);
+            _ = App.MainWindow.SetStatusMessage(Messages.ProcessingHistoryFailed);
             return;
         }
     }

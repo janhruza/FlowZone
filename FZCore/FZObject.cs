@@ -24,7 +24,7 @@ public class FZObject
     /// </summary>
     ~FZObject()
     {
-        _objects.Remove(this);
+        _ = _objects.Remove(this);
     }
 
     /// <summary>

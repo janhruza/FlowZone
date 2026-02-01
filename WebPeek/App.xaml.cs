@@ -27,7 +27,7 @@ public partial class App : BaseApplication
         if (e.Args.Length != 1)
         {
             // startup initialization
-            AppManager.ImportApps();
+            _ = AppManager.ImportApps();
 
             // show main window
             MainWindow mw = new MainWindow();
@@ -49,7 +49,7 @@ public partial class App : BaseApplication
 
             mw.Loaded += (s, e) =>
             {
-                WebPeek.MainWindow.SetActivePage(pg);
+                _ = WebPeek.MainWindow.SetActivePage(pg);
             };
 
             // display main window with the web view page
@@ -89,7 +89,7 @@ public partial class App : BaseApplication
     private async void Application_Exit(object sender, ExitEventArgs e)
     {
         // on app close cleanup
-        AppManager.ExportApps();
+        _ = AppManager.ExportApps();
 
         // clear cookies
         await ClearCookies();

@@ -35,7 +35,7 @@ public partial class PgHome : Page
         };
 
         // Assuming MainWindow is the main application window that can host pages
-        MainWindow.SetActivePage(pgWebView);
+        _ = MainWindow.SetActivePage(pgWebView);
         return;
     }
 
@@ -71,7 +71,7 @@ public partial class PgHome : Page
                 Content = "No web applications registered. Click the 'Add Application' button to add a new application."
             };
 
-            lbxApps.Items.Add(lbi);
+            _ = lbxApps.Items.Add(lbi);
             return;
         }
 
@@ -126,7 +126,7 @@ public partial class PgHome : Page
             btnDelete.Click += (s, e) =>
             {
                 // Logic to delete the application
-                RemoveApp(app);
+                _ = RemoveApp(app);
             };
 
             // run button
@@ -141,9 +141,9 @@ public partial class PgHome : Page
                 OpenWebApp(app);
             };
 
-            g.Children.Add(lbl);
-            g.Children.Add(btnDelete);
-            g.Children.Add(btnStart);
+            _ = g.Children.Add(lbl);
+            _ = g.Children.Add(btnDelete);
+            _ = g.Children.Add(btnStart);
 
             Grid.SetColumn(btnDelete, 1);
             Grid.SetColumn(btnStart, 2);
@@ -156,7 +156,7 @@ public partial class PgHome : Page
                 HorizontalContentAlignment = HorizontalAlignment.Stretch
             };
 
-            lbxApps.Items.Add(lbi);
+            _ = lbxApps.Items.Add(lbi);
         }
 
         return;

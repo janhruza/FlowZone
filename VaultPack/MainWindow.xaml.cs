@@ -32,7 +32,7 @@ public partial class MainWindow : IconlessWindow
             Header = "View Log",
             OnClick = () =>
             {
-                Core.ViewLog(this);
+                _ = Core.ViewLog(this);
             }
         });
     }
@@ -100,7 +100,7 @@ public partial class MainWindow : IconlessWindow
             Content = Path.GetFileName(path)
         };
 
-        lbFilesToAdd.Items.Add(lbi);
+        _ = lbFilesToAdd.Items.Add(lbi);
         Log.Success($"Item \'{path}\' added to list.", nameof(AddCreateItem));
         return;
     }
@@ -172,8 +172,8 @@ public partial class MainWindow : IconlessWindow
     #endregion
 
     #region Extract existing archive code
-    string e_ArchivePath = string.Empty;
-    string e_FolderPath = string.Empty;
+    private string e_ArchivePath = string.Empty;
+    private string e_FolderPath = string.Empty;
 
     private void btnExtractClear_Click(object sender, RoutedEventArgs e)
     {
@@ -275,6 +275,6 @@ public partial class MainWindow : IconlessWindow
 
     private void miViewLog_Click(object sender, RoutedEventArgs e)
     {
-        Core.ViewLog(this);
+        _ = Core.ViewLog(this);
     }
 }

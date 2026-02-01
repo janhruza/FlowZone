@@ -123,7 +123,7 @@ public partial class LogViewer : IconlessWindow
         catch (Exception ex)
         {
             // Handle any file parsing or IO exceptions
-            MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBox.Show($"Error loading log file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         finally

@@ -137,15 +137,15 @@ h1, h2, h3, h4, h5, h6 {
     private string GetHTMLText(string title, string body)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("<html>");
-        sb.Append(DocumentMeta(GetStyleSheet()));
-        sb.Append("<body>");
-        sb.Append("<h1>");
-        sb.Append(title);
-        sb.Append("</h1>");
-        sb.Append(body);
-        sb.Append("</body>");
-        sb.Append("</html>");
+        _ = sb.Append("<html>");
+        _ = sb.Append(DocumentMeta(GetStyleSheet()));
+        _ = sb.Append("<body>");
+        _ = sb.Append("<h1>");
+        _ = sb.Append(title);
+        _ = sb.Append("</h1>");
+        _ = sb.Append(body);
+        _ = sb.Append("</body>");
+        _ = sb.Append("</html>");
         return sb.ToString();
     }
 
@@ -270,14 +270,14 @@ h1, h2, h3, h4, h5, h6 {
         {
             // no feed items
             ListBoxItem item = NoFeedItemsItem();
-            lbFeedItems.Items.Add(item);
+            _ = lbFeedItems.Items.Add(item);
             return;
         }
 
         foreach (FeedItem item in _channel.Items)
         {
             ListBoxItem lbi = GetFeedItem(item);
-            lbFeedItems.Items.Add(lbi);
+            _ = lbFeedItems.Items.Add(lbi);
         }
     }
 

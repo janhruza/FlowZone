@@ -148,17 +148,17 @@ public partial class PgProfiles : Page, IExpandoPage
             // no profiles found
             // draw an item that redirects user to a create new profile page
 
-            lbProfiles.Items.Add(NewProfileItem());
+            _ = lbProfiles.Items.Add(NewProfileItem());
             return;
         }
 
-        lbProfiles.Items.Add(NewProfileItem());
-        lbProfiles.Items.Add(new Separator());
+        _ = lbProfiles.Items.Add(NewProfileItem());
+        _ = lbProfiles.Items.Add(new Separator());
 
         foreach (UserProfile profile in UserProfile.Profiles)
         {
             // add an item with associated profile
-            lbProfiles.Items.Add(ProfileMenuItem(profile));
+            _ = lbProfiles.Items.Add(ProfileMenuItem(profile));
         }
 
         return;
@@ -187,7 +187,7 @@ public partial class PgProfiles : Page, IExpandoPage
         // user profile loaded
 
         UserProfile.Current = profile;
-        MainWindow.SetHomePage();
+        _ = MainWindow.SetHomePage();
         return;
     }
 

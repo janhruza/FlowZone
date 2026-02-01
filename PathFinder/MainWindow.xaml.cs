@@ -39,7 +39,7 @@ public partial class MainWindow : IconlessWindow
         };
 
         ctlView = ctl;
-        gdContent.Children.Add(ctlView);
+        _ = gdContent.Children.Add(ctlView);
         Grid.SetColumn(ctlView, 1);
     }
 
@@ -97,13 +97,13 @@ public partial class MainWindow : IconlessWindow
             tvi.Selected += async (s, e) =>
             {
                 CtlFVDetails ctl = (CtlFVDetails)ctlView;
-                await ctl.OpenFolder(entry.Value);
+                _ = await ctl.OpenFolder(entry.Value);
 
                 // deselect all drive items
                 DeselectDriveItems();
             };
 
-            tvFavorites.Items.Add(tvi);
+            _ = tvFavorites.Items.Add(tvi);
         }
     }
 
@@ -150,13 +150,13 @@ public partial class MainWindow : IconlessWindow
                 ti.Selected += async (s, e) =>
                 {
                     CtlFVDetails ctl = (CtlFVDetails)ctlView;
-                    await ctl.OpenFolder(di.Name);
+                    _ = await ctl.OpenFolder(di.Name);
 
                     // deselect favorite items
                     DeselectFavoriteItems();
                 };
 
-                tvDrives.Items.Add(ti);
+                _ = tvDrives.Items.Add(ti);
             }
         }
     }
@@ -228,7 +228,7 @@ public partial class MainWindow : IconlessWindow
 
     private void miAbout_Click(object sender, RoutedEventArgs e)
     {
-        FZCore.Core.AboutBox();
+        _ = FZCore.Core.AboutBox();
     }
 
     private void miThemeDark_Click(object sender, RoutedEventArgs e)

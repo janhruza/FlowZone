@@ -73,7 +73,7 @@ public partial class App : BaseApplication
             }
         };
 
-        proc.Start();
+        _ = proc.Start();
         return;
     }
 
@@ -168,6 +168,6 @@ public partial class App : BaseApplication
 
     private void Application_Exit(object sender, ExitEventArgs e)
     {
-        RTSettings.SaveCurrent();
+        _ = RTSettings.SaveCurrent();
     }
 }

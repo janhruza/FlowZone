@@ -36,7 +36,7 @@ public partial class CtlGridView : CtlFolderViewBase
 
         item.MouseDoubleClick += async (s, e) =>
         {
-            await OpenFolder(parent);
+            _ = await OpenFolder(parent);
         };
 
         return item;
@@ -82,7 +82,7 @@ public partial class CtlGridView : CtlFolderViewBase
         }
 
         // add the parent folder item
-        uGrid.Children.Add((CtlGridViewItem)CreateParentFolderItem(folderPath));
+        _ = uGrid.Children.Add((CtlGridViewItem)CreateParentFolderItem(folderPath));
 
         // handle all folders first
         foreach (string dir in dirs)
@@ -104,7 +104,7 @@ public partial class CtlGridView : CtlFolderViewBase
 
             item.MouseDoubleClick += async (s, e) =>
             {
-                await OpenFolder(item.Uid);
+                _ = await OpenFolder(item.Uid);
             };
 
             if (CmFolderMenu(folderPath, out ContextMenu cm) == true)
@@ -112,7 +112,7 @@ public partial class CtlGridView : CtlFolderViewBase
                 item.ContextMenu = cm;
             }
 
-            uGrid.Children.Add(item);
+            _ = uGrid.Children.Add(item);
         }
 
         // handle all files second
@@ -163,7 +163,7 @@ public partial class CtlGridView : CtlFolderViewBase
             {
                 item.ContextMenu = cm;
             }
-            uGrid.Children.Add(item);
+            _ = uGrid.Children.Add(item);
         }
 
         return true;
@@ -198,7 +198,7 @@ public partial class CtlGridView : CtlFolderViewBase
 
     private async void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        await OpenFolder(_folderPath);
+        _ = await OpenFolder(_folderPath);
     }
 
     private void miExplorer_Click(object sender, System.Windows.RoutedEventArgs e)

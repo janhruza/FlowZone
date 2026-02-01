@@ -31,7 +31,7 @@ public partial class MainWindow : IconlessWindow
             _navButtons = [btnHome, btnOverview, btnIncomes, btnExpanses, btnProfile];
 
             ToggleButton? tb = null;
-            ChangePage(PgProfiles.Instance, ref tb);
+            _ = ChangePage(PgProfiles.Instance, ref tb);
         };
     }
 
@@ -81,27 +81,27 @@ public partial class MainWindow : IconlessWindow
 
     private void btnHome_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgHome.Instance, ref btnHome);
+        _ = ChangePage(PgHome.Instance, ref btnHome);
     }
 
     private void btnOverview_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgOverview.Instance, ref btnOverview);
+        _ = ChangePage(PgOverview.Instance, ref btnOverview);
     }
 
     private void btnIncomes_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgIncomes.Instance, ref btnIncomes);
+        _ = ChangePage(PgIncomes.Instance, ref btnIncomes);
     }
 
     private void btnExpanses_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgExpanses.Instance, ref btnExpanses);
+        _ = ChangePage(PgExpanses.Instance, ref btnExpanses);
     }
 
     private void btnProfile_Click(object sender, RoutedEventArgs e)
     {
-        ChangePage(PgMyProfile.Instance, ref btnProfile);
+        _ = ChangePage(PgMyProfile.Instance, ref btnProfile);
     }
 
     #region Static code

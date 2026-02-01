@@ -31,7 +31,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
         Loaded += async (s, e) =>
         {
             _folderPath = $"C:\\";
-            await OpenFolder(_folderPath);
+            _ = await OpenFolder(_folderPath);
         };
     }
 
@@ -54,7 +54,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
 
         lbi.MouseDoubleClick += async (s, e) =>
         {
-            await OpenFolder(parent);
+            _ = await OpenFolder(parent);
         };
 
         return lbi;
@@ -70,7 +70,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
         }
 
         listBox.Items.Clear();
-        listBox.Items.Add(new ListBoxItem
+        _ = listBox.Items.Add(new ListBoxItem
         {
             Content = new CtlItemDetailView()
             {
@@ -104,12 +104,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
         if (hasParent)
         {
             ListBoxItem lbiParent = (ListBoxItem)CreateParentFolderItem(folderPath);
-            listBox.Items.Add(lbiParent);
+            _ = listBox.Items.Add(lbiParent);
         }
 
         if (hasParent && dirs.Count > 0)
         {
-            listBox.Items.Add(new Separator());
+            _ = listBox.Items.Add(new Separator());
         }
 
         foreach (string dir in dirs)
@@ -142,7 +142,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
                     FZCore.Core.ErrorBox($"Unable to open the given folder: {di.FullName}");
                 }
             };
-            listBox.Items.Add(lbi);
+            _ = listBox.Items.Add(lbi);
         }
 
         if (files.Count == 0)
@@ -150,7 +150,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
             return true;
         }
 
-        listBox.Items.Add(new Separator());
+        _ = listBox.Items.Add(new Separator());
 
         foreach (string file in files)
         {
@@ -202,7 +202,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
                 }
             };
 
-            listBox.Items.Add(lbi);
+            _ = listBox.Items.Add(lbi);
         }
 
         return true;
@@ -218,7 +218,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
 
     private async void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        await OpenFolder(_folderPath);
+        _ = await OpenFolder(_folderPath);
     }
 
     private void miExplorer_Click(object sender, RoutedEventArgs e)

@@ -251,7 +251,7 @@ public class VideoDownloader
     public static string GetDownloader()
     {
         string sOut;
-        _downloaderExists(out sOut);
+        _ = _downloaderExists(out sOut);
         return sOut;
     }
 

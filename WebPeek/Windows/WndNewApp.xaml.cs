@@ -69,7 +69,7 @@ public partial class WndNewApp : IconlessWindow
     {
         if (ExportApp() == false)
         {
-            MessageBox.Show("Failed to register the application. Please check the name and URL.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBox.Show("Failed to register the application. Please check the name and URL.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 

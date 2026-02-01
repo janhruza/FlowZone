@@ -58,14 +58,14 @@ public class WindowExtender
     {
         if (_consoleAttached == true)
         {
-            FreeConsole();
+            _ = FreeConsole();
             _consoleAttached = false;
         }
 
         else
         {
             // show console window
-            AllocConsole();
+            _ = AllocConsole();
 
             // get console window handle
             nint hConsole = GetConsoleWindow();
@@ -74,7 +74,7 @@ public class WindowExtender
             nint hMenu = GetSystemMenu(hConsole, false);
 
             // delete close menu item (disables the close button)
-            DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
+            _ = DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
 
             Console.Title = $"{Process.GetProcessById(Environment.ProcessId).ProcessName} Debug Console";
             _consoleAttached = true;
@@ -126,7 +126,7 @@ public class WindowExtender
     {
         if (_customMenuItems.ContainsKey(id))
         {
-            _customMenuItems.Remove(id);
+            _ = _customMenuItems.Remove(id);
             RedrawMenu();
         }
     }
@@ -136,7 +136,7 @@ public class WindowExtender
     /// </summary>
     public void RestoreDefaultMenu()
     {
-        GetSystemMenu(_hwnd, true); // Restore the original menu
+        _ = GetSystemMenu(_hwnd, true); // Restore the original menu
         _customMenuItems.Clear();
     }
 
@@ -153,7 +153,7 @@ public class WindowExtender
             if (e.Key == Key.F1)
             {
                 // open app log
-                Core.ViewLog(_window);
+                _ = Core.ViewLog(_window);
             }
 
             if (e.Key == System.Windows.Input.Key.F11)
@@ -173,7 +173,7 @@ public class WindowExtender
     private void RedrawMenu()
     {
         // Clear the current menu and restore the default system menu
-        GetSystemMenu(_hwnd, true);
+        _ = GetSystemMenu(_hwnd, true);
 
         IntPtr systemMenu = GetSystemMenu(_hwnd, false);
 
@@ -182,12 +182,12 @@ public class WindowExtender
         {
             if (string.IsNullOrEmpty(menuItem.Value.Header) || menuItem.Value.Header == "-")
             {
-                InsertMenu(systemMenu, menuItem.Key, MF_SEPARATOR, 0, string.Empty);
+                _ = InsertMenu(systemMenu, menuItem.Key, MF_SEPARATOR, 0, string.Empty);
             }
 
             else
             {
-                InsertMenu(systemMenu, menuItem.Key, MF_STRING, menuItem.Key, menuItem.Value.Header);
+                _ = InsertMenu(systemMenu, menuItem.Key, MF_STRING, menuItem.Key, menuItem.Value.Header);
             }
         }
     }
@@ -232,10 +232,10 @@ public class WindowExtender
     private static extern bool FreeConsole();
 
     [DllImport("user32.dll", SetLastError = true)]
-    static extern bool DeleteMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+    private static extern bool DeleteMenu(IntPtr hMenu, uint uPosition, uint uFlags);
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    static extern IntPtr GetConsoleWindow();
+    private static extern IntPtr GetConsoleWindow();
 
     /// <summary>
     /// Draws the system menu using the dark theme.

@@ -29,7 +29,7 @@ public partial class MainWindow : IconlessWindow
             Header = "Home Page",
             OnClick = () =>
             {
-                GoToHomePage();
+                _ = GoToHomePage();
             }
         });
 
@@ -38,7 +38,7 @@ public partial class MainWindow : IconlessWindow
             Header = "View Log\tF1",
             OnClick = () =>
             {
-                FZCore.Core.ViewLog(this);
+                _ = FZCore.Core.ViewLog(this);
             }
         });
 
@@ -68,7 +68,7 @@ public partial class MainWindow : IconlessWindow
         }
 
         // set the home page as active
-        SetActivePage(_instance._homePage, 640, 450);
+        _ = SetActivePage(_instance._homePage, 640, 450);
         return true;
     }
 
@@ -101,7 +101,7 @@ public partial class MainWindow : IconlessWindow
     {
         if (e.Key == System.Windows.Input.Key.F1)
         {
-            FZCore.Core.ViewLog(this);
+            _ = FZCore.Core.ViewLog(this);
         }
 
         else if (e.Key == System.Windows.Input.Key.F11)

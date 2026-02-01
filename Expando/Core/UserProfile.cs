@@ -560,11 +560,11 @@ public class UserProfile
                 using (BinaryWriter writer = new BinaryWriter(fs))
                 {
                     // rewrite the user count on the begining
-                    fs.Seek(0, SeekOrigin.Begin);
+                    _ = fs.Seek(0, SeekOrigin.Begin);
                     writer.Write(count);
 
                     // append data to the end
-                    fs.Seek(0, SeekOrigin.End);
+                    _ = fs.Seek(0, SeekOrigin.End);
                     writer.Write(user.Id);          // User ID (long)
 
                     string path = Path.Combine(UserFolders, user.Id.ToString());

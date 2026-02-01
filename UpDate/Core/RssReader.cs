@@ -42,7 +42,7 @@ public class RssReader
                 client.Timeout = TimeSpan.FromSeconds(10); // Set timeout
                 HttpResponseMessage msg = await client.GetAsync(source);
 
-                msg.EnsureSuccessStatusCode();
+                _ = msg.EnsureSuccessStatusCode();
 
                 if (msg.IsSuccessStatusCode)
                 {
@@ -99,7 +99,7 @@ public class RssReader
     public RssReader(string rssFile)
     {
         _data = ReadRssFile(rssFile);
-        ReadXmlData(_doc, _data);
+        _ = ReadXmlData(_doc, _data);
     }
 
     #endregion

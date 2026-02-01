@@ -134,7 +134,7 @@ public class DoublePlayer : Control
         {
             if (File.Exists(track) == false)
             {
-                playlist.Tracks.Remove(track);
+                _ = playlist.Tracks.Remove(track);
             }
         }
     }
@@ -238,7 +238,7 @@ public class DoublePlayer : Control
         if (_canPrev)
         {
             playlistIndex--;
-            QueueNext(Playlist.Tracks[playlistIndex]);
+            _ = QueueNext(Playlist.Tracks[playlistIndex]);
             SwapPlayers();
             _pCurrent.Play();
             Session.Track = _pCurrent.Source.AbsolutePath;

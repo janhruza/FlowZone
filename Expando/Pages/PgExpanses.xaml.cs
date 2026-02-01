@@ -74,7 +74,7 @@ public partial class PgExpanses : Page, IExpandoPage
                 }
             }
 
-            lbExpanses.Items.Add(App.CreateTransactionItem(expanse, ModifyItem, RemoveItem));
+            _ = lbExpanses.Items.Add(App.CreateTransactionItem(expanse, ModifyItem, RemoveItem));
         }
 
         return;

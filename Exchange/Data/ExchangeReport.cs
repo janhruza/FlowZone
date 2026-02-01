@@ -205,7 +205,7 @@ public struct ExchangeReport
 
             // gets the message content
             string data = await response.Content.ReadAsStringAsync();
-            await SaveReport(data);
+            _ = await SaveReport(data);
             return await TryParse(data);
         }
 

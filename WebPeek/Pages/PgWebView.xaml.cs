@@ -10,7 +10,7 @@ namespace WebPeek.Pages;
 /// </summary>
 public partial class PgWebView : Page
 {
-    const string DEFAULT_URL = "https://www.bing.com/";
+    private const string DEFAULT_URL = "https://www.bing.com/";
     /// <summary>
     /// Creates a new instance of the <see cref="PgWebView"/> class.
     /// </summary>

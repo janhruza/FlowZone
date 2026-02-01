@@ -73,7 +73,7 @@ public partial class PgIncomes : Page, IExpandoPage
                 }
             }
 
-            lbIncomes.Items.Add(App.CreateTransactionItem(income, ModifyItem, RemoveItem));
+            _ = lbIncomes.Items.Add(App.CreateTransactionItem(income, ModifyItem, RemoveItem));
         }
 
         return;

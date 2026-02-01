@@ -38,7 +38,7 @@ public partial class CtlCaptionBar : UserControl
                 _element = value;
 
                 // set the element
-                grid.Children.Add(_element);
+                _ = grid.Children.Add(_element);
                 Grid.SetColumn(_element, 0);
             }
 
@@ -167,17 +167,17 @@ public partial class CtlCaptionBar : UserControl
 
     private void btnMinimize_Click(object sender, RoutedEventArgs e)
     {
-        _window?.WindowState = WindowState.Minimized;
+        _ = (_window?.WindowState = WindowState.Minimized);
     }
 
     private void Maximize()
     {
-        _window?.WindowState = WindowState.Maximized;
+        _ = (_window?.WindowState = WindowState.Maximized);
     }
 
     private void Restore()
     {
-        _window?.WindowState = WindowState.Normal;
+        _ = (_window?.WindowState = WindowState.Normal);
     }
 
     private void btnMaximize_Click(object sender, RoutedEventArgs e)

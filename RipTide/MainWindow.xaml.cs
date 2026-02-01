@@ -86,7 +86,7 @@ public partial class MainWindow : IconlessWindow
                 _downloader.Cookies = value;
             };
 
-            cbCookiesBrowsers.Items.Add(cbi);
+            _ = cbCookiesBrowsers.Items.Add(cbi);
         }
 
         if (cbCookiesBrowsers.Items.Count > 0)
@@ -139,7 +139,7 @@ public partial class MainWindow : IconlessWindow
         }
 
         DevConsole.OpenConsole();
-        await _downloader.DownloadAsync();
+        _ = await _downloader.DownloadAsync();
         DevConsole.CloseConsole();
     }
 
@@ -163,7 +163,7 @@ public partial class MainWindow : IconlessWindow
     {
         VideoDownloader.YT_DLP_CUSTOM_PATH = string.Empty;
         RTSettings.Current.CustomDownloaderPath = string.Empty;
-        RTSettings.SaveCurrent();
+        _ = RTSettings.SaveCurrent();
         ResetFields();
         return;
     }
@@ -179,7 +179,7 @@ public partial class MainWindow : IconlessWindow
         {
             // add parameter
             string param = wnd.ParameterValue;
-            lbExtraParams.Items.Add(param);
+            _ = lbExtraParams.Items.Add(param);
         }
 
         return;
@@ -197,9 +197,9 @@ public partial class MainWindow : IconlessWindow
         {
             VideoDownloader.YT_DLP_CUSTOM_PATH = ofd.FileName;
             RTSettings.Current.CustomDownloaderPath = ofd.FileName;
-            RTSettings.SaveCurrent();
+            _ = RTSettings.SaveCurrent();
             ResetFields();
-            VerifyFields();
+            _ = VerifyFields();
         }
 
         return;

@@ -15,10 +15,10 @@ public partial class WndDialog : IconlessWindow
 {
     #region Static data
 
-    const char C_ERROR = '';
-    const char C_WARNING = '';
-    const char C_INFO = '';
-    const char C_SUCCESS = '';
+    private const char C_ERROR = '';
+    private const char C_WARNING = '';
+    private const char C_INFO = '';
+    private const char C_SUCCESS = '';
 
     private Dictionary<DialogIcon, char> IconsByImage => new Dictionary<DialogIcon, char>
     {

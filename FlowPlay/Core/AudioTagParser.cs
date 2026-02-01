@@ -40,8 +40,8 @@ public static class AudioTagParser
                 if (fs.Length < 128) return false;
 
                 byte[] buffer = new byte[128];
-                fs.Seek(-128, SeekOrigin.End);
-                fs.Read(buffer, 0, 128);
+                _ = fs.Seek(-128, SeekOrigin.End);
+                _ = fs.Read(buffer, 0, 128);
 
                 // Check for the "TAG" identifier at the beginning of the 128-byte block
                 string identifier = Encoding.ASCII.GetString(buffer, 0, 3);
@@ -97,7 +97,7 @@ public static class AudioTagParser
             {
                 // Check RIFF header
                 if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "RIFF") return false;
-                reader.ReadInt32(); // Skip file size
+                _ = reader.ReadInt32(); // Skip file size
                 if (Encoding.ASCII.GetString(reader.ReadBytes(4)) != "WAVE") return false;
 
                 // Search for the "LIST" chunk
@@ -134,15 +134,15 @@ public static class AudioTagParser
                                 }
 
                                 // Chunks must be aligned to even addresses
-                                if (tagSize % 2 != 0 && fs.Position < fs.Length) fs.ReadByte();
+                                if (tagSize % 2 != 0 && fs.Position < fs.Length) _ = fs.ReadByte();
                             }
                             return true;
                         }
                     }
 
                     // Skip to the next chunk
-                    fs.Seek(chunkSize, SeekOrigin.Current);
-                    if (chunkSize % 2 != 0 && fs.Position < fs.Length) fs.ReadByte();
+                    _ = fs.Seek(chunkSize, SeekOrigin.Current);
+                    if (chunkSize % 2 != 0 && fs.Position < fs.Length) _ = fs.ReadByte();
                 }
             }
         }

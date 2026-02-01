@@ -12,19 +12,19 @@ namespace FZCore;
 public static class DevConsole
 {
     [DllImport("kernel32.dll", SetLastError = true)]
-    static extern bool AllocConsole();
+    private static extern bool AllocConsole();
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    static extern bool FreeConsole();
+    private static extern bool FreeConsole();
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    static extern IntPtr GetStdHandle(int nStdHandle);
+    private static extern IntPtr GetStdHandle(int nStdHandle);
 
     private const int STD_INPUT_HANDLE = -10;
     private const int STD_OUTPUT_HANDLE = -11;
     private const int STD_ERROR_HANDLE = -12;
 
-    static bool _opened = false;
+    private static bool _opened = false;
 
     /// <summary>
     /// Determines whether the developer console is active or not.
@@ -52,7 +52,7 @@ public static class DevConsole
     {
         Console.SetOut(TextWriter.Null);
         Console.SetIn(TextReader.Null);
-        FreeConsole();
+        _ = FreeConsole();
         _opened = false;
     }
 

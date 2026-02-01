@@ -54,7 +54,7 @@ public class RTSettings
     {
         // ensures the existence of current settings
         s_Settings = new RTSettings();
-        EnsureSettings();
+        _ = EnsureSettings();
     }
 
     #region Settings properties

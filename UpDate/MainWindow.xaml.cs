@@ -47,7 +47,7 @@ public partial class MainWindow : IconlessWindow
 
     private async void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
     {
-        await ReloadFeedsAsync();
+        _ = await ReloadFeedsAsync();
     }
 
     private async void IconlessWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -59,7 +59,7 @@ public partial class MainWindow : IconlessWindow
 
         else if (e.Key == System.Windows.Input.Key.F5)
         {
-            await ReloadFeedsAsync();
+            _ = await ReloadFeedsAsync();
         }
 
         else if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.N)
@@ -283,7 +283,7 @@ public partial class MainWindow : IconlessWindow
             var feedSources = UpDateSettings.Current.Feeds;
             if (feedSources.Count == 0)
             {
-                trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
+                _ = trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
                 return true;
             }
 
@@ -299,7 +299,7 @@ public partial class MainWindow : IconlessWindow
                     foreach (var channel in channels)
                     {
                         var item = CreateTreeViewItem(channel);
-                        trFeeds.Items.Add(item);
+                        _ = trFeeds.Items.Add(item);
 
                         // Auto-select the very first item that arrives to fill the preview pane
                         if (trFeeds.Items.Count == 1)
@@ -328,7 +328,7 @@ public partial class MainWindow : IconlessWindow
         if (new WndAddFeed().ShowDialog() == true)
         {
             // redraw RSS feed sources
-            await ReloadFeedsAsync();
+            _ = await ReloadFeedsAsync();
         }
     }
 
@@ -388,6 +388,6 @@ public partial class MainWindow : IconlessWindow
         UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
         UpDateSettings.Current.Feeds = UpDateSettings.GetDefaultFeeds();
         ApplySettings(UpDateSettings.Current);
-        await ReloadFeedsAsync();
+        _ = await ReloadFeedsAsync();
     }
 }

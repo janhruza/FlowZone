@@ -34,7 +34,7 @@ public partial class PgMyProfile : Page, IExpandoPage
             // no profile loaded
             // can't show any info
             Page pg = PgNoProfile.Instance;
-            MainWindow.SetActivePage(ref pg);
+            _ = MainWindow.SetActivePage(ref pg);
             return;
         }
 
@@ -91,8 +91,8 @@ public partial class PgMyProfile : Page, IExpandoPage
                 if (UserProfile.RebuildUserIndexFile() == true)
                 {
                     // navigate to the home page
-                    UserProfile.LoadUsersData();
-                    MainWindow.SetHomePage();
+                    _ = UserProfile.LoadUsersData();
+                    _ = MainWindow.SetHomePage();
                 }
 
                 else

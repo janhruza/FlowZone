@@ -91,7 +91,7 @@ public static class AppManager
                     WebApplication webApp = new WebApplication(name, link);
 
                     // register the application
-                    RegisterApp(webApp);
+                    _ = RegisterApp(webApp);
                 }
             }
         }
@@ -146,7 +146,7 @@ public static class AppManager
         }
 
         // unregister the app
-        dWebApps.Remove(hash);
+        _ = dWebApps.Remove(hash);
         return true;
     }
 }

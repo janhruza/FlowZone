@@ -25,13 +25,13 @@ public partial class MainWindow : IconlessWindow
     #region Native calls
 
     [DllImport("dwmapi")]
-    static extern int DwmSetWindowAttribute(IntPtr hWnd, int dwAttribute, int[] pwAttribute, int cbAttribute);
+    private static extern int DwmSetWindowAttribute(IntPtr hWnd, int dwAttribute, int[] pwAttribute, int cbAttribute);
 
     #endregion
 
     #region Media player controls
 
-    const double POSITION_STEP = 10_000;
+    private const double POSITION_STEP = 10_000;
 
     private void StopMedia()
     {
@@ -50,7 +50,7 @@ public partial class MainWindow : IconlessWindow
         return;
     }
 
-    List<MenuItem> aSpeeds;
+    private List<MenuItem> aSpeeds;
     private void SetupPlayerSpeeds()
     {
         foreach (MenuItem miSpeed in aSpeeds)

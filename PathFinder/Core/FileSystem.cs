@@ -239,7 +239,7 @@ public static class FileSystem
                                                           bool includeHidden,
                                                           List<string> outputList)
     {
-        return FsFetchAllFolders(folderPath, includeHidden, out outputList);
+        return FsFetchAllFolders(folderPath, includeHidden, out _);
     }
 
     /// <summary>
@@ -253,7 +253,7 @@ public static class FileSystem
                                                         bool includeHidden,
                                                         List<string> outputList)
     {
-        return FsFetchAllFiles(folderPath, includeHidden, out outputList);
+        return FsFetchAllFiles(folderPath, includeHidden, out _);
     }
 
     /// <summary>

@@ -63,7 +63,7 @@ public partial class WndNewTransaction : IconlessWindow
             case Transaction.TypeExpanse:
                 foreach (string sExpanse in _expanses)
                 {
-                    cbType.Items.Add(sExpanse);
+                    _ = cbType.Items.Add(sExpanse);
                 }
                 break;
 
@@ -71,7 +71,7 @@ public partial class WndNewTransaction : IconlessWindow
             case Transaction.TypeIncome:
                 foreach (string sIncome in _incomes)
                 {
-                    cbType.Items.Add(sIncome);
+                    _ = cbType.Items.Add(sIncome);
                 }
                 break;
         }
@@ -107,8 +107,7 @@ public partial class WndNewTransaction : IconlessWindow
     private Transaction CreateTransaction(Transaction? transactionBase = null)
     {
         Transaction transaction;
-        decimal value = decimal.Zero;
-
+        decimal value;
         if (decimal.TryParse(txtValue.Text.Trim(), out value) == false)
         {
             value = decimal.Zero;
@@ -171,7 +170,7 @@ public partial class WndNewTransaction : IconlessWindow
                 if (editMode == true)
                 {
                     // need toremove the original transaction first
-                    UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x => x.Id == transaction.Id).FirstOrDefault());
+                    _ = UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x => x.Id == transaction.Id).FirstOrDefault());
                 }
 
                 // save the transaction

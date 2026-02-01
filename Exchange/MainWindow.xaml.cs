@@ -42,6 +42,6 @@ public partial class MainWindow : IconlessWindow
 
     private void IconlessWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        SetStatusMessage("Window is ready.");
+        _ = SetStatusMessage("Window is ready.");
     }
 }

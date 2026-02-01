@@ -52,7 +52,7 @@ public class BaseWindow : Window
     /// </summary>
     ~BaseWindow()
     {
-        _windows.Remove(this);
+        _ = _windows.Remove(this);
     }
 
     /// <summary>

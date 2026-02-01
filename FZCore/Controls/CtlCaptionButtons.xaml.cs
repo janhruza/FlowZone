@@ -83,17 +83,17 @@ public partial class CtlCaptionButtons : UserControl
     {
         if (_window?.WindowState == WindowState.Normal)
         {
-            _window?.WindowState = WindowState.Maximized;
+            _ = (_window?.WindowState = WindowState.Maximized);
         }
 
         else
         {
-            _window?.WindowState = WindowState.Normal;
+            _ = (_window?.WindowState = WindowState.Normal);
         }
     }
 
     private void btnMinimize_Click(object sender, RoutedEventArgs e)
     {
-        _window?.WindowState = WindowState.Minimized;
+        _ = (_window?.WindowState = WindowState.Minimized);
     }
 }

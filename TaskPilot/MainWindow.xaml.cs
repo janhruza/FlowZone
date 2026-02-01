@@ -106,12 +106,12 @@ public partial class MainWindow : IconlessWindow
             };
 
             // add items to the menu
-            cm.Items.Add(miUpdate);
-            cm.Items.Add(new Separator());
-            cm.Items.Add(miDelete);
+            _ = cm.Items.Add(miUpdate);
+            _ = cm.Items.Add(new Separator());
+            _ = cm.Items.Add(miDelete);
         }
 
-        lbTasks.Items.Add(lbi);
+        _ = lbTasks.Items.Add(lbi);
     }
 
     private async Task RemoveTask(TaskItem task)

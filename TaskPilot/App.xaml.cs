@@ -171,7 +171,7 @@ public partial class App : BaseApplication
         if (!Tasks.Select(x => x.Id == taskId).Any()) return false;
 
         // remove item
-        Tasks.Remove(Tasks.Where(x => x.Id == taskId).First());
+        _ = Tasks.Remove(Tasks.Where(x => x.Id == taskId).First());
         return true;
     }
 

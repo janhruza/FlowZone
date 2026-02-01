@@ -49,12 +49,12 @@ public partial class MainWindow : IconlessWindow
                 break;
 
             case HashHivePage.HashText:
-                LoadPage(Pages.PgTextHash.Instance);
+                _ = LoadPage(Pages.PgTextHash.Instance);
                 UncheckAll(btnText);
                 break;
 
             case HashHivePage.HashFile:
-                LoadPage(Pages.PgFileHash.Instance);
+                _ = LoadPage(Pages.PgFileHash.Instance);
                 UncheckAll(btnFile);
                 break;
         }

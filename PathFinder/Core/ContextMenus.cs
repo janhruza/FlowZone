@@ -11,7 +11,7 @@ namespace PathFinder.Core;
 /// </summary>
 public static class ContextMenus
 {
-    static void ExecuteAction(string path, string verb)
+    private static void ExecuteAction(string path, string verb)
     {
         try
         {
@@ -52,7 +52,7 @@ public static class ContextMenus
                 ExecuteAction(folderPath, verb);
             };
 
-            menu.Items.Add(item);
+            _ = menu.Items.Add(item);
         }
 
         return menu.Items.Count > 0;
@@ -82,7 +82,7 @@ public static class ContextMenus
                 ExecuteAction(filePath, verb);
             };
 
-            menu.Items.Add(item);
+            _ = menu.Items.Add(item);
         }
 
         return menu.Items.Count > 0;

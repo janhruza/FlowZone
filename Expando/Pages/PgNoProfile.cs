@@ -54,7 +54,7 @@ public class PgNoProfile : Page, IExpandoPage
         btnProfiles.Click += (s, e) =>
         {
             Page pgSelection = PgProfiles.Instance;
-            MainWindow.SetActivePage(ref pgSelection);
+            _ = MainWindow.SetActivePage(ref pgSelection);
         };
 
         // elements container

@@ -70,8 +70,8 @@ public partial class CtlExchangeCalculator : UserControl
                 Content = header
             };
 
-            cbxInput.Items.Add(cbiIn);
-            cbxOutput.Items.Add(cbiOut);
+            _ = cbxInput.Items.Add(cbiIn);
+            _ = cbxOutput.Items.Add(cbiOut);
         }
 
         if (cbxInput.Items.Count > 0) cbxInput.SelectedIndex = 0;
@@ -125,7 +125,7 @@ public partial class CtlExchangeCalculator : UserControl
     {
         if (await TryConvert() == false)
         {
-            App.MainWindow.SetStatusMessage("Unable to perform this conversion.");
+            _ = App.MainWindow.SetStatusMessage("Unable to perform this conversion.");
         }
     }
 

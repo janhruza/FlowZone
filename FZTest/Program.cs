@@ -5,7 +5,7 @@ namespace FZTest;
 internal class Program
 {
     [STAThread]
-    static int Main(string[] args)
+    private static int Main(string[] args)
     {
         return 0;
     }
