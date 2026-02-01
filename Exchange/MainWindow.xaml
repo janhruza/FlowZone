@@ -25,11 +25,11 @@
         <TabControl Margin="10"
                     Width="400">
 
-            <TabItem Header="Statistics">
+            <TabItem Header="Currency Exchange">
                 <controls:CtlExchangeCalculator Margin="0,5,0,0"/>
             </TabItem>
 
-            <TabItem Header="Conversion History">
+            <TabItem Header="Statistics">
                 <controls:CtlExchangeHistory Margin="0,5,0,0"/>
             </TabItem>
 
