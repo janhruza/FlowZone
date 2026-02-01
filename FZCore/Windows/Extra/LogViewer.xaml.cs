@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FZCore.Windows;
+namespace FZCore.Windows.Extra;
 
 internal class LogEntry
 {

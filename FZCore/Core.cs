@@ -1,4 +1,5 @@
 ﻿using FZCore.Windows;
+using FZCore.Windows.Extra;
 
 using Microsoft.Win32;
 
