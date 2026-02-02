@@ -112,18 +112,19 @@ public partial class MainWindow : IconlessWindow
         _ = await ActivatePage(App.PgDashboard);
     }
 
-    private void tviCPU_Selected(object sender, RoutedEventArgs e)
+    private async void tviCPU_Selected(object sender, RoutedEventArgs e)
     {
         return;
     }
 
-    private void tviRAM_Selected(object sender, RoutedEventArgs e)
+    private async void tviRAM_Selected(object sender, RoutedEventArgs e)
     {
         return;
     }
 
-    private void tviTasks_Selected(object sender, RoutedEventArgs e)
+    private async void tviTasks_Selected(object sender, RoutedEventArgs e)
     {
+        await ActivatePage(App.PgTasks);
         return;
     }
 }

@@ -20,6 +20,11 @@ public partial class App : BaseApplication
     /// </summary>
     public static PgDashboard PgDashboard { get; private set; }
 
+    /// <summary>
+    /// Representing the processes page.
+    /// </summary>
+    public static PgTasks PgTasks { get; private set; }
+
     #endregion
 
     #region Performance counters
@@ -67,6 +72,7 @@ public partial class App : BaseApplication
         });
 
         PgDashboard = new PgDashboard();
+        PgTasks = new PgTasks();
         MainWindow = new MainWindow();
 
         MainWindow.Show();
