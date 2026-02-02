@@ -36,8 +36,8 @@ public class FreeWindow : BaseWindow
 
     private void FreeWindow_SourceInitialized(object? sender, EventArgs e)
     {
-        nint hwnd = new WindowInteropHelper(this).EnsureHandle();
-        WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [2], Marshal.SizeOf<int>());
+        _ = new WindowInteropHelper(this).EnsureHandle();
+        _ = WinAPI.DwmSetWindowAttribute(Handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [2], Marshal.SizeOf<int>());
         return;
     }
 

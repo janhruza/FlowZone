@@ -51,7 +51,7 @@ public static class MonitorService
     {
         if (_activeCounters.Contains(counter) == true)
         {
-            _activeCounters.Remove(counter);
+            _ = _activeCounters.Remove(counter);
         }
     }
 

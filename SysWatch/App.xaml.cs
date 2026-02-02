@@ -1,5 +1,4 @@
-﻿using FZCore;
-using FZCore.Extra;
+﻿using FZCore.Extra;
 
 using System.Threading.Tasks;
 using System.Windows;

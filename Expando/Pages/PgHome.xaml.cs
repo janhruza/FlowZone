@@ -57,7 +57,7 @@ public partial class PgHome : Page, IExpandoPage
     private void rLog_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         LogViewer lvWindow = new LogViewer(Log.Path);
-        lvWindow.ShowDialog();
+        _ = lvWindow.ShowDialog();
     }
 
     #region Static code
