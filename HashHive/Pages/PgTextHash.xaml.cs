@@ -27,34 +27,34 @@ public partial class PgTextHash : Page
 
     private void btnSha256_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        txtResult.Text = App.SHA256Hash(txtInput.Text);
+        this.txtResult.Text = App.SHA256Hash(this.txtInput.Text);
     }
 
     private void btnSha512_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        txtResult.Text = App.SHA512Hash(txtInput.Text);
+        this.txtResult.Text = App.SHA512Hash(this.txtInput.Text);
     }
 
     private void btnMD5_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        txtResult.Text = App.MD5Hash(txtInput.Text);
+        this.txtResult.Text = App.MD5Hash(this.txtInput.Text);
     }
 
     private void btnSha1_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        txtResult.Text = App.SHA1Hash(txtInput.Text);
+        this.txtResult.Text = App.SHA1Hash(this.txtInput.Text);
     }
 
     private void btnSha384_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        txtResult.Text = App.SHA384Hash(txtInput.Text);
+        this.txtResult.Text = App.SHA384Hash(this.txtInput.Text);
     }
 
     private void btnCopyHash_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(txtResult.Text) == false)
+        if (string.IsNullOrEmpty(this.txtResult.Text) == false)
         {
-            Clipboard.SetText(txtResult.Text);
+            Clipboard.SetText(this.txtResult.Text);
         }
     }
 }

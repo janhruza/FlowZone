@@ -43,7 +43,7 @@ public partial class PgDashboard : Page
     {
         Dispatcher.Invoke(() =>
         {
-            rGPU.Text = MathF.Round(e, 2).ToString();
+            this.rGPU.Text = MathF.Round(e, 2).ToString();
         });
     }
 
@@ -51,7 +51,7 @@ public partial class PgDashboard : Page
     {
         Dispatcher.Invoke(() =>
         {
-            rIO.Text = MathF.Round(e, 2).ToString();
+            this.rIO.Text = MathF.Round(e, 2).ToString();
         });
     }
 
@@ -59,7 +59,7 @@ public partial class PgDashboard : Page
     {
         Dispatcher.Invoke(() =>
         {
-            rRAM.Text = MathF.Round(e, 2).ToString();
+            this.rRAM.Text = MathF.Round(e, 2).ToString();
         });
     }
 
@@ -91,7 +91,7 @@ public partial class PgDashboard : Page
     {
         Dispatcher.Invoke(() =>
         {
-            rCPU.Text = MathF.Round(e, 2).ToString();
+            this.rCPU.Text = MathF.Round(e, 2).ToString();
         });
     }
 

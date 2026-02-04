@@ -23,11 +23,11 @@ public partial class NewTaskWindow : IconlessWindow
         Task = new TaskItem();
 
         // default dtValue - indefinite expiration
-        cbCanExpire.IsChecked = false;
-        dtExpiration.SelectedDate = DateTime.MaxValue;
+        this.cbCanExpire.IsChecked = false;
+        this.dtExpiration.SelectedDate = DateTime.MaxValue;
 
         // is new task
-        _isNewTask = true;
+        this._isNewTask = true;
     }
 
     /// <summary>
@@ -39,15 +39,15 @@ public partial class NewTaskWindow : IconlessWindow
         InitializeComponent();
         Task = task;
 
-        cbCanExpire.IsChecked = task.ExpirationDate != DateTime.MaxValue; // must be MaxValue to be indefinite
-        dtExpiration.SelectedDate = task.ExpirationDate;
+        this.cbCanExpire.IsChecked = task.ExpirationDate != DateTime.MaxValue; // must be MaxValue to be indefinite
+        this.dtExpiration.SelectedDate = task.ExpirationDate;
 
         // load fields data
-        txtCaption.Text = task.Caption;
-        txtDescription.Text = task.Text;
+        this.txtCaption.Text = task.Caption;
+        this.txtDescription.Text = task.Text;
 
         // is not new task - already existing task is being modified
-        _isNewTask = false;
+        this._isNewTask = false;
     }
 
     /// <summary>
@@ -97,9 +97,9 @@ public partial class NewTaskWindow : IconlessWindow
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         // assign values
-        Task.Caption = txtCaption.Text;                                         // mandatory
-        Task.Text = txtDescription.Text;                                        // optional
-        Task.ExpirationDate = dtExpiration.SelectedDate ?? DateTime.MinValue;   // mandatory but default case is handled
+        Task.Caption = this.txtCaption.Text;                                         // mandatory
+        Task.Text = this.txtDescription.Text;                                        // optional
+        Task.ExpirationDate = this.dtExpiration.SelectedDate ?? DateTime.MinValue;   // mandatory but default case is handled
 
         // evaluate results
         if (string.IsNullOrEmpty(Task.Caption) || Task.ExpirationDate == DateTime.MinValue)
@@ -111,7 +111,7 @@ public partial class NewTaskWindow : IconlessWindow
         else
         {
             // valid input, create task
-            if (_isNewTask == true)
+            if (this._isNewTask == true)
             {
                 // create only if it's a new task
                 App.Tasks.Add(Task);
@@ -125,13 +125,13 @@ public partial class NewTaskWindow : IconlessWindow
 
     private void cbCanExpire_Checked(object sender, RoutedEventArgs e)
     {
-        dtExpiration.SelectedDate = DateTime.Now;
-        bdExpiration.Visibility = Visibility.Visible;
+        this.dtExpiration.SelectedDate = DateTime.Now;
+        this.bdExpiration.Visibility = Visibility.Visible;
     }
 
     private void cbCanExpire_Unchecked(object sender, RoutedEventArgs e)
     {
-        dtExpiration.SelectedDate = DateTime.MaxValue;
-        bdExpiration.Visibility = Visibility.Collapsed;
+        this.dtExpiration.SelectedDate = DateTime.MaxValue;
+        this.bdExpiration.Visibility = Visibility.Collapsed;
     }
 }

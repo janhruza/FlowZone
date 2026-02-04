@@ -44,19 +44,19 @@ public class ExtendedWindow : BaseWindow
     public ExtendedWindow()
     {
         // creates the window identifier
-        _guid = Guid.CreateVersion7();
+        this._guid = Guid.CreateVersion7();
 
         // creates the window handle
-        _handle = (nuint)this.GetHandle();
+        this._handle = (nuint)this.GetHandle();
 
         // initializes the extender class
-        _extender = new WindowExtender(this);
+        this._extender = new WindowExtender(this);
 
         // sets the default index for menu items
-        idx = 0x10;
+        this.idx = 0x10;
 
         // extends the window with basic extended functionality
-        _extender.EmpowerWindow();
+        this._extender.EmpowerWindow();
 
         // disable independent pixels unit
         SnapsToDevicePixels = true;
@@ -110,12 +110,12 @@ public class ExtendedWindow : BaseWindow
     /// Adds a menu item to the window's system menu.
     /// </summary>
     /// <param name="item">Information about the menu item.</param>
-    public void AddMenuItem(ExtendedMenuItem item) => _extender.AddMenuItem(idx++, item);
+    public void AddMenuItem(ExtendedMenuItem item) => this._extender.AddMenuItem(this.idx++, item);
 
     /// <summary>
     /// Adds a separator to the window's system menu.
     /// </summary>
-    public void AddMenuSeparator() => _extender.AddSeparator(idx++);
+    public void AddMenuSeparator() => this._extender.AddSeparator(this.idx++);
 
     /// <summary>
     /// Sets the window's extended <see cref="WindowStyle"/>.
@@ -124,7 +124,7 @@ public class ExtendedWindow : BaseWindow
     public void SetWindowState(ExtendedWindowState state)
     {
         // set new state
-        _state = state;
+        this._state = state;
 
         switch (state)
         {
@@ -159,22 +159,22 @@ public class ExtendedWindow : BaseWindow
     /// <summary>
     /// Gets or sets the extended <see cref="WindowState"/> of this window.
     /// </summary>
-    public ExtendedWindowState WindowStateEx { get => _state; set => SetWindowState(value); }
+    public ExtendedWindowState WindowStateEx { get => this._state; set => SetWindowState(value); }
 
     /// <summary>
     /// Representing the attached <see cref="WindowExtender"/> object.
     /// </summary>
-    public WindowExtender Extender => _extender;
+    public WindowExtender Extender => this._extender;
 
     /// <summary>
     /// Representing the window handle (HWND) as <see cref="UIntPtr"/>.
     /// </summary>
-    public nuint Handle => _handle;
+    public nuint Handle => this._handle;
 
     /// <summary>
     /// Representing the window identification as <see cref="Guid"/>.
     /// </summary>
-    public Guid Id => _guid;
+    public Guid Id => this._guid;
 
     #endregion
 }

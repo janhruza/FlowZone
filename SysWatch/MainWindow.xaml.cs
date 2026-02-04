@@ -21,7 +21,7 @@ public partial class MainWindow : IconlessWindow
     public MainWindow()
     {
         InitializeComponent();
-        ctlButtons.Target = this;
+        this.ctlButtons.Target = this;
     }
 
     #region Public methods
@@ -35,9 +35,9 @@ public partial class MainWindow : IconlessWindow
     /// successfully activated; otherwise, <see langword="false"/>.</returns>
     public async Task<bool> ActivatePage(Page? page)
     {
-        if (frm is null) return false;
+        if (this.frm is null) return false;
         if (page is null) return false;
-        return frm.Navigate(page);
+        return this.frm.Navigate(page);
     }
 
     #endregion
@@ -74,10 +74,10 @@ public partial class MainWindow : IconlessWindow
     private void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
     {
         ExtendSystemMenu();
-        ctlButtons.Foreground = FZCore.Core.IsDarkModeEnabled() ? Brushes.White : Brushes.Black;
+        this.ctlButtons.Foreground = FZCore.Core.IsDarkModeEnabled() ? Brushes.White : Brushes.Black;
 
         // activate the default item
-        tviDashboard.IsSelected = true;
+        this.tviDashboard.IsSelected = true;
     }
 
     private void IconlessWindow_KeyDown(object sender, KeyEventArgs e)
@@ -124,7 +124,7 @@ public partial class MainWindow : IconlessWindow
 
     private async void tviTasks_Selected(object sender, RoutedEventArgs e)
     {
-        await ActivatePage(App.PgTasks);
+        _ = await ActivatePage(App.PgTasks);
         return;
     }
 }

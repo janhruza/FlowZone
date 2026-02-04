@@ -29,7 +29,7 @@ public partial class PgExpanses : Page, IExpandoPage
     public void ReloadUI()
     {
         // clear the list of expanses
-        lbExpanses.Items.Clear();
+        this.lbExpanses.Items.Clear();
 
         if (UserProfile.Current == null)
         {
@@ -74,7 +74,7 @@ public partial class PgExpanses : Page, IExpandoPage
                 }
             }
 
-            _ = lbExpanses.Items.Add(App.CreateTransactionItem(expanse, ModifyItem, RemoveItem));
+            _ = this.lbExpanses.Items.Add(App.CreateTransactionItem(expanse, ModifyItem, RemoveItem));
         }
 
         return;

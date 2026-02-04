@@ -15,10 +15,10 @@ public partial class WndVideoProperties : IconlessWindow
 
     private async Task LoadProperties(VideoProperties properties)
     {
-        rFilename.Text = properties.Path;
-        rWidth.Text = properties.Width.ToString();
-        rHeight.Text = properties.Height.ToString();
-        rDuration.Text = $"{properties.Duration.Hours:D2}:{properties.Duration.Minutes:D2}:{properties.Duration.Seconds:D2}";
+        this.rFilename.Text = properties.Path;
+        this.rWidth.Text = properties.Width.ToString();
+        this.rHeight.Text = properties.Height.ToString();
+        this.rDuration.Text = $"{properties.Duration.Hours:D2}:{properties.Duration.Minutes:D2}:{properties.Duration.Seconds:D2}";
         return;
     }
 
@@ -29,12 +29,12 @@ public partial class WndVideoProperties : IconlessWindow
     public WndVideoProperties(ref VideoProperties properties)
     {
         InitializeComponent();
-        _properties = properties;
+        this._properties = properties;
     }
 
     private async void IconlessWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        await LoadProperties(_properties);
+        await LoadProperties(this._properties);
     }
 
     private void miCancel_Click(object sender, System.Windows.RoutedEventArgs e)

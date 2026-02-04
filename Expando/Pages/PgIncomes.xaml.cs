@@ -28,7 +28,7 @@ public partial class PgIncomes : Page, IExpandoPage
     public void ReloadUI()
     {
         // clear the list of expanses
-        lbIncomes.Items.Clear();
+        this.lbIncomes.Items.Clear();
 
         if (UserProfile.Current == null)
         {
@@ -73,7 +73,7 @@ public partial class PgIncomes : Page, IExpandoPage
                 }
             }
 
-            _ = lbIncomes.Items.Add(App.CreateTransactionItem(income, ModifyItem, RemoveItem));
+            _ = this.lbIncomes.Items.Add(App.CreateTransactionItem(income, ModifyItem, RemoveItem));
         }
 
         return;

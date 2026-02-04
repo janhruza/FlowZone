@@ -43,7 +43,7 @@ public class UserProfile
     /// <summary>
     /// Representing a list of all user transactions.
     /// </summary>
-    public List<Transaction> Transactions => _transactions;
+    public List<Transaction> Transactions => this._transactions;
 
     /// <summary>
     /// Gets a new list of all the user's expanses.
@@ -54,10 +54,10 @@ public class UserProfile
         List<Transaction> list = [];
         try
         {
-            if (_transactions == null) return list;
+            if (this._transactions == null) return list;
 
             // gets only the expanses
-            list = _transactions.Where(x => x.Type == Transaction.TypeExpanse).ToList();
+            list = this._transactions.Where(x => x.Type == Transaction.TypeExpanse).ToList();
             return list;
         }
 
@@ -77,10 +77,10 @@ public class UserProfile
         List<Transaction> list = [];
         try
         {
-            if (_transactions == null) return list;
+            if (this._transactions == null) return list;
 
             // gets only the incomes
-            list = _transactions.Where(x => x.Type == Transaction.TypeIncome).ToList();
+            list = this._transactions.Where(x => x.Type == Transaction.TypeIncome).ToList();
             return list;
         }
 

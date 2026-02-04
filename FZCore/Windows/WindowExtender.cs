@@ -38,17 +38,17 @@ public class WindowExtender
     {
         if (window == null) throw new ArgumentNullException(nameof(window));
 
-        _window = window;
-        _hwnd = new WindowInteropHelper(window).EnsureHandle();
-        _customMenuItems = new Dictionary<int, ExtendedMenuItem>();
-        _consoleAttached = false;
+        this._window = window;
+        this._hwnd = new WindowInteropHelper(window).EnsureHandle();
+        this._customMenuItems = new Dictionary<int, ExtendedMenuItem>();
+        this._consoleAttached = false;
 
         // Hook WndProc
-        var source = HwndSource.FromHwnd(_hwnd);
+        var source = HwndSource.FromHwnd(this._hwnd);
         source.AddHook(WndProc);
 
         // Save the original system menu
-        _originalSystemMenu = GetSystemMenu(_hwnd, false);
+        this._originalSystemMenu = GetSystemMenu(this._hwnd, false);
     }
 
     /// <summary>
@@ -56,10 +56,10 @@ public class WindowExtender
     /// </summary>
     public void ToggleConsole()
     {
-        if (_consoleAttached == true)
+        if (this._consoleAttached == true)
         {
             _ = FreeConsole();
-            _consoleAttached = false;
+            this._consoleAttached = false;
         }
 
         else
@@ -77,7 +77,7 @@ public class WindowExtender
             _ = DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
 
             Console.Title = $"{Process.GetProcessById(Environment.ProcessId).ProcessName} Debug Console";
-            _consoleAttached = true;
+            this._consoleAttached = true;
         }
     }
 
@@ -89,7 +89,7 @@ public class WindowExtender
     /// <param name="onClick">On-click action for the menu item.</param>
     public void AddMenuItem(int id, string header, Action onClick)
     {
-        _customMenuItems[id] = new ExtendedMenuItem { Header = header, OnClick = onClick };
+        this._customMenuItems[id] = new ExtendedMenuItem { Header = header, OnClick = onClick };
         RedrawMenu();
     }
 
@@ -99,7 +99,7 @@ public class WindowExtender
     /// <param name="id"></param>
     public void AddSeparator(int id)
     {
-        _customMenuItems[id] = new ExtendedMenuItem
+        this._customMenuItems[id] = new ExtendedMenuItem
         {
             Header = "-"
         };
@@ -114,7 +114,7 @@ public class WindowExtender
     /// <param name="menuItem">Menu item struct.</param>
     public void AddMenuItem(int id, ExtendedMenuItem menuItem)
     {
-        _customMenuItems[id] = menuItem;
+        this._customMenuItems[id] = menuItem;
         RedrawMenu();
     }
 
@@ -124,9 +124,9 @@ public class WindowExtender
     /// <param name="id">ID of the target item.</param>
     public void RemoveMenuItem(int id)
     {
-        if (_customMenuItems.ContainsKey(id))
+        if (this._customMenuItems.ContainsKey(id))
         {
-            _ = _customMenuItems.Remove(id);
+            _ = this._customMenuItems.Remove(id);
             RedrawMenu();
         }
     }
@@ -136,8 +136,8 @@ public class WindowExtender
     /// </summary>
     public void RestoreDefaultMenu()
     {
-        _ = GetSystemMenu(_hwnd, true); // Restore the original menu
-        _customMenuItems.Clear();
+        _ = GetSystemMenu(this._hwnd, true); // Restore the original menu
+        this._customMenuItems.Clear();
     }
 
     /// <summary>
@@ -145,21 +145,21 @@ public class WindowExtender
     /// </summary>
     public void EmpowerWindow()
     {
-        if (_window == null) return;
+        if (this._window == null) return;
 
         // enable keydown events
-        _window.KeyDown += (s, e) =>
+        this._window.KeyDown += (s, e) =>
         {
             if (e.Key == Key.F1)
             {
                 // open app log
-                _ = Core.ViewLog(_window);
+                _ = Core.ViewLog(this._window);
             }
 
             if (e.Key == System.Windows.Input.Key.F11)
             {
                 // empower window
-                _window.ToggleFullScreenMode();
+                this._window.ToggleFullScreenMode();
             }
 
             if (e.Key == System.Windows.Input.Key.F12)
@@ -173,12 +173,12 @@ public class WindowExtender
     private void RedrawMenu()
     {
         // Clear the current menu and restore the default system menu
-        _ = GetSystemMenu(_hwnd, true);
+        _ = GetSystemMenu(this._hwnd, true);
 
-        IntPtr systemMenu = GetSystemMenu(_hwnd, false);
+        IntPtr systemMenu = GetSystemMenu(this._hwnd, false);
 
         // Insert custom items at their respective positions based on IDs
-        foreach (var menuItem in _customMenuItems.OrderBy(m => m.Key))
+        foreach (var menuItem in this._customMenuItems.OrderBy(m => m.Key))
         {
             if (string.IsNullOrEmpty(menuItem.Value.Header) || menuItem.Value.Header == "-")
             {
@@ -198,7 +198,7 @@ public class WindowExtender
         if (msg == WM_SYSCOMMAND)
         {
             int commandId = wParam.ToInt32();
-            if (_customMenuItems.TryGetValue(commandId, out var menuItem))
+            if (this._customMenuItems.TryGetValue(commandId, out var menuItem))
             {
                 menuItem.OnClick?.Invoke();
                 handled = true;

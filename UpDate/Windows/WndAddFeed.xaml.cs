@@ -27,7 +27,7 @@ public partial class WndAddFeed : IconlessWindow
     /// </summary>
     public new void Show()
     {
-        _isDialog = false;
+        this._isDialog = false;
         base.Show();
     }
 
@@ -37,7 +37,7 @@ public partial class WndAddFeed : IconlessWindow
     /// <returns></returns>
     public new bool? ShowDialog()
     {
-        _isDialog = true;
+        this._isDialog = true;
         Loaded += (s, e) => SystemSounds.Beep.Play();
         return base.ShowDialog();
     }
@@ -47,7 +47,7 @@ public partial class WndAddFeed : IconlessWindow
         try
         {
             // gets the raw input
-            string url = txtUrl.Text.Trim();
+            string url = this.txtUrl.Text.Trim();
 
             if (string.IsNullOrEmpty(url) == true || Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri) == false)
             {
@@ -79,7 +79,7 @@ public partial class WndAddFeed : IconlessWindow
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        if (_isDialog)
+        if (this._isDialog)
         {
             DialogResult = false;
         }
@@ -95,7 +95,7 @@ public partial class WndAddFeed : IconlessWindow
             return;
         }
 
-        if (_isDialog)
+        if (this._isDialog)
         {
             DialogResult = true;
         }
@@ -105,6 +105,6 @@ public partial class WndAddFeed : IconlessWindow
 
     private void txtUrl_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        btnOK.IsEnabled = txtUrl.Text.Length > 0;
+        this.btnOK.IsEnabled = this.txtUrl.Text.Length > 0;
     }
 }

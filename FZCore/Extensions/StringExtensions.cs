@@ -1,7 +1,7 @@
 ﻿namespace FZCore.Extensions;
 
 /// <summary>
-/// Representing various <see cref="System.String"/> extensions.
+/// Representing various <see cref="string"/> extensions.
 /// </summary>
 public static class StringExtensions
 {

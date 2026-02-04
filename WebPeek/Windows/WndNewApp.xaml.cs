@@ -17,8 +17,8 @@ public partial class WndNewApp : IconlessWindow
     public WndNewApp()
     {
         InitializeComponent();
-        webApp = new WebApplication();
-        Result = webApp;
+        this.webApp = new WebApplication();
+        Result = this.webApp;
     }
 
     private bool bDialog;
@@ -35,7 +35,7 @@ public partial class WndNewApp : IconlessWindow
     /// </summary>
     public new void Show()
     {
-        bDialog = false;
+        this.bDialog = false;
         return;
     }
 
@@ -45,13 +45,13 @@ public partial class WndNewApp : IconlessWindow
     /// <returns>The window's dialog result.</returns>
     public new bool? ShowDialog()
     {
-        bDialog = true;
+        this.bDialog = true;
         return base.ShowDialog();
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        if (bDialog)
+        if (this.bDialog)
         {
             DialogResult = false;
         }
@@ -61,8 +61,8 @@ public partial class WndNewApp : IconlessWindow
 
     private bool ExportApp()
     {
-        webApp = new WebApplication(txtName.Text, txtUrl.Text);
-        return AppManager.RegisterApp(webApp);
+        this.webApp = new WebApplication(this.txtName.Text, this.txtUrl.Text);
+        return AppManager.RegisterApp(this.webApp);
     }
 
     private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -73,9 +73,9 @@ public partial class WndNewApp : IconlessWindow
             return;
         }
 
-        Result = webApp;
+        Result = this.webApp;
 
-        if (bDialog)
+        if (this.bDialog)
         {
             DialogResult = true;
         }

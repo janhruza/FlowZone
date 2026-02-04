@@ -141,24 +141,24 @@ public partial class PgProfiles : Page, IExpandoPage
     /// </summary>
     public void ReloadUI()
     {
-        lbProfiles.Items.Clear();
+        this.lbProfiles.Items.Clear();
 
         if (UserProfile.Profiles.Count == 0)
         {
             // no profiles found
             // draw an item that redirects user to a create new profile page
 
-            _ = lbProfiles.Items.Add(NewProfileItem());
+            _ = this.lbProfiles.Items.Add(NewProfileItem());
             return;
         }
 
-        _ = lbProfiles.Items.Add(NewProfileItem());
-        _ = lbProfiles.Items.Add(new Separator());
+        _ = this.lbProfiles.Items.Add(NewProfileItem());
+        _ = this.lbProfiles.Items.Add(new Separator());
 
         foreach (UserProfile profile in UserProfile.Profiles)
         {
             // add an item with associated profile
-            _ = lbProfiles.Items.Add(ProfileMenuItem(profile));
+            _ = this.lbProfiles.Items.Add(ProfileMenuItem(profile));
         }
 
         return;

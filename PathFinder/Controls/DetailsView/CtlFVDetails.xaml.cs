@@ -30,8 +30,8 @@ public partial class CtlFVDetails : CtlFolderViewBase
 
         Loaded += async (s, e) =>
         {
-            _folderPath = $"C:\\";
-            _ = await OpenFolder(_folderPath);
+            this._folderPath = $"C:\\";
+            _ = await OpenFolder(this._folderPath);
         };
     }
 
@@ -69,8 +69,8 @@ public partial class CtlFVDetails : CtlFolderViewBase
             return false;
         }
 
-        listBox.Items.Clear();
-        _ = listBox.Items.Add(new ListBoxItem
+        this.listBox.Items.Clear();
+        _ = this.listBox.Items.Add(new ListBoxItem
         {
             Content = new CtlItemDetailView()
             {
@@ -96,7 +96,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
         }
 
         // folder exists
-        _folderPath = folderPath;
+        this._folderPath = folderPath;
         FolderChanged.Invoke(this, folderPath);
 
         // get parent folder item
@@ -104,12 +104,12 @@ public partial class CtlFVDetails : CtlFolderViewBase
         if (hasParent)
         {
             ListBoxItem lbiParent = (ListBoxItem)CreateParentFolderItem(folderPath);
-            _ = listBox.Items.Add(lbiParent);
+            _ = this.listBox.Items.Add(lbiParent);
         }
 
         if (hasParent && dirs.Count > 0)
         {
-            _ = listBox.Items.Add(new Separator());
+            _ = this.listBox.Items.Add(new Separator());
         }
 
         foreach (string dir in dirs)
@@ -142,7 +142,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
                     FZCore.Core.ErrorBox($"Unable to open the given folder: {di.FullName}");
                 }
             };
-            _ = listBox.Items.Add(lbi);
+            _ = this.listBox.Items.Add(lbi);
         }
 
         if (files.Count == 0)
@@ -150,7 +150,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
             return true;
         }
 
-        _ = listBox.Items.Add(new Separator());
+        _ = this.listBox.Items.Add(new Separator());
 
         foreach (string file in files)
         {
@@ -202,7 +202,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
                 }
             };
 
-            _ = listBox.Items.Add(lbi);
+            _ = this.listBox.Items.Add(lbi);
         }
 
         return true;
@@ -214,16 +214,16 @@ public partial class CtlFVDetails : CtlFolderViewBase
     public new event EventHandler<string> FolderChanged = delegate { };
 
     /// <inheritdoc/>
-    public new string FolderName => _folderPath;
+    public new string FolderName => this._folderPath;
 
     private async void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        _ = await OpenFolder(_folderPath);
+        _ = await OpenFolder(this._folderPath);
     }
 
     private void miExplorer_Click(object sender, RoutedEventArgs e)
     {
-        if (listBox.SelectedIndex != -1 && listBox.SelectedItem is ListBoxItem li)
+        if (this.listBox.SelectedIndex != -1 && this.listBox.SelectedItem is ListBoxItem li)
         {
             string path = li.Uid;
             _ = Process.Start("explorer", $"/select, {path}");
@@ -232,7 +232,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
         else
         {
             // open folder
-            _ = Process.Start("explorer", _folderPath);
+            _ = Process.Start("explorer", this._folderPath);
         }
     }
 }

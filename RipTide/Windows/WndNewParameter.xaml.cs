@@ -30,20 +30,20 @@ public partial class WndNewParameter : IconlessWindow
     /// <summary>
     /// Representing the user-specified paramteter.
     /// </summary>
-    public string ParameterValue => _parameter;
+    public string ParameterValue => this._parameter;
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
-        _parameter = string.Empty;
+        this._parameter = string.Empty;
         DialogResult = false;
         Close();
     }
 
     private void btnAdd_Click(object sender, RoutedEventArgs e)
     {
-        _parameter = txtParam.Text.Trim();
+        this._parameter = this.txtParam.Text.Trim();
 
-        if (string.IsNullOrEmpty(_parameter) == false)
+        if (string.IsNullOrEmpty(this._parameter) == false)
         {
             DialogResult = true;
             Close();
@@ -54,17 +54,17 @@ public partial class WndNewParameter : IconlessWindow
 
     private void txtParam_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        btnAdd.IsEnabled = txtParam.Text.Trim().Length > 0;
+        this.btnAdd.IsEnabled = this.txtParam.Text.Trim().Length > 0;
     }
 
     private void rSupportedSites_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        rSupportedSites.Foreground = SystemColors.AccentColorBrush;
+        this.rSupportedSites.Foreground = SystemColors.AccentColorBrush;
     }
 
     private void rSupportedSites_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        rSupportedSites.Foreground = SystemColors.AccentColorLight2Brush;
+        this.rSupportedSites.Foreground = SystemColors.AccentColorLight2Brush;
     }
 
     private void rSupportedSites_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

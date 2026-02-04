@@ -15,7 +15,7 @@ public partial class CtlTextInput : UserControl
     public CtlTextInput()
     {
         InitializeComponent();
-        txt.Clear();
+        this.txt.Clear();
     }
 
     /// <summary>
@@ -23,8 +23,8 @@ public partial class CtlTextInput : UserControl
     /// </summary>
     public object Header
     {
-        get => lbl.Content;
-        set => lbl.Content = value;
+        get => this.lbl.Content;
+        set => this.lbl.Content = value;
     }
 
     /// <summary>
@@ -32,8 +32,8 @@ public partial class CtlTextInput : UserControl
     /// </summary>
     public string Placeholder
     {
-        get => tbPlaceholder.Text;
-        set => tbPlaceholder.Text = value;
+        get => this.tbPlaceholder.Text;
+        set => this.tbPlaceholder.Text = value;
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ public partial class CtlTextInput : UserControl
     /// </summary>
     public string Text
     {
-        get => txt.Text;
-        set => txt.Text = value;
+        get => this.txt.Text;
+        set => this.txt.Text = value;
     }
 
     /// <summary>
@@ -50,27 +50,27 @@ public partial class CtlTextInput : UserControl
     /// </summary>
     public bool IsReadOnly
     {
-        get => txt.IsReadOnly;
-        set => txt.IsReadOnly = value;
+        get => this.txt.IsReadOnly;
+        set => this.txt.IsReadOnly = value;
     }
 
     /// <summary>
     /// Gets the underlying <see cref="System.Windows.Controls.TextBox"/> control associated with this instance.
     /// </summary>
-    public TextBox TextBox => txt;
+    public TextBox TextBox => this.txt;
 
     private void txt_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (tbPlaceholder is null) return;
+        if (this.tbPlaceholder is null) return;
 
-        if (txt.Text.Length == 0)
+        if (this.txt.Text.Length == 0)
         {
-            tbPlaceholder.Visibility = System.Windows.Visibility.Visible;
+            this.tbPlaceholder.Visibility = System.Windows.Visibility.Visible;
         }
 
         else
         {
-            tbPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
+            this.tbPlaceholder.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

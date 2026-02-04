@@ -111,7 +111,7 @@ public partial class MainWindow : IconlessWindow
             _ = cm.Items.Add(miDelete);
         }
 
-        _ = lbTasks.Items.Add(lbi);
+        _ = this.lbTasks.Items.Add(lbi);
     }
 
     private async Task RemoveTask(TaskItem task)
@@ -127,7 +127,7 @@ public partial class MainWindow : IconlessWindow
 
     private async Task LoadTasks()
     {
-        lbTasks.Items.Clear();
+        this.lbTasks.Items.Clear();
 
         if (App.Tasks.Count == 0)
         {

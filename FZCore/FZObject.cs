@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace FZCore;
 
 /// <summary>
-/// Representing the customized <see cref="Object"/> class with few more base values.
+/// Representing the customized <see cref="object"/> class with few more base values.
 /// </summary>
 public class FZObject
 {

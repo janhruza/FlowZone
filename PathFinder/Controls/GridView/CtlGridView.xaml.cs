@@ -48,7 +48,7 @@ public partial class CtlGridView : CtlFolderViewBase
     public new event EventHandler<string> FolderChanged = delegate { };
 
     /// <inheritdoc/>
-    public new string FolderName => _folderPath;
+    public new string FolderName => this._folderPath;
 
     /// <inheritdoc/>
     public new async Task<bool> OpenFolder(string folderPath)
@@ -59,11 +59,11 @@ public partial class CtlGridView : CtlFolderViewBase
             return false;
         }
 
-        _folderPath = folderPath;
+        this._folderPath = folderPath;
         FolderChanged.Invoke(this, folderPath);
 
         // clear grid
-        uGrid.Children.Clear();
+        this.uGrid.Children.Clear();
 
         // enum objects
         List<string> dirs = [];
@@ -82,7 +82,7 @@ public partial class CtlGridView : CtlFolderViewBase
         }
 
         // add the parent folder item
-        _ = uGrid.Children.Add((CtlGridViewItem)CreateParentFolderItem(folderPath));
+        _ = this.uGrid.Children.Add((CtlGridViewItem)CreateParentFolderItem(folderPath));
 
         // handle all folders first
         foreach (string dir in dirs)
@@ -112,7 +112,7 @@ public partial class CtlGridView : CtlFolderViewBase
                 item.ContextMenu = cm;
             }
 
-            _ = uGrid.Children.Add(item);
+            _ = this.uGrid.Children.Add(item);
         }
 
         // handle all files second
@@ -163,7 +163,7 @@ public partial class CtlGridView : CtlFolderViewBase
             {
                 item.ContextMenu = cm;
             }
-            _ = uGrid.Children.Add(item);
+            _ = this.uGrid.Children.Add(item);
         }
 
         return true;
@@ -175,8 +175,8 @@ public partial class CtlGridView : CtlFolderViewBase
     public CtlGridView()
     {
         InitializeComponent();
-        _folderPath = string.Empty;
-        _ = OpenFolder(_folderPath);
+        this._folderPath = string.Empty;
+        _ = OpenFolder(this._folderPath);
     }
 
     /// <summary>
@@ -192,17 +192,17 @@ public partial class CtlGridView : CtlFolderViewBase
     /// </summary>
     public int Columns
     {
-        get => uGrid.Columns;
-        set => uGrid.Columns = value;
+        get => this.uGrid.Columns;
+        set => this.uGrid.Columns = value;
     }
 
     private async void miRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        _ = await OpenFolder(_folderPath);
+        _ = await OpenFolder(this._folderPath);
     }
 
     private void miExplorer_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        _ = Process.Start("explorer", _folderPath);
+        _ = Process.Start("explorer", this._folderPath);
     }
 }

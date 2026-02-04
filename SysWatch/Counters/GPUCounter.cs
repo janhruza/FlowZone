@@ -46,7 +46,7 @@ public class GPUCounter : ICounter
 
             foreach (var instance in instances)
             {
-                _counters.Add(new PerformanceCounter("GPU Engine", "Utilization Percentage", instance));
+                this._counters.Add(new PerformanceCounter("GPU Engine", "Utilization Percentage", instance));
             }
         }
 
@@ -66,7 +66,7 @@ public class GPUCounter : ICounter
     public async Task Update()
     {
         float totalUsage = 0;
-        foreach (var counter in _counters)
+        foreach (var counter in this._counters)
         {
             try
             {

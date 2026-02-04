@@ -59,7 +59,7 @@ public partial class App : BaseApplication
     /// Computes the SHA-256 hash.
     /// </summary>
     /// <param name="input">Input data (as text).</param>
-    /// <returns>SHA-256 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    /// <returns>SHA-256 hash of the <paramref name="input"/> as <see cref="string"/>.</returns>
     public static string SHA256Hash(string input)
     {
         if (string.IsNullOrEmpty(input))
@@ -76,7 +76,7 @@ public partial class App : BaseApplication
     /// Computes the SHA-512 hash.
     /// </summary>
     /// <param name="input">Input data (as text).</param>
-    /// <returns>SHA-512 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    /// <returns>SHA-512 hash of the <paramref name="input"/> as <see cref="string"/>.</returns>
     public static string SHA512Hash(string input)
     {
         if (string.IsNullOrEmpty(input))
@@ -93,7 +93,7 @@ public partial class App : BaseApplication
     /// Computes the MD5 hash.
     /// </summary>
     /// <param name="input">Input data (as text).</param>
-    /// <returns>MD5 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    /// <returns>MD5 hash of the <paramref name="input"/> as <see cref="string"/>.</returns>
     public static string MD5Hash(string input)
     {
         if (string.IsNullOrEmpty(input))
@@ -110,7 +110,7 @@ public partial class App : BaseApplication
     /// Computes the SHA-1 hash.
     /// </summary>
     /// <param name="input">Input data (as text).</param>
-    /// <returns>SHA-1 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    /// <returns>SHA-1 hash of the <paramref name="input"/> as <see cref="string"/>.</returns>
     public static string SHA1Hash(string input)
     {
         if (string.IsNullOrEmpty(input))
@@ -127,7 +127,7 @@ public partial class App : BaseApplication
     /// Computes the SHA-384 hash.
     /// </summary>
     /// <param name="input">Input data (as text).</param>
-    /// <returns>SHA-384 hash of the <paramref name="input"/> as <see cref="System.String"/>.</returns>
+    /// <returns>SHA-384 hash of the <paramref name="input"/> as <see cref="string"/>.</returns>
     public static string SHA384Hash(string input)
     {
         if (string.IsNullOrEmpty(input))
@@ -143,7 +143,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Computes the SHA-1 hash of the given <paramref name="input"/> data.
     /// </summary>
-    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <param name="input">Input data as <see cref="byte"/> array.</param>
     /// <returns>Computed hash.</returns>
     public static string SHA1Hash(byte[] input)
     {
@@ -154,7 +154,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Computes the SHA-256 hash of the given <paramref name="input"/> data.
     /// </summary>
-    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <param name="input">Input data as <see cref="byte"/> array.</param>
     /// <returns>Computed hash.</returns>
     public static string SHA256Hash(byte[] input)
     {
@@ -165,7 +165,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Computes the SHA-384 hash of the given <paramref name="input"/> data.
     /// </summary>
-    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <param name="input">Input data as <see cref="byte"/> array.</param>
     /// <returns>Computed hash.</returns>
     public static string SHA384Hash(byte[] input)
     {
@@ -176,7 +176,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Computes the SHA-512 hash of the given <paramref name="input"/> data.
     /// </summary>
-    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <param name="input">Input data as <see cref="byte"/> array.</param>
     /// <returns>Computed hash.</returns>
     public static string SHA512Hash(byte[] input)
     {
@@ -187,7 +187,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Computes the MD5 hash of the given <paramref name="input"/> data.
     /// </summary>
-    /// <param name="input">Input data as <see cref="System.Byte"/> array.</param>
+    /// <param name="input">Input data as <see cref="byte"/> array.</param>
     /// <returns>Computed hash.</returns>
     public static string MD5Hash(byte[] input)
     {

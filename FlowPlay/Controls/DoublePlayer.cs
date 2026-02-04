@@ -23,8 +23,8 @@ public class DoublePlayer : Control
     private MediaElement _pCurrent;
     private MediaElement _pNext;
 
-    private bool _canNext => (Playlist.Tracks.Count - 1) > playlistIndex;
-    private bool _canPrev => playlistIndex >= 0;
+    private bool _canNext => (Playlist.Tracks.Count - 1) > this.playlistIndex;
+    private bool _canPrev => this.playlistIndex >= 0;
 
     #endregion
 
@@ -35,17 +35,17 @@ public class DoublePlayer : Control
     /// </summary>
     public DoublePlayer()
     {
-        playlistIndex = 0;
+        this.playlistIndex = 0;
         Playlist = new MediaPlaylist();
         Position = TimeSpan.Zero;
 
-        _pCurrent = new MediaElement
+        this._pCurrent = new MediaElement
         {
             LoadedBehavior = MediaState.Manual,
             Visibility = Visibility.Visible
         };
 
-        _pCurrent.MediaEnded += (s, e) =>
+        this._pCurrent.MediaEnded += (s, e) =>
         {
             // swap players and play the next song
             if (_canNext)
@@ -54,23 +54,23 @@ public class DoublePlayer : Control
             }
         };
 
-        _pCurrent.MediaOpened += (s, e) =>
+        this._pCurrent.MediaOpened += (s, e) =>
         {
             // load buffer with the first player simultaneously
-            if (QueueNext(Playlist.Tracks[playlistIndex]) == true)
+            if (QueueNext(Playlist.Tracks[this.playlistIndex]) == true)
             {
                 // advance the current index
-                playlistIndex++;
+                this.playlistIndex++;
             }
 
             else
             {
                 // playlist ended, reset index to default
-                playlistIndex = 0;
+                this.playlistIndex = 0;
             }
         };
 
-        _pNext = new MediaElement
+        this._pNext = new MediaElement
         {
             LoadedBehavior = MediaState.Manual
         };
@@ -121,10 +121,10 @@ public class DoublePlayer : Control
     private void SwapPlayers()
     {
         // reset next (new current) player
-        _pNext.Position = TimeSpan.Zero;
+        this._pNext.Position = TimeSpan.Zero;
 
         // tuple swap
-        (_pNext, _pCurrent) = (_pCurrent, _pNext);
+        (this._pNext, this._pCurrent) = (this._pCurrent, this._pNext);
         return;
     }
 
@@ -151,8 +151,8 @@ public class DoublePlayer : Control
             return false;
         }
 
-        _pNext.Source = new Uri(playlistItem, UriKind.RelativeOrAbsolute);
-        _pNext.Position = TimeSpan.Zero;
+        this._pNext.Source = new Uri(playlistItem, UriKind.RelativeOrAbsolute);
+        this._pNext.Position = TimeSpan.Zero;
         return true;
     }
 
@@ -163,27 +163,27 @@ public class DoublePlayer : Control
     /// <param name="playlistItem">Path to the media file.</param>
     public void OpenMedia(string playlistItem)
     {
-        _pCurrent.Source = new Uri(playlistItem, UriKind.RelativeOrAbsolute);
-        _pCurrent.Position = TimeSpan.Zero;
+        this._pCurrent.Source = new Uri(playlistItem, UriKind.RelativeOrAbsolute);
+        this._pCurrent.Position = TimeSpan.Zero;
         Session.Track = playlistItem;
-        playlistIndex = 0;
+        this.playlistIndex = 0;
         return;
     }
 
     /// <summary>
     /// Plays current media from current position.
     /// </summary>
-    public void Play() => _pCurrent.Play();
+    public void Play() => this._pCurrent.Play();
 
     /// <summary>
     /// Pauses current media at current position.
     /// </summary>
-    public void Pause() => _pCurrent.Pause();
+    public void Pause() => this._pCurrent.Pause();
 
     /// <summary>
     /// Stops and resets current media to be played from the beginning.
     /// </summary>
-    public void Stop() => _pCurrent.Stop();
+    public void Stop() => this._pCurrent.Stop();
 
     /// <summary>
     /// Gets or sets the current position of progress through the current media's playback time.
@@ -192,14 +192,14 @@ public class DoublePlayer : Control
     {
         get
         {
-            if (_pCurrent == null) return TimeSpan.Zero;
-            return _pCurrent.Position;
+            if (this._pCurrent == null) return TimeSpan.Zero;
+            return this._pCurrent.Position;
         }
 
         set
         {
-            if (_pCurrent == null) return;
-            _pCurrent.Position = value;
+            if (this._pCurrent == null) return;
+            this._pCurrent.Position = value;
         }
     }
 
@@ -223,8 +223,8 @@ public class DoublePlayer : Control
         if (_canNext)
         {
             SwapPlayers();
-            _pCurrent.Play();
-            Session.Track = _pCurrent.Source.AbsolutePath;
+            this._pCurrent.Play();
+            Session.Track = this._pCurrent.Source.AbsolutePath;
         }
 
         return;
@@ -237,11 +237,11 @@ public class DoublePlayer : Control
     {
         if (_canPrev)
         {
-            playlistIndex--;
-            _ = QueueNext(Playlist.Tracks[playlistIndex]);
+            this.playlistIndex--;
+            _ = QueueNext(Playlist.Tracks[this.playlistIndex]);
             SwapPlayers();
-            _pCurrent.Play();
-            Session.Track = _pCurrent.Source.AbsolutePath;
+            this._pCurrent.Play();
+            Session.Track = this._pCurrent.Source.AbsolutePath;
         }
 
         return;
@@ -280,14 +280,14 @@ public class DoublePlayer : Control
     /// </param>
     public void Skip(double milliseconds)
     {
-        if (_pCurrent.NaturalDuration.HasTimeSpan == false)
+        if (this._pCurrent.NaturalDuration.HasTimeSpan == false)
         {
             Log.Error($"Current player has no timespan.", nameof(Skip));
             return;
         }
 
         double value = Position.TotalMilliseconds + milliseconds;
-        if (value >= _pCurrent.NaturalDuration.TimeSpan.TotalMilliseconds)
+        if (value >= this._pCurrent.NaturalDuration.TimeSpan.TotalMilliseconds)
         {
             PlayNext();
         }
@@ -305,11 +305,11 @@ public class DoublePlayer : Control
     /// </summary>
     public double Volume
     {
-        get => _pCurrent.Volume;
+        get => this._pCurrent.Volume;
         set
         {
-            _pCurrent.Volume = value;
-            _pNext.Volume = value;
+            this._pCurrent.Volume = value;
+            this._pNext.Volume = value;
         }
     }
 }

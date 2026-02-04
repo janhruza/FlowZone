@@ -44,10 +44,10 @@ public partial class MainWindow : IconlessWindow
 
         Loaded += (s, e) =>
         {
-            frmContent.Content = _homePage;
+            this.frmContent.Content = this._homePage;
         };
 
-        _homePage = new PgHome();
+        this._homePage = new PgHome();
         _instance = this;
     }
 

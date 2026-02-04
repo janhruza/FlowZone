@@ -4,6 +4,7 @@ using FZCore.Windows;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Media;
 
 namespace SysWatch.Windows.Dialogs;
 
@@ -12,7 +13,7 @@ namespace SysWatch.Windows.Dialogs;
 /// </summary>
 public partial class DlgProcessInfo : IconlessWindow
 {
-    const string NO_INFO = "N/A";
+    private const string NO_INFO = "N/A";
 
     /// <summary>
     /// Creates a new <see cref="DlgProcessInfo"/> instance with the process Id specified.
@@ -23,18 +24,18 @@ public partial class DlgProcessInfo : IconlessWindow
         InitializeComponent();
         InvalidateFields();
 
-        _pid = processId;
+        this._pid = processId;
 
         if (processId >= 0)
         {
             try
             {
-                _proc = Process.GetProcessById(processId);
+                this._proc = Process.GetProcessById(processId);
             }
 
             catch (Exception ex)
             {
-                _proc = null;
+                this._proc = null;
                 Log.Error(ex, nameof(DlgProcessInfo));
             }
         }
@@ -46,14 +47,14 @@ public partial class DlgProcessInfo : IconlessWindow
     private void LoadProcessInfo()
     {
         // check process validity
-        if (_proc is null) return;
+        if (this._proc is null) return;
 
         try
         {
             // display its info
-            txtProcessName.Text = _proc.ProcessName;
-            txtExtra.Text = _proc.TotalProcessorTime.ToString();
-            txtWindowTitle.Text = _proc.MainWindowHandle != nint.Zero ? _proc.MainWindowTitle : NO_INFO;
+            this.txtProcessName.Text = this._proc.ProcessName;
+            this.txtExtra.Text = this._proc.TotalProcessorTime.ToString();
+            this.txtWindowTitle.Text = this._proc.MainWindowHandle != nint.Zero ? this._proc.MainWindowTitle : NO_INFO;
         }
 
         catch (Win32Exception win32ex)
@@ -81,13 +82,14 @@ public partial class DlgProcessInfo : IconlessWindow
             return;
         }
 
-        txtProcessName.Text = NO_INFO;
-        txtExtra.Text = NO_INFO;
+        this.txtProcessName.Text = NO_INFO;
+        this.txtExtra.Text = NO_INFO;
         return;
     }
 
     private void IconlessWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
         LoadProcessInfo();
+        SystemSounds.Beep.Play();
     }
 }

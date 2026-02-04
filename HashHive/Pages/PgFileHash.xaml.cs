@@ -32,7 +32,7 @@ public partial class PgFileHash : Page
 
     private bool CanComputeHash()
     {
-        return File.Exists(txtPath.Text);
+        return File.Exists(this.txtPath.Text);
     }
 
     private void ComputeHash(HashAlgorithm hash)
@@ -40,36 +40,36 @@ public partial class PgFileHash : Page
         if (CanComputeHash() == false)
         {
             Log.Error("No file selected.", nameof(ComputeHash));
-            txtResult.Text = "NO_FILE_OPENED";
+            this.txtResult.Text = "NO_FILE_OPENED";
             return;
         }
 
-        byte[] data = File.ReadAllBytes(txtPath.Text);
+        byte[] data = File.ReadAllBytes(this.txtPath.Text);
 
         switch (hash)
         {
             default:
-                txtResult.Text = "INVALID_HASH_TYPE";
+                this.txtResult.Text = "INVALID_HASH_TYPE";
                 break;
 
             case HashAlgorithm.SHA1:
-                txtResult.Text = App.SHA1Hash(data);
+                this.txtResult.Text = App.SHA1Hash(data);
                 break;
 
             case HashAlgorithm.SHA256:
-                txtResult.Text = App.SHA256Hash(data);
+                this.txtResult.Text = App.SHA256Hash(data);
                 break;
 
             case HashAlgorithm.SHA384:
-                txtResult.Text = App.SHA384Hash(data);
+                this.txtResult.Text = App.SHA384Hash(data);
                 break;
 
             case HashAlgorithm.SHA512:
-                txtResult.Text = App.SHA512Hash(data);
+                this.txtResult.Text = App.SHA512Hash(data);
                 break;
 
             case HashAlgorithm.MD5:
-                txtResult.Text = App.MD5Hash(data);
+                this.txtResult.Text = App.MD5Hash(data);
                 break;
         }
 
@@ -110,15 +110,15 @@ public partial class PgFileHash : Page
 
         if (ofd.ShowDialog() == true)
         {
-            txtPath.Text = ofd.FileName;
+            this.txtPath.Text = ofd.FileName;
         }
     }
 
     private void btnCopy_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(txtResult.Text) == false)
+        if (string.IsNullOrEmpty(this.txtResult.Text) == false)
         {
-            Clipboard.SetText(txtResult.Text);
+            Clipboard.SetText(this.txtResult.Text);
         }
     }
 }

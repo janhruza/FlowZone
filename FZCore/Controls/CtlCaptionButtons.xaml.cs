@@ -22,7 +22,7 @@ public partial class CtlCaptionButtons : UserControl
     public CtlCaptionButtons()
     {
         InitializeComponent();
-        _buttons = [btnClose, btnMaximize, btnMinimize];
+        this._buttons = [this.btnClose, this.btnMaximize, this.btnMinimize];
         Foreground = SystemColors.WindowTextBrush;
     }
 
@@ -31,9 +31,9 @@ public partial class CtlCaptionButtons : UserControl
     /// </summary>
     ~CtlCaptionButtons()
     {
-        if (_window != null)
+        if (this._window != null)
         {
-            _window.StateChanged -= _window_StateChanged;
+            this._window.StateChanged -= _window_StateChanged;
         }
     }
 
@@ -45,12 +45,12 @@ public partial class CtlCaptionButtons : UserControl
         get => field;
         set
         {
-            _window = value;
+            this._window = value;
             field = value;
 
-            if (_window != null)
+            if (this._window != null)
             {
-                _window.StateChanged += _window_StateChanged;
+                this._window.StateChanged += _window_StateChanged;
                 //foreach (Button btn in _buttons)
                 //{
                 //    btn.Foreground = _window.Foreground;
@@ -61,7 +61,7 @@ public partial class CtlCaptionButtons : UserControl
 
     private void SetForeground(Brush color)
     {
-        foreach (Button btn in _buttons)
+        foreach (Button btn in this._buttons)
         {
             btn.Foreground = color;
         }
@@ -84,41 +84,41 @@ public partial class CtlCaptionButtons : UserControl
 
     private void _window_StateChanged(object? sender, System.EventArgs e)
     {
-        switch (_window?.WindowState)
+        switch (this._window?.WindowState)
         {
             default:
                 break;
 
             case WindowState.Normal:
-                btnMaximize.Content = TEXT_BTN_MAXIMIZE;
+                this.btnMaximize.Content = TEXT_BTN_MAXIMIZE;
                 break;
 
             case WindowState.Maximized:
-                btnMaximize.Content = TEXT_BTN_RESTORE;
+                this.btnMaximize.Content = TEXT_BTN_RESTORE;
                 break;
         }
     }
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
-        _window?.Close();
+        this._window?.Close();
     }
 
     private void btnMaximize_Click(object sender, RoutedEventArgs e)
     {
-        if (_window?.WindowState == WindowState.Normal)
+        if (this._window?.WindowState == WindowState.Normal)
         {
-            _ = (_window?.WindowState = WindowState.Maximized);
+            _ = (this._window?.WindowState = WindowState.Maximized);
         }
 
         else
         {
-            _ = (_window?.WindowState = WindowState.Normal);
+            _ = (this._window?.WindowState = WindowState.Normal);
         }
     }
 
     private void btnMinimize_Click(object sender, RoutedEventArgs e)
     {
-        _ = (_window?.WindowState = WindowState.Minimized);
+        _ = (this._window?.WindowState = WindowState.Minimized);
     }
 }

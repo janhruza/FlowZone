@@ -28,7 +28,7 @@ public partial class WndNewTransaction : IconlessWindow
         if (transactionBase.HasValue && editMode == true)
         {
             Transaction tr = transactionBase.Value;
-            _transaction = new Transaction
+            this._transaction = new Transaction
             {
                 Id = tr.Id,
                 UserId = tr.UserId,
@@ -43,7 +43,7 @@ public partial class WndNewTransaction : IconlessWindow
         else
         {
             DateTime dt = DateTime.Now;
-            _transaction = new Transaction
+            this._transaction = new Transaction
             {
                 Id = (ulong)dt.ToBinary(),
                 UserId = UserProfile.Current?.Id ?? ulong.MinValue,
@@ -56,22 +56,22 @@ public partial class WndNewTransaction : IconlessWindow
         }
 
         // provide categories based oon transaction types
-        cbType.Items.Clear();
+        this.cbType.Items.Clear();
         switch (transactionType)
         {
             // expanse
             case Transaction.TypeExpanse:
-                foreach (string sExpanse in _expanses)
+                foreach (string sExpanse in this._expanses)
                 {
-                    _ = cbType.Items.Add(sExpanse);
+                    _ = this.cbType.Items.Add(sExpanse);
                 }
                 break;
 
             // income
             case Transaction.TypeIncome:
-                foreach (string sIncome in _incomes)
+                foreach (string sIncome in this._incomes)
                 {
-                    _ = cbType.Items.Add(sIncome);
+                    _ = this.cbType.Items.Add(sIncome);
                 }
                 break;
         }
@@ -108,7 +108,7 @@ public partial class WndNewTransaction : IconlessWindow
     {
         Transaction transaction;
         decimal value;
-        if (decimal.TryParse(txtValue.Text.Trim(), out value) == false)
+        if (decimal.TryParse(this.txtValue.Text.Trim(), out value) == false)
         {
             value = decimal.Zero;
         }
@@ -123,10 +123,10 @@ public partial class WndNewTransaction : IconlessWindow
                 Id = (ulong)dt.ToBinary(),
                 UserId = UserProfile.Current?.Id ?? ulong.MinValue,
                 Timestamp = dt.ToBinary(),
-                Type = transactionType,
+                Type = this.transactionType,
                 Value = value,
-                Description = txtDescription.Text.Trim(),
-                Category = (string)cbType.SelectedItem
+                Description = this.txtDescription.Text.Trim(),
+                Category = (string)this.cbType.SelectedItem
             };
 
             return transaction;
@@ -141,8 +141,8 @@ public partial class WndNewTransaction : IconlessWindow
                 Timestamp = transactionBase.Value.Timestamp,
                 Type = transactionBase.Value.Type,
                 Value = value,
-                Description = txtDescription.Text.Trim(),
-                Category = (string)cbType.SelectedItem
+                Description = this.txtDescription.Text.Trim(),
+                Category = (string)this.cbType.SelectedItem
             };
 
             return transaction;
@@ -158,7 +158,7 @@ public partial class WndNewTransaction : IconlessWindow
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         // check if the transaction is valid
-        Transaction transaction = CreateTransaction(_transaction);
+        Transaction transaction = CreateTransaction(this._transaction);
 
         if (VerifyTransaction(transaction) == true)
         {
@@ -167,7 +167,7 @@ public partial class WndNewTransaction : IconlessWindow
             if (UserProfile.Current != null)
             {
                 // is edit mode
-                if (editMode == true)
+                if (this.editMode == true)
                 {
                     // need toremove the original transaction first
                     _ = UserProfile.Current.Transactions.Remove(UserProfile.Current.Transactions.Where(x => x.Id == transaction.Id).FirstOrDefault());

@@ -263,7 +263,7 @@ public partial class MainWindow : IconlessWindow
 
         item.Selected += (s, e) =>
         {
-            frmContent.Content = new PgChannelView(channel);
+            this.frmContent.Content = new PgChannelView(channel);
             Title = $"{channel.Title.Trim()} | {(UpDateSettings.Current?.Title ?? App.AppTitle)}";
         };
 
@@ -277,13 +277,13 @@ public partial class MainWindow : IconlessWindow
             UpDateSettings.Current ??= UpDateSettings.EnsureSettings();
 
             // UI Reset
-            trFeeds.Items.Clear();
-            frmContent.Content = null;
+            this.trFeeds.Items.Clear();
+            this.frmContent.Content = null;
 
             var feedSources = UpDateSettings.Current.Feeds;
             if (feedSources.Count == 0)
             {
-                _ = trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
+                _ = this.trFeeds.Items.Add(new TreeViewItem { Header = "No feeds available.", Padding = new Thickness(0, 10, 10, 10) });
                 return true;
             }
 
@@ -299,10 +299,10 @@ public partial class MainWindow : IconlessWindow
                     foreach (var channel in channels)
                     {
                         var item = CreateTreeViewItem(channel);
-                        _ = trFeeds.Items.Add(item);
+                        _ = this.trFeeds.Items.Add(item);
 
                         // Auto-select the very first item that arrives to fill the preview pane
-                        if (trFeeds.Items.Count == 1)
+                        if (this.trFeeds.Items.Count == 1)
                         {
                             item.IsSelected = true;
                         }

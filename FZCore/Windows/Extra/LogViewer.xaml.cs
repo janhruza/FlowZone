@@ -27,9 +27,9 @@ public partial class LogViewer : IconlessWindow
     public LogViewer(string logFilePath)
     {
         InitializeComponent();
-        dgEntries.RowHeight = double.NaN;
-        _dataLoaded = false;
-        _loadedData = [];
+        this.dgEntries.RowHeight = double.NaN;
+        this._dataLoaded = false;
+        this._loadedData = [];
 
         // Load the log file when the window is fully loaded
         Loaded += async (s, e) =>
@@ -47,22 +47,22 @@ public partial class LogViewer : IconlessWindow
         // If the file doesn't exist, display the filename and return
         if (!File.Exists(filename))
         {
-            rFilename.Text = "FILE_NOT_FOUND";
+            this.rFilename.Text = "FILE_NOT_FOUND";
             return;
         }
 
         // Display the file path
-        rFilename.Text = Path.GetFileName(filename);
+        this.rFilename.Text = Path.GetFileName(filename);
         string[] data = await File.ReadAllLinesAsync(filename);
-        _loadedData = data.ToList();
-        _dataLoaded = true;
+        this._loadedData = data.ToList();
+        this._dataLoaded = true;
         return;
     }
 
     private async Task DisplayData(string filter)
     {
         // check if data are loaded
-        if (_dataLoaded == false)
+        if (this._dataLoaded == false)
         {
             // no loaded data
             return;
@@ -76,7 +76,7 @@ public partial class LogViewer : IconlessWindow
         try
         {
             // Parse the log file line by line
-            foreach (string line in _loadedData)
+            foreach (string line in this._loadedData)
             {
                 /*
                  * FORMAT:
@@ -118,7 +118,7 @@ public partial class LogViewer : IconlessWindow
             logEntries = [.. logEntries.OrderByDescending(x => DateTime.Parse(x.Date))];
 
             // Bind the ObservableCollection to the DataGrid
-            dgEntries.ItemsSource = logEntries;
+            this.dgEntries.ItemsSource = logEntries;
         }
         catch (Exception ex)
         {
@@ -134,6 +134,6 @@ public partial class LogViewer : IconlessWindow
 
     private async void txtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        await DisplayData(txtSearch.Text);
+        await DisplayData(this.txtSearch.Text);
     }
 }

@@ -48,7 +48,7 @@ public partial class PgOverview : Page, IExpandoPage
         {
             // no user profile loaded
             // draw a message
-            rBilance.Text = "NaN";
+            this.rBilance.Text = "NaN";
             return;
         }
 
@@ -56,7 +56,7 @@ public partial class PgOverview : Page, IExpandoPage
         decimal incomes = UserProfile.Current.GetIncomes().Sum(x => x.Value);
         decimal total = -expanses + incomes;
 
-        rBilance.Text = total.ToString("C");
+        this.rBilance.Text = total.ToString("C");
         return;
     }
 

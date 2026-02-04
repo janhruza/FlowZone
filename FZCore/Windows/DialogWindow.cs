@@ -266,7 +266,7 @@ public class DialogWindow
 
         wnd.Loaded += (s, e) => GetSound(Image).Play();
 
-        _result = TDReturn.IDCANCEL;
+        this._result = TDReturn.IDCANCEL;
 
         // Layout root
         Grid rootGrid = new Grid { Margin = new Thickness(10) };
@@ -343,7 +343,7 @@ public class DialogWindow
         wnd.Content = rootGrid;
 
         _ = wnd.ShowDialog();
-        return _result;
+        return this._result;
     }
 
     private void AddButton(StackPanel panel, DWButton btn, Window wnd)
@@ -356,7 +356,7 @@ public class DialogWindow
 
         b.Click += (s, e) =>
         {
-            _result = GetResult(btn);
+            this._result = GetResult(btn);
             wnd.Close();
         };
 

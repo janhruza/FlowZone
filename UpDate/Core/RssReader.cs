@@ -89,7 +89,7 @@ public class RssReader
     /// </summary>
     public RssReader()
     {
-        _data = string.Empty;
+        this._data = string.Empty;
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ public class RssReader
     /// <param name="rssFile">Path to the file that contains RSS feed data. RSS file is a XML file.</param>
     public RssReader(string rssFile)
     {
-        _data = ReadRssFile(rssFile);
-        _ = ReadXmlData(_doc, _data);
+        this._data = ReadRssFile(rssFile);
+        _ = ReadXmlData(this._doc, this._data);
     }
 
     #endregion
@@ -113,10 +113,10 @@ public class RssReader
     /// <returns>True, if data were downloaded, otherwise false.</returns>
     public async Task<bool> LoadDataAsync(string url)
     {
-        _data = await RetrieveRssData(new Uri(url, UriKind.RelativeOrAbsolute));
-        if (string.IsNullOrEmpty(_data) == false)
+        this._data = await RetrieveRssData(new Uri(url, UriKind.RelativeOrAbsolute));
+        if (string.IsNullOrEmpty(this._data) == false)
         {
-            return ReadXmlData(_doc, _data);
+            return ReadXmlData(this._doc, this._data);
         }
 
         return false;
@@ -132,7 +132,7 @@ public class RssReader
         {
             List<RssChannel> channels = new List<RssChannel>();
 
-            var rssNodes = _doc.SelectNodes("//rss/channel");
+            var rssNodes = this._doc.SelectNodes("//rss/channel");
             if (rssNodes == null || rssNodes.Count == 0)
             {
                 Log.Warning("Selected document has no RSS channels.", nameof(ReadChannels));

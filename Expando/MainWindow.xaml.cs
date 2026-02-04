@@ -28,7 +28,7 @@ public partial class MainWindow : IconlessWindow
         Loaded += (s, e) =>
         {
             // contructs the _navButtons list
-            _navButtons = [btnHome, btnOverview, btnIncomes, btnExpanses, btnProfile];
+            this._navButtons = [this.btnHome, this.btnOverview, this.btnIncomes, this.btnExpanses, this.btnProfile];
 
             ToggleButton? tb = null;
             _ = ChangePage(PgProfiles.Instance, ref tb);
@@ -39,7 +39,7 @@ public partial class MainWindow : IconlessWindow
 
     private void NavUncheckAll(ref ToggleButton? tbException)
     {
-        foreach (var tButton in _navButtons)
+        foreach (var tButton in this._navButtons)
         {
             if (tbException == tButton)
             {
@@ -61,13 +61,13 @@ public partial class MainWindow : IconlessWindow
             return false;
         }
 
-        if (frmContent == null)
+        if (this.frmContent == null)
         {
             Log.Error("Frame (page viever) is null.", nameof(NavSetPage));
             return false;
         }
 
-        frmContent.Content = page;
+        this.frmContent.Content = page;
         Title = $"{page.Title}{(UserProfile.IsProfileLoaded() ? $" ({UserProfile.Current?.Username})" : string.Empty)} - {Messages.AppTitle}";
         Log.Info($"Navigation changed to: {page.Title}", nameof(NavSetPage));
         return true;
@@ -81,27 +81,27 @@ public partial class MainWindow : IconlessWindow
 
     private void btnHome_Click(object sender, RoutedEventArgs e)
     {
-        _ = ChangePage(PgHome.Instance, ref btnHome);
+        _ = ChangePage(PgHome.Instance, ref this.btnHome);
     }
 
     private void btnOverview_Click(object sender, RoutedEventArgs e)
     {
-        _ = ChangePage(PgOverview.Instance, ref btnOverview);
+        _ = ChangePage(PgOverview.Instance, ref this.btnOverview);
     }
 
     private void btnIncomes_Click(object sender, RoutedEventArgs e)
     {
-        _ = ChangePage(PgIncomes.Instance, ref btnIncomes);
+        _ = ChangePage(PgIncomes.Instance, ref this.btnIncomes);
     }
 
     private void btnExpanses_Click(object sender, RoutedEventArgs e)
     {
-        _ = ChangePage(PgExpanses.Instance, ref btnExpanses);
+        _ = ChangePage(PgExpanses.Instance, ref this.btnExpanses);
     }
 
     private void btnProfile_Click(object sender, RoutedEventArgs e)
     {
-        _ = ChangePage(PgMyProfile.Instance, ref btnProfile);
+        _ = ChangePage(PgMyProfile.Instance, ref this.btnProfile);
     }
 
     #region Static code

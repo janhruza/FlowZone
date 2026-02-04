@@ -72,7 +72,7 @@ public class BaseWindow : Window
     private void Initialize()
     {
         // allow only one initialization
-        if (_initialized == true) return;
+        if (this._initialized == true) return;
 
         // top priority setup
         _windows.Add(this);
@@ -97,7 +97,7 @@ public class BaseWindow : Window
         };
 
         // window initialized
-        _initialized = true;
+        this._initialized = true;
         return;
     }
 
@@ -106,7 +106,7 @@ public class BaseWindow : Window
     /// <summary>
     /// Representing the window handle.
     /// </summary>
-    public nint Handle => _handle;
+    public nint Handle => this._handle;
 
     /// <summary>
     /// Overrides the OnSourceInitialized method to capture the window handle after the source is initialized.
@@ -115,7 +115,7 @@ public class BaseWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
-        _handle = new System.Windows.Interop.WindowInteropHelper(this).EnsureHandle();
+        this._handle = new System.Windows.Interop.WindowInteropHelper(this).EnsureHandle();
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class BaseWindow : Window
     public bool SetDarkMode(bool value)
     {
         int iValue = value == true ? 1 : 0;
-        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(_handle, (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, [iValue], sizeof(int)));
+        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(this._handle, (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, [iValue], sizeof(int)));
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public class BaseWindow : Window
     /// <returns>true if the system backdrop was successfully set to transient; otherwise, false.</returns>
     public bool MakeTransient()
     {
-        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(_handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], sizeof(int)));
+        return HRESULT.SUCCEEDED(WinAPI.DwmSetWindowAttribute(this._handle, (int)DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, [3], sizeof(int)));
     }
 
     /// <summary>

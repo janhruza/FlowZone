@@ -37,11 +37,11 @@ public partial class CtlExchangeCalculator : UserControl
 
     private async Task ReloadUI()
     {
-        if (_report.HasValue == false)
+        if (this._report.HasValue == false)
         {
             // fetch only if the report is null
-            _report = await ExchangeReport.FetchAsync();
-            if (_report.HasValue == false)
+            this._report = await ExchangeReport.FetchAsync();
+            if (this._report.HasValue == false)
             {
                 Log.Error("Unable to fetch the currency report.", nameof(ReloadUI));
                 FZCore.Core.ErrorBox("Unable to fetch the currency report.");
@@ -49,11 +49,11 @@ public partial class CtlExchangeCalculator : UserControl
             }
         }
 
-        cbxInput.Items.Clear();
-        cbxOutput.Items.Clear();
-        txtResult.Clear();
+        this.cbxInput.Items.Clear();
+        this.cbxOutput.Items.Clear();
+        this.txtResult.Clear();
 
-        foreach (CurrencyInfo currency in _report.Value.Currencies)
+        foreach (CurrencyInfo currency in this._report.Value.Currencies)
         {
             string header = $"{currency.Currency} ({currency.Country})";
             ComboBoxItem cbiIn = new ComboBoxItem
@@ -70,23 +70,23 @@ public partial class CtlExchangeCalculator : UserControl
                 Content = header
             };
 
-            _ = cbxInput.Items.Add(cbiIn);
-            _ = cbxOutput.Items.Add(cbiOut);
+            _ = this.cbxInput.Items.Add(cbiIn);
+            _ = this.cbxOutput.Items.Add(cbiOut);
         }
 
-        if (cbxInput.Items.Count > 0) cbxInput.SelectedIndex = 0;
-        if (cbxOutput.Items.Count > 0) cbxOutput.SelectedIndex = 0;
+        if (this.cbxInput.Items.Count > 0) this.cbxInput.SelectedIndex = 0;
+        if (this.cbxOutput.Items.Count > 0) this.cbxOutput.SelectedIndex = 0;
     }
 
     private async Task<bool> TryConvert()
     {
         try
         {
-            if (cbxInput.SelectedItem is ComboBoxItem cbiIn && cbiIn.Tag is CurrencyInfo cIn &&
-                cbxOutput.SelectedItem is ComboBoxItem cbiOut && cbiOut.Tag is CurrencyInfo cOut)
+            if (this.cbxInput.SelectedItem is ComboBoxItem cbiIn && cbiIn.Tag is CurrencyInfo cIn &&
+                this.cbxOutput.SelectedItem is ComboBoxItem cbiOut && cbiOut.Tag is CurrencyInfo cOut)
             {
                 // 1. get the amount
-                if (decimal.TryParse(txtAmount.Text, out decimal inputAmount))
+                if (decimal.TryParse(this.txtAmount.Text, out decimal inputAmount))
                 {
                     // 2. calculate the rate
                     decimal unitRateIn = cIn.Rate / cIn.Amount;
@@ -96,8 +96,8 @@ public partial class CtlExchangeCalculator : UserControl
                     decimal result = (inputAmount * unitRateIn) / unitRateOut;
 
                     // 4. display
-                    txtAmount.Text = inputAmount.ToString("N2");
-                    txtResult.Text = result.ToString("N2");
+                    this.txtAmount.Text = inputAmount.ToString("N2");
+                    this.txtResult.Text = result.ToString("N2");
                 }
                 else
                 {

@@ -29,20 +29,20 @@ public partial class MainWindow : IconlessWindow
     {
         InitializeComponent();
 
-        _timer = new DispatcherTimer
+        this._timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(App.TimerInterval)
         };
 
-        _timer.Tick += (s, e) =>
+        this._timer.Tick += (s, e) =>
         {
-            btnDownload.IsEnabled = VerifyFields();
+            this.btnDownload.IsEnabled = VerifyFields();
         };
 
-        _timer.Start();
+        this._timer.Start();
 
         // creates an instance of a video downloader
-        _downloader = new VideoDownloader();
+        this._downloader = new VideoDownloader();
 
         Loaded += (s, e) =>
         {
@@ -50,7 +50,7 @@ public partial class MainWindow : IconlessWindow
             App.HandleWindowSettings(this);
 
             // assign settings for this window (MainWindow specific)
-            miAoT.IsChecked = RTSettings.Current.AlwaysOnTop;
+            this.miAoT.IsChecked = RTSettings.Current.AlwaysOnTop;
             SetThemeMode(RTSettings.Current.ThemeMode, ThemeItemById[RTSettings.Current.ThemeMode]);
 
             // refresh all fields to their defaults
@@ -66,11 +66,11 @@ public partial class MainWindow : IconlessWindow
         // reset window title
         Title = $"{App.Title} [{VideoDownloader.GetVersion()}]";
 
-        txtUrl.Text = string.Empty;
-        txtLocation.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+        this.txtUrl.Text = string.Empty;
+        this.txtLocation.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
 
         // reload available cookies browsers
-        cbCookiesBrowsers.Items.Clear();
+        this.cbCookiesBrowsers.Items.Clear();
 
         foreach (CookiesBrowser value in Enum.GetValues(typeof(CookiesBrowser)))
         {
@@ -83,15 +83,15 @@ public partial class MainWindow : IconlessWindow
             cbi.Selected += (s, e) =>
             {
                 // set cookies browser to the downloader instance
-                _downloader.Cookies = value;
+                this._downloader.Cookies = value;
             };
 
-            _ = cbCookiesBrowsers.Items.Add(cbi);
+            _ = this.cbCookiesBrowsers.Items.Add(cbi);
         }
 
-        if (cbCookiesBrowsers.Items.Count > 0)
+        if (this.cbCookiesBrowsers.Items.Count > 0)
         {
-            cbCookiesBrowsers.SelectedIndex = 0;
+            this.cbCookiesBrowsers.SelectedIndex = 0;
         }
     }
 
@@ -102,8 +102,8 @@ public partial class MainWindow : IconlessWindow
     /// <returns>True, if all required input data are valid, otherwise false.</returns>
     private bool VerifyFields()
     {
-        string address = txtUrl.Text.Trim();
-        string location = txtLocation.Text.Trim();
+        string address = this.txtUrl.Text.Trim();
+        string location = this.txtLocation.Text.Trim();
 
         if (string.IsNullOrEmpty(address))
         {
@@ -117,8 +117,8 @@ public partial class MainWindow : IconlessWindow
             return false;
         }
 
-        _downloader.Address = address;
-        _downloader.Location = location;
+        this._downloader.Address = address;
+        this._downloader.Location = location;
         return true;
     }
 
@@ -132,14 +132,14 @@ public partial class MainWindow : IconlessWindow
         }
 
         // rebuild additional params list
-        _downloader.AdditionalParameters.Clear();
-        foreach (string param in lbExtraParams.Items)
+        this._downloader.AdditionalParameters.Clear();
+        foreach (string param in this.lbExtraParams.Items)
         {
-            _downloader.AdditionalParameters.Add(param);
+            this._downloader.AdditionalParameters.Add(param);
         }
 
         DevConsole.OpenConsole();
-        _ = await _downloader.DownloadAsync();
+        _ = await this._downloader.DownloadAsync();
         DevConsole.CloseConsole();
     }
 
@@ -153,7 +153,7 @@ public partial class MainWindow : IconlessWindow
 
         if (openFolderDialog.ShowDialog() == true)
         {
-            txtLocation.Text = openFolderDialog.FolderName;
+            this.txtLocation.Text = openFolderDialog.FolderName;
         }
 
         return;
@@ -179,7 +179,7 @@ public partial class MainWindow : IconlessWindow
         {
             // add parameter
             string param = wnd.ParameterValue;
-            _ = lbExtraParams.Items.Add(param);
+            _ = this.lbExtraParams.Items.Add(param);
         }
 
         return;
@@ -207,10 +207,10 @@ public partial class MainWindow : IconlessWindow
 
     private void RemoveSelectedParameter()
     {
-        if (lbExtraParams.Items.Count == 0) return;
-        if (lbExtraParams.SelectedIndex == -1) return;
+        if (this.lbExtraParams.Items.Count == 0) return;
+        if (this.lbExtraParams.SelectedIndex == -1) return;
 
-        lbExtraParams.Items.RemoveAt(lbExtraParams.SelectedIndex);
+        this.lbExtraParams.Items.RemoveAt(this.lbExtraParams.SelectedIndex);
         return;
     }
 
@@ -282,19 +282,19 @@ public partial class MainWindow : IconlessWindow
 
     private Dictionary<Core.ThemeMode, MenuItem> ThemeItemById => new Dictionary<Core.ThemeMode, MenuItem>()
     {
-        { Core.ThemeMode.System, miThemeSystem },
-        { Core.ThemeMode.Light, miThemeLight },
-        { Core.ThemeMode.Dark, miThemeDark },
-        { Core.ThemeMode.None, miThemeLegacy }
+        { Core.ThemeMode.System, this.miThemeSystem },
+        { Core.ThemeMode.Light, this.miThemeLight },
+        { Core.ThemeMode.Dark, this.miThemeDark },
+        { Core.ThemeMode.None, this.miThemeLegacy }
     };
 
     private void SetThemeMode(Core.ThemeMode mode, MenuItem? toggleOn)
     {
         // disable all theme-related check boxes (on menu items)
-        miThemeLight.IsChecked = false;
-        miThemeDark.IsChecked = false;
-        miThemeSystem.IsChecked = false;
-        miThemeLegacy.IsChecked = false;
+        this.miThemeLight.IsChecked = false;
+        this.miThemeDark.IsChecked = false;
+        this.miThemeSystem.IsChecked = false;
+        this.miThemeLegacy.IsChecked = false;
 
         // set mode to settings
         RTSettings.Current.ThemeMode = mode;
@@ -342,22 +342,22 @@ public partial class MainWindow : IconlessWindow
 
     private void miThemeLight_Click(object sender, RoutedEventArgs e)
     {
-        SetThemeMode(Core.ThemeMode.Light, miThemeLight);
+        SetThemeMode(Core.ThemeMode.Light, this.miThemeLight);
     }
 
     private void miThemeDark_Click(object sender, RoutedEventArgs e)
     {
-        SetThemeMode(Core.ThemeMode.Dark, miThemeDark);
+        SetThemeMode(Core.ThemeMode.Dark, this.miThemeDark);
     }
 
     private void miThemeSystem_Click(object sender, RoutedEventArgs e)
     {
-        SetThemeMode(Core.ThemeMode.System, miThemeSystem);
+        SetThemeMode(Core.ThemeMode.System, this.miThemeSystem);
     }
 
     private void miThemeLegacy_Click(object sender, RoutedEventArgs e)
     {
-        SetThemeMode(Core.ThemeMode.None, miThemeLegacy);
+        SetThemeMode(Core.ThemeMode.None, this.miThemeLegacy);
     }
 
     private void miCustomPath_Click(object sender, RoutedEventArgs e)
@@ -393,7 +393,7 @@ public partial class MainWindow : IconlessWindow
 
     private void lbExtraParams_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        btnRemoveParam.IsEnabled = lbExtraParams.SelectedIndex != -1;
+        this.btnRemoveParam.IsEnabled = this.lbExtraParams.SelectedIndex != -1;
         return;
     }
 }

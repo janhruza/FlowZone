@@ -23,7 +23,7 @@ public partial class MainWindow : IconlessWindow
 
         // loads the window
         InitializeComponent();
-        _toggleButtons = [btnText, btnFile];
+        this._toggleButtons = [this.btnText, this.btnFile];
 
         // set hashing text page as default
         SetPage(HashHivePage.HashText);
@@ -44,18 +44,18 @@ public partial class MainWindow : IconlessWindow
         {
             default:
             case HashHivePage.Null:
-                frmContent.Content = null;
+                this.frmContent.Content = null;
                 UncheckAll(null);
                 break;
 
             case HashHivePage.HashText:
                 _ = LoadPage(Pages.PgTextHash.Instance);
-                UncheckAll(btnText);
+                UncheckAll(this.btnText);
                 break;
 
             case HashHivePage.HashFile:
                 _ = LoadPage(Pages.PgFileHash.Instance);
-                UncheckAll(btnFile);
+                UncheckAll(this.btnFile);
                 break;
         }
 
@@ -68,7 +68,7 @@ public partial class MainWindow : IconlessWindow
     {
         if (toggleButton == null)
         {
-            foreach (ToggleButton toggle in _toggleButtons)
+            foreach (ToggleButton toggle in this._toggleButtons)
             {
                 toggle.IsEnabled = false;
             }
@@ -76,7 +76,7 @@ public partial class MainWindow : IconlessWindow
             return;
         }
 
-        foreach (ToggleButton button in _toggleButtons)
+        foreach (ToggleButton button in this._toggleButtons)
         {
             if (toggleButton == button)
             {
@@ -99,7 +99,7 @@ public partial class MainWindow : IconlessWindow
             return false;
         }
 
-        frmContent.Content = page;
+        this.frmContent.Content = page;
         Title = $"{page.Title} - {App.Title}";
         return true;
     }

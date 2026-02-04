@@ -59,7 +59,7 @@ public partial class PgHome : Page
     private void RefreshAppsList()
     {
         // Logic to refresh the list of applications
-        lbxApps.Items.Clear();
+        this.lbxApps.Items.Clear();
 
         var apps = AppManager.GetApps().OrderBy(x => x.Name);
 
@@ -71,7 +71,7 @@ public partial class PgHome : Page
                 Content = "No web applications registered. Click the 'Add Application' button to add a new application."
             };
 
-            _ = lbxApps.Items.Add(lbi);
+            _ = this.lbxApps.Items.Add(lbi);
             return;
         }
 
@@ -156,7 +156,7 @@ public partial class PgHome : Page
                 HorizontalContentAlignment = HorizontalAlignment.Stretch
             };
 
-            _ = lbxApps.Items.Add(lbi);
+            _ = this.lbxApps.Items.Add(lbi);
         }
 
         return;

@@ -25,7 +25,7 @@ public class RAMCounter : Counter
     public RAMCounter() : base("Memory", "Available MBytes", string.Empty)
     {
         long totalBytes = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes;
-        _totalMb = totalBytes / (1024f * 1024f);
+        this._totalMb = totalBytes / (1024f * 1024f);
     }
 
     /// <inheritdoc />
@@ -38,8 +38,8 @@ public class RAMCounter : Counter
 
         try
         {
-            float availableMb = _counter.NextValue();
-            float usedPercentage = ((_totalMb - availableMb) / _totalMb) * 100;
+            float availableMb = this._counter.NextValue();
+            float usedPercentage = ((this._totalMb - availableMb) / this._totalMb) * 100;
 
             ValueObtained.Invoke(this, usedPercentage);
         }

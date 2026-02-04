@@ -30,12 +30,12 @@ public partial class WndSettings : IconlessWindow
             UpDateSettings.Current = UpDateSettings.EnsureSettings();
         }
 
-        cbThemes.Items.Clear();
+        this.cbThemes.Items.Clear();
         int idx = 0;
 
         foreach (FZCore.FZThemeMode themeMode in Enum.GetValues<FZCore.FZThemeMode>())
         {
-            int index = cbThemes.Items.Add(new ComboBoxItem()
+            int index = this.cbThemes.Items.Add(new ComboBoxItem()
             {
                 Tag = themeMode,
                 Content = themeMode.ToString()
@@ -47,12 +47,12 @@ public partial class WndSettings : IconlessWindow
             }
         }
 
-        if (cbThemes.Items.Count > 0)
+        if (this.cbThemes.Items.Count > 0)
         {
-            cbThemes.SelectedIndex = idx;
+            this.cbThemes.SelectedIndex = idx;
         }
 
-        txtBaseTitle.Text = UpDateSettings.Current.Title;
+        this.txtBaseTitle.Text = UpDateSettings.Current.Title;
     }
 
     /// <summary>
@@ -63,9 +63,9 @@ public partial class WndSettings : IconlessWindow
     private void btnOk_Click(object sender, RoutedEventArgs e)
     {
         UpDateSettings.Current ??= new UpDateSettings();
-        ComboBoxItem item = (ComboBoxItem)cbThemes.SelectedItem;
+        ComboBoxItem item = (ComboBoxItem)this.cbThemes.SelectedItem;
 
-        UpDateSettings.Current.Title = txtBaseTitle.Text;
+        UpDateSettings.Current.Title = this.txtBaseTitle.Text;
         UpDateSettings.Current.ThemeMode = (FZCore.FZThemeMode)item.Tag;
 
         Result = true;
@@ -80,7 +80,7 @@ public partial class WndSettings : IconlessWindow
     private void rRestore_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         // restore default title
-        txtBaseTitle.Text = App.AppTitle;
+        this.txtBaseTitle.Text = App.AppTitle;
     }
 
     private void rRestore_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -100,18 +100,18 @@ public partial class WndSettings : IconlessWindow
                 }
 
             case FZCore.FZThemeMode.Dark:
-                rRestore.Foreground = SystemColors.AccentColorLight1Brush;
+                this.rRestore.Foreground = SystemColors.AccentColorLight1Brush;
                 return;
 
             case FZCore.FZThemeMode.None:
             case FZCore.FZThemeMode.Light:
-                rRestore.Foreground = SystemColors.AccentColorDark1Brush;
+                this.rRestore.Foreground = SystemColors.AccentColorDark1Brush;
                 return;
         }
     }
 
     private void rRestore_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
     {
-        rRestore.Foreground = SystemColors.AccentColorBrush;
+        this.rRestore.Foreground = SystemColors.AccentColorBrush;
     }
 }

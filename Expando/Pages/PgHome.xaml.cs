@@ -28,12 +28,12 @@ public partial class PgHome : Page, IExpandoPage
 
             // adds listeners to the events
             // change user page
-            rChangeUser.MouseEnter += (s, e) => rChangeUser.Foreground = SystemColors.AccentColorLight2Brush;
-            rChangeUser.MouseLeave += (s, e) => rChangeUser.Foreground = SystemColors.AccentColorBrush;
+            this.rChangeUser.MouseEnter += (s, e) => this.rChangeUser.Foreground = SystemColors.AccentColorLight2Brush;
+            this.rChangeUser.MouseLeave += (s, e) => this.rChangeUser.Foreground = SystemColors.AccentColorBrush;
 
             // view log window
-            rLog.MouseEnter += (s, e) => rLog.Foreground = SystemColors.AccentColorLight2Brush;
-            rLog.MouseLeave += (s, e) => rLog.Foreground = SystemColors.AccentColorBrush;
+            this.rLog.MouseEnter += (s, e) => this.rLog.Foreground = SystemColors.AccentColorLight2Brush;
+            this.rLog.MouseLeave += (s, e) => this.rLog.Foreground = SystemColors.AccentColorBrush;
         };
     }
 
@@ -44,8 +44,8 @@ public partial class PgHome : Page, IExpandoPage
     {
         if (IsLoaded == false) return;
 
-        rName.Text = UserProfile.Current?.Username ?? "Anonymous";
-        rDate.Text = DateTime.Now.ToLongDateString();
+        this.rName.Text = UserProfile.Current?.Username ?? "Anonymous";
+        this.rDate.Text = DateTime.Now.ToLongDateString();
     }
 
     private void rChangeUser_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

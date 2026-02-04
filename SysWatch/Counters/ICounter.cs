@@ -14,7 +14,7 @@ public interface ICounter
     /// <summary>
     /// Occurs when a new floating-point value is obtained.
     /// </summary>
-    /// <remarks>The event provides the obtained value as the <see cref="System.Single"/> argument in the
+    /// <remarks>The event provides the obtained value as the <see cref="float"/> argument in the
     /// event data. Subscribers can use this event to react to value updates as they become available.</remarks>
     event EventHandler<float> ValueObtained;
 

@@ -25,7 +25,7 @@ public partial class MainWindow : IconlessWindow
         InitializeComponent();
 
         // init the theme items array
-        _themeItems = [miThemeDefault, miThemeLight, miThemeDark, miThemeSystem];
+        this._themeItems = [this.miThemeDefault, this.miThemeLight, this.miThemeDark, this.miThemeSystem];
 
         CtlFVDetails ctl = new CtlFVDetails
         {
@@ -38,9 +38,9 @@ public partial class MainWindow : IconlessWindow
             await SetStatusMessage(folderPath);
         };
 
-        ctlView = ctl;
-        _ = gdContent.Children.Add(ctlView);
-        Grid.SetColumn(ctlView, 1);
+        this.ctlView = ctl;
+        _ = this.gdContent.Children.Add(this.ctlView);
+        Grid.SetColumn(this.ctlView, 1);
     }
 
     private CtlFolderViewBase ctlView;
@@ -62,7 +62,7 @@ public partial class MainWindow : IconlessWindow
 
     private void DeselectDriveItems()
     {
-        foreach (object obj in tvDrives.Items)
+        foreach (object obj in this.tvDrives.Items)
         {
             if (obj is TreeViewItem ti)
             {
@@ -73,7 +73,7 @@ public partial class MainWindow : IconlessWindow
 
     private void DeselectFavoriteItems()
     {
-        foreach (object obj in tvFavorites.Items)
+        foreach (object obj in this.tvFavorites.Items)
         {
             if (obj is TreeViewItem ti)
             {
@@ -84,7 +84,7 @@ public partial class MainWindow : IconlessWindow
 
     private async Task SetFavoriteFolders()
     {
-        tvFavorites.Items.Clear();
+        this.tvFavorites.Items.Clear();
         foreach (var entry in GetFavoriteFolders())
         {
             TreeViewItem tvi = new TreeViewItem
@@ -96,14 +96,14 @@ public partial class MainWindow : IconlessWindow
 
             tvi.Selected += async (s, e) =>
             {
-                CtlFVDetails ctl = (CtlFVDetails)ctlView;
+                CtlFVDetails ctl = (CtlFVDetails)this.ctlView;
                 _ = await ctl.OpenFolder(entry.Value);
 
                 // deselect all drive items
                 DeselectDriveItems();
             };
 
-            _ = tvFavorites.Items.Add(tvi);
+            _ = this.tvFavorites.Items.Add(tvi);
         }
     }
 
@@ -118,24 +118,24 @@ public partial class MainWindow : IconlessWindow
     {
         if (string.IsNullOrWhiteSpace(message))
         {
-            sbStatusText.Content = string.Empty;
-            statusBar.Visibility = Visibility.Collapsed;
-            miStatusPanel.IsChecked = false;
+            this.sbStatusText.Content = string.Empty;
+            this.statusBar.Visibility = Visibility.Collapsed;
+            this.miStatusPanel.IsChecked = false;
             return;
         }
 
         else
         {
-            sbStatusText.Content = message;
-            statusBar.Visibility = Visibility.Visible;
-            miStatusPanel.IsChecked = true;
+            this.sbStatusText.Content = message;
+            this.statusBar.Visibility = Visibility.Visible;
+            this.miStatusPanel.IsChecked = true;
             return;
         }
     }
 
     private async Task LoadDrives()
     {
-        tvDrives.Items.Clear();
+        this.tvDrives.Items.Clear();
         foreach (string drive in Environment.GetLogicalDrives())
         {
             DriveInfo di = new DriveInfo(drive);
@@ -149,14 +149,14 @@ public partial class MainWindow : IconlessWindow
 
                 ti.Selected += async (s, e) =>
                 {
-                    CtlFVDetails ctl = (CtlFVDetails)ctlView;
+                    CtlFVDetails ctl = (CtlFVDetails)this.ctlView;
                     _ = await ctl.OpenFolder(di.Name);
 
                     // deselect favorite items
                     DeselectFavoriteItems();
                 };
 
-                _ = tvDrives.Items.Add(ti);
+                _ = this.tvDrives.Items.Add(ti);
             }
         }
     }
@@ -183,9 +183,9 @@ public partial class MainWindow : IconlessWindow
 
     private void UncheckAllThemeButtons()
     {
-        if (_themeItems == null) return;
+        if (this._themeItems == null) return;
 
-        foreach (MenuItem mi in _themeItems)
+        foreach (MenuItem mi in this._themeItems)
         {
             mi.IsChecked = false;
         }
@@ -202,19 +202,19 @@ public partial class MainWindow : IconlessWindow
         switch (themeMode)
         {
             case FZThemeMode.None:
-                miThemeDefault.IsChecked = true;
+                this.miThemeDefault.IsChecked = true;
                 break;
 
             case FZThemeMode.Light:
-                miThemeLight.IsChecked = true;
+                this.miThemeLight.IsChecked = true;
                 break;
 
             case FZThemeMode.Dark:
-                miThemeDark.IsChecked = true;
+                this.miThemeDark.IsChecked = true;
                 break;
 
             case FZThemeMode.System:
-                miThemeSystem.IsChecked = true;
+                this.miThemeSystem.IsChecked = true;
                 break;
         }
 
@@ -253,11 +253,11 @@ public partial class MainWindow : IconlessWindow
 
     private void miStatusPanel_Checked(object sender, RoutedEventArgs e)
     {
-        statusBar.Visibility = Visibility.Visible;
+        this.statusBar.Visibility = Visibility.Visible;
     }
 
     private void miStatusPanel_Unchecked(object sender, RoutedEventArgs e)
     {
-        statusBar.Visibility = Visibility.Collapsed;
+        this.statusBar.Visibility = Visibility.Collapsed;
     }
 }

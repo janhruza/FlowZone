@@ -32,8 +32,8 @@ public class Counter : ICounter
     /// <param name="instanceName">The name of the performance counter instance. Specify an empty string for single-instance counters.</param>
     public Counter(string categoryName, string counterName, string instanceName)
     {
-        _counter = new PerformanceCounter(categoryName, counterName, instanceName);
-        try { _ = _counter.NextValue(); } catch { }
+        this._counter = new PerformanceCounter(categoryName, counterName, instanceName);
+        try { _ = this._counter.NextValue(); } catch { }
     }
 
     /// <inheritdoc />
@@ -58,7 +58,7 @@ public class Counter : ICounter
         {
             if (!IsActive) return;
 
-            float value = _counter.NextValue();
+            float value = this._counter.NextValue();
             ValueObtained.Invoke(this, value);
         }
         catch (Exception ex)

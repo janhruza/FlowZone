@@ -30,7 +30,7 @@ public partial class PgChannelView : Page
     public PgChannelView()
     {
         InitializeComponent();
-        _channel = new RssChannel();
+        this._channel = new RssChannel();
         ReloadUI();
     }
 
@@ -41,7 +41,7 @@ public partial class PgChannelView : Page
     public PgChannelView(RssChannel channel)
     {
         InitializeComponent();
-        _channel = channel;
+        this._channel = channel;
         ReloadUI();
     }
 
@@ -254,30 +254,30 @@ h1, h2, h3, h4, h5, h6 {
 
     private void ReloadUI()
     {
-        if (RssChannel.IsValid(ref _channel) == false)
+        if (RssChannel.IsValid(ref this._channel) == false)
         {
             return;
         }
 
         // channel is valid, display its info
-        rTitle.Text = _channel.Title.Trim();
-        rDescription.Text = _channel.Description.Trim();
+        this.rTitle.Text = this._channel.Title.Trim();
+        this.rDescription.Text = this._channel.Description.Trim();
 
         // get channel items
-        lbFeedItems.Items.Clear();
+        this.lbFeedItems.Items.Clear();
 
-        if (_channel.Items.Count == 0)
+        if (this._channel.Items.Count == 0)
         {
             // no feed items
             ListBoxItem item = NoFeedItemsItem();
-            _ = lbFeedItems.Items.Add(item);
+            _ = this.lbFeedItems.Items.Add(item);
             return;
         }
 
-        foreach (FeedItem item in _channel.Items)
+        foreach (FeedItem item in this._channel.Items)
         {
             ListBoxItem lbi = GetFeedItem(item);
-            _ = lbFeedItems.Items.Add(lbi);
+            _ = this.lbFeedItems.Items.Add(lbi);
         }
     }
 

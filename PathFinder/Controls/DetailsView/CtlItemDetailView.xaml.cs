@@ -18,10 +18,10 @@ public partial class CtlItemDetailView : UserControl
         InitializeComponent();
         Loaded += (s, e) =>
         {
-            tbName.Text = "Name";
-            tbExtension.Text = "Extension";
-            tbModified.Text = "Modified";
-            tbSize.Text = "Size (bytes)";
+            this.tbName.Text = "Name";
+            this.tbExtension.Text = "Extension";
+            this.tbModified.Text = "Modified";
+            this.tbSize.Text = "Size (bytes)";
         };
     }
 
@@ -31,7 +31,7 @@ public partial class CtlItemDetailView : UserControl
     public CtlItemDetailView(ref FSObjectInfo obj)
     {
         InitializeComponent();
-        _info = obj;
+        this._info = obj;
         Loaded += CtlItemDetailView_Loaded;
     }
 
@@ -39,7 +39,7 @@ public partial class CtlItemDetailView : UserControl
 
     private void CtlItemDetailView_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        LoadData(ref _info);
+        LoadData(ref this._info);
     }
 
     private void LoadData(ref FSObjectInfo info)
@@ -70,10 +70,10 @@ public partial class CtlItemDetailView : UserControl
             size = string.Empty;
         }
 
-        tbName.Text = name;
-        tbExtension.Text = ext;
-        tbModified.Text = modified;
-        tbSize.Text = size;
+        this.tbName.Text = name;
+        this.tbExtension.Text = ext;
+        this.tbModified.Text = modified;
+        this.tbSize.Text = size;
         return;
     }
 }

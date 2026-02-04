@@ -37,13 +37,13 @@ public partial class CtlExchangeHistory : UserControl
 
     private void ClearCanvas()
     {
-        canvas.Children.Clear();
+        this.canvas.Children.Clear();
         return;
     }
 
     private void CanvasApplyMargins()
     {
-        canvas.Margin = new Thickness(0,
+        this.canvas.Margin = new Thickness(0,
                                        0,
                                            SystemParameters.VerticalScrollBarWidth,
                                            SystemParameters.HorizontalScrollBarHeight);
@@ -76,13 +76,13 @@ public partial class CtlExchangeHistory : UserControl
             rects.Add(rect);
         }
 
-        canvas.Width = rects.Count * (BAR_SPACE + BAR_WIDTH);
-        canvas.Height = rects.Max(x => x.Height);
+        this.canvas.Width = rects.Count * (BAR_SPACE + BAR_WIDTH);
+        this.canvas.Height = rects.Max(x => x.Height);
 
         for (int x = 0; x < rects.Count; x++)
         {
             Rectangle rect = rects[x];
-            _ = canvas.Children.Add(rect);
+            _ = this.canvas.Children.Add(rect);
             Canvas.SetLeft(rect, x * (BAR_WIDTH + BAR_SPACE));
             Canvas.SetBottom(rect, 0);
         }
@@ -100,15 +100,15 @@ public partial class CtlExchangeHistory : UserControl
 
     private async Task LoadMetrics()
     {
-        cbxMetric.Items.Clear();
+        this.cbxMetric.Items.Clear();
 
         ComboBoxItem cbiFirst = new ComboBoxItem
         {
             Content = "(Select a metric)"
         };
 
-        _ = cbxMetric.Items.Add(cbiFirst);
-        _ = cbxMetric.Items.Add(new Separator());
+        _ = this.cbxMetric.Items.Add(cbiFirst);
+        _ = this.cbxMetric.Items.Add(new Separator());
 
         foreach (var metric in _metrics)
         {
@@ -120,10 +120,10 @@ public partial class CtlExchangeHistory : UserControl
 
             cbi.Selected += async (s, e) => await SelectMetricWrapper(metric.Key);
 
-            _ = cbxMetric.Items.Add(cbi);
+            _ = this.cbxMetric.Items.Add(cbi);
         }
 
-        if (cbxMetric.Items.Count > 0) cbxMetric.SelectedIndex = 0;
+        if (this.cbxMetric.Items.Count > 0) this.cbxMetric.SelectedIndex = 0;
         return;
     }
 
@@ -155,7 +155,7 @@ public partial class CtlExchangeHistory : UserControl
     public async Task<bool> ReloadHistory()
     {
         // clear the fields
-        cbxCurrency.Items.Clear();
+        this.cbxCurrency.Items.Clear();
 
         // enum the currencies
         if (ExchangeReport.LatestReport is null)
@@ -177,11 +177,11 @@ public partial class CtlExchangeHistory : UserControl
                 Content = $"{currency.Currency} ({currency.Country})"
             };
 
-            _ = cbxCurrency.Items.Add(cbi);
+            _ = this.cbxCurrency.Items.Add(cbi);
         }
 
         // select the top item
-        if (cbxCurrency.Items.Count > 0) cbxCurrency.SelectedIndex = 0;
+        if (this.cbxCurrency.Items.Count > 0) this.cbxCurrency.SelectedIndex = 0;
 
         _ = App.MainWindow.SetStatusMessage($"History reloaded.");
         return true;

@@ -41,15 +41,15 @@ public partial class MainWindow : IconlessWindow
     {
         if (string.IsNullOrWhiteSpace(message))
         {
-            sbiMessage.Content = string.Empty;
-            statusBar.Visibility = System.Windows.Visibility.Collapsed;
+            this.sbiMessage.Content = string.Empty;
+            this.statusBar.Visibility = System.Windows.Visibility.Collapsed;
             return false;
         }
 
         else
         {
-            sbiMessage.Content = message;
-            statusBar.Visibility = System.Windows.Visibility.Visible;
+            this.sbiMessage.Content = message;
+            this.statusBar.Visibility = System.Windows.Visibility.Visible;
             return true;
         }
     }

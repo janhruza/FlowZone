@@ -32,7 +32,7 @@ public partial class PgTasks : Page
     private int _pId = -1;
     private int GetSelectedPid()
     {
-        return _pId;
+        return this._pId;
     }
 
     private MenuItem CreateRefreshItem()
@@ -53,7 +53,7 @@ public partial class PgTasks : Page
         _cmNoProcess.Items.Clear();
 
         MenuItem miRefresh = CreateRefreshItem();
-        _cmNoProcess.Items.Add(miRefresh);
+        _ = _cmNoProcess.Items.Add(miRefresh);
 
         return;
     }
@@ -74,7 +74,7 @@ public partial class PgTasks : Page
             if (pId >= 0) ShowProcessInfo(pId);
         };
 
-        _cmProcess.Items.Add(miDetails);
+        _ = _cmProcess.Items.Add(miDetails);
 
         MenuItem miKill = new MenuItem
         {
@@ -88,11 +88,11 @@ public partial class PgTasks : Page
             if (pId >= 0) await ProcTerminate(pId);
         };
 
-        _cmProcess.Items.Add(miKill);
-        _cmProcess.Items.Add(new Separator());
+        _ = _cmProcess.Items.Add(miKill);
+        _ = _cmProcess.Items.Add(new Separator());
 
         MenuItem miRefresh = CreateRefreshItem();
-        _cmProcess.Items.Add(miRefresh);
+        _ = _cmProcess.Items.Add(miRefresh);
 
         return;
     }
@@ -133,7 +133,7 @@ public partial class PgTasks : Page
 
     private async Task UpdateView(List<Process> processList, string filter)
     {
-        lbxTasks.Items.Clear();
+        this.lbxTasks.Items.Clear();
 
         if (string.IsNullOrWhiteSpace(filter) == false)
         {
@@ -161,10 +161,10 @@ public partial class PgTasks : Page
 
             lbi.Selected += (s, e) =>
             {
-                _pId = proc.Id;
+                this._pId = proc.Id;
             };
 
-            lbxTasks.Items.Add(lbi);
+            _ = this.lbxTasks.Items.Add(lbi);
         }
     }
 
@@ -226,19 +226,19 @@ public partial class PgTasks : Page
 
     private async void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
     {
-        await FilterUI(txtFilter.Text);
+        await FilterUI(this.txtFilter.Text);
     }
 
     private void lbxTasks_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        if (lbxTasks.SelectedIndex != -1)
+        if (this.lbxTasks.SelectedIndex != -1)
         {
-            lbxTasks.ContextMenu = _cmProcess;
+            this.lbxTasks.ContextMenu = _cmProcess;
         }
 
         else
         {
-            lbxTasks.ContextMenu = _cmNoProcess;
+            this.lbxTasks.ContextMenu = _cmNoProcess;
         }
     }
 
@@ -251,7 +251,7 @@ public partial class PgTasks : Page
 
         else if (e.Key == System.Windows.Input.Key.F7)
         {
-            if (lbxTasks.SelectedIndex == -1)
+            if (this.lbxTasks.SelectedIndex == -1)
             {
                 // no process selected
                 return;
@@ -266,7 +266,7 @@ public partial class PgTasks : Page
 
         else if (e.Key == System.Windows.Input.Key.Delete)
         {
-            if (lbxTasks.SelectedIndex == -1)
+            if (this.lbxTasks.SelectedIndex == -1)
             {
                 // no process selected
                 return;

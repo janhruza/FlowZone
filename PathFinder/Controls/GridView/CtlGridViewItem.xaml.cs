@@ -20,8 +20,8 @@ public partial class CtlGridViewItem : UserControl
     public CtlGridViewItem()
     {
         InitializeComponent();
-        tbIcon.Text = ""; // arrow back
-        tbText.Text = "[Parent]";
+        this.tbIcon.Text = ""; // arrow back
+        this.tbText.Text = "[Parent]";
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class CtlGridViewItem : UserControl
     public CtlGridViewItem(ref FSObjectInfo obj)
     {
         InitializeComponent();
-        _info = obj;
+        this._info = obj;
         _ = ReloadUI();
     }
 
@@ -44,21 +44,21 @@ public partial class CtlGridViewItem : UserControl
     /// <returns>Operation result.</returns>
     public bool ReloadUI()
     {
-        if (_info.Exists == false) return false;
+        if (this._info.Exists == false) return false;
 
-        FileSystemInfo fsi = (FileSystemInfo)_info.Info;
-        tbText.Text = fsi.Name;
+        FileSystemInfo fsi = (FileSystemInfo)this._info.Info;
+        this.tbText.Text = fsi.Name;
 
-        switch (_info.IsFile)
+        switch (this._info.IsFile)
         {
             // file
             case true:
-                tbIcon.Text = TEXT_ICON_FILE;
+                this.tbIcon.Text = TEXT_ICON_FILE;
                 return true;
 
             // folder
             default:
-                tbIcon.Text = TEXT_ICON_FOLDER;
+                this.tbIcon.Text = TEXT_ICON_FOLDER;
                 return true;
         }
     }

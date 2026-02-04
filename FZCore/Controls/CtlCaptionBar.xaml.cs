@@ -19,8 +19,8 @@ public partial class CtlCaptionBar : UserControl
     /// </summary>
     public string Title
     {
-        get => tbTitle.Text;
-        set => tbTitle.Text = value;
+        get => this.tbTitle.Text;
+        set => this.tbTitle.Text = value;
     }
 
     private UIElement? _element;
@@ -30,26 +30,26 @@ public partial class CtlCaptionBar : UserControl
     /// </summary>
     public UIElement? HeaderElement
     {
-        get => _element;
+        get => this._element;
         set
         {
             if (value != null)
             {
-                _element = value;
+                this._element = value;
 
                 // set the element
-                _ = grid.Children.Add(_element);
-                Grid.SetColumn(_element, 0);
+                _ = this.grid.Children.Add(this._element);
+                Grid.SetColumn(this._element, 0);
             }
 
             else
             {
-                if (grid.Children.Contains(_element))
+                if (this.grid.Children.Contains(this._element))
                 {
-                    grid.Children.Remove(_element);
+                    this.grid.Children.Remove(this._element);
                 }
 
-                _element = null;
+                this._element = null;
             }
         }
     }
@@ -59,7 +59,7 @@ public partial class CtlCaptionBar : UserControl
     /// </summary>
     public Window? Target
     {
-        get => _window;
+        get => this._window;
         set
         {
             RegisterTarget(value);
@@ -74,7 +74,7 @@ public partial class CtlCaptionBar : UserControl
         get => field;
         set
         {
-            btnMinimize.IsEnabled = value;
+            this.btnMinimize.IsEnabled = value;
             field = value;
         }
     }
@@ -87,7 +87,7 @@ public partial class CtlCaptionBar : UserControl
         get => field;
         set
         {
-            btnMaximize.IsEnabled = value;
+            this.btnMaximize.IsEnabled = value;
             field = value;
         }
     }
@@ -96,14 +96,14 @@ public partial class CtlCaptionBar : UserControl
     {
         if (window == null)
         {
-            if (_window != null)
+            if (this._window != null)
             {
-                _window.StateChanged -= Window_StateChanged;
+                this._window.StateChanged -= Window_StateChanged;
             }
             return;
         }
 
-        _window = window;
+        this._window = window;
         window.StateChanged += Window_StateChanged;
         Title = window.Title;
     }
@@ -136,21 +136,21 @@ public partial class CtlCaptionBar : UserControl
     /// </summary>
     ~CtlCaptionBar()
     {
-        _window?.StateChanged -= Window_StateChanged;
+        this._window?.StateChanged -= Window_StateChanged;
     }
 
     private void Window_StateChanged(object? sender, System.EventArgs e)
     {
-        switch (_window?.WindowState)
+        switch (this._window?.WindowState)
         {
             case WindowState.Normal:
-                btnMaximize.Content = TEXT_BTN_MAXIMIZE;
+                this.btnMaximize.Content = TEXT_BTN_MAXIMIZE;
                 //miRestore.IsEnabled = false;
                 //miMaximize.IsEnabled = true;
                 break;
 
             case WindowState.Maximized:
-                btnMaximize.Content = TEXT_BTN_RESTORE;
+                this.btnMaximize.Content = TEXT_BTN_RESTORE;
                 //miRestore.IsEnabled = true;
                 //miMaximize.IsEnabled = false;
                 break;
@@ -162,27 +162,27 @@ public partial class CtlCaptionBar : UserControl
 
     private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        _window?.DragMove();
+        this._window?.DragMove();
     }
 
     private void btnMinimize_Click(object sender, RoutedEventArgs e)
     {
-        _ = (_window?.WindowState = WindowState.Minimized);
+        _ = (this._window?.WindowState = WindowState.Minimized);
     }
 
     private void Maximize()
     {
-        _ = (_window?.WindowState = WindowState.Maximized);
+        _ = (this._window?.WindowState = WindowState.Maximized);
     }
 
     private void Restore()
     {
-        _ = (_window?.WindowState = WindowState.Normal);
+        _ = (this._window?.WindowState = WindowState.Normal);
     }
 
     private void btnMaximize_Click(object sender, RoutedEventArgs e)
     {
-        switch (_window?.WindowState)
+        switch (this._window?.WindowState)
         {
             default:
                 break;
@@ -199,7 +199,7 @@ public partial class CtlCaptionBar : UserControl
 
     private void btnClose_Click(object sender, RoutedEventArgs e)
     {
-        _window?.Close();
+        this._window?.Close();
     }
 
     private void miRestore_Click(object sender, RoutedEventArgs e)

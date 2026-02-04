@@ -44,7 +44,7 @@ public partial class MainWindow : IconlessWindow
     private void btnCreate_Click(object sender, RoutedEventArgs e)
     {
         // conditions check
-        string path = txtCreatePath.Text.Trim();
+        string path = this.txtCreatePath.Text.Trim();
         Log.Info($"Creating archive at \'{path}\'", nameof(btnCreate_Click));
 
         if (string.IsNullOrEmpty(path) == true)
@@ -53,7 +53,7 @@ public partial class MainWindow : IconlessWindow
             return;
         }
 
-        if (_filesToAdd.Count == 0)
+        if (this._filesToAdd.Count == 0)
         {
             Log.Error($"No items to put into the archive.", nameof(btnCreate_Click));
             return;
@@ -65,9 +65,9 @@ public partial class MainWindow : IconlessWindow
             using (BinaryWriter bw = new BinaryWriter(fs))
             {
                 // write data
-                bw.Write(_filesToAdd.Count);
+                bw.Write(this._filesToAdd.Count);
 
-                foreach (string file in _filesToAdd)
+                foreach (string file in this._filesToAdd)
                 {
                     FileInfo fi = new FileInfo(file);
                     bw.Write(fi.Name);
@@ -78,20 +78,20 @@ public partial class MainWindow : IconlessWindow
             }
         }
 
-        Core.InfoBox($"Archive of {_filesToAdd.Count} files was created at {path}.", "Archive created");
+        Core.InfoBox($"Archive of {this._filesToAdd.Count} files was created at {path}.", "Archive created");
         return;
     }
 
     private void AddCreateItem(string path)
     {
         path = path.Trim();
-        if (_filesToAdd.Contains(path) == true)
+        if (this._filesToAdd.Contains(path) == true)
         {
             Log.Info($"Item \'{path}\' is already included.", nameof(AddCreateItem));
             return;
         }
 
-        _filesToAdd.Add(path);
+        this._filesToAdd.Add(path);
 
         // create to UI
         ListBoxItem lbi = new ListBoxItem
@@ -100,20 +100,20 @@ public partial class MainWindow : IconlessWindow
             Content = Path.GetFileName(path)
         };
 
-        _ = lbFilesToAdd.Items.Add(lbi);
+        _ = this.lbFilesToAdd.Items.Add(lbi);
         Log.Success($"Item \'{path}\' added to list.", nameof(AddCreateItem));
         return;
     }
 
     private void RemoveCreateSelected()
     {
-        if (lbFilesToAdd.SelectedIndex >= 0)
+        if (this.lbFilesToAdd.SelectedIndex >= 0)
         {
-            List<ListBoxItem> selectedItems = lbFilesToAdd.SelectedItems.Cast<ListBoxItem>().ToList();
+            List<ListBoxItem> selectedItems = this.lbFilesToAdd.SelectedItems.Cast<ListBoxItem>().ToList();
 
             foreach (ListBoxItem selected in selectedItems)
             {
-                lbFilesToAdd.Items.Remove(selected);
+                this.lbFilesToAdd.Items.Remove(selected);
             }
         }
 
@@ -129,7 +129,7 @@ public partial class MainWindow : IconlessWindow
 
         if (sfd.ShowDialog() == true)
         {
-            txtCreatePath.Text = sfd.FileName;
+            this.txtCreatePath.Text = sfd.FileName;
             Log.Info($"Archive destination changed to \'{sfd.FileName}\'.", nameof(btnCreateChoose_Click));
         }
     }
@@ -158,9 +158,9 @@ public partial class MainWindow : IconlessWindow
 
     private void ClearCreatePage()
     {
-        _filesToAdd.Clear();
-        lbFilesToAdd.Items.Clear();
-        txtCreatePath.Clear();
+        this._filesToAdd.Clear();
+        this.lbFilesToAdd.Items.Clear();
+        this.txtCreatePath.Clear();
         Log.Info($"Create archive page was cleared.", nameof(ClearCreatePage));
     }
 
@@ -177,29 +177,29 @@ public partial class MainWindow : IconlessWindow
 
     private void btnExtractClear_Click(object sender, RoutedEventArgs e)
     {
-        txtArchivePath.Clear();
-        txtExtractFolder.Clear();
+        this.txtArchivePath.Clear();
+        this.txtExtractFolder.Clear();
         Log.Info($"Extract archive page was cleared.", nameof(btnExtractClear_Click));
     }
 
     private bool ValidateExtractionData()
     {
-        e_ArchivePath = txtArchivePath.Text.Trim();
-        e_FolderPath = txtExtractFolder.Text.Trim();
+        this.e_ArchivePath = this.txtArchivePath.Text.Trim();
+        this.e_FolderPath = this.txtExtractFolder.Text.Trim();
 
-        if (File.Exists(e_ArchivePath) == false)
+        if (File.Exists(this.e_ArchivePath) == false)
         {
             Log.Error($"Invalid archive path.", nameof(ValidateExtractionData));
             return false;
         }
 
-        if (Directory.Exists(e_FolderPath) == false)
+        if (Directory.Exists(this.e_FolderPath) == false)
         {
             Log.Error($"Invalid destination folder path.", nameof(ValidateExtractionData));
             return false;
         }
 
-        Log.Info($"Extraction data validated. Archive path: \'{e_ArchivePath}\', extraction folder: \'{e_FolderPath}\'.", nameof(ValidateExtractionData));
+        Log.Info($"Extraction data validated. Archive path: \'{this.e_ArchivePath}\', extraction folder: \'{this.e_FolderPath}\'.", nameof(ValidateExtractionData));
         return true;
     }
 
@@ -213,7 +213,7 @@ public partial class MainWindow : IconlessWindow
         }
 
         // extract archive
-        using (FileStream fs = File.OpenRead(e_ArchivePath))
+        using (FileStream fs = File.OpenRead(this.e_ArchivePath))
         {
             using (BinaryReader br = new BinaryReader(fs))
             {
@@ -232,7 +232,7 @@ public partial class MainWindow : IconlessWindow
                         buffer[i] = br.ReadByte();
                     }
 
-                    string path = Path.Combine(e_FolderPath, name);
+                    string path = Path.Combine(this.e_FolderPath, name);
                     File.WriteAllBytes(path, buffer);
 
                     Log.Success($"File \'{name}\' was extracted into \'{path}\'.", nameof(btnExtract_Click));
@@ -240,7 +240,7 @@ public partial class MainWindow : IconlessWindow
             }
         }
 
-        Core.InfoBox($"Archive was extracted into {e_FolderPath}.", "Archive extracted");
+        Core.InfoBox($"Archive was extracted into {this.e_FolderPath}.", "Archive extracted");
     }
 
     private void btnChooseArchive_Click(object sender, RoutedEventArgs e)
@@ -252,7 +252,7 @@ public partial class MainWindow : IconlessWindow
 
         if (ofd.ShowDialog() == true)
         {
-            txtArchivePath.Text = ofd.FileName;
+            this.txtArchivePath.Text = ofd.FileName;
             Log.Info($"Archive path has changed to \'{ofd.FileName}\'.", nameof(btnChooseArchive_Click));
         }
     }
@@ -266,7 +266,7 @@ public partial class MainWindow : IconlessWindow
 
         if (ofd.ShowDialog() == true)
         {
-            txtExtractFolder.Text = ofd.FolderName;
+            this.txtExtractFolder.Text = ofd.FolderName;
             Log.Info($"Extraction folder has changed to \'{ofd.FolderName}\'.", nameof(btnChooseExtractFolder_Click));
         }
     }

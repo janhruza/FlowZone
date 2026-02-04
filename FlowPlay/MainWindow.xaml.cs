@@ -35,29 +35,29 @@ public partial class MainWindow : IconlessWindow
 
     private void StopMedia()
     {
-        cPlayer.Stop();
+        this.cPlayer.Stop();
         Title = "FlowPlay";
     }
 
     private void SetPlaybackSpeed(double speed)
     {
-        if (cPlayer.IsLoaded == false)
+        if (this.cPlayer.IsLoaded == false)
         {
             return;
         }
 
-        cPlayer.SpeedRatio = speed;
+        this.cPlayer.SpeedRatio = speed;
         return;
     }
 
     private List<MenuItem> aSpeeds;
     private void SetupPlayerSpeeds()
     {
-        foreach (MenuItem miSpeed in aSpeeds)
+        foreach (MenuItem miSpeed in this.aSpeeds)
         {
             miSpeed.Click += (s, e) =>
             {
-                foreach (MenuItem mi in aSpeeds)
+                foreach (MenuItem mi in this.aSpeeds)
                 {
                     if (mi == miSpeed)
                     {
@@ -77,62 +77,62 @@ public partial class MainWindow : IconlessWindow
 
     private void VolumeUp()
     {
-        if (cPlayer.Volume >= 0.95)
+        if (this.cPlayer.Volume >= 0.95)
         {
-            cPlayer.Volume = 1.0;
+            this.cPlayer.Volume = 1.0;
         }
 
         else
         {
-            cPlayer.Volume += 0.05;
+            this.cPlayer.Volume += 0.05;
         }
     }
 
     private void VolumeDown()
     {
-        if (cPlayer.Volume <= 0.05)
+        if (this.cPlayer.Volume <= 0.05)
         {
-            cPlayer.Volume = 0;
+            this.cPlayer.Volume = 0;
         }
 
         else
         {
-            cPlayer.Volume -= 0.05;
+            this.cPlayer.Volume -= 0.05;
         }
     }
 
     private void PlayerRewind()
     {
-        double cur = cPlayer.Position.TotalMilliseconds;
+        double cur = this.cPlayer.Position.TotalMilliseconds;
         if (cur <= POSITION_STEP)
         {
-            cPlayer.Position = TimeSpan.FromMilliseconds(0);
+            this.cPlayer.Position = TimeSpan.FromMilliseconds(0);
         }
 
         else
         {
-            cPlayer.Position = TimeSpan.FromMilliseconds(cur - POSITION_STEP);
+            this.cPlayer.Position = TimeSpan.FromMilliseconds(cur - POSITION_STEP);
         }
     }
 
     private void PlayerForward()
     {
-        if (cPlayer.NaturalDuration.HasTimeSpan == false)
+        if (this.cPlayer.NaturalDuration.HasTimeSpan == false)
         {
             return;
         }
 
-        double max = cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
-        double cur = cPlayer.Position.TotalMilliseconds;
+        double max = this.cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+        double cur = this.cPlayer.Position.TotalMilliseconds;
 
         if ((max - cur) < POSITION_STEP)
         {
-            cPlayer.Position = TimeSpan.FromMilliseconds(max);
+            this.cPlayer.Position = TimeSpan.FromMilliseconds(max);
         }
 
         else
         {
-            cPlayer.Position = TimeSpan.FromMilliseconds(cur + POSITION_STEP);
+            this.cPlayer.Position = TimeSpan.FromMilliseconds(cur + POSITION_STEP);
         }
     }
 
@@ -140,23 +140,23 @@ public partial class MainWindow : IconlessWindow
 
     private void PlayerPause()
     {
-        dTimer.Stop();
-        cPlayer.Pause();
-        bPlaying = false;
-        btnPlayPause.Content = sPlay;
+        this.dTimer.Stop();
+        this.cPlayer.Pause();
+        this.bPlaying = false;
+        this.btnPlayPause.Content = this.sPlay;
     }
 
     private void PlayerPlay()
     {
-        cPlayer.Play();
-        bPlaying = true;
-        btnPlayPause.Content = sPause;
-        dTimer.Start();
+        this.cPlayer.Play();
+        this.bPlaying = true;
+        this.btnPlayPause.Content = this.sPause;
+        this.dTimer.Start();
     }
 
     private void PlayPause()
     {
-        if (bPlaying == true)
+        if (this.bPlaying == true)
         {
             PlayerPause();
         }
@@ -169,10 +169,10 @@ public partial class MainWindow : IconlessWindow
 
     private void StartMedia()
     {
-        dTimer.Stop();
-        bPlaying = false;
+        this.dTimer.Stop();
+        this.bPlaying = false;
         PlayPause();
-        dTimer.Start();
+        this.dTimer.Start();
     }
 
     private void OpenMedia()
@@ -187,7 +187,7 @@ public partial class MainWindow : IconlessWindow
             StopMedia();
 
             SizeToContent = SizeToContent.WidthAndHeight;
-            cPlayer.Source = new Uri(ofd.FileName);
+            this.cPlayer.Source = new Uri(ofd.FileName);
             StartMedia();
 
             Title = $"{ofd.SafeFileName} | FlowPlay";
@@ -220,8 +220,8 @@ public partial class MainWindow : IconlessWindow
                 break;
         }
 
-        rArtist.Text = tag.Artist;
-        rTitle.Text = tag.Title;
+        this.rArtist.Text = tag.Artist;
+        this.rTitle.Text = tag.Title;
 
         return result;
     }
@@ -229,8 +229,8 @@ public partial class MainWindow : IconlessWindow
     private void FitMediaIntoWindow()
     {
         SizeToContent = SizeToContent.WidthAndHeight;
-        cPlayer.Width = cPlayer.NaturalVideoWidth;
-        cPlayer.Height = cPlayer.NaturalVideoHeight;
+        this.cPlayer.Width = this.cPlayer.NaturalVideoWidth;
+        this.cPlayer.Height = this.cPlayer.NaturalVideoHeight;
         return;
     }
 
@@ -240,18 +240,18 @@ public partial class MainWindow : IconlessWindow
         {
             // fill window with player
             SizeToContent = SizeToContent.Manual;
-            cPlayer.Width = double.NaN;
-            cPlayer.Height = double.NaN;
+            this.cPlayer.Width = double.NaN;
+            this.cPlayer.Height = double.NaN;
         }
 
         else
         {
             // set window size to the size of the player
-            if (cPlayer.HasVideo)
+            if (this.cPlayer.HasVideo)
             {
                 SizeToContent = SizeToContent.WidthAndHeight;
-                cPlayer.Width = cPlayer.NaturalVideoWidth;
-                cPlayer.Height = cPlayer.NaturalVideoHeight;
+                this.cPlayer.Width = this.cPlayer.NaturalVideoWidth;
+                this.cPlayer.Height = this.cPlayer.NaturalVideoHeight;
             }
         }
 
@@ -277,18 +277,18 @@ public partial class MainWindow : IconlessWindow
     {
         InitializeComponent();
 
-        aSpeeds = [miSpeed025, miSpeed050, miSpeed075, miSpeed100, miSpeed125, miSpeed150, miSpeed175, miSpeed200];
+        this.aSpeeds = [this.miSpeed025, this.miSpeed050, this.miSpeed075, this.miSpeed100, this.miSpeed125, this.miSpeed150, this.miSpeed175, this.miSpeed200];
         SetupPlayerSpeeds();
 
-        dTimer = new DispatcherTimer
+        this.dTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(1)
         };
 
-        dTimer.Tick += (s, e) =>
+        this.dTimer.Tick += (s, e) =>
         {
             // adjust slider position
-            slPosition.Value = cPlayer.Position.TotalMilliseconds;
+            this.slPosition.Value = this.cPlayer.Position.TotalMilliseconds;
         };
 
         // set transparent (acrylic) background
@@ -299,19 +299,19 @@ public partial class MainWindow : IconlessWindow
     private void ShowLoadedVideoProperties()
     {
         // input checks
-        if (cPlayer.HasVideo == false) return;
-        if (cPlayer.Source == null) return;
+        if (this.cPlayer.HasVideo == false) return;
+        if (this.cPlayer.Source == null) return;
 
         // only local files supported
-        string path = cPlayer.Source.LocalPath;
+        string path = this.cPlayer.Source.LocalPath;
 
         // get the video properties
         VideoProperties vp = new VideoProperties
         {
             Path = path,
-            Height = cPlayer.NaturalVideoHeight,
-            Width = cPlayer.NaturalVideoWidth,
-            Duration = cPlayer.NaturalDuration.TimeSpan
+            Height = this.cPlayer.NaturalVideoHeight,
+            Width = this.cPlayer.NaturalVideoWidth,
+            Duration = this.cPlayer.NaturalDuration.TimeSpan
         };
 
         // show the properties window
@@ -331,19 +331,19 @@ public partial class MainWindow : IconlessWindow
 
     private void cPlayer_MediaOpened(object sender, RoutedEventArgs e)
     {
-        if (cPlayer.HasVideo == false)
+        if (this.cPlayer.HasVideo == false)
         {
             // hide the player for audio files and show track info instead
-            cPlayer.Visibility = Visibility.Collapsed;
-            tbTrackInfo.Visibility = Visibility.Visible;
+            this.cPlayer.Visibility = Visibility.Collapsed;
+            this.tbTrackInfo.Visibility = Visibility.Visible;
 
-            slPosition.Minimum = 0;
-            slPosition.Maximum = cPlayer.NaturalDuration.HasTimeSpan ? cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
-            bdControls.Visibility = Visibility.Visible;
+            this.slPosition.Minimum = 0;
+            this.slPosition.Maximum = this.cPlayer.NaturalDuration.HasTimeSpan ? this.cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
+            this.bdControls.Visibility = Visibility.Visible;
 
-            if (cPlayer.Source != null || string.IsNullOrEmpty(cPlayer.Source!.LocalPath) == false)
+            if (this.cPlayer.Source != null || string.IsNullOrEmpty(this.cPlayer.Source!.LocalPath) == false)
             {
-                string filename = cPlayer.Source!.LocalPath;
+                string filename = this.cPlayer.Source!.LocalPath;
                 if (LoadAudioTrackInfo(filename) == false)
                 {
                     Log.Error("Failed to load audio track info for file: " + filename, nameof(cPlayer_MediaOpened));
@@ -356,17 +356,17 @@ public partial class MainWindow : IconlessWindow
         }
 
         // show the player and hide track info
-        tbTrackInfo.Visibility = Visibility.Collapsed;
-        cPlayer.Visibility = Visibility.Visible;
+        this.tbTrackInfo.Visibility = Visibility.Collapsed;
+        this.cPlayer.Visibility = Visibility.Visible;
 
-        int w = cPlayer.NaturalVideoWidth;
-        int h = cPlayer.NaturalVideoHeight;
+        int w = this.cPlayer.NaturalVideoWidth;
+        int h = this.cPlayer.NaturalVideoHeight;
 
-        cPlayer.Width = w;
-        cPlayer.Height = h;
+        this.cPlayer.Width = w;
+        this.cPlayer.Height = h;
 
-        slPosition.Minimum = 0;
-        slPosition.Maximum = cPlayer.NaturalDuration.HasTimeSpan ? cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
+        this.slPosition.Minimum = 0;
+        this.slPosition.Maximum = this.cPlayer.NaturalDuration.HasTimeSpan ? this.cPlayer.NaturalDuration.TimeSpan.TotalMilliseconds : 0;
         return;
     }
 
@@ -465,17 +465,17 @@ public partial class MainWindow : IconlessWindow
 
     private void cPlayer_MouseEnter(object sender, MouseEventArgs e)
     {
-        bdControls.Visibility = Visibility.Visible;
+        this.bdControls.Visibility = Visibility.Visible;
     }
 
     private void cPlayer_MouseLeave(object sender, MouseEventArgs e)
     {
-        if (bdControls.IsMouseOver)
+        if (this.bdControls.IsMouseOver)
         {
             return;
         }
 
-        bdControls.Visibility = Visibility.Collapsed;
+        this.bdControls.Visibility = Visibility.Collapsed;
     }
 
     private void miFullScreen_Click(object sender, RoutedEventArgs e)
@@ -485,16 +485,16 @@ public partial class MainWindow : IconlessWindow
 
     private void slPosition_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        if (cPlayer.IsLoaded == false)
+        if (this.cPlayer.IsLoaded == false)
         {
             return;
         }
 
-        if (slPosition.IsMouseOver == true && Mouse.LeftButton == MouseButtonState.Pressed)
+        if (this.slPosition.IsMouseOver == true && Mouse.LeftButton == MouseButtonState.Pressed)
         {
             PlayerPause();
-            double value = slPosition.Value;
-            cPlayer.Position = TimeSpan.FromMilliseconds(value);
+            double value = this.slPosition.Value;
+            this.cPlayer.Position = TimeSpan.FromMilliseconds(value);
             PlayerPlay();
         }
 
@@ -505,8 +505,8 @@ public partial class MainWindow : IconlessWindow
     {
         // fill window with player
         SizeToContent = SizeToContent.Manual;
-        cPlayer.Width = double.NaN;
-        cPlayer.Height = double.NaN;
+        this.cPlayer.Width = double.NaN;
+        this.cPlayer.Height = double.NaN;
     }
 
     private void miSpeed025_Click(object sender, RoutedEventArgs e)
@@ -554,12 +554,12 @@ public partial class MainWindow : IconlessWindow
         double newSize = e.NewSize.Width / 3;
         if (newSize != double.NaN)
         {
-            tbNote.FontSize = newSize;
+            this.tbNote.FontSize = newSize;
         }
 
         else
         {
-            tbNote.FontSize = 100;
+            this.tbNote.FontSize = 100;
         }
     }
 

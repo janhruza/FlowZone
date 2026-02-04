@@ -35,29 +35,29 @@ public partial class WndDialog : IconlessWindow
     /// </summary>
     public string Message
     {
-        get => tbText.Text;
-        set => tbText.Text = value;
+        get => this.tbText.Text;
+        set => this.tbText.Text = value;
     }
 
     /// <summary>
-    /// Representing the dialog icon as <see cref="System.Char"/>.
+    /// Representing the dialog icon as <see cref="char"/>.
     /// </summary>
     public char IconGlyph
     {
         get
         {
-            if (lImage.Content.ToString() == null)
+            if (this.lImage.Content.ToString() == null)
             {
                 return C_INFO;
             }
 
             else
             {
-                return lImage.ToString()[0];
+                return this.lImage.ToString()[0];
             }
         }
 
-        set => lImage.Content = value;
+        set => this.lImage.Content = value;
     }
 
     /// <summary>

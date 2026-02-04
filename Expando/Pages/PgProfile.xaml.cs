@@ -39,9 +39,9 @@ public partial class PgMyProfile : Page, IExpandoPage
         }
 
         // show profile info
-        rUsername.Text = UserProfile.Current?.Username.ToUpper();
-        rCreation.Text = $"{UserProfile.Current?.CreationDate.ToShortDateString()} {UserProfile.Current?.CreationDate.ToShortTimeString()}";
-        rId.Text = UserProfile.Current?.Id.ToString();
+        this.rUsername.Text = UserProfile.Current?.Username.ToUpper();
+        this.rCreation.Text = $"{UserProfile.Current?.CreationDate.ToShortDateString()} {UserProfile.Current?.CreationDate.ToShortTimeString()}";
+        this.rId.Text = UserProfile.Current?.Id.ToString();
 
         return;
     }
