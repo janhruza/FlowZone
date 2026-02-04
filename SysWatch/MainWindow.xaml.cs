@@ -84,7 +84,7 @@ public partial class MainWindow : IconlessWindow
     {
         if (e.Key == Key.F1)
         {
-            ShowLog();
+            ShowHelp();
         }
 
         else if (e.Key == Key.F2)

@@ -35,8 +35,13 @@ public static class FZData
 
         "Utilities:\n" +
         "• WebPeek: Web connectivity and data retrieval.\n" +
-        "• FlowPlay & Expando: Media handling and UI enhancements.\n" +
-        "• UpDate: Automated solution maintenance.\n\n" +
+        "• FlowPlay: Media handling and UI enhancements.\n" +
+        "• UpDate: RSS reader.\n\n" +
 
         "Developed with C# for high-performance Windows workflows.";
+
+    /// <summary>
+    /// Representing the project website.
+    /// </summary>
+    public const string Website = "https://www.github.com/janhruza/FlowZone";
 }

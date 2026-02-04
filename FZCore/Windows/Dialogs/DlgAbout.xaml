@@ -1,0 +1,95 @@
+﻿<local:IconlessWindow x:Class="FZCore.Windows.Dialogs.DlgAbout"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:local="clr-namespace:FZCore.Windows"
+                       mc:Ignorable="d"
+                       Title="About FlowZone"
+                       ResizeMode="NoResize"
+                       SizeToContent="WidthAndHeight"
+                       Loaded="TransientWindow_Loaded">
+
+    <local:IconlessWindow.Resources>
+
+        <Style TargetType="{x:Type Run}"
+               x:Key="H1">
+
+            <Setter Property="FontSize"
+                    Value="16"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Foreground"
+                    Value="{x:Static SystemColors.AccentColorBrush}"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type Run}"
+               x:Key="H2">
+
+            <Setter Property="FontSize"
+                    Value="14"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+            <Setter Property="Foreground"
+                    Value="{x:Static SystemColors.AccentColorBrush}"/>
+
+        </Style>
+
+    </local:IconlessWindow.Resources>
+    
+    <Grid Width="400"
+          Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   TextWrapping="Wrap"
+                   TextTrimming="CharacterEllipsis">
+            
+            <Run Text="FlowZone Solutions"
+                 Style="{DynamicResource H1}"/>
+            
+            <LineBreak />
+            <LineBreak />
+            
+            <Run Text="FlowZone is a unified software solution providing a curated set of graphic interfaces and utilities for daily computing."/>
+            
+            <LineBreak />
+            <LineBreak />
+            
+            <Run Text="Developed with C# for high-performance Windows workflows."/>
+            
+            <LineBreak />
+            <LineBreak />
+            
+            <Run Text="© 2025-2026 Jan Hruza"/>
+            <Hyperlink Name="link"
+                       Click="link_Click">Project Website</Hyperlink>
+
+        </TextBlock>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,10,0,0">
+
+            <Button Content="Cancel"
+                    IsCancel="True"
+                    Margin="0,0,5,0"/>
+            
+            <Button Content="OK"
+                    IsCancel="True"/>
+
+        </StackPanel>
+
+    </Grid>
+    
+</local:IconlessWindow>

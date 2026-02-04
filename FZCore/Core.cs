@@ -1,4 +1,5 @@
 ﻿using FZCore.Windows;
+using FZCore.Windows.Dialogs;
 using FZCore.Windows.Extra;
 
 using Microsoft.Win32;
@@ -83,8 +84,8 @@ public static class Core
     /// <returns>Always true.</returns>
     public static bool AboutBox()
     {
-        InfoBox(FZData.About, FZData.Solution);
-        return true;
+        //InfoBox(FZData.About, FZData.Solution);
+        return new DlgAbout().ShowDialog() ?? false;
     }
 
     /// <summary>
