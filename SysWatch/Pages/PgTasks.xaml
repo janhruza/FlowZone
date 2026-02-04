@@ -52,7 +52,9 @@
         
         <ListBox Grid.Row="2"
                  Name="lbxTasks"
-                 Margin="0,0,0,0"/>
+                 Margin="0,0,0,0"
+                 KeyDown="lbxTasks_KeyDown"
+                 PreviewMouseRightButtonDown="lbxTasks_PreviewMouseRightButtonDown"/>
 
     </Grid>
     

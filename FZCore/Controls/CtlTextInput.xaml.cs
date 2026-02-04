@@ -37,6 +37,24 @@ public partial class CtlTextInput : UserControl
     }
 
     /// <summary>
+    /// Gets or sets the text of the text box area.
+    /// </summary>
+    public string Text
+    {
+        get => txt.Text;
+        set => txt.Text = value;
+    }
+
+    /// <summary>
+    /// Determines whether the text area is read only or not.
+    /// </summary>
+    public bool IsReadOnly
+    {
+        get => txt.IsReadOnly;
+        set => txt.IsReadOnly = value;
+    }
+
+    /// <summary>
     /// Gets the underlying <see cref="System.Windows.Controls.TextBox"/> control associated with this instance.
     /// </summary>
     public TextBox TextBox => txt;

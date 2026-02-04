@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using FZCore;
+
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using SysWatch.Controls;
+using SysWatch.Windows.Dialogs;
 
 namespace SysWatch.Pages;
 
@@ -14,12 +18,90 @@ namespace SysWatch.Pages;
 /// </summary>
 public partial class PgTasks : Page
 {
+    private ContextMenu _cmNoProcess { get; } = new ContextMenu();
+    private ContextMenu _cmProcess { get; } = new ContextMenu();
+
     /// <summary>
     /// Creates a new <see cref="PgTasks"/> instance.
     /// </summary>
     public PgTasks()
     {
         InitializeComponent();
+    }
+
+    private int _pId = -1;
+    private int GetSelectedPid()
+    {
+        return _pId;
+    }
+
+    private MenuItem CreateRefreshItem()
+    {
+        MenuItem miRefresh = new MenuItem
+        {
+            Header = "Refresh",
+            InputGestureText = "F5"
+        };
+
+        miRefresh.Click += async (s, e) => await LoadUI();
+
+        return miRefresh;
+    }
+
+    private async Task ConstructNoProcessMenu()
+    {
+        _cmNoProcess.Items.Clear();
+
+        MenuItem miRefresh = CreateRefreshItem();
+        _cmNoProcess.Items.Add(miRefresh);
+
+        return;
+    }
+
+    private async Task ConstructProcessMenu()
+    {
+        _cmProcess.Items.Clear();
+
+        MenuItem miDetails = new MenuItem
+        {
+            Header = "Details",
+            InputGestureText = "F7"
+        };
+
+        miDetails.Click += (s, e) =>
+        {
+            int pId = GetSelectedPid();
+            if (pId >= 0) ShowProcessInfo(pId);
+        };
+
+        _cmProcess.Items.Add(miDetails);
+
+        MenuItem miKill = new MenuItem
+        {
+            Header = "Terminate",
+            InputGestureText = "Del"
+        };
+
+        miKill.Click += async (s, e) =>
+        {
+            int pId = GetSelectedPid();
+            if (pId >= 0) await ProcTerminate(pId);
+        };
+
+        _cmProcess.Items.Add(miKill);
+        _cmProcess.Items.Add(new Separator());
+
+        MenuItem miRefresh = CreateRefreshItem();
+        _cmProcess.Items.Add(miRefresh);
+
+        return;
+    }
+
+    private async Task ConstructMenus()
+    {
+        await ConstructNoProcessMenu();
+        await ConstructProcessMenu();
+        return;
     }
 
     private static async Task<List<Process>> FetchProcesses()
@@ -73,7 +155,13 @@ public partial class PgTasks : Page
             ListBoxItem lbi = new ListBoxItem
             {
                 HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
-                Content = ctlProcItem
+                Content = ctlProcItem,
+                Tag = proc.Id
+            };
+
+            lbi.Selected += (s, e) =>
+            {
+                _pId = proc.Id;
             };
 
             lbxTasks.Items.Add(lbi);
@@ -93,13 +181,99 @@ public partial class PgTasks : Page
         return;
     }
 
-    private async void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void ShowProcessInfo(int pId)
+    {
+        // shows process information
+        DlgProcessInfo dlgInfo = new DlgProcessInfo(pId);
+
+        try
+        {
+            _ = dlgInfo.ShowDialog();
+        }
+
+        catch (Exception ex)
+        {
+            Log.Error(ex, nameof(ShowProcessInfo));
+        }
+
+        return;
+    }
+
+    private async Task ProcTerminate(int pId)
+    {
+        try
+        {
+            Process.GetProcessById(pId).Kill();
+        }
+
+        catch (Exception ex)
+        {
+            FZCore.Core.ErrorBox(ex.Message, "End Task");
+            Log.Error(ex, nameof(ProcTerminate));
+        }
+
+        finally
+        {
+            await LoadUI();
+        }
+    }
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         await LoadUI();
+        await ConstructMenus();
     }
 
     private async void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
     {
         await FilterUI(txtFilter.Text);
+    }
+
+    private void lbxTasks_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (lbxTasks.SelectedIndex != -1)
+        {
+            lbxTasks.ContextMenu = _cmProcess;
+        }
+
+        else
+        {
+            lbxTasks.ContextMenu = _cmNoProcess;
+        }
+    }
+
+    private async void lbxTasks_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.F5)
+        {
+            await LoadUI();
+        }
+
+        else if (e.Key == System.Windows.Input.Key.F7)
+        {
+            if (lbxTasks.SelectedIndex == -1)
+            {
+                // no process selected
+                return;
+            }
+
+            // show process info if the item is valid
+            int pId = GetSelectedPid();
+            if (pId >= 0) ShowProcessInfo(pId);
+
+            return;
+        }
+
+        else if (e.Key == System.Windows.Input.Key.Delete)
+        {
+            if (lbxTasks.SelectedIndex == -1)
+            {
+                // no process selected
+                return;
+            }
+
+            int pId = GetSelectedPid();
+            await ProcTerminate(pId);
+        }
     }
 }
