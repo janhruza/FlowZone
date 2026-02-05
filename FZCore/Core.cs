@@ -1,5 +1,6 @@
 ﻿using FZCore.Windows;
 using FZCore.Windows.Dialogs;
+using FZCore.Windows.Dialogs.Types;
 using FZCore.Windows.Extra;
 
 using Microsoft.Win32;
@@ -31,7 +32,9 @@ public static class Core
     /// <param name="caption">Caption of the message box window.</param>
     public static void InfoBox(string message, string caption = "FZCore")
     {
-        _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
+        //_ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information);
+        //_ = DialogWindow.ShowDialog(message, caption, caption, DWImage.INFO, DWButton.OK);
+        _ = DlgMessageBox.Show(message, caption, DWButton.OK, DWImage.INFO, DWButton.OK);
         return;
     }
 
@@ -42,9 +45,22 @@ public static class Core
     /// <param name="caption">Caption of the message box window.</param>
     public static void ErrorBox(string message, string caption = "FZCore")
     {
-        _ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+        //_ = MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         //_ = DialogWindow.ShowDialog(message, caption, caption, DWImage.ERROR, DWButton.OK);
+        _ = DlgMessageBox.Show(message, caption, DWButton.OK, DWImage.ERROR, DWButton.OK);
         return;
+    }
+
+    /// <summary>
+    /// Representing the user yes/no choice dialog.
+    /// </summary>
+    /// <param name="message">A message to be shown.</param>
+    /// <param name="caption">Message box caption.</param>
+    /// <returns><see langword="true"/> if the yes button is pressed, otherwise <see langword="false"/>.</returns>
+    public static bool Choice(string message, string caption = "FZCore")
+    {
+        TDReturn result = DlgMessageBox.Show(message, caption, DWButton.YES | DWButton.NO, DWImage.INFO, DWButton.NO);
+        return result == TDReturn.IDYES;
     }
 
     /// <summary>

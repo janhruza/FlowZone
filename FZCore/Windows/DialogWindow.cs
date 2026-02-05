@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FZCore.Windows.Dialogs;
+using FZCore.Windows.Dialogs.Types;
+
+using System;
 using System.Media;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,116 +9,15 @@ using System.Windows.Media.Imaging;
 
 namespace FZCore.Windows;
 
-/// <summary>
-/// Representing the return value of the <see cref="DialogWindow.Show()"/> function.
-/// This value is the result of the <see cref="DialogWindow"/>.
-/// </summary>
-public enum TDReturn
-{
-    /// <summary>
-    /// Function failed.
-    /// </summary>
-    ERROR = 0,
-
-    /// <summary>
-    /// Cancel button was pressed or Alt+F4 was pressed.
-    /// </summary>
-    IDCANCEL = 1,
-
-    /// <summary>
-    /// No button was pressed.
-    /// </summary>
-    IDNO = 2,
-
-    /// <summary>
-    /// OK button was pressed.
-    /// </summary>
-    IDOK = 3,
-
-    /// <summary>
-    /// Retry button was pressed.
-    /// </summary>
-    IDRETRY = 4,
-
-    /// <summary>
-    /// Yes button was pressed.
-    /// </summary>
-    IDYES = 5,
-
-    /// <summary>
-    /// Close button was pressed.
-    /// </summary>
-    IDCLOSE = 6
-}
-
-/// <summary>
-/// Representing valid <see cref="DialogWindow"/> images.
-/// </summary>
-public enum DWImage
-{
-    /// <summary>
-    /// Representing the error image.
-    /// </summary>
-    ERROR,
-
-    /// <summary>
-    /// Representing the informational image.
-    /// </summary>
-    INFO,
-
-    /// <summary>
-    /// Representing the shield image.
-    /// </summary>
-    SHIELD,
-
-    /// <summary>
-    /// Representing the warning image.
-    /// </summary>
-    WARNING
-}
-
-/// <summary>
-/// Representing valid <see cref="DialogWindow"/> buttons.
-/// </summary>
-[Flags]
-public enum DWButton
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    OK = 0,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    YES = 1,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    NO = 2,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    RETRY = 4,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    CANCEL = 8,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    CLOSE = 16
-}
-
+[Obsolete]
 /// <summary>
 /// Representing a custom dialog window.
 /// <see cref="DialogWindow"/> is a more extended version of the standard <see cref="MessageBox"/> class.
 /// In essence, <see cref="DialogWindow"/> is a kind of a TaskDialog, a Windows API modern version of <see cref="MessageBox"/>.
 /// </summary>
+/// /// <remarks>
+/// This class is obsolette. Please use the new <see cref="DlgMessageBox"/> instead.
+/// </remarks>
 public class DialogWindow
 {
     /// <summary>
@@ -252,16 +154,16 @@ public class DialogWindow
     public TDReturn Show()
     {
         // Create window
-        Window wnd = new Window
+        IconlessWindow wnd = new IconlessWindow
         {
             Title = Title,
             WindowStartupLocation = WindowStartupLocation.CenterScreen,
             ResizeMode = ResizeMode.NoResize,
             SizeToContent = SizeToContent.WidthAndHeight,
-            MaxWidth = 640,
+            MaxWidth = 600,
             MinWidth = 320,
             SnapsToDevicePixels = true,
-            UseLayoutRounding = false
+            UseLayoutRounding = true
         };
 
         wnd.Loaded += (s, e) => GetSound(Image).Play();
