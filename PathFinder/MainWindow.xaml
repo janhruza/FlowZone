@@ -45,8 +45,17 @@
             
             <MenuItem Header="View">
                 <MenuItem Header="Details"
-                          IsChecked="True"/>
+                          IsChecked="False"
+                          Name="miDetails"
+                          IsCheckable="True"
+                          Checked="miDetails_Checked"/>
 
+                <MenuItem Header="Grid"
+                          IsChecked="False"
+                          Name="miGrid"
+                          IsCheckable="True"
+                          Checked="miGrid_Checked"/>
+                
                 <Separator />
 
                 <MenuItem Header="Status Panel"

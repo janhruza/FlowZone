@@ -24,17 +24,17 @@ public class CtlFolderViewBase : UserControl, IFolderView
     }
 
     /// <inheritdoc/>
-    public event EventHandler FolderOpened = delegate { };
+    public virtual event EventHandler FolderOpened = delegate { };
 
     /// <inheritdoc/>
-    public async Task<bool> OpenFolder(string folderPath)
+    public virtual async Task<bool> OpenFolder(string folderPath)
     {
         FolderChanged.Invoke(this, folderPath);
         return false;
     }
 
     /// <inheritdoc/>
-    public object CreateParentFolderItem(string folderPath)
+    public virtual object CreateParentFolderItem(string folderPath)
     {
         return new object();
     }
@@ -42,5 +42,5 @@ public class CtlFolderViewBase : UserControl, IFolderView
     /// <summary>
     /// Occurrs when the current folder changes.
     /// </summary>
-    public event EventHandler<string> FolderChanged = delegate { };
+    public virtual event EventHandler<string> FolderChanged = delegate { };
 }

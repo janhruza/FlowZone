@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PathFinder.Controls.GridView"
              mc:Ignorable="d"
-             Width="64"
-             Height="64"
-             Padding="2"
-             BorderThickness="1">
+             Padding="5"
+             BorderThickness="1"
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave"
+             Background="Transparent">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -20,8 +21,9 @@
                    Name="tbIcon"
                    FontFamily="Segoe Fluent Icons"
                    Text=""
-                   TextAlignment="Center"
-                   FontSize="24"/>
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="36"/>
         
         <TextBlock Grid.Row="1"
                    Name="tbText"

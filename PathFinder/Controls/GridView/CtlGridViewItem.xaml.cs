@@ -2,7 +2,9 @@
 
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PathFinder.Controls.GridView;
 
@@ -70,5 +72,17 @@ public partial class CtlGridViewItem : UserControl
     public async Task<bool> ReloadUIAsync()
     {
         return ReloadUI();
+    }
+
+    private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        this.Background = SystemColors.AccentColorBrush;
+        this.BorderBrush = FZCore.Core.IsDarkModeEnabled() ? SystemColors.AccentColorLight2Brush : SystemColors.AccentColorDark2Brush;
+    }
+
+    private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+    {
+        this.Background = Brushes.Transparent;
+        this.BorderBrush = Brushes.Transparent;
     }
 }

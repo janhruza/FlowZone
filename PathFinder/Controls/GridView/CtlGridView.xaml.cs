@@ -20,7 +20,7 @@ namespace PathFinder.Controls.GridView;
 public partial class CtlGridView : CtlFolderViewBase
 {
     /// <inheritdoc/>
-    public new object CreateParentFolderItem(string folderPath)
+    public override object CreateParentFolderItem(string folderPath)
     {
         string parent = Directory.GetParent(folderPath)?.FullName ?? Directory.GetDirectoryRoot(folderPath);
 
@@ -44,23 +44,23 @@ public partial class CtlGridView : CtlFolderViewBase
 
     private string _folderPath;
 
-    /// <inheritdoc/>
-    public new event EventHandler<string> FolderChanged = delegate { };
+    /// <inheritdoc />
+    public override event EventHandler FolderOpened = delegate { };
+
+    /// <inheritdoc />
+    public override event EventHandler<string> FolderChanged = delegate { };
 
     /// <inheritdoc/>
     public new string FolderName => this._folderPath;
 
     /// <inheritdoc/>
-    public new async Task<bool> OpenFolder(string folderPath)
+    public override async Task<bool> OpenFolder(string folderPath)
     {
         if (Directory.Exists(folderPath) == false)
         {
             Log.Error($"Folder \'{folderPath}\' not found.", nameof(OpenFolder));
             return false;
         }
-
-        this._folderPath = folderPath;
-        FolderChanged.Invoke(this, folderPath);
 
         // clear grid
         this.uGrid.Children.Clear();
@@ -69,17 +69,20 @@ public partial class CtlGridView : CtlFolderViewBase
         List<string> dirs = [];
         List<string> files = [];
 
-        if (await FsFetchAllFoldersAsync(folderPath, true, dirs) == false)
+        if (FsFetchAllFolders(folderPath, true, out dirs) == false)
         {
             Log.Error($"Unable to enumerate directories inside \'{folderPath}\'.", nameof(OpenFolder));
             return false;
         }
 
-        if (await FsFetchAllFilesAsync(folderPath, true, files) == false)
+        if (FsFetchAllFiles(folderPath, true, out files) == false)
         {
             Log.Error($"Unable to enumerate files inside \'{folderPath}\'.", nameof(OpenFolder));
             return false;
         }
+
+        this._folderPath = folderPath;
+        FolderChanged.Invoke(this, folderPath);
 
         // add the parent folder item
         _ = this.uGrid.Children.Add((CtlGridViewItem)CreateParentFolderItem(folderPath));
@@ -87,14 +90,10 @@ public partial class CtlGridView : CtlFolderViewBase
         // handle all folders first
         foreach (string dir in dirs)
         {
-            DirectoryInfo di = new DirectoryInfo(dir);
-            FSObjectInfo obj = new FSObjectInfo
-            {
-                IsFile = false,
-                Exists = di.Exists,
-                Info = di,
-                IsSpecial = false
-            };
+            if (FsGetItemInfo(dir, out FSObjectInfo obj) == false) continue;
+            if (obj.IsFile == true) continue; // file check
+
+            DirectoryInfo di = (DirectoryInfo)obj.Info;
 
             // creates the folder item
             CtlGridViewItem item = new CtlGridViewItem(ref obj)
@@ -118,19 +117,15 @@ public partial class CtlGridView : CtlFolderViewBase
         // handle all files second
         foreach (string file in files)
         {
-            FileInfo fi = new FileInfo(file);
-            FSObjectInfo obj = new FSObjectInfo
-            {
-                IsFile = true,
-                Exists = fi.Exists,
-                Info = fi,
-                IsSpecial = false
-            };
+            if (FsGetItemInfo(file, out FSObjectInfo obj) == false) continue;
+            if (obj.IsFile == false) continue; // file check
+
+            FileInfo fi = (FileInfo)obj.Info;
 
             // creates the file item
             CtlGridViewItem item = new CtlGridViewItem(ref obj)
             {
-                Uid = fi.FullName
+                Uid = fi.Name
             };
 
             item.MouseDoubleClick += (s, e) =>
@@ -143,9 +138,7 @@ public partial class CtlGridView : CtlFolderViewBase
                             {
                                 FileName = fi.Name,
                                 WorkingDirectory = folderPath,
-                                UseShellExecute = true,
-                                CreateNoWindow = true,
-                                WindowStyle = ProcessWindowStyle.Hidden
+                                UseShellExecute = true
                             }
                     };
 
@@ -166,6 +159,8 @@ public partial class CtlGridView : CtlFolderViewBase
             _ = this.uGrid.Children.Add(item);
         }
 
+        this.FolderOpened.Invoke(this, EventArgs.Empty);
+
         return true;
     }
 
@@ -184,7 +179,7 @@ public partial class CtlGridView : CtlFolderViewBase
     /// Default is 64.
     /// </summary>
     /// <remarks>All items are squares (the width and height is the same).</remarks>
-    public int ItemSize { get; set; } = 64;
+    public int ItemSize { get; set; } = 128;
 
     /// <summary>
     /// Gets or sets the value of total columns in the display grid.

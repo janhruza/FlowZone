@@ -24,7 +24,9 @@
         </ContextMenu>
     </controls:CtlFolderViewBase.ContextMenu>
 
-<UniformGrid Name="uGrid"
-                 Columns="8"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <UniformGrid Name="uGrid"
+                     Columns="8"/>
+    </ScrollViewer>
 
 </controls:CtlFolderViewBase>

@@ -2,6 +2,7 @@
 using FZCore.Windows;
 
 using PathFinder.Controls;
+using PathFinder.Controls.GridView;
 
 using System;
 using System.Collections.Generic;
@@ -26,26 +27,21 @@ public partial class MainWindow : IconlessWindow
 
         // init the theme items array
         this._themeItems = [this.miThemeDefault, this.miThemeLight, this.miThemeDark, this.miThemeSystem];
+        this._viewItems = [miDetails, miGrid];
 
-        CtlFVDetails ctl = new CtlFVDetails
-        {
-            BorderThickness = new Thickness(0)
-        };
-
-        ctl.SortFoldersFirst = true;
-        ctl.FolderChanged += async (s, folderPath) =>
-        {
-            await SetStatusMessage(folderPath);
-        };
-
-        this.ctlView = ctl;
-        _ = this.gdContent.Children.Add(this.ctlView);
-        Grid.SetColumn(this.ctlView, 1);
+        _ctlFVDetails = new CtlFVDetails();
+        _ctlGridView = new CtlGridView();
     }
+
+    private CtlGridView _ctlGridView;
+    private CtlFVDetails _ctlFVDetails;
 
     private CtlFolderViewBase ctlView;
 
     private MenuItem[] _themeItems;
+    private MenuItem[] _viewItems;
+
+    private string _folderPath = string.Empty;
 
     private Dictionary<string, string> GetFavoriteFolders()
     {
@@ -96,8 +92,8 @@ public partial class MainWindow : IconlessWindow
 
             tvi.Selected += async (s, e) =>
             {
-                CtlFVDetails ctl = (CtlFVDetails)this.ctlView;
-                _ = await ctl.OpenFolder(entry.Value);
+                _folderPath = entry.Value;
+                await ctlView.OpenFolder(entry.Value);
 
                 // deselect all drive items
                 DeselectDriveItems();
@@ -149,8 +145,8 @@ public partial class MainWindow : IconlessWindow
 
                 ti.Selected += async (s, e) =>
                 {
-                    CtlFVDetails ctl = (CtlFVDetails)this.ctlView;
-                    _ = await ctl.OpenFolder(di.Name);
+                    _folderPath = di.Name;
+                    _ = await ctlView.OpenFolder(di.Name);
 
                     // deselect favorite items
                     DeselectFavoriteItems();
@@ -166,6 +162,7 @@ public partial class MainWindow : IconlessWindow
         await SetStatusMessage(string.Empty);
         await LoadDrives();
         await SetFavoriteFolders();
+        await SetView(_ctlFVDetails);
     }
 
     private void IconlessWindow_DevToolsKeyPressed(object sender, EventArgs e)
@@ -259,5 +256,56 @@ public partial class MainWindow : IconlessWindow
     private void miStatusPanel_Unchecked(object sender, RoutedEventArgs e)
     {
         this.statusBar.Visibility = Visibility.Collapsed;
+    }
+
+    private void DeselectViews()
+    {
+        miDetails.IsChecked = false;
+        miGrid.IsChecked = false;
+    }
+
+    private async Task SetView(CtlFolderViewBase view)
+    {
+        if (view == null) return;
+
+        if (ctlView != null)
+        {
+            this.gdContent.Children.Remove(ctlView);
+
+            try
+            {
+                // remove old handlers
+                ctlView.FolderChanged -= View_FolderChanged;
+            }
+
+            catch { }
+        }
+
+        view.SortFoldersFirst = true;
+
+        ctlView = view;
+        ctlView.FolderChanged += View_FolderChanged;
+        await ctlView.OpenFolder(_folderPath);
+        this.gdContent.Children.Add(view);
+        Grid.SetColumn(view, 1);
+        return;
+    }
+
+    private async void View_FolderChanged(object? sender, string e)
+    {
+        _folderPath = e;
+        await SetStatusMessage(_folderPath);
+    }
+
+    private async void miDetails_Checked(object sender, RoutedEventArgs e)
+    {
+        DeselectViews();
+        await SetView(_ctlFVDetails);
+    }
+
+    private async void miGrid_Checked(object sender, RoutedEventArgs e)
+    {
+        DeselectViews();
+        await SetView(_ctlGridView);
     }
 }

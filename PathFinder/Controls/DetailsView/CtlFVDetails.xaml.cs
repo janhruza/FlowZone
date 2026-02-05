@@ -36,7 +36,7 @@ public partial class CtlFVDetails : CtlFolderViewBase
     }
 
     /// <inheritdoc/>
-    public new object CreateParentFolderItem(string folderPath)
+    public override object CreateParentFolderItem(string folderPath)
     {
         string parent = Directory.GetParent(folderPath)?.FullName ?? Directory.GetDirectoryRoot(folderPath);
 
@@ -60,8 +60,14 @@ public partial class CtlFVDetails : CtlFolderViewBase
         return lbi;
     }
 
+    /// <inheritdoc />
+    public override event EventHandler FolderOpened = delegate { };
+
+    /// <inheritdoc />
+    public override event EventHandler<string> FolderChanged = delegate { };
+
     /// <inheritdoc/>
-    public new async Task<bool> OpenFolder(string folderPath)
+    public override async Task<bool> OpenFolder(string folderPath)
     {
         if (Directory.Exists(folderPath) == false)
         {
@@ -74,11 +80,11 @@ public partial class CtlFVDetails : CtlFolderViewBase
         {
             Content = new CtlItemDetailView()
             {
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 FontSize = SystemFonts.StatusFontSize + 2
             },
 
-            HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch,
+            HorizontalContentAlignment = HorizontalAlignment.Stretch,
             IsEnabled = false
         });
 
@@ -209,9 +215,6 @@ public partial class CtlFVDetails : CtlFolderViewBase
     }
 
     private string _folderPath = string.Empty;
-
-    /// <inheritdoc/>
-    public new event EventHandler<string> FolderChanged = delegate { };
 
     /// <inheritdoc/>
     public new string FolderName => this._folderPath;
