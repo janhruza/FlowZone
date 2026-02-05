@@ -1,6 +1,7 @@
 ﻿using FZCore;
 using FZCore.Extensions;
 using FZCore.Windows;
+using FZCore.Windows.Dialogs.Types;
 
 using System;
 using System.Linq;
@@ -355,11 +356,14 @@ public partial class MainWindow : IconlessWindow
     private void miResetSettings_Click(object sender, RoutedEventArgs e)
     {
         // get confirmation
-        if (MessageBox.Show($"Do you want to restore the default settings? This will erase all saved feeds and other settings. This action is irreversible.",
-                            $"Restore settings",
-                            MessageBoxButton.YesNo,
-                            MessageBoxImage.Warning,
-                            MessageBoxResult.No) == MessageBoxResult.Yes)
+        //if (MessageBox.Show($"Do you want to restore the default settings? This will erase all saved feeds and other settings. This action is irreversible.",
+        //                    $"Restore settings",
+        //                    MessageBoxButton.YesNo,
+        //                    MessageBoxImage.Warning,
+        //                    MessageBoxResult.No) == MessageBoxResult.Yes)
+        if (FZCore.Core.Choice($"Do you want to restore the default settings? This will erase all saved feeds and other settings. This action is irreversible.",
+                               "Restore settings",
+                               DWImage.WARNING) == true)
         {
             // reset current settings object into the default state
             UpDateSettings.Current = new UpDateSettings();

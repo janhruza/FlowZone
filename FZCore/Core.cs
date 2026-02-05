@@ -56,11 +56,23 @@ public static class Core
     /// </summary>
     /// <param name="message">A message to be shown.</param>
     /// <param name="caption">Message box caption.</param>
+    /// <param name="image">Specifies the dialog box icon.</param>
+    /// <returns><see langword="true"/> if the yes button is pressed, otherwise <see langword="false"/>.</returns>
+    public static bool Choice(string message, string caption, DWImage image)
+    {
+        TDReturn result = DlgMessageBox.Show(message, caption, DWButton.YES | DWButton.NO, image, DWButton.NO);
+        return result == TDReturn.IDYES;
+    }
+
+    /// <summary>
+    /// Representing the user yes/no choice dialog.
+    /// </summary>
+    /// <param name="message">A message to be shown.</param>
+    /// <param name="caption">Message box caption.</param>
     /// <returns><see langword="true"/> if the yes button is pressed, otherwise <see langword="false"/>.</returns>
     public static bool Choice(string message, string caption = "FZCore")
     {
-        TDReturn result = DlgMessageBox.Show(message, caption, DWButton.YES | DWButton.NO, DWImage.INFO, DWButton.NO);
-        return result == TDReturn.IDYES;
+        return Choice(message, caption, DWImage.INFO);
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using FZCore.Windows;
+using FZCore.Windows.Dialogs.Types;
 
 using System;
 using System.Threading.Tasks;
@@ -116,7 +117,8 @@ public partial class MainWindow : IconlessWindow
 
     private async Task RemoveTask(TaskItem task)
     {
-        if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        //if (MessageBox.Show(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (FZCore.Core.Choice(Messages.ConfirmDeleteTask, $"Delete task '{task.Caption}'", DWImage.WARNING) == true)
         {
             if (App.RemoveTask(task.Id) == true)
             {

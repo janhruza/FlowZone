@@ -1,5 +1,6 @@
 ﻿using FZCore;
 using FZCore.Windows;
+using FZCore.Windows.Dialogs.Types;
 
 using Microsoft.Win32;
 
@@ -367,7 +368,8 @@ public partial class MainWindow : IconlessWindow
 
     private void miCustomPathReset_Click(object sender, RoutedEventArgs e)
     {
-        if (MessageBox.Show(Messages.ResetCustomDownloader, "Reset Downloader", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        //if (MessageBox.Show(Messages.ResetCustomDownloader, "Reset Downloader", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (FZCore.Core.Choice(Messages.ResetCustomDownloader, "Reset Downloader", DWImage.WARNING) == true)
         {
             ResetDownloader();
         }

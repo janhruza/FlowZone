@@ -1,6 +1,8 @@
 ﻿using Expando.Core;
 
-using System.Windows;
+using FZCore.Windows.Dialogs;
+using FZCore.Windows.Dialogs.Types;
+
 using System.Windows.Controls;
 
 namespace Expando.Pages;
@@ -53,19 +55,22 @@ public partial class PgMyProfile : Page, IExpandoPage
             return;
         }
 
-        if (MessageBox.Show(Messages.ConfirmDeleteTransactions, "Delete all transactions", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        //if (MessageBox.Show(Messages.ConfirmDeleteTransactions, "Delete all transactions", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (FZCore.Core.Choice(Messages.ConfirmDeleteTransactions, "Delete all transactions", DWImage.WARNING) == true)
         {
             // clear transactions list
             UserProfile.Current?.Transactions.Clear();
             if (UserProfile.Current?.SaveTransactions() == true)
             {
-                _ = MessageBox.Show(Messages.TransactionsDeleted, "Transactions deleted.", MessageBoxButton.OK, MessageBoxImage.Information);
+                //_ = MessageBox.Show(Messages.TransactionsDeleted, "Transactions deleted.", MessageBoxButton.OK, MessageBoxImage.Information);
+                _ = DlgMessageBox.Show(Messages.TransactionsDeleted, "Transactions deleted", DWButton.OK, DWImage.INFO);
             }
 
             else
             {
                 // unable to save the list of transactions
-                _ = MessageBox.Show(Messages.TransactionsSavingError, "Updating error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //_ = MessageBox.Show(Messages.TransactionsSavingError, "Updating error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = DlgMessageBox.Show(Messages.TransactionsSavingError, "Updating error", DWButton.OK, DWImage.ERROR);
             }
         }
 
@@ -79,7 +84,8 @@ public partial class PgMyProfile : Page, IExpandoPage
             return;
         }
 
-        if (MessageBox.Show(Messages.ConfirmDeleteAccount, "Delete your profile", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        //if (MessageBox.Show(Messages.ConfirmDeleteAccount, "Delete your profile", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (FZCore.Core.Choice(Messages.ConfirmDeleteAccount, "Delete your profile", DWImage.WARNING) == true)
         {
             // delete user profile
 
@@ -98,14 +104,16 @@ public partial class PgMyProfile : Page, IExpandoPage
                 else
                 {
                     // can't rebuild user index file
-                    _ = MessageBox.Show(Messages.CantRebuildIndexFile, "Can't rebuild index file", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //_ = MessageBox.Show(Messages.CantRebuildIndexFile, "Can't rebuild index file", MessageBoxButton.OK, MessageBoxImage.Error);
+                    FZCore.Core.ErrorBox(Messages.CantRebuildIndexFile, "Can't rebuild index file");
                 }
             }
 
             else
             {
                 // can't remove profile from the loaded profiles list
-                _ = MessageBox.Show(Messages.CantRemoveUser, "Can't remove profile.", MessageBoxButton.OK, MessageBoxImage.Error);
+                //_ = MessageBox.Show(Messages.CantRemoveUser, "Can't remove profile.", MessageBoxButton.OK, MessageBoxImage.Error);
+                FZCore.Core.ErrorBox(Messages.CantRemoveUser, "Can't remove profile.");
             }
         }
 
