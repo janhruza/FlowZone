@@ -32,7 +32,7 @@ public partial class App : BaseApplication
     /// <summary>
     /// Representing the main application window.
     /// </summary>
-    public static new MainWindow MainWindow { get; set; }
+    public static MainWindow MainWindow { get; set; }
 
     private void BaseApplication_Startup(object sender, System.Windows.StartupEventArgs e)
     {

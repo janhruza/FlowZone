@@ -5,10 +5,10 @@ using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using FZCore.Windows.Dialogs;
 
 namespace FZCore.Windows;
 
-[Obsolete]
 /// <summary>
 /// Representing a custom dialog window.
 /// <see cref="DialogWindow"/> is a more extended version of the standard <see cref="MessageBox"/> class.
@@ -17,6 +17,7 @@ namespace FZCore.Windows;
 /// /// <remarks>
 /// This class is obsolette. Please use the new <see cref="DlgMessageBox"/> instead.
 /// </remarks>
+[Obsolete("Please use the DlgMessageBox instead.")]
 public class DialogWindow
 {
     /// <summary>

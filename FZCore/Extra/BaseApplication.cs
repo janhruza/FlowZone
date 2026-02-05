@@ -12,7 +12,7 @@ public class BaseApplication : Application
     /// <summary>
     /// Representing the main application window.
     /// </summary>
-    public new IconlessWindow MainWindow { get; set; }
+    public virtual new IconlessWindow MainWindow { get; set; }
 
     /// <summary>
     /// Representing the application theme.
@@ -30,12 +30,14 @@ public class BaseApplication : Application
         }
     }
 
+    /// <inheritdoc />
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
         Log.AppStarted();
     }
 
+    /// <inheritdoc />
     protected override void OnExit(ExitEventArgs e)
     {
         base.OnExit(e);

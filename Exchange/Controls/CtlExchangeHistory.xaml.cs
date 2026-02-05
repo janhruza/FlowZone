@@ -28,11 +28,6 @@ public partial class CtlExchangeHistory : UserControl
         InitializeComponent();
     }
 
-    private static bool CurrenciesLoaded()
-    {
-        return ExchangeReport.LatestReport is not null;
-    }
-
     #region Metrics' methods
 
     private void ClearCanvas()
@@ -51,7 +46,7 @@ public partial class CtlExchangeHistory : UserControl
 
     private async Task<bool> CurrenciesInCZK()
     {
-        if (CurrenciesLoaded() == false) return false;
+        if (ExchangeReport.LatestReport.HasValue == false) return false;
         ClearCanvas();
 
         // display the currencies ina graph
@@ -158,7 +153,7 @@ public partial class CtlExchangeHistory : UserControl
         this.cbxCurrency.Items.Clear();
 
         // enum the currencies
-        if (ExchangeReport.LatestReport is null)
+        if (ExchangeReport.LatestReport.HasValue == false)
         {
             if (await ExchangeReport.FetchAsync() == null)
             {
@@ -169,8 +164,9 @@ public partial class CtlExchangeHistory : UserControl
         }
 
         // latest report should not be null at this point
-        foreach (CurrencyInfo currency in ExchangeReport.LatestReport.Value.Currencies)
+        for (int i = 0; i < ExchangeReport.LatestReport.Value.Currencies.Count; i++)
         {
+            CurrencyInfo currency = ExchangeReport.LatestReport.Value.Currencies[i];
             ComboBoxItem cbi = new ComboBoxItem
             {
                 Tag = currency,

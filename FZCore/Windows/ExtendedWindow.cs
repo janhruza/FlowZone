@@ -167,11 +167,6 @@ public class ExtendedWindow : BaseWindow
     public WindowExtender Extender => this._extender;
 
     /// <summary>
-    /// Representing the window handle (HWND) as <see cref="UIntPtr"/>.
-    /// </summary>
-    public nuint Handle => this._handle;
-
-    /// <summary>
     /// Representing the window identification as <see cref="Guid"/>.
     /// </summary>
     public Guid Id => this._guid;
