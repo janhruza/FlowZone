@@ -10,7 +10,7 @@
                       Topmost="True"
                       ResizeMode="NoResize"
                       MinWidth="320"
-                      MaxWidth="600"
+                      MaxWidth="500"
                       SizeToContent="WidthAndHeight"
                       ShowActivated="True"
                       Loaded="IconlessWindow_Loaded">
@@ -42,14 +42,16 @@
                    TextWrapping="Wrap"
                    TextTrimming="CharacterEllipsis"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   Margin="0,0,10,0"/>
 
         <!-- Dialog buttons (created dynamically) -->
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Name="stpButtons"/>
+                    Name="stpButtons"
+                    Margin="0,10,0,0"/>
 
     </Grid>
     
