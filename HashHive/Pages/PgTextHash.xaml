@@ -4,6 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HashHive.Pages"
+      UseLayoutRounding="True"
+      SnapsToDevicePixels="True"
       Title="Hash Text">
 
     <StackPanel Width="400">
