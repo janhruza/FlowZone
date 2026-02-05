@@ -31,7 +31,8 @@ public partial class App : BaseApplication
         if (UserProfile.LoadUsersData() != 0)
         {
             Log.Error(Messages.CantLoadUserData, nameof(ReloadUserData));
-            _ = MessageBox.Show(Messages.CantLoadUserData, "Load Profiles", MessageBoxButton.OK, MessageBoxImage.Error);
+            //_ = MessageBox.Show(Messages.CantLoadUserData, "Load Profiles", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.CantLoadUserData, "Load Profiles");
         }
     }
 

@@ -105,7 +105,7 @@ public partial class NewTaskWindow : IconlessWindow
         if (string.IsNullOrEmpty(Task.Caption) || Task.ExpirationDate == DateTime.MinValue)
         {
             // invalid input
-            _ = MessageBox.Show(Messages.CreateTaskInvalidData, "Invalid input data", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.CreateTaskInvalidData, "Invalid input data");
         }
 
         else

@@ -209,7 +209,7 @@ public partial class MainWindow : IconlessWindow
     {
         if (await SaveTasks() == false)
         {
-            _ = MessageBox.Show(Messages.TasksSavingFailed, "Saving failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.TasksSavingFailed, "Saving failed");
         }
     }
 

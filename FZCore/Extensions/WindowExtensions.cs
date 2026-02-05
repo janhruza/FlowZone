@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using FZCore.Windows.Dialogs;
+
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -26,18 +28,6 @@ public static class WindowExtensions
     public static PVOID GetHandle(this Window window)
     {
         return new WindowInteropHelper(window).EnsureHandle();
-    }
-
-    /// <summary>
-    /// Shows a new message window with the specified <paramref name="message"/>. It will use <paramref name="window"/>'s title as the caption text.
-    /// </summary>
-    /// <param name="window">Target window.</param>
-    /// <param name="message">Message text.</param>
-    /// <param name="image">Message image.</param>
-    public static void ShowMessage(this Window window, string message, MessageBoxImage image = MessageBoxImage.Information)
-    {
-        _ = MessageBox.Show(message, window.Title, MessageBoxButton.OK, image);
-        return;
     }
 
     /// <summary>

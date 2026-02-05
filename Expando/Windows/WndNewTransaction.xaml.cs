@@ -180,7 +180,7 @@ public partial class WndNewTransaction : IconlessWindow
                 if (UserProfile.Current.SaveTransactions() == false)
                 {
                     // unable to save the list of the transactions
-                    _ = MessageBox.Show(Messages.TransactionsSavingError, "Saving error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    FZCore.Core.ErrorBox(Messages.TransactionsSavingError, "Saving error");
                     return;
                 }
 
@@ -192,7 +192,7 @@ public partial class WndNewTransaction : IconlessWindow
             else
             {
                 // user is not logged in
-                _ = MessageBox.Show(Messages.UserNotLoggedIn, "New transaction", MessageBoxButton.OK, MessageBoxImage.Error);
+                FZCore.Core.ErrorBox(Messages.UserNotLoggedIn, "New transaction");
                 return;
             }
         }
@@ -200,7 +200,7 @@ public partial class WndNewTransaction : IconlessWindow
         else
         {
             // invalid transaction
-            _ = MessageBox.Show(Messages.CantCreateTransaction, "New transaction", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.CantCreateTransaction, "New transaction");
         }
     }
 
@@ -214,7 +214,7 @@ public partial class WndNewTransaction : IconlessWindow
     {
         if (UserProfile.IsProfileLoaded() == false)
         {
-            _ = MessageBox.Show(Messages.UserNotLoggedIn, "No profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.UserNotLoggedIn, "No profile");
             return false;
         }
 
@@ -230,7 +230,7 @@ public partial class WndNewTransaction : IconlessWindow
     {
         if (UserProfile.IsProfileLoaded() == false)
         {
-            _ = MessageBox.Show(Messages.UserNotLoggedIn, "No profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.UserNotLoggedIn, "No profile");
             return false;
         }
 
@@ -247,7 +247,7 @@ public partial class WndNewTransaction : IconlessWindow
     {
         if (UserProfile.IsProfileLoaded() == false)
         {
-            _ = MessageBox.Show(Messages.UserNotLoggedIn, "No profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.UserNotLoggedIn, "No profile");
             return false;
         }
 

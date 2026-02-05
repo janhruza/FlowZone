@@ -57,7 +57,8 @@ public partial class WndNewProfile : IconlessWindow
         // check if input is valid
         if (ValidateData() == false)
         {
-            _ = MessageBox.Show(Messages.InvalidProfileData, "Create profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            //_ = MessageBox.Show(Messages.InvalidProfileData, "Create profile", MessageBoxButton.OK, MessageBoxImage.Error);
+            FZCore.Core.ErrorBox(Messages.InvalidProfileData, "Create profile");
         }
 
         else
@@ -72,7 +73,8 @@ public partial class WndNewProfile : IconlessWindow
 
             else
             {
-                _ = MessageBox.Show(Messages.CantCreateProfile, "Create profile", MessageBoxButton.OK, MessageBoxImage.Error);
+                //_ = MessageBox.Show(Messages.CantCreateProfile, "Create profile", MessageBoxButton.OK, MessageBoxImage.Error);
+                FZCore.Core.ErrorBox(Messages.CantCreateProfile, "Create profile");
             }
         }
     }

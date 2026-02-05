@@ -52,7 +52,8 @@ public partial class WndAddFeed : IconlessWindow
             if (string.IsNullOrEmpty(url) == true || Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri) == false)
             {
                 // invalid input, show error
-                _ = MessageBox.Show($"Unable to add the RSS feed. The given address is not a valid URL.", Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                //_ = MessageBox.Show($"Unable to add the RSS feed. The given address is not a valid URL.", Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                FZCore.Core.ErrorBox($"Unable to add the RSS feed. The given address is not a valid URL.", Title);
                 return false;
             }
 
