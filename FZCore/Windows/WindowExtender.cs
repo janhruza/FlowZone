@@ -150,19 +150,18 @@ public class WindowExtender
         // enable keydown events
         this._window.KeyDown += (s, e) =>
         {
-            if (e.Key == Key.F1)
+            if (e.Key == Key.F10)
             {
-                // open app log
-                _ = Core.ViewLog(this._window);
+                _ = FZCore.Core.ViewLog(this._window);
             }
 
-            if (e.Key == System.Windows.Input.Key.F11)
+            else if (e.Key == System.Windows.Input.Key.F11)
             {
                 // empower window
                 this._window.ToggleFullScreenMode();
             }
 
-            if (e.Key == System.Windows.Input.Key.F12)
+            else if (e.Key == System.Windows.Input.Key.F12)
             {
                 // toggle console
                 ToggleConsole();

@@ -44,7 +44,7 @@
                           Click="miAddFeed_Click"/>
 
                 <Separator />
-
+                
                 <MenuItem Name="miRestoreFeed"
                           Header="Restore default"
                           Click="miRestoreFeed_Click"/>
@@ -58,11 +58,15 @@
                           InputGestureText="F2"
                           Click="miSettings_Click"/>
 
-                <Separator />
-
                 <MenuItem Name="miResetSettings"
                           Header="Restore settings"
                           Click="miResetSettings_Click"/>
+                <Separator />
+
+                <MenuItem Header="About"
+                          InputGestureText="F1"
+                          Name="miAbout"
+                          Click="miAbout_Click"/>
             </MenuItem>
         </Menu>
         

@@ -39,11 +39,10 @@ public partial class MainWindow : IconlessWindow
         // extend window
         WindowExtender wex = new WindowExtender(this);
         wex.AddSeparator(0x11);
-        wex.AddMenuItem(0x12, "Refresh\tF5", async () => await ReloadFeedsAsync());
-        wex.AddMenuItem(0x13, "View log\tF1", () => FZCore.Core.ViewLog(this));
-
-        // activate all extensions
-        wex.EmpowerWindow();
+        wex.AddMenuItem(0x12, "View log\tF3", () => FZCore.Core.ViewLog(this));
+        wex.AddMenuItem(0x13, "Refresh\tF5", async () => await ReloadFeedsAsync());
+        wex.AddSeparator(0x14);
+        wex.AddMenuItem(0x15, "Fullscreen Mode\tF11", () => this.ToggleFullScreenMode());
     }
 
     private async void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
@@ -51,16 +50,31 @@ public partial class MainWindow : IconlessWindow
         _ = await ReloadFeedsAsync();
     }
 
-    private async void IconlessWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    private async void IconlessWindow_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key == System.Windows.Input.Key.F2)
+        if (e.Key == Key.F1)
+        {
+            FZCore.Core.AboutBox();
+        }
+
+        else if (e.Key == Key.F2)
         {
             HandleSettings();
         }
 
-        else if (e.Key == System.Windows.Input.Key.F5)
+        else if (e.Key == Key.F3)
+        {
+            _ = FZCore.Core.ViewLog(this);
+        }
+
+        else if (e.Key == Key.F5)
         {
             _ = await ReloadFeedsAsync();
+        }
+
+        else if (e.Key == Key.F11)
+        {
+            this.ToggleFullScreenMode();
         }
 
         else if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.N)
@@ -241,7 +255,6 @@ public partial class MainWindow : IconlessWindow
     //        return false;
     //    }
     //}
-
     // Helper method to keep UI logic clean
     private TreeViewItem CreateTreeViewItem(RssChannel channel)
     {
@@ -346,6 +359,8 @@ public partial class MainWindow : IconlessWindow
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
+        if (this.WindowState == WindowState.Maximized) return;
+
         // check if settings exists
         if (UpDateSettings.Current != null)
         {
@@ -393,5 +408,10 @@ public partial class MainWindow : IconlessWindow
         UpDateSettings.Current.Feeds = UpDateSettings.GetDefaultFeeds();
         ApplySettings(UpDateSettings.Current);
         _ = await ReloadFeedsAsync();
+    }
+
+    private void miAbout_Click(object sender, RoutedEventArgs e)
+    {
+        _ = FZCore.Core.AboutBox();
     }
 }
