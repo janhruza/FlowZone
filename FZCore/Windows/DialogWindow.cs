@@ -1,5 +1,4 @@
-﻿using FZCore.Windows.Dialogs;
-using FZCore.Windows.Dialogs.Types;
+﻿using FZCore.Windows.Dialogs.Types;
 
 using System;
 using System.Media;

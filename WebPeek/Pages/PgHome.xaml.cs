@@ -1,4 +1,4 @@
-﻿using FZCore.Windows;
+﻿using FZCore.Windows.Dialogs.Types;
 
 using System.Linq;
 using System.Windows;
@@ -45,7 +45,8 @@ public partial class PgHome : Page
         if (webApp == null) return false;
 
         // show confirmation dialog
-        if (DialogWindow.ShowDialog($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", caption: $"Remove \'{webApp.Name}\'", DWImage.WARNING, DWButton.YES | DWButton.NO) != TDReturn.IDYES) return false;
+        //if (DialogWindow.ShowDialog($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", caption: $"Remove \'{webApp.Name}\'", DWImage.WARNING, DWButton.YES | DWButton.NO) != TDReturn.IDYES) return false;
+        if (FZCore.Core.Choice($"Are you sure you want to remove this web application? This action is irreversable.", $"Remove \'{webApp.Name}\'", DWImage.WARNING) == false) return false;
 
         if (AppManager.UnregisterApp(webApp) == true)
         {

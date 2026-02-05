@@ -107,12 +107,12 @@ public partial class DlgMessageBox : IconlessWindow
 
         b.Click += (s, e) =>
         {
-            this.Result = GetResult(btn);
-            this.Close();
+            Result = GetResult(btn);
+            Close();
         };
 
         _ = panel.Children.Add(b);
-        _buttons.Add(btn, b);
+        this._buttons.Add(btn, b);
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public partial class DlgMessageBox : IconlessWindow
         InitializeComponent();
 
         // basic properties
-        this.Title = caption;
+        Title = caption;
         this.tbMessage.Text = message;
         this._image = image;
 
@@ -132,19 +132,19 @@ public partial class DlgMessageBox : IconlessWindow
         if (icon == null)
         {
             // no image
-            img.Margin = new System.Windows.Thickness(0);
-            img.Visibility = System.Windows.Visibility.Collapsed;
+            this.img.Margin = new System.Windows.Thickness(0);
+            this.img.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         else
         {
-            img.Source = icon;
+            this.img.Source = icon;
         }
 
         // buttons
         if (buttons == DWButton.OK)
         {
-            AddButton(stpButtons, DWButton.OK);
+            AddButton(this.stpButtons, DWButton.OK);
         }
 
         else
@@ -155,7 +155,7 @@ public partial class DlgMessageBox : IconlessWindow
 
                 if ((buttons & btn) == btn)
                 {
-                    AddButton(stpButtons, btn);
+                    AddButton(this.stpButtons, btn);
                 }
             }
         }
@@ -163,7 +163,7 @@ public partial class DlgMessageBox : IconlessWindow
         // sets the default button
         if (active.HasValue && buttons.HasFlag(active))
         {
-            _buttons[active.Value].IsDefault = true;
+            this._buttons[active.Value].IsDefault = true;
         }
     }
 
@@ -178,7 +178,7 @@ public partial class DlgMessageBox : IconlessWindow
     private void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
     {
         // play the target sound
-        GetSound(_image).Play();
+        GetSound(this._image).Play();
     }
 
     /// <summary>
