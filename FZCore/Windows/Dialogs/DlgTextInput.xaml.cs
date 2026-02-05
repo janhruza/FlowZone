@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Media;
+using System.Windows;
 
 namespace FZCore.Windows.Dialogs;
 
@@ -52,5 +53,10 @@ public partial class DlgTextInput : IconlessWindow
     public static string GetInput()
     {
         return GetInput("Enter a value", string.Empty);
+    }
+
+    private void IconlessWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        SystemSounds.Beep.Play();
     }
 }

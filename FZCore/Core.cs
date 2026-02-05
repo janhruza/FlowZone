@@ -1,4 +1,5 @@
-﻿using FZCore.Windows;
+﻿using FZCore.Controls;
+using FZCore.Windows;
 using FZCore.Windows.Dialogs;
 using FZCore.Windows.Dialogs.Types;
 using FZCore.Windows.Extra;
@@ -73,6 +74,27 @@ public static class Core
     public static bool Choice(string message, string caption = "FZCore")
     {
         return Choice(message, caption, DWImage.INFO);
+    }
+
+    /// <summary>
+    /// Representing the user text input box.
+    /// </summary>
+    /// <param name="header">Input prompt.</param>
+    /// <param name="defaultValue">Default input value.</param>
+    /// <returns>The user input.</returns>
+    public static string InputBox(string header, string defaultValue)
+    {
+        return DlgTextInput.GetInput(header, defaultValue);
+    }
+
+    /// <summary>
+    /// Representing the user text input box.
+    /// </summary>
+    /// <param name="header">Input prompt.</param>
+    /// <returns>The user input.</returns>
+    public static string InputBox(string header)
+    {
+        return InputBox(header, string.Empty);
     }
 
     /// <summary>

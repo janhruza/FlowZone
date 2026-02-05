@@ -10,7 +10,8 @@
                       ResizeMode="NoResize"
                       Topmost="True"
                       Title="Input required"
-                      SizeToContent="WidthAndHeight">
+                      SizeToContent="WidthAndHeight"
+                      Loaded="IconlessWindow_Loaded">
     
     <Grid Margin="10">
         <Grid.RowDefinitions>
