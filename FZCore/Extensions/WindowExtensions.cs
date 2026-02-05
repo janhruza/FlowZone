@@ -1,6 +1,4 @@
-﻿using FZCore.Windows.Dialogs;
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
